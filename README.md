@@ -4,9 +4,11 @@ A free, open-source and advanced bot for Pokémon Revolution Online.
 
 Community: https://proshine-bot.ml/
 
+Scripts: https://github.com/Silv3rPRO/proshine-scripts
+
 ## Libraries
 
-* [Moonsharp](http://www.moonsharp.org/) - Lua interpreter
+* [MoonSharp](http://www.moonsharp.org/) - Lua interpreter
 * [Json.NET](http://www.newtonsoft.com/json) - JSON framework
 
 ## Credits
