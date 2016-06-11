@@ -1,0 +1,79 @@
+﻿<Window x:Class="PROShine.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PROShine"
+        mc:Ignorable="d" Background="#FFCDD5E2" Foreground="#FF101020" WindowStartupLocation="CenterOwner" Icon="logo.ico" Title="Connection" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
+    <Grid Margin="2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid Name="AccountSettings"  Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="25" />
+            </Grid.ColumnDefinitions>
+            <Grid Margin="2" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Username:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
+                <TextBox Name="UsernameTextBox" Width="256" Grid.Row="0" Grid.Column="1" Margin="2"></TextBox>
+                <Label Grid.Row="1" Grid.Column="0" Content="Password:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
+                <PasswordBox Name="PasswordTextBox" Grid.Row="1" Grid.Column="1" Margin="2"></PasswordBox>
+                <Label Grid.Row="2" Grid.Column="0" Content="Server:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
+                <ComboBox Name="ServerComboBox" Grid.Row="2" Grid.Column="1" Margin="2" />
+                <CheckBox Name="ProxyCheckBox" Grid.Row="3" Grid.Column="1" Margin="2" Checked="ProxyCheckBox_Checked" Unchecked="ProxyCheckBox_Checked">Connect through a proxy server</CheckBox>
+                <StackPanel Name="ProxyTypePanel" Grid.Row="4" Grid.Column="1" Margin="2" Orientation="Horizontal">
+                    <RadioButton Name="Socks4RadioButton" Checked="ProxyCheckBox_Checked" Unchecked="ProxyCheckBox_Checked" Margin="0,0,10,0">SOCKS4</RadioButton>
+                    <RadioButton Name="Socks5RadioButton" Checked="ProxyCheckBox_Checked" Unchecked="ProxyCheckBox_Checked" IsChecked="True">SOCKS5</RadioButton>
+                </StackPanel>
+                <Label Name="ProxyHostLabel" Grid.Row="5" Grid.Column="0" Content="Host:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
+                <TextBox Name="ProxyHostTextBox" Width="256" Grid.Row="5" Grid.Column="1" Margin="2"></TextBox>
+                <Label Name="ProxyPortLabel" Grid.Row="6" Grid.Column="0" Content="Port:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
+                <TextBox Name="ProxyPortTextBox" Width="256" Grid.Row="6" Grid.Column="1" Margin="2"></TextBox>
+                <CheckBox Name="AnonymousCheckBox" Grid.Row="7" Grid.Column="1" Margin="2" Checked="ProxyCheckBox_Checked" Unchecked="ProxyCheckBox_Checked" IsChecked="True">Use anonymous authentication</CheckBox>
+                <Label Name="ProxyUsernameLabel" Grid.Row="8" Grid.Column="0" Content="Username:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
+                <TextBox Name="ProxyUsernameTextBox" Width="256" Grid.Row="8" Grid.Column="1" Margin="2"></TextBox>
+                <Label Name="ProxyPasswordLabel" Grid.Row="9" Grid.Column="0" Content="Password:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
+                <PasswordBox Name="ProxyPasswordTextBox" Grid.Row="9" Grid.Column="1" Margin="2"></PasswordBox>
+                <Button Grid.Row="10" Grid.Column="0" IsCancel="True" Content="Cancel" Background="#FFCDD5E2" Foreground="#FF101020" Margin="1"></Button>
+                <Grid Grid.Row="10" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" IsDefault="True" Content="Login" Background="#FFCDD5E2" Foreground="#FF101020" Margin="2" Click="LoginButton_Click"></Button>
+                    <Button Grid.Column="1" Name="SaveAccountButton" Content="Save" Background="#FFCDD5E2" Foreground="#FF101020" Margin="2" Click="SaveAccountButton_Click"  />
+                </Grid>
+            </Grid>
+            <Grid Margin="2" Grid.Column="1">
+                <Button Name="ShowAccountsButton" Content="&gt;" HorizontalAlignment="Stretch" Click="ShowAccounts_Click" />
+            </Grid>
+        </Grid>
+        <Grid Name="AccountList"  Margin="2" Grid.Column="1" Visibility="Hidden" Width="0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <ListBox Name="AccountListView" Grid.Row="0" ItemsSource="{Binding AccountName}" SelectionChanged="AccountListView_SelectionChanged" />
+            <Button Name="DeleteAccountButton" Grid.Row="1" Content="Delete" Background="#FFCDD5E2" Foreground="#FF101020" Margin="2" Click="DeleteAccountButton_Click" />
+        </Grid>
+    </Grid>
+</Window>
