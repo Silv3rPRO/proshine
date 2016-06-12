@@ -6,7 +6,7 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:PROShine"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800" Background="#FFCDD5E2" Foreground="#FF101020" Icon="logo.ico" FontSize="13.333">
+        Title="MainWindow" Height="600" Width="800" Background="#FFCDD5E2" Foreground="#FF101020" Icon="../logo.ico" FontSize="13.333">
     <Window.Resources>
         <LinearGradientBrush x:Key="CheckedBlue" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#FFb5c3da" Offset="0" />

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PROShine"
-        mc:Ignorable="d" Background="#FFCDD5E2" Foreground="#FF101020" WindowStartupLocation="CenterOwner" Icon="logo.ico" Title="Connection" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
+        mc:Ignorable="d" Background="#FFCDD5E2" Foreground="#FF101020" WindowStartupLocation="CenterOwner" Icon="../logo.ico" Title="Connection" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
     <Grid Margin="2">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
