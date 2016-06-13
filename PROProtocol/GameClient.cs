@@ -632,6 +632,7 @@ namespace PROProtocol
 
         private void OnConnectionClosed(Exception ex)
         {
+            _mapClient.Close();
             if (!IsConnected)
             {
 #if DEBUG

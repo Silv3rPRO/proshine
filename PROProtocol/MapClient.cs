@@ -42,6 +42,11 @@ namespace PROProtocol
             _connection.Update();
         }
 
+        public void Close()
+        {
+            _connection.Close();
+        }
+
         public void DownloadMap(string mapName)
         {
             mapName += MapExtension;
