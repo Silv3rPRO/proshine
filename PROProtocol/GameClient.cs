@@ -203,6 +203,8 @@ namespace PROProtocol
 
         private void UpdateMovement()
         {
+            if (!IsInitialized) return;
+
             if (!_movementTimeout.IsActive && _movements.Count > 0)
             {
                 Direction direction = _movements[0];
@@ -907,6 +909,8 @@ namespace PROProtocol
 
         private void OnNpcBattlers(string[] data)
         {
+            if (!IsInitialized) return;
+
             Map.Npcs.Clear();
             foreach (Npc npc in Map.OriginalNpcs)
             {
@@ -916,6 +920,8 @@ namespace PROProtocol
         
         private void OnNpcDestroy(string[] data)
         {
+            if (!IsInitialized) return;
+
             string[] npcData = data[1].Split('|');
 
             Map.Npcs.Clear();
