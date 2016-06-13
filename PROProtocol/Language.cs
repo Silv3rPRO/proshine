@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 
@@ -18,7 +17,7 @@ namespace PROProtocol
 
         private const string FileName = "Resources/Lang.xml";
 
-        private SortedDictionary<string, string> _texts = new SortedDictionary<string, string>();
+        private SortedDictionary<string, string> _texts;
 
         public Language()
         {
