@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 
@@ -6,12 +7,23 @@ namespace PROProtocol
 {
     public class Language
     {
+        private class DescendingLengthComparer : IComparer<string>
+        {
+            public int Compare(string x, string y)
+            {
+                int result = y.Length.CompareTo(x.Length);
+                return result != 0 ? result : x.CompareTo(y);
+            }
+        }
+
         private const string FileName = "Resources/Lang.xml";
 
-        private Dictionary<string, string> _texts = new Dictionary<string, string>();
+        private SortedDictionary<string, string> _texts = new SortedDictionary<string, string>();
 
         public Language()
         {
+            _texts = new SortedDictionary<string, string>(new DescendingLengthComparer());
+
             if (File.Exists(FileName))
             {
                 XmlDocument xml = new XmlDocument();
