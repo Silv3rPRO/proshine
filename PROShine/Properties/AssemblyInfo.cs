@@ -7,7 +7,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("PROShine")]
-[assembly: AssemblyDescription("A free and advanced bot for Pokemon Revolution Online.")]
+[assembly: AssemblyDescription("A free, open-source and advanced bot for Pokemon Revolution Online.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Silv3r")]
 [assembly: AssemblyProduct("PROShine")]
