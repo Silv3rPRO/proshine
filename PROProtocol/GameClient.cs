@@ -604,6 +604,9 @@ namespace PROProtocol
                 // DSSock.loadMap
                 SendPacket("-");
                 SendPacket("k|.|" + MapName.ToLowerInvariant());
+
+                CanUseCut = HasCutAbility();
+                CanUseSmashRock = HasRockSmashAbility();
             }
             else
             {
@@ -740,7 +743,7 @@ namespace PROProtocol
                     OnNpcDestroy(data);
                     break;
                 case "#":
-                    OnPokemonsUpdate(data);
+                    OnTeamUpdate(data);
                     break;
                 case "d":
                     OnInventoryUpdate(data);
@@ -935,12 +938,12 @@ namespace PROProtocol
             }
         }
 
-        private void OnPokemonsUpdate(string[] data)
+        private void OnTeamUpdate(string[] data)
         {
-            string[] pokemonsData = data[1].Split(new[] { "\r\n" }, StringSplitOptions.None);
+            string[] teamData = data[1].Split(new[] { "\r\n" }, StringSplitOptions.None);
 
             Team.Clear();
-            foreach (string pokemon in pokemonsData)
+            foreach (string pokemon in teamData)
             {
                 if (pokemon == string.Empty)
                     continue;
@@ -949,8 +952,12 @@ namespace PROProtocol
 
                 Team.Add(new Pokemon(pokemonData));
             }
-            CanUseCut = HasCutAbility();
-            CanUseSmashRock = HasRockSmashAbility();
+
+            if (IsInitialized)
+            {
+                CanUseCut = HasCutAbility();
+                CanUseSmashRock = HasRockSmashAbility();
+            }
 
             if (_swapTimeout.IsActive)
             {
