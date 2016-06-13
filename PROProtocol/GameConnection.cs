@@ -16,7 +16,7 @@ namespace PROProtocol
         
         private const string RedAddress = "46.28.205.35";
         private const string BlueAddress = "46.28.207.53";
-        protected const int ServerPort = 800;
+        private const int ServerPort = 800;
 
         private Server _server;
         private bool _useSocks;

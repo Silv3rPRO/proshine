@@ -18,8 +18,6 @@ namespace PROProtocol
             Icing
         }
 
-        public string Name { get; private set; }
-
         public int[,] Colliders { get; private set; }
         public MapLink[,] Links { get; private set; }
         public int[,] Tiles1 { get; private set; }
@@ -48,11 +46,8 @@ namespace PROProtocol
                 { 6686, 0 }
             };
 
-        public Map(string name)
+        public Map(byte[] content)
         {
-            Name = name;
-            byte[] content = File.ReadAllBytes("Resources/" + name + ".dat");
-
             using (MemoryStream stream = new MemoryStream(content))
             {
                 using (BinaryReader reader = new BinaryReader(stream))

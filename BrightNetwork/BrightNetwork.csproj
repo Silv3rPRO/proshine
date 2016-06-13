@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="BrightClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleBinaryClient.cs" />
     <Compile Include="SimpleTextClient.cs" />
     <Compile Include="SocksConnection.cs" />
   </ItemGroup>

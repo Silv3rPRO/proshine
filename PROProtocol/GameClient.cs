@@ -15,6 +15,7 @@ namespace PROProtocol
 
         public int PlayerX { get; private set; }
         public int PlayerY { get; private set; }
+        public string MapName { get; private set; }
         public Map Map { get; private set; }
 
         public bool IsInBattle { get; private set; }
@@ -94,6 +95,8 @@ namespace PROProtocol
         private Timeout _itemUseTimeout = new Timeout();
         private Timeout _fishingTimeout = new Timeout();
 
+        private MapClient _mapClient;
+
         public bool IsInactive
         {
             get
@@ -116,8 +119,14 @@ namespace PROProtocol
             get { return Map != null; }
         }
 
-        public GameClient(GameConnection connection)
+        public GameClient(GameConnection connection, MapConnection mapConnection)
         {
+            _mapClient = new MapClient(mapConnection);
+            _mapClient.ConnectionOpened += MapClient_ConnectionOpened;
+            _mapClient.ConnectionClosed += MapClient_ConnectionClosed;
+            _mapClient.ConnectionFailed += MapClient_ConnectionFailed;
+            _mapClient.MapLoaded += MapClient_MapLoaded;
+
             _connection = connection;
             _connection.PacketReceived += OnPacketReceived;
             _connection.Connected += OnConnectionOpened;
@@ -134,19 +143,17 @@ namespace PROProtocol
 
         public void Open()
         {
-#if DEBUG
-            Console.WriteLine("[+++] Connecting to the server");
-#endif
-            _connection.Connect();
+            _mapClient.Open();
         }
 
-        public void Close()
+        public void Close(Exception error = null)
         {
-            _connection.Close();
+            _connection.Close(error);
         }
 
         public void Update()
         {
+            _mapClient.Update();
             _connection.Update();
             if (!IsAuthenticated)
                 return;
@@ -255,7 +262,7 @@ namespace PROProtocol
                 PlayerY = destinationY;
                 IsOnGround = isOnGround;
                 IsSurfing = isSurfing;
-                PositionUpdated?.Invoke(Map.Name, PlayerX, PlayerY);
+                PositionUpdated?.Invoke(MapName, PlayerX, PlayerY);
 
                 if (result == Map.MoveResult.Icing)
                 {
@@ -569,6 +576,41 @@ namespace PROProtocol
             return false;
         }
 
+        private void MapClient_ConnectionOpened()
+        {
+#if DEBUG
+            Console.WriteLine("[+++] Connecting to the game server");
+#endif
+            _connection.Connect();
+        }
+
+        private void MapClient_ConnectionFailed(Exception ex)
+        {
+            ConnectionFailed?.Invoke(ex);
+        }
+
+        private void MapClient_ConnectionClosed(Exception ex)
+        {
+            Close(ex);
+        }
+
+        private void MapClient_MapLoaded(string mapName, Map map)
+        {
+            if (mapName == MapName)
+            {
+                Players.Clear();
+
+                Map = map;
+                // DSSock.loadMap
+                SendPacket("-");
+                SendPacket("k|.|" + MapName.ToLowerInvariant());
+            }
+            else
+            {
+                InvalidPacket?.Invoke(mapName, "Received a map that is not the current map");
+            }
+        }
+
         private void OnPacketReceived(string packet)
         {
             ProcessPacket(packet);
@@ -803,7 +845,7 @@ namespace PROProtocol
             string map = mapData[0];
             int playerX = Convert.ToInt32(mapData[1]);
             int playerY = Convert.ToInt32(mapData[2]);
-            if (playerX != PlayerX || playerY != PlayerY || map != Map.Name)
+            if (playerX != PlayerX || playerY != PlayerY || map != MapName)
             {
                 PlayerX = playerX;
                 PlayerY = playerY;
@@ -818,8 +860,7 @@ namespace PROProtocol
                 SendPacket("S");
             }
 
-            Console.WriteLine("[Map] Position updated: " + Map.Name + "," + PlayerX + "," + PlayerY);
-            PositionUpdated?.Invoke(Map.Name, PlayerX, playerY);
+            PositionUpdated?.Invoke(MapName, PlayerX, playerY);
 
             _teleportationTimeout.Cancel();
         }
@@ -842,8 +883,7 @@ namespace PROProtocol
             }
             IsOnGround = (mapData[3] == "1");
 
-            Console.WriteLine("[Map] Position synchronised: " + Map.Name + "," + PlayerX + "," + PlayerY);
-            PositionUpdated?.Invoke(Map.Name, PlayerX, playerY);
+            PositionUpdated?.Invoke(MapName, PlayerX, playerY);
         }
 
         private void OnPlayerInfos(string[] data)
@@ -1417,6 +1457,8 @@ namespace PROProtocol
 
         private void LoadMap(string mapName)
         {
+            mapName = MapClient.RemoveExtension(mapName);
+
             _loadingTimeout.Set(Rand.Next(1500, 4000));
 
             OpenedShop = null;
@@ -1428,16 +1470,20 @@ namespace PROProtocol
             _mountingTimeout.Cancel();
             _itemUseTimeout.Cancel();
 
-            if (Map == null || Map.Name != mapName)
+            if (Map == null || MapName != mapName)
             {
-                Players.Clear();
-                Console.WriteLine("[Map] Map changed: " + (Map == null ? "null" : Map.Name) + " -> " + mapName);
-
-                Map = new Map(mapName);
-                // DSSock.loadMap
-                SendPacket("-");
-                SendPacket("k|.|" + mapName.ToLowerInvariant());
+                DownloadMap(mapName);
             }
+        }
+
+        private void DownloadMap(string mapName)
+        {
+            Console.WriteLine("[Map] Requesting: " + MapName);
+
+            Map = null;
+            MapName = mapName;
+            _mapClient.DownloadMap(MapName);
+            Players.Clear();
         }
     }
 }

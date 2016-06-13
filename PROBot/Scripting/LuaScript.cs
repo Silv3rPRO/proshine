@@ -295,7 +295,7 @@ namespace PROBot.Scripting
         // API: Returns the name of the current map.
         private string GetMapName()
         {
-            return Bot.Game.Map.Name;
+            return Bot.Game.MapName;
         }
 
         // API: Returns the amount of pokémon in the team.

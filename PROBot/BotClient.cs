@@ -88,11 +88,13 @@ namespace PROBot
             GameConnection.Server server = Account.Server == "BLUE" ? GameConnection.Server.Blue : GameConnection.Server.Red;
             if (Account.Socks.Version != SocksVersion.None)
             {
-                client = new GameClient(new GameConnection(server, (int)Account.Socks.Version, Account.Socks.Host, Account.Socks.Port, Account.Socks.Username, Account.Socks.Password));
+                // TODO: Clean this code.
+                client = new GameClient(new GameConnection(server, (int)Account.Socks.Version, Account.Socks.Host, Account.Socks.Port, Account.Socks.Username, Account.Socks.Password),
+                    new MapConnection((int)Account.Socks.Version, Account.Socks.Host, Account.Socks.Port, Account.Socks.Username, Account.Socks.Password));
             }
             else
             {
-                client = new GameClient(new GameConnection(server));
+                client = new GameClient(new GameConnection(server), new MapConnection());
             }
             SetClient(client);
             client.Open();

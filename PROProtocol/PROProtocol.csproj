@@ -40,6 +40,8 @@
     <Compile Include="ChatEmotes.cs" />
     <Compile Include="EffortValuesManager.cs" />
     <Compile Include="Language.cs" />
+    <Compile Include="MapClient.cs" />
+    <Compile Include="MapConnection.cs" />
     <Compile Include="MapLink.cs" />
     <Compile Include="MovesManager.cs" />
     <Compile Include="Direction.cs" />
