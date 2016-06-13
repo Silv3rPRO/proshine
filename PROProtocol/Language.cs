@@ -1,19 +1,27 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 
 namespace PROProtocol
 {
     public class Language
     {
-        private Dictionary<string, string> _texts;
+        private const string FileName = "Resources/Lang.xml";
+
+        private Dictionary<string, string> _texts = new Dictionary<string, string>();
 
         public Language()
         {
-            XmlDocument xml = new XmlDocument();
-            xml.Load("Resources/Lang.xml");
+            if (File.Exists(FileName))
+            {
+                XmlDocument xml = new XmlDocument();
+                xml.Load(FileName);
+                LoadXmlDocument(xml);
+            }
+        }
 
-            _texts = new Dictionary<string, string>();
-            
+        private void LoadXmlDocument(XmlDocument xml)
+        {
             XmlNode languageNode = xml.DocumentElement.GetElementsByTagName("English")[0];
             if (languageNode != null)
             {
