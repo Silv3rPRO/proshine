@@ -14,7 +14,7 @@ namespace PROProtocol
             Blue
         }
         
-        private const string RedAddress = "46.28.205.35";
+        private const string RedAddress = "46.28.203.224";
         private const string BlueAddress = "46.28.207.53";
         private const int ServerPort = 800;
 
