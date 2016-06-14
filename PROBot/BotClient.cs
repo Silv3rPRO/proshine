@@ -128,7 +128,7 @@ namespace PROBot
             if (PokemonEvolver.Update()) return;
             if (MoveTeacher.Update()) return;
 
-            if (Game.IsInitialized && Game.IsInactive)
+            if (Game.IsMapLoaded && Game.AreNpcReceived && Game.IsInactive)
             {
                 ExecuteNextAction();
             }

@@ -144,7 +144,7 @@ namespace PROShine
             {
                 return;
             }
-            if (_bot.Game != null && _bot.Game != null && _bot.Game.IsInitialized && _bot.Game.Channels.Any(e => e.Name == channelName))
+            if (_bot.Game != null && _bot.Game != null && _bot.Game.IsMapLoaded && _bot.Game.Channels.Any(e => e.Name == channelName))
             {
                 _bot.Game.CloseChannel(channelName);
             }
@@ -203,7 +203,7 @@ namespace PROShine
             {
                 return;
             }
-            if (_bot.Game != null && _bot.Game != null && _bot.Game.IsInitialized && _bot.Game.Conversations.Contains(pmName))
+            if (_bot.Game != null && _bot.Game != null && _bot.Game.IsMapLoaded && _bot.Game.Conversations.Contains(pmName))
             {
                 _bot.Game.CloseConversation(pmName);
             }
@@ -310,7 +310,7 @@ namespace PROShine
 
         private void InputChatBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Return && _bot.Game != null && _bot.Game.IsInitialized)
+            if (e.Key == Key.Return && _bot.Game != null && _bot.Game.IsMapLoaded)
             {
                 SendChatInput(InputChatBox.Text);
                 InputChatBox.Clear();

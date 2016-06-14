@@ -41,7 +41,7 @@ namespace PROShine
         {
             lock (_bot)
             {
-                if (_bot.Game != null && _bot.Game.IsInitialized && _bot.Game.Players != null)
+                if (_bot.Game != null && _bot.Game.IsMapLoaded && _bot.Game.Players != null)
                 {
                     IEnumerable<PlayerInfos> playersList = _bot.Game.Players.Values.OrderBy(e => e.Added);
                     List<PlayerInfosView> listToDisplay = new List<PlayerInfosView>();

@@ -114,10 +114,11 @@ namespace PROProtocol
             }
         }
 
-        public bool IsInitialized
+        public bool IsMapLoaded
         {
             get { return Map != null; }
         }
+        public bool AreNpcReceived { get; private set; }
 
         public GameClient(GameConnection connection, MapConnection mapConnection)
         {
@@ -203,7 +204,7 @@ namespace PROProtocol
 
         private void UpdateMovement()
         {
-            if (!IsInitialized) return;
+            if (!IsMapLoaded) return;
 
             if (!_movementTimeout.IsActive && _movements.Count > 0)
             {
@@ -910,18 +911,20 @@ namespace PROProtocol
 
         private void OnNpcBattlers(string[] data)
         {
-            if (!IsInitialized) return;
+            if (!IsMapLoaded) return;
 
             Map.Npcs.Clear();
             foreach (Npc npc in Map.OriginalNpcs)
             {
                 Map.Npcs.Add(npc.Clone());
             }
+
+            AreNpcReceived = true;
         }
-        
+
         private void OnNpcDestroy(string[] data)
         {
-            if (!IsInitialized) return;
+            if (!IsMapLoaded) return;
 
             string[] npcData = data[1].Split('|');
 
@@ -960,7 +963,7 @@ namespace PROProtocol
                 Team.Add(new Pokemon(pokemonData));
             }
 
-            if (IsInitialized)
+            if (IsMapLoaded)
             {
                 CanUseCut = HasCutAbility();
                 CanUseSmashRock = HasRockSmashAbility();
@@ -1495,6 +1498,7 @@ namespace PROProtocol
             Console.WriteLine("[Map] Requesting: " + MapName);
 
             Map = null;
+            AreNpcReceived = false;
             MapName = mapName;
             _mapClient.DownloadMap(MapName);
             Players.Clear();
