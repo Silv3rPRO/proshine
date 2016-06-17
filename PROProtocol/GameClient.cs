@@ -465,15 +465,17 @@ namespace PROProtocol
         public bool HasSurfAbility()
         {
             return HasMove("Surf") &&
-                (Map.Region == "1" && HasItemName("SOUL BADGE") ||
-                Map.Region == "2" && HasItemName("FOG BADGE"));
+                (Map.Region == "1" && HasItemName("Soul Badge") ||
+                Map.Region == "2" && HasItemName("Fog Badge") ||
+                Map.Region == "3" && HasItemName("Balance Badge"));
         }
 
         public bool HasCutAbility()
         {
             return (HasMove("Cut") || HasTreeaxe()) &&
-                (Map.Region == "1" && HasItemName("CASCADE BADGE") ||
-                Map.Region == "2" && HasItemName("HIVE BADGE"));
+                (Map.Region == "1" && HasItemName("Cascade Badge") ||
+                Map.Region == "2" && HasItemName("Hive Badge") ||
+                Map.Region == "3" && HasItemName("Stone Badge"));
         }
 
         public bool HasRockSmashAbility()
