@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PROProtocol
 {
@@ -86,19 +87,9 @@ namespace PROProtocol
             CurrentHealth = current;
         }
 
-        public List<string> GetMoveNames()
+        public string[] GetMoveNames()
         {
-            List<string> moveNames = new List<string>();
-            foreach (PokemonMove move in Moves)
-            {
-                if (move.Id == 0) // an empty move
-                {
-                    break;
-                }
-                MovesManager.MoveData moveData = MovesManager.Instance.GetMoveData(move.Id);
-                moveNames.Add(moveData.Name.ToUpperInvariant());
-            }
-            return moveNames;
+            return Moves.Where(m => m.Id > 0).Select(m => m.Name).ToArray();
         }
     }
 }
