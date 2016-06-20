@@ -177,6 +177,7 @@ namespace PROBot.Scripting
             // General actions
             _lua.Globals["useItem"] = new Func<string, bool>(UseItem);
             _lua.Globals["useItemOnPokemon"] = new Func<string, int, bool>(UseItemOnPokemon);
+            _lua.Globals["giveItemOnPokemon"] = new Func<string, int, bool>(GiveItemOnPokemon);
 
             // Battle actions
             _lua.Globals["attack"] = new Func<bool>(Attack);
@@ -1052,7 +1053,26 @@ namespace PROBot.Scripting
             }
             return false;
         }
+        
+        // API: Give the specified item on the specified pokemon.
 
+        private bool GiveItemOnPokemon(string itemName, int pokemonIndex)
+        {
+            itemName = itemName.ToUpperInvariant();
+            InventoryItem item = Bot.Game.GetItemFromName(itemName.ToUpperInvariant());
+
+            if (item != null && item.Quantity > 0)
+            {
+            if (!Bot.Game.IsInBattle)
+                {
+                    if (!ValidateAction("giveItemOnPokemon", false)) return false;
+                    Bot.Game.GiveItem(item.Id, pokemonIndex);
+                    return ExecuteAction(true);
+                }
+            }
+            return false;
+        }
+        
         // API: Uses the most effective offensive move available.
         private bool Attack()
         {
