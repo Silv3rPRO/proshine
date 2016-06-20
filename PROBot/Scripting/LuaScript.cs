@@ -177,6 +177,7 @@ namespace PROBot.Scripting
             // General actions
             _lua.Globals["useItem"] = new Func<string, bool>(UseItem);
             _lua.Globals["useItemOnPokemon"] = new Func<string, int, bool>(UseItemOnPokemon);
+            _lua.Globals["getPokemonItem"] = new Func<int, bool>(GetPokemonItem);
 
             // Battle actions
             _lua.Globals["attack"] = new Func<bool>(Attack);
@@ -1052,7 +1053,24 @@ namespace PROBot.Scripting
             }
             return false;
         }
+        
+        // API: Get item from specified pokemon, or return False if haven't item
+        private bool GetPokemonItem(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonItem: tried to retrieve the non-existing pokemon " + index + ".");
+                return false;
+            }
+            if (Bot.Game.Team[index - 1].ItemHold == "")
+            {
+                return false;
+            }
 
+            Bot.Game.TakeItem(index);
+            return true;
+        }
+        
         // API: Uses the most effective offensive move available.
         private bool Attack()
         {
