@@ -172,6 +172,7 @@ namespace PROBot.Scripting
             _lua.Globals["sortTeamRangeByLevelDescending"] = new Func<int, int, bool>(SortTeamRangeByLevelDescending);
             _lua.Globals["buyItem"] = new Func<string, int, bool>(BuyItem);
             _lua.Globals["giveItemToPokemon"] = new Func<string, int, bool>(GiveItemToPokemon);
+            _lua.Globals["takeItemFromPokemon"] = new Func<int, bool>(TakeItemFromPokemon);
 
             // Path functions
             _lua.Globals["pushDialogAnswer"] = new Action<int>(PushDialogAnswer);
@@ -1032,6 +1033,26 @@ namespace PROBot.Scripting
 
             return ExecuteAction(Bot.Game.GiveItemToPokemon(pokemonIndex, item.Id));
         }
+        
+        // API: Take the held item from the specified pokemon.
+        private bool TakeItemFromPokemon(int index)
+        {
+            if (!ValidateAction("takeItemFromPokemon", false)) return false;
+
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: takeItemFromPokemon: tried to retrieve the non-existing pokemon " + index + ".");
+                return false;
+            }
+
+            if (Bot.Game.Team[index - 1].ItemHeld == string.Empty)
+            {
+                Fatal("error: takeItemFromPokemon: tried to take the non-existing held item from pokémon '" + index + "'.");
+                return false;
+            }
+
+            return ExecuteAction(Bot.Game.TakeItemFromPokemon(index));
+        }
 
         // API: Adds the specified answer to the answer queue. It will be used in the next dialog.
         private void PushDialogAnswer(int answerIndex)
@@ -1087,7 +1108,7 @@ namespace PROBot.Scripting
             }
             return false;
         }
-
+        
         // API: Uses the most effective offensive move available.
         private bool Attack()
         {
