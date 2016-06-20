@@ -16,6 +16,7 @@ namespace PROProtocol
         public int BaseExperience { get; private set; }
         public bool IsShiny { get; private set; }
         public string Gender { get; private set; }
+        public string ItemHold { get; private set; }
         public PokemonStats Stats { get; private set; }
         public PokemonStats IV { get; private set; }
         public PokemonStats EV { get; private set; }
@@ -75,6 +76,7 @@ namespace PROProtocol
             IsShiny = (data[20] == "1");
             Status = data[21];
             Gender = data[22];
+            ItemHold = data[40];
 
             Stats = new PokemonStats(data, 23, MaxHealth);
             IV = new PokemonStats(data, 30);
