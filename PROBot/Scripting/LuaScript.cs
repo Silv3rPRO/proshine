@@ -129,6 +129,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonIndividualValue"] = new Func<int, string, int>(GetPokemonIndividualValue);
             _lua.Globals["hasItem"] = new Func<string, bool>(HasItem);
             _lua.Globals["getItemQuantity"] = new Func<string, int>(GetItemQuantity);
+            _lua.Globals["giveItemToPokemon"] = new Func<string, int, bool>(GiveItemToPokemon);
             _lua.Globals["hasPokemonInTeam"] = new Func<string, bool>(HasPokemonInTeam);
             _lua.Globals["isTeamSortedByLevelAscending"] = new Func<bool>(IsTeamSortedByLevelAscending);
             _lua.Globals["isTeamSortedByLevelDescending"] = new Func<bool>(IsTeamSortedByLevelDescending);
@@ -177,7 +178,6 @@ namespace PROBot.Scripting
             // General actions
             _lua.Globals["useItem"] = new Func<string, bool>(UseItem);
             _lua.Globals["useItemOnPokemon"] = new Func<string, int, bool>(UseItemOnPokemon);
-            _lua.Globals["giveItemOnPokemon"] = new Func<string, int, bool>(GiveItemOnPokemon);
 
             // Battle actions
             _lua.Globals["attack"] = new Func<bool>(Attack);
@@ -467,6 +467,27 @@ namespace PROBot.Scripting
         private int GetItemQuantity(string itemName)
         {
             return Bot.Game.GetItemFromName(itemName.ToUpperInvariant())?.Quantity ?? 0;
+        }
+        
+        // API: Give the specified item on the specified pokemon.
+        private bool GiveItemToPokemon(string itemName, int pokemonIndex)
+        {
+            if (!ValidateAction("giveItemToPokemon", false)) return false;
+
+            if (pokemonIndex < 1 || pokemonIndex > Bot.Game.Team.Count)
+            {
+                Fatal("error: giveItemToPokemon: tried to retrieve the non-existing pokémon " + pokemonIndex + ".");
+                return false;
+            }
+
+            InventoryItem item = Bot.Game.GetItemFromName(itemName);
+            if (item == null || item.Quantity == 0)
+            {
+                Fatal("error: giveItemToPokemon: tried to give the non-existing item '" + itemName + "'.");
+                return false;
+            }
+
+            return ExecuteAction(Bot.Game.GiveItemToPokemon(pokemonIndex, item.Id));
         }
 
         // API: Returns true if the specified pokémon is present in the team.
@@ -1053,26 +1074,7 @@ namespace PROBot.Scripting
             }
             return false;
         }
-        
-        // API: Give the specified item on the specified pokemon.
 
-        private bool GiveItemOnPokemon(string itemName, int pokemonIndex)
-        {
-            itemName = itemName.ToUpperInvariant();
-            InventoryItem item = Bot.Game.GetItemFromName(itemName.ToUpperInvariant());
-
-            if (item != null && item.Quantity > 0)
-            {
-            if (!Bot.Game.IsInBattle)
-                {
-                    if (!ValidateAction("giveItemOnPokemon", false)) return false;
-                    Bot.Game.GiveItem(item.Id, pokemonIndex);
-                    return ExecuteAction(true);
-                }
-            }
-            return false;
-        }
-        
         // API: Uses the most effective offensive move available.
         private bool Attack()
         {
