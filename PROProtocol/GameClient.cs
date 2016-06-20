@@ -378,16 +378,14 @@ namespace PROProtocol
             SendPacket(toSend);
         }
         
-        public void SendGiveItem(int id, int pokemon)
+        public void SendGiveItem(int pokemonId, int itemId)
         {
-            string toSend = "{|.|/giveitem " + pokemon + "," + id;
-            SendPacket(toSend);
+            SendPacket("/giveitem " + pokemonId + "," + itemId);
         }
 
-        public void SendTakeItem(int pokemon)
+        public void SendTakeItem(int pokemonId)
         {
-            string toSend = "{|.|/takeitem " + pokemon;
-            SendPacket(toSend);
+            SendPacket("/takeitem " + pokemonId);
         }
 
         public void LearnMove(int pokemonUid, int moveToForgetUid)
@@ -474,41 +472,43 @@ namespace PROProtocol
             }
         }
         
-        public void GiveItem(int id, int pokemonUid)
+        public bool GiveItemToPokemon(int pokemonUid, int itemId)
         {
-            if (!(pokemonUid >= 0 && pokemonUid <= 6) || !HasItemId(id))
+            if (!(pokemonUid >= 1 && pokemonUid <= Team.Count))
             {
-                return;
+                return false;
             }
-            InventoryItem item = GetItemFromId(id);
+            InventoryItem item = GetItemFromId(itemId);
             if (item == null || item.Quantity == 0)
             {
-                return;
+                return false;
             }
+            if (!_itemUseTimeout.IsActive && !IsInBattle
+                && (item.Scope == 2 || item.Scope == 3 || item.Scope == 9 || item.Scope == 13
+                || item.Scope == 14 || item.Scope == 5 || item.Scope == 12 || item.Scope == 6))
             {
-                if (!_itemUseTimeout.IsActive && !IsInBattle
-                    && (item.Scope == 2 || item.Scope == 3 || item.Scope == 9 || item.Scope == 13 
-                    || item.Scope == 14 || item.Scope == 5 || item.Scope == 12 || item.Scope == 6))
-                {
-                    SendGiveItem(id, pokemonUid);
-                    _itemUseTimeout.Set();
-                }
+                SendGiveItem(pokemonUid, itemId);
+                _itemUseTimeout.Set();
+                return true;
             }
+            return false;
         }
 
-        public void TakeItem(int pokemonUid)
+        public bool TakeItemFromPokemon(int pokemonUid)
         {
-            if (!(pokemonUid >= 0 && pokemonUid <= 6))
+            if (!(pokemonUid >= 1 && pokemonUid <= Team.Count))
             {
-                return;
+                return false;
             }
-            if (!(_itemUseTimeout.IsActive))
+            if (!_itemUseTimeout.IsActive && Team[pokemonUid].ItemHeld != "")
             {
-                    SendTakeItem(pokemonUid);
-                    _itemUseTimeout.Set();
+                SendTakeItem(pokemonUid);
+                _itemUseTimeout.Set();
+                return true;
             }
+            return false;
         }
-        
+
         public bool HasSurfAbility()
         {
             return HasMove("Surf") &&
