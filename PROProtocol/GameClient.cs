@@ -384,6 +384,12 @@ namespace PROProtocol
             SendPacket(toSend);
         }
 
+        public void SendTakeItem(int pokemon)
+        {
+            string toSend = "{|.|/takeitem " + pokemon;
+            SendPacket(toSend);
+        }
+
         public void LearnMove(int pokemonUid, int moveToForgetUid)
         {
             _swapTimeout.Set();
@@ -487,6 +493,19 @@ namespace PROProtocol
                     SendGiveItem(id, pokemonUid);
                     _itemUseTimeout.Set();
                 }
+            }
+        }
+
+        public void TakeItem(int pokemonUid)
+        {
+            if (!(pokemonUid >= 0 && pokemonUid <= 6))
+            {
+                return;
+            }
+            if (!(_itemUseTimeout.IsActive))
+            {
+                    SendTakeItem(pokemonUid);
+                    _itemUseTimeout.Set();
             }
         }
         
