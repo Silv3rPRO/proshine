@@ -121,6 +121,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonHealthPercent"] = new Func<int, int>(GetPokemonHealthPercent);
             _lua.Globals["getPokemonLevel"] = new Func<int, int>(GetPokemonLevel);
             _lua.Globals["getPokemonStatus"] = new Func<int, string>(GetPokemonStatus);
+            _lua.Globals["getPokemonHeldItem"] = new Func<int, string>(GetPokemonHeldItem);
             _lua.Globals["isPokemonUsable"] = new Func<int, bool>(IsPokemonUsable);
             _lua.Globals["getUsablePokemonCount"] = new Func<int>(GetUsablePokemonCount);
             _lua.Globals["hasMove"] = new Func<int, string, bool>(HasMove);
@@ -129,7 +130,6 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonIndividualValue"] = new Func<int, string, int>(GetPokemonIndividualValue);
             _lua.Globals["hasItem"] = new Func<string, bool>(HasItem);
             _lua.Globals["getItemQuantity"] = new Func<string, int>(GetItemQuantity);
-            _lua.Globals["giveItemToPokemon"] = new Func<string, int, bool>(GiveItemToPokemon);
             _lua.Globals["hasPokemonInTeam"] = new Func<string, bool>(HasPokemonInTeam);
             _lua.Globals["isTeamSortedByLevelAscending"] = new Func<bool>(IsTeamSortedByLevelAscending);
             _lua.Globals["isTeamSortedByLevelDescending"] = new Func<bool>(IsTeamSortedByLevelDescending);
@@ -171,6 +171,7 @@ namespace PROBot.Scripting
             _lua.Globals["sortTeamRangeByLevelAscending"] = new Func<int, int, bool>(SortTeamRangeByLevelAscending);
             _lua.Globals["sortTeamRangeByLevelDescending"] = new Func<int, int, bool>(SortTeamRangeByLevelDescending);
             _lua.Globals["buyItem"] = new Func<string, int, bool>(BuyItem);
+            _lua.Globals["giveItemToPokemon"] = new Func<string, int, bool>(GiveItemToPokemon);
 
             // Path functions
             _lua.Globals["pushDialogAnswer"] = new Action<int>(PushDialogAnswer);
@@ -178,7 +179,6 @@ namespace PROBot.Scripting
             // General actions
             _lua.Globals["useItem"] = new Func<string, bool>(UseItem);
             _lua.Globals["useItemOnPokemon"] = new Func<string, int, bool>(UseItemOnPokemon);
-            _lua.Globals["checkPokemonItem"] = new Func<int, string>(CheckPokemonItem);
 
             // Battle actions
             _lua.Globals["attack"] = new Func<bool>(Attack);
@@ -372,22 +372,19 @@ namespace PROBot.Scripting
             }
             return Bot.Game.Team[index - 1].Status;
         }
-        
-        // API: Returns the item hold of the specified pokemon, or return "None" if item is null (no item)
-        private string CheckPokemonItem(int index)
+
+        // API: Returns the item held by the specified pokemon in the team, null if empty.
+        private string GetPokemonHeldItem(int index)
         {
             if (index < 1 || index > Bot.Game.Team.Count)
             {
-                Fatal("error: checkPokemonItem: tried to retrieve the non-existing pokemon " + index + ".");
+                Fatal("error: getPokemonHeldItem: tried to retrieve the non-existing pokemon " + index + ".");
                 return null;
             }
-            if (Bot.Game.Team[index - 1].ItemHold == "")
-            {
-                return "None";
-            }
-            return Bot.Game.Team[index - 1].ItemHold;
+            string itemHeld = Bot.Game.Team[index - 1].ItemHeld;
+            return itemHeld == string.Empty ? null : itemHeld;
         }
-        
+
         // API: Returns true if the specified pokémon has is alive and has an offensive attack available.
         private bool IsPokemonUsable(int index)
         {
@@ -483,27 +480,6 @@ namespace PROBot.Scripting
         private int GetItemQuantity(string itemName)
         {
             return Bot.Game.GetItemFromName(itemName.ToUpperInvariant())?.Quantity ?? 0;
-        }
-        
-        // API: Give the specified item on the specified pokemon.
-        private bool GiveItemToPokemon(string itemName, int pokemonIndex)
-        {
-            if (!ValidateAction("giveItemToPokemon", false)) return false;
-
-            if (pokemonIndex < 1 || pokemonIndex > Bot.Game.Team.Count)
-            {
-                Fatal("error: giveItemToPokemon: tried to retrieve the non-existing pokémon " + pokemonIndex + ".");
-                return false;
-            }
-
-            InventoryItem item = Bot.Game.GetItemFromName(itemName);
-            if (item == null || item.Quantity == 0)
-            {
-                Fatal("error: giveItemToPokemon: tried to give the non-existing item '" + itemName + "'.");
-                return false;
-            }
-
-            return ExecuteAction(Bot.Game.GiveItemToPokemon(pokemonIndex, item.Id));
         }
 
         // API: Returns true if the specified pokémon is present in the team.
@@ -1034,6 +1010,27 @@ namespace PROBot.Scripting
             }
 
             return ExecuteAction(Bot.Game.BuyItem(item.Id, quantity));
+        }
+        
+        // API: Give the specified item on the specified pokemon.
+        private bool GiveItemToPokemon(string itemName, int pokemonIndex)
+        {
+            if (!ValidateAction("giveItemToPokemon", false)) return false;
+
+            if (pokemonIndex < 1 || pokemonIndex > Bot.Game.Team.Count)
+            {
+                Fatal("error: giveItemToPokemon: tried to retrieve the non-existing pokémon " + pokemonIndex + ".");
+                return false;
+            }
+
+            InventoryItem item = Bot.Game.GetItemFromName(itemName);
+            if (item == null || item.Quantity == 0)
+            {
+                Fatal("error: giveItemToPokemon: tried to give the non-existing item '" + itemName + "'.");
+                return false;
+            }
+
+            return ExecuteAction(Bot.Game.GiveItemToPokemon(pokemonIndex, item.Id));
         }
 
         // API: Adds the specified answer to the answer queue. It will be used in the next dialog.
