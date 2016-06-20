@@ -41,6 +41,11 @@ namespace PROProtocol
         {
             get { return CurrentHealth + "/" + MaxHealth; }
         }
+        
+        public string Item
+        {
+            get { return ItemHeld; }
+        }
 
         public int RemainingExperience
         {
