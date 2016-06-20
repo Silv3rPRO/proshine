@@ -177,6 +177,7 @@ namespace PROBot.Scripting
             // General actions
             _lua.Globals["useItem"] = new Func<string, bool>(UseItem);
             _lua.Globals["useItemOnPokemon"] = new Func<string, int, bool>(UseItemOnPokemon);
+            _lua.Globals["checkPokemonItem"] = new Func<int, string>(CheckPokemonItem);
 
             // Battle actions
             _lua.Globals["attack"] = new Func<bool>(Attack);
@@ -369,6 +370,21 @@ namespace PROBot.Scripting
                 return null;
             }
             return Bot.Game.Team[index - 1].Status;
+        }
+        
+        // API: Returns the item hold of the specified pokemon, or return "None" if item is null (no item)
+        private string CheckPokemonItem(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: checkPokemonItem: tried to retrieve the non-existing pokemon " + index + ".");
+                return null;
+            }
+            if (Bot.Game.Team[index - 1].ItemHold == "")
+            {
+                return "None";
+            }
+            return Bot.Game.Team[index - 1].ItemHold;
         }
         
         // API: Returns true if the specified pokémon has is alive and has an offensive attack available.
