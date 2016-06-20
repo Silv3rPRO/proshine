@@ -377,6 +377,12 @@ namespace PROProtocol
             }
             SendPacket(toSend);
         }
+        
+        public void SendTakeItem(int pokemon)
+        {
+            string toSend = "{|.|/takeitem " + pokemon;
+            SendPacket(toSend);
+        }
 
         public void LearnMove(int pokemonUid, int moveToForgetUid)
         {
@@ -461,7 +467,20 @@ namespace PROProtocol
                 }
             }
         }
-
+        
+         public void TakeItem(int pokemonUid)
+        {
+            if (!(pokemonUid >= 0 && pokemonUid <= 6))
+            {
+                return;
+            }
+            if (!(_itemUseTimeout.IsActive))
+            {
+                    SendTakeItem(pokemonUid);
+                    _itemUseTimeout.Set();
+            }
+        }
+        
         public bool HasSurfAbility()
         {
             return HasMove("Surf") &&
