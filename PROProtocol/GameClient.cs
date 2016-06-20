@@ -380,12 +380,12 @@ namespace PROProtocol
         
         public void SendGiveItem(int pokemonId, int itemId)
         {
-            SendPacket("/giveitem " + pokemonId + "," + itemId);
+            SendMessage("/giveitem " + pokemonId + "," + itemId);
         }
 
         public void SendTakeItem(int pokemonId)
         {
-            SendPacket("/takeitem " + pokemonId);
+            SendMessage("/takeitem " + pokemonId);
         }
 
         public void LearnMove(int pokemonUid, int moveToForgetUid)
