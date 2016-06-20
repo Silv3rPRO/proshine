@@ -377,6 +377,12 @@ namespace PROProtocol
             }
             SendPacket(toSend);
         }
+        
+        public void SendGiveItem(int id, int pokemon)
+        {
+            string toSend = "{|.|/giveitem " + pokemon + "," + id;
+            SendPacket(toSend);
+        }
 
         public void LearnMove(int pokemonUid, int moveToForgetUid)
         {
@@ -461,7 +467,29 @@ namespace PROProtocol
                 }
             }
         }
-
+        
+        public void GiveItem(int id, int pokemonUid)
+        {
+            if (!(pokemonUid >= 0 && pokemonUid <= 6) || !HasItemId(id))
+            {
+                return;
+            }
+            InventoryItem item = GetItemFromId(id);
+            if (item == null || item.Quantity == 0)
+            {
+                return;
+            }
+            {
+                if (!_itemUseTimeout.IsActive && !IsInBattle
+                    && (item.Scope == 2 || item.Scope == 3 || item.Scope == 9 || item.Scope == 13 
+                    || item.Scope == 14 || item.Scope == 5 || item.Scope == 12 || item.Scope == 6))
+                {
+                    SendGiveItem(id, pokemonUid);
+                    _itemUseTimeout.Set();
+                }
+            }
+        }
+        
         public bool HasSurfAbility()
         {
             return HasMove("Surf") &&
