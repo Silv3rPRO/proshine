@@ -165,6 +165,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonStatusFromPC"] = new Func<int, int, string>(GetPokemonStatusFromPC);
             _lua.Globals["getPCBoxCount"] = new Func<int>(GetPCBoxCount);
             _lua.Globals["getPCPokemonCount"] = new Func<int>(GetPCPokemonCount);
+            _lua.Globals["isPrivateMessageEnable"] = new Func<bool>(IsPrivateMessageEnable);
 
             // Battle conditions
             _lua.Globals["isOpponentShiny"] = new Func<bool>(IsOpponentShiny);
@@ -205,6 +206,9 @@ namespace PROBot.Scripting
             _lua.Globals["takeItemFromPokemon"] = new Func<int, bool>(TakeItemFromPokemon);
             _lua.Globals["releasePokemonFromTeam"] = new Func<int, bool>(ReleasePokemonFromTeam);
             _lua.Globals["releasePokemonFromPC"] = new Func<int, int, bool>(ReleasePokemonFromPC);
+            _lua.Globals["enablePrivateMessage"] = new Func<bool>(EnablePrivateMessage);
+            _lua.Globals["disablePrivateMessage"] = new Func<bool>(DisablePrivateMessage);
+
 
             // Path functions
             _lua.Globals["pushDialogAnswer"] = new Action<int>(PushDialogAnswer);
@@ -1021,6 +1025,24 @@ namespace PROBot.Scripting
                 }
             }
             return false;
+        }
+
+        // API: Check if the private message from normal users are blocked
+        private bool IsPrivateMessageEnable()
+        {
+            return Bot.Game.IsPrivateMessageOn;
+        }
+
+        // API: Enable private messages from users
+        private bool EnablePrivateMessage()
+        {
+            return ExecuteAction(Bot.Game.PrivateMessageOn());
+        }
+
+        // API: Disable private messages from users
+        private bool DisablePrivateMessage()
+        {
+            return ExecuteAction(Bot.Game.PrivateMessageOff());
         }
 
         // API: Check if the PC is open. Moving close the PC, usePC() opens it.

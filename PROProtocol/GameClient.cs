@@ -25,6 +25,7 @@ namespace PROProtocol
         public bool IsPCOpen { get; private set; }
         public bool CanUseCut { get; private set; }
         public bool CanUseSmashRock { get; private set; }
+        public bool IsPrivateMessageOn { get; private set; }
 
         public int Money { get; private set; }
         public int Coins { get; private set; }
@@ -151,6 +152,7 @@ namespace PROProtocol
             Conversations = new List<string>();
             Players = new Dictionary<string, PlayerInfos>();
             PCGreatestUid = -1;
+            IsPrivateMessageOn = true;
         }
 
         public void Open()
@@ -446,6 +448,42 @@ namespace PROProtocol
         private void SendReleasePokemon(int pokemonUid)
         {
             SendMessage("/release " + pokemonUid);
+        }
+
+        private void SendPrivateMessageOn()
+        {
+            SendMessage("/pmon");
+        }
+
+        private void SendPrivateMessageOff()
+        {
+            SendMessage("/pmoff");
+        }
+
+        private void SendPrivateMessageAway()
+        {
+            SendMessage("/pmaway");
+        }
+
+        public bool PrivateMessageOn()
+        {
+            IsPrivateMessageOn = true;
+            SendPrivateMessageOn();
+            return true;
+        }
+
+        public bool PrivateMessageOff()
+        {
+            IsPrivateMessageOn = false;
+            SendPrivateMessageOff();
+            return true;
+        }
+
+        // /pmaway does not seem to do anything
+        public bool PrivateMessageAway()
+        {
+            SendPrivateMessageAway();
+            return true;
         }
 
         public bool ReleasePokemonFromPC(int boxId, int boxPokemonId)
