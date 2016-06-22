@@ -662,7 +662,7 @@ namespace PROProtocol
             {
                 return false;
             }
-            if (!_itemUseTimeout.IsActive && Team[pokemonUid].ItemHeld != "")
+            if (!_itemUseTimeout.IsActive && Team[pokemonUid - 1].ItemHeld != "")
             {
                 SendTakeItem(pokemonUid);
                 _itemUseTimeout.Set();
