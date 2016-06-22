@@ -18,10 +18,10 @@
                     <GridView>
                         <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
                         <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                        <GridViewColumn Header="Level" DisplayMemberBinding="{Binding Level}"/>
+                        <GridViewColumn Header="Level" DisplayMemberBinding="{Binding Experience.CurrentLevel}"/>
                         <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}"/>
                         <GridViewColumn Header="HP" DisplayMemberBinding="{Binding Health}"/>
-                        <GridViewColumn Header="Remaining Exp" DisplayMemberBinding="{Binding RemainingExperience}"/>
+                        <GridViewColumn Header="Remaining Exp" DisplayMemberBinding="{Binding Experience.RemainingExperience}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
