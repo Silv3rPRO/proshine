@@ -2,6 +2,7 @@
 using PROBot.Scripting;
 using PROProtocol;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace PROBot
@@ -257,6 +258,38 @@ namespace PROBot
             {
                 return MoveToCell(target.PositionX, target.PositionY, 1);
             }
+        }
+
+        public bool OpenPC()
+        {
+            Tuple<int, int> pcPosition = Game.Map.GetPC();
+            if (pcPosition == null || Game.IsPCOpen)
+            {
+                return false;
+            }
+            int distance = Game.DistanceTo(pcPosition.Item1, pcPosition.Item2);
+            if (distance == 1)
+            {
+                return Game.OpenPC();
+            }
+            else
+            {
+                return MoveToCell(pcPosition.Item1, pcPosition.Item2 + 1);
+            }
+        }
+
+        public bool RefreshPCBox(int boxId)
+        {
+            if (!Game.IsPCOpen)
+            {
+                return false;
+            }
+            if (!Game.RefreshPCBox(boxId))
+            {
+                return false;
+            }
+            _actionTimeout.Set();
+            return true;
         }
 
         private void ExecuteNextAction()

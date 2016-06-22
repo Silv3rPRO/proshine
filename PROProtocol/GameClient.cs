@@ -22,15 +22,18 @@ namespace PROProtocol
         public bool IsSurfing { get; private set; }
         public bool IsBiking { get; private set; }
         public bool IsOnGround { get; private set; }
+        public bool IsPCOpen { get; private set; }
         public bool CanUseCut { get; private set; }
         public bool CanUseSmashRock { get; private set; }
 
         public int Money { get; private set; }
         public int Coins { get; private set; }
         public List<Pokemon> Team { get; private set; }
+        public List<Pokemon> CurrentPCBox { get; private set; }
         public List<InventoryItem> Items { get; private set; }
         public string PokemonTime { get; private set; }
         public string Weather { get; private set; }
+        public int PCGreatestUid { get; private set; }
 
         public bool IsScriptActive { get; private set; }
         public string ScriptId { get; private set; }
@@ -43,6 +46,9 @@ namespace PROProtocol
         public List<string> Conversations { get; private set; }
         public Dictionary<string, PlayerInfos> Players { get; private set; }
         private DateTime _updatePlayers;
+        private DateTime _refreshBoxTimeout;
+        public bool IsPCBoxRefreshing { get; private set; }
+        public int CurrentPCBoxId { get; private set; }
 
         public event Action ConnectionOpened;
         public event Action<Exception> ConnectionFailed;
@@ -75,6 +81,7 @@ namespace PROProtocol
         public event Action<int, int> Evolving;
         public event Action<string, string> PokeTimeUpdated;
         public event Action<Shop> ShopOpened;
+        public event Action<List<Pokemon>> PCBoxUpdated;
 
         private const string Version = "0.952";
 
@@ -94,6 +101,7 @@ namespace PROProtocol
         private Timeout _swapTimeout = new Timeout();
         private Timeout _itemUseTimeout = new Timeout();
         private Timeout _fishingTimeout = new Timeout();
+        private Timeout _refreshingPCBox = new Timeout();
 
         private MapClient _mapClient;
 
@@ -110,7 +118,8 @@ namespace PROProtocol
                     && !_dialogTimeout.IsActive
                     && !_swapTimeout.IsActive
                     && !_itemUseTimeout.IsActive
-                    && !_fishingTimeout.IsActive;
+                    && !_fishingTimeout.IsActive
+                    && !_refreshingPCBox.IsActive;
             }
         }
 
@@ -136,10 +145,12 @@ namespace PROProtocol
             Rand = new Random();
             I18n = new Language();
             Team = new List<Pokemon>();
+            CurrentPCBox = new List<Pokemon>();
             Items = new List<InventoryItem>();
             Channels = new List<ChatChannel>();
             Conversations = new List<string>();
             Players = new Dictionary<string, PlayerInfos>();
+            PCGreatestUid = -1;
         }
 
         public void Open()
@@ -168,11 +179,13 @@ namespace PROProtocol
             _swapTimeout.Update();
             _itemUseTimeout.Update();
             _fishingTimeout.Update();
+            _refreshingPCBox.Update();
 
             SendRegularPing();
             UpdateMovement();
             UpdateScript();
             UpdatePlayers();
+            UpdatePCBox();
         }
 
         public void CloseChannel(string channelName)
@@ -246,6 +259,21 @@ namespace PROProtocol
                     }
                 }
                 _updatePlayers = DateTime.UtcNow.AddSeconds(5);
+            }
+        }
+
+        private void UpdatePCBox()
+        {
+            // if we did not receive an answer, then the box is empty
+            if (IsPCBoxRefreshing && _refreshBoxTimeout > DateTime.UtcNow)
+            {
+                IsPCBoxRefreshing = false;
+                if (Map.IsPC(PlayerX, PlayerY - 1))
+                {
+                    IsPCOpen = true;
+                }
+                CurrentPCBox = new List<Pokemon>();
+                PCBoxUpdated?.Invoke(CurrentPCBox);
             }
         }
 
@@ -399,6 +427,108 @@ namespace PROProtocol
             SendPacket("^|.|" + pokemonUid + "|.|" + moveToForgetUid);
         }
 
+        private void SendMovePokemonToPC(int pokemonUid)
+        {
+            SendPacket("?|.|" + pokemonUid + "|.|-1");
+        }
+
+        // if there is a pokemon in teamSlot, it will be swapped
+        private void SendMovePokemonFromPC(int pokemonUid, int teamSlot)
+        {
+            SendPacket("?|.|" + pokemonUid + "|.|" + teamSlot);
+        }
+
+        private void SendRefreshPCRange(int start, int end)
+        {
+            SendPacket("M|.|" + start + "|.|" + end);
+        }
+
+        private Tuple<int, int> GetPCBoxRange(int boxId)
+        {
+            if (!IsPCOpen || boxId < 1 || boxId > 67)
+            {
+                return null;
+            }
+            return new Tuple<int, int>((boxId - 1) * 15 + 7, (boxId - 1) * 15 + 21);
+        }
+
+        public bool RefreshPCBox(int boxId)
+        {
+            if (!IsPCOpen || boxId < 1 || boxId > 67 || _refreshingPCBox.IsActive || IsPCBoxRefreshing)
+            {
+                return false;
+            }
+            var range = GetPCBoxRange(boxId);
+            _refreshingPCBox.Set(Rand.Next(1500, 2000)); // this is the amount of time we wait for an answer
+            CurrentPCBoxId = boxId;
+            IsPCBoxRefreshing = true;
+            CurrentPCBox = null;
+            _refreshBoxTimeout = DateTime.UtcNow.AddSeconds(5); // this is to avoid a flood of the function
+            SendRefreshPCRange(range.Item1, range.Item2);
+            return true;
+        }
+
+        public bool RefreshCurrentPCBox()
+        {
+            return RefreshPCBox(CurrentPCBoxId);
+        }
+
+        private int GetPokemonPCUid(int box, int id)
+        {
+            if (box < 1 || box > 67 || id < 1 || id > 15)
+            {
+                return -1;
+            }
+            int result = (box - 1) * 15 + 6 + id;
+            // ensures we cannot access a pokemon we do not have or know
+            if (result > PCGreatestUid || CurrentPCBox == null || box != CurrentPCBoxId)
+            {
+                return -1;
+            }
+            return result;
+        }
+
+        public bool DepositPokemonToPC(int pokemonUid)
+        {
+            if (!IsPCOpen || pokemonUid < 1 || pokemonUid > 6 || Team.Count < pokemonUid)
+            {
+                return false;
+            }
+            SendMovePokemonToPC(pokemonUid);
+            return true;
+        }
+
+        public bool WithdrawPokemonFromPC(int boxId, int boxPokemonId)
+        {
+            int pcPokemonUid = GetPokemonPCUid(boxId, boxPokemonId);
+            if (pcPokemonUid == -1)
+            {
+                return false;
+            }
+            if (!IsPCOpen || pcPokemonUid < 7 || pcPokemonUid > PCGreatestUid || Team.Count >= 6)
+            {
+                return false;
+            }
+            SendMovePokemonFromPC(pcPokemonUid, Team.Count + 1);
+            return true;
+        }
+
+        public bool SwapPokemonFromPC(int boxId, int boxPokemonId, int teamPokemonUid)
+        {
+            int pcPokemonUid = GetPokemonPCUid(boxId, boxPokemonId);
+            if (pcPokemonUid == -1)
+            {
+                return false;
+            }
+            if (!IsPCOpen || pcPokemonUid < 7 || pcPokemonUid > PCGreatestUid
+                || teamPokemonUid < 1 || teamPokemonUid > 6 || Team.Count < teamPokemonUid)
+            {
+                return false;
+            }
+            SendMovePokemonFromPC(pcPokemonUid, teamPokemonUid);
+            return true;
+        }
+
         public bool SwapPokemon(int pokemon1, int pokemon2)
         {
             if (IsInBattle || pokemon1 < 1 || pokemon2 < 1 || Team.Count < pokemon1 || Team.Count < pokemon2 || pokemon1 == pokemon2)
@@ -424,7 +554,7 @@ namespace PROProtocol
             SendMessage("/syn");
             _teleportationTimeout.Set();
         }
-        
+
         public void UseAttack(int number)
         {
             SendAttack(number.ToString());
@@ -612,6 +742,16 @@ namespace PROProtocol
             _dialogTimeout.Set();
         }
 
+        public bool OpenPC()
+        {
+            if (!Map.IsPC(PlayerX, PlayerY - 1))
+            {
+                return false;
+            }
+            IsPCOpen = true;
+            return RefreshPCBox(1);
+        }
+
         public void PushDialogAnswer(int index)
         {
             _dialogResponses.Enqueue(index);
@@ -705,10 +845,11 @@ namespace PROProtocol
             _lastMovement = DateTime.UtcNow;
             // Consider the pokemart closed after the first movement.
             OpenedShop = null;
+            IsPCOpen = false;
             // DSSock.sendMove
             SendPacket("#|.|" + direction);
         }
-        
+
         private void SendAttack(string number)
         {
             // DSSock.sendAttack
@@ -847,6 +988,9 @@ namespace PROProtocol
                 case "'":
                     // DSSock.ProcessCommands
                     SendPacket("'");
+                    break;
+                case "m":
+                    OnPCBox(data);
                     break;
                 default:
 #if DEBUG
@@ -1104,7 +1248,7 @@ namespace PROProtocol
             }
 
             PokemonsUpdated?.Invoke();
-            
+
             if (ActiveBattle.IsFinished)
             {
                 _battleTimeout.Set(Rand.Next(1000, 3000));
@@ -1146,7 +1290,7 @@ namespace PROProtocol
                 }
                 DialogOpened?.Invoke(message);
             }
-            
+
             IsScriptActive = true;
             _dialogTimeout.Set(Rand.Next(1500, 4000));
             ScriptId = id;
@@ -1167,7 +1311,7 @@ namespace PROProtocol
             _mountingTimeout.Set(Rand.Next(500, 1000));
             _itemUseTimeout.Cancel();
         }
-        
+
         private void OnSurfingUpdate(string[] data)
         {
             if (data[1] == "1")
@@ -1458,7 +1602,7 @@ namespace PROProtocol
                 string packet = string.Join("|.|", data);
                 InvalidPacket?.Invoke(packet, "PM with no parameter");
             }
-            string[] nicknames = data[1].Split(new [] { "-=-" }, StringSplitOptions.None);
+            string[] nicknames = data[1].Split(new[] { "-=-" }, StringSplitOptions.None);
             if (nicknames.Length < 2)
             {
                 string packet = string.Join("|.|", data);
@@ -1519,6 +1663,62 @@ namespace PROProtocol
             string message = data[2].Substring(offset);
 
             PrivateMessage?.Invoke(conversation, mode, speaker, message);
+        }
+
+        public int GetBoxIdFromPokemonUid(int lastUid)
+        {
+            return (lastUid - 7) / 15 + 1;
+        }
+
+        private void OnPCBox(string[] data)
+        {
+            _refreshingPCBox.Cancel();
+            IsPCBoxRefreshing = false;
+            if (Map.IsPC(PlayerX, PlayerY - 1))
+            {
+                IsPCOpen = true;
+            }
+            string[] body = data[1].Split('=');
+            if (body.Length < 3)
+            {
+                InvalidPacket?.Invoke(data[0] + "|.|" + data[1], "Received an invalid PC Box packet");
+                return;
+            }
+            PCGreatestUid = Convert.ToInt32(body[0]);
+
+            int pokemonCount = Convert.ToInt32(body[1]);
+            if (pokemonCount <= 0 || pokemonCount > 15)
+            {
+                InvalidPacket?.Invoke(data[0] + "|.|" + data[1], "Received an invalid PC Box size");
+                return;
+            }
+            string[] pokemonListDatas = body[2].Split(new[] { "\r\n" }, StringSplitOptions.None);
+            if (body.Length < 1)
+            {
+                InvalidPacket?.Invoke(data[0] + "|.|" + data[1], "Received an empty box");
+                return;
+            }
+            List<Pokemon> pokemonBox = new List<Pokemon>();
+            foreach (var pokemonDatas in pokemonListDatas)
+            {
+                if (pokemonDatas == string.Empty) continue;
+                string[] pokemonDatasArray = pokemonDatas.Split('|');
+                Pokemon pokemon = new Pokemon(pokemonDatasArray);
+                if (CurrentPCBoxId != GetBoxIdFromPokemonUid(pokemon.Uid))
+                {
+                    InvalidPacket?.Invoke(data[0] + "|.|" + data[1], "Received a box packet for an unexpected box: expected #"
+                        + CurrentPCBox + ", received #" + GetBoxIdFromPokemonUid(pokemon.Uid));
+                    return;
+                }
+                pokemonBox.Add(pokemon);
+            }
+            if (pokemonBox.Count != pokemonCount)
+            {
+                InvalidPacket?.Invoke(data[0] + "|.|" + data[1], "Received a PC Box size that does not match the content");
+                return;
+            }
+            CurrentPCBox = pokemonBox;
+            PCBoxUpdated?.Invoke(CurrentPCBox);
         }
 
         private void LoadMap(string mapName)

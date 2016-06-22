@@ -348,6 +348,34 @@ namespace PROProtocol
             return false;
         }
 
+        public bool IsPC(int x, int y)
+        {
+            if (x >= 0 && x < Width && y >= 0 && y < Height)
+            {
+                int num = Tiles2[x, y];
+                return num == 5437;
+            }
+            return false;
+        }
+
+        // we lazily assume there can be only one PC and it is always accessible
+        public Tuple<int, int> GetPC()
+        {
+            for (int y = 0; y < Height; ++y)
+            {
+                for (int x = 0; x < Width; ++x)
+                {
+                    if (IsPC(x, y))
+                    {
+                        return new Tuple<int, int>(x, y);
+                    }
+                }
+            }
+            return null;
+        }
+
+
+
         public int GetSlider(int x, int y)
         {
             int tile = Tiles1[x, y];
