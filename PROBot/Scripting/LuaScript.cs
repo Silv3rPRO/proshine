@@ -203,6 +203,8 @@ namespace PROBot.Scripting
             _lua.Globals["swapPokemonFromPC"] = new Func<int, int, int, bool>(SwapPokemonFromPC);
             _lua.Globals["giveItemToPokemon"] = new Func<string, int, bool>(GiveItemToPokemon);
             _lua.Globals["takeItemFromPokemon"] = new Func<int, bool>(TakeItemFromPokemon);
+            _lua.Globals["releasePokemonFromTeam"] = new Func<int, bool>(ReleasePokemonFromTeam);
+            _lua.Globals["releasePokemonFromPC"] = new Func<int, int, bool>(ReleasePokemonFromPC);
 
             // Path functions
             _lua.Globals["pushDialogAnswer"] = new Action<int>(PushDialogAnswer);
@@ -1379,6 +1381,36 @@ namespace PROBot.Scripting
             return Bot.Game.CurrentPCBox[boxPokemonId - 1].Status;
         }
  
+        private bool ReleasePokemonFromTeam(int pokemonUid)
+        {
+            if (pokemonUid < 1 || pokemonUid > 6 || pokemonUid > Bot.Game.Team.Count)
+            {
+                Fatal("error: releasePokemonFromTeam: pokemonUid is out of range: " + pokemonUid
+                    + " (team size: " + Bot.Game.Team.Count.ToString() + ").");
+                return false;
+            }
+            if (!Bot.Game.IsPCOpen)
+            {
+                Fatal("error: releasePokemonFromTeam: cannot release a pokemon while the PC is closed: #" + pokemonUid + " (" + Bot.Game.Team[pokemonUid].Name + ").");
+                return false;
+            }
+            if (Bot.Game.IsPCBoxRefreshing)
+            {
+                Fatal("error: releasePokemonFromTeam: cannot release a pokemon while the PC box is refreshing: #" + pokemonUid + " (" + Bot.Game.Team[pokemonUid].Name + ").");
+                return false;
+            }
+            return ExecuteAction(Bot.Game.ReleasePokemonFromTeam(pokemonUid));
+        }
+
+        private bool ReleasePokemonFromPC(int boxId, int boxPokemonId)
+        {
+            if (!IsPCAccessValid("releasePokemonFromPC", boxId, boxPokemonId))
+            {
+                return false;
+            }
+            return ExecuteAction(Bot.Game.ReleasePokemonFromPC(boxId, boxPokemonId));
+        }
+
         // API: Buys the specified item from the opened shop.
         private bool BuyItem(string itemName, int quantity)
         {

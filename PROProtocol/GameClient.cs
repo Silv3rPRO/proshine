@@ -406,14 +406,14 @@ namespace PROProtocol
             SendPacket(toSend);
         }
         
-        public void SendGiveItem(int pokemonId, int itemId)
+        public void SendGiveItem(int pokemonUid, int itemId)
         {
-            SendMessage("/giveitem " + pokemonId + "," + itemId);
+            SendMessage("/giveitem " + pokemonUid + "," + itemId);
         }
 
-        public void SendTakeItem(int pokemonId)
+        public void SendTakeItem(int pokemonUid)
         {
-            SendMessage("/takeitem " + pokemonId);
+            SendMessage("/takeitem " + pokemonUid);
         }
 
         public void LearnMove(int pokemonUid, int moveToForgetUid)
@@ -441,6 +441,38 @@ namespace PROProtocol
         private void SendRefreshPCRange(int start, int end)
         {
             SendPacket("M|.|" + start + "|.|" + end);
+        }
+
+        private void SendReleasePokemon(int pokemonUid)
+        {
+            SendMessage("/release " + pokemonUid);
+        }
+
+        public bool ReleasePokemonFromPC(int boxId, int boxPokemonId)
+        {
+            if (!IsPCOpen || IsPCBoxRefreshing || boxId < 1 || boxId > 67
+                || boxPokemonId < 1 || boxPokemonId > 15 || boxPokemonId > CurrentPCBox.Count)
+            {
+                return false;
+            }
+            int pokemonUid = GetPokemonPCUid(boxId, boxPokemonId);
+            if (pokemonUid == -1 || pokemonUid != CurrentPCBox[boxPokemonId].Uid)
+            {
+                return false;
+            }
+            SendReleasePokemon(pokemonUid);
+            return true;
+        }
+
+        public bool ReleasePokemonFromTeam(int pokemonUid)
+        {
+            if (!IsPCOpen || IsPCBoxRefreshing
+                || pokemonUid < 1 || pokemonUid > 6 || pokemonUid > Team.Count)
+            {
+                return false;
+            }
+            SendReleasePokemon(pokemonUid);
+            return true;
         }
 
         private Tuple<int, int> GetPCBoxRange(int boxId)
