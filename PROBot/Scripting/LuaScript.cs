@@ -1052,6 +1052,11 @@ namespace PROBot.Scripting
         {
             if (!ValidateAction("withdrawPokemonFromPC", false)) return false;
 
+            if (!IsPCAccessValid("withdrawPokemonFromPC", boxId, boxPokemonId))
+            {
+                return false;
+            }
+
             if (Bot.Game.WithdrawPokemonFromPC(boxId, boxPokemonId))
             {
                 return ExecuteAction(Bot.Game.RefreshPCBox(boxId));
@@ -1076,6 +1081,11 @@ namespace PROBot.Scripting
         {
             if (!ValidateAction("swapPokemonFromPC", false)) return false;
 
+            if (!IsPCAccessValid("swapPokemonFromPC", boxId, boxPokemonId))
+            {
+                return false;
+            }
+
             if (Bot.Game.SwapPokemonFromPC(boxId, boxPokemonId, pokemonUid))
             {
                 return ExecuteAction(Bot.Game.RefreshCurrentPCBox());
@@ -1097,7 +1107,7 @@ namespace PROBot.Scripting
         private int GetPCBoxCount()
         {
             // The PCGreatestUid is only known after the first box refresh
-            if (!Bot.Game.IsPCOpen || Bot.Game.PCGreatestUid == -1)
+            if (!Bot.Game.IsPCOpen || Bot.Game.PCGreatestUid == -1 || Bot.Game.IsPCBoxRefreshing)
             {
                 return -1;
             }
@@ -1108,7 +1118,7 @@ namespace PROBot.Scripting
         private int GetPCPokemonCount()
         {
             // The PCGreatestUid is only known after the first box refresh
-            if (!Bot.Game.IsPCOpen || Bot.Game.PCGreatestUid == -1)
+            if (!Bot.Game.IsPCOpen || Bot.Game.PCGreatestUid == -1 || Bot.Game.IsPCBoxRefreshing)
             {
                 return -1;
             }
