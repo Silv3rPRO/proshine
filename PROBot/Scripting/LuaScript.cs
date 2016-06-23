@@ -158,8 +158,8 @@ namespace PROBot.Scripting
             _lua.Globals["isPrivateMessageEnabled"] = new Func<bool>(IsPrivateMessageEnabled);
             _lua.Globals["getTime"] = new GetTimeDelegate(GetTime);
             _lua.Globals["isMorning"] = new Func<bool>(IsMorning);
-            _lua.Globals["isMorning"] = new Func<bool>(IsNoon);
-            _lua.Globals["isMorning"] = new Func<bool>(IsNight);
+            _lua.Globals["isNoon"] = new Func<bool>(IsNoon);
+            _lua.Globals["isNight"] = new Func<bool>(IsNight);
 
             _lua.Globals["isCurrentPCBoxRefreshed"] = new Func<bool>(IsCurrentPCBoxRefreshed);
             _lua.Globals["getCurrentPCBoxId"] = new Func<int>(GetCurrentPCBoxId);
@@ -1224,19 +1224,19 @@ namespace PROBot.Scripting
             return false;
         }
 
-        // API: Check if the private message from normal users are blocked
+        // API: Check if the private message from normal users are blocked.
         private bool IsPrivateMessageEnabled()
         {
             return Bot.Game.IsPrivateMessageOn;
         }
 
-        // API: Enable private messages from users
+        // API: Enable private messages from users.
         private bool EnablePrivateMessage()
         {
             return ExecuteAction(Bot.Game.PrivateMessageOn());
         }
 
-        // API: Disable private messages from users
+        // API: Disable private messages from users.
         private bool DisablePrivateMessage()
         {
             return ExecuteAction(Bot.Game.PrivateMessageOff());
@@ -1244,7 +1244,7 @@ namespace PROBot.Scripting
 
         private delegate int GetTimeDelegate(out int minute);
 
-        // API: Return the current in game hour and minute
+        // API: Return the current in game hour and minute.
         private int GetTime(out int minute)
         {
             DateTime dt = Convert.ToDateTime(Bot.Game.PokemonTime);
@@ -1252,7 +1252,7 @@ namespace PROBot.Scripting
             return dt.Hour;
         }
 
-        // API: Return true if morning time
+        // API: Return true if morning time.
         private bool IsMorning()
         {
             DateTime dt = Convert.ToDateTime(Bot.Game.PokemonTime);
@@ -1263,7 +1263,7 @@ namespace PROBot.Scripting
             return false;
         }
 
-        // API: Return true if noon time
+        // API: Return true if noon time.
         private bool IsNoon()
         {
             DateTime dt = Convert.ToDateTime(Bot.Game.PokemonTime);
@@ -1274,7 +1274,7 @@ namespace PROBot.Scripting
             return false;
         }
 
-        // API: Return true if night time
+        // API: Return true if night time.
         private bool IsNight()
         {
             DateTime dt = Convert.ToDateTime(Bot.Game.PokemonTime);
@@ -1283,6 +1283,12 @@ namespace PROBot.Scripting
                 return true;
             }
             return false;
+        }
+
+        // API: Return true if the character is outside.
+        private bool IsOutside()
+        {
+            return Bot.Game.Map.IsOutside;
         }
 
         // API: Check if the PC is open. Moving close the PC, usePC() opens it.
@@ -1299,7 +1305,7 @@ namespace PROBot.Scripting
             return ExecuteAction(Bot.OpenPC());
         }
 
-        // API: Open box from the PC
+        // API: Open box from the PC.
         private bool OpenPCBox(int boxId)
         {
             if (!ValidateAction("openPCBox", false)) return false;
