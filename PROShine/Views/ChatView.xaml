@@ -12,6 +12,6 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TabControl Name="TabControl" Margin="1" Grid.Row="0" />
-        <TextBox Name="InputChatBox" Margin="1" Grid.Row="1" KeyDown="InputChatBox_KeyDown" />    
+        <TextBox Name="InputChatBox" Margin="1" Grid.Row="1" KeyDown="InputChatBox_KeyDown" MaxLength="100" />    
     </Grid>
 </UserControl>
