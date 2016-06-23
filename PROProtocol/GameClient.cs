@@ -1167,6 +1167,8 @@ namespace PROProtocol
             string[] timeData = data[1].Split('|');
 
             PokemonTime = timeData[0];
+            DateTime dt = Convert.ToDateTime(PokemonTime);
+
             Weather = timeData[1];
 
             PokeTimeUpdated?.Invoke(PokemonTime, Weather);

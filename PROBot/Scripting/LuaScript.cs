@@ -115,19 +115,34 @@ namespace PROBot.Scripting
             _lua.Globals["getPlayerY"] = new Func<int>(GetPlayerY);
             _lua.Globals["getMapName"] = new Func<string>(GetMapName);
             _lua.Globals["getTeamSize"] = new Func<int>(GetTeamSize);
+
             _lua.Globals["getPokemonId"] = new Func<int, int>(GetPokemonId);
             _lua.Globals["getPokemonName"] = new Func<int, string>(GetPokemonName);
             _lua.Globals["getPokemonHealth"] = new Func<int, int>(GetPokemonHealth);
             _lua.Globals["getPokemonHealthPercent"] = new Func<int, int>(GetPokemonHealthPercent);
+            _lua.Globals["getPokemonMaxHealth"] = new Func<int, int>(GetPokemonMaxHealth);
             _lua.Globals["getPokemonLevel"] = new Func<int, int>(GetPokemonLevel);
+            _lua.Globals["getPokemonTotalExperience"] = new Func<int, int>(GetPokemonTotalExperience);
+            _lua.Globals["getPokemonRemainingExperience"] = new Func<int, int>(GetPokemonRemainingExperience);
             _lua.Globals["getPokemonStatus"] = new Func<int, string>(GetPokemonStatus);
             _lua.Globals["getPokemonHeldItem"] = new Func<int, string>(GetPokemonHeldItem);
+            _lua.Globals["getPokemonUniqueId"] = new Func<int, int>(GetPokemonUniqueId);
+            _lua.Globals["getRemainingPowerPoints"] = new Func<int, string, int>(GetRemainingPowerPoints);
+            _lua.Globals["getPokemonMaxPowerPoints"] = new Func<int, int, int>(GetPokemonMaxPowerPoints);
+            _lua.Globals["isPokemonShiny"] = new Func<int, bool>(IsPokemonShiny);
+            _lua.Globals["getPokemonMove"] = new Func<int, int, string>(GetPokemonMove);
+            _lua.Globals["getPokemonNature"] = new Func<int, string>(GetPokemonNature);
+            _lua.Globals["getPokemonAbility"] = new Func<int, string>(GetPokemonAbility);
+            _lua.Globals["getPokemonEffortValue"] = new Func<int, string, int>(GetPokemonEffortValue);
+            _lua.Globals["getPokemonIndividualValue"] = new Func<int, string, int>(GetPokemonIndividualValue);
+            _lua.Globals["getPokemonHappiness"] = new Func<int, int>(GetPokemonHappiness);
+            _lua.Globals["getPokemonRegion"] = new Func<int, string>(GetPokemonRegion);
+            _lua.Globals["getPokemonOriginalTrainer"] = new Func<int, string>(GetPokemonOriginalTrainer);
+            _lua.Globals["getPokemonGender"] = new Func<int, string>(GetPokemonGender);
             _lua.Globals["isPokemonUsable"] = new Func<int, bool>(IsPokemonUsable);
             _lua.Globals["getUsablePokemonCount"] = new Func<int>(GetUsablePokemonCount);
             _lua.Globals["hasMove"] = new Func<int, string, bool>(HasMove);
-            _lua.Globals["getRemainingPowerPoints"] = new Func<int, string, int>(GetRemainingPowerPoints);
-            _lua.Globals["getPokemonEffortValue"] = new Func<int, string, int>(GetPokemonEffortValue);
-            _lua.Globals["getPokemonIndividualValue"] = new Func<int, string, int>(GetPokemonIndividualValue);
+
             _lua.Globals["hasItem"] = new Func<string, bool>(HasItem);
             _lua.Globals["getItemQuantity"] = new Func<string, int>(GetItemQuantity);
             _lua.Globals["hasPokemonInTeam"] = new Func<string, bool>(HasPokemonInTeam);
@@ -140,20 +155,35 @@ namespace PROBot.Scripting
             _lua.Globals["isShopOpen"] = new Func<bool>(IsShopOpen);
             _lua.Globals["getMoney"] = new Func<int>(GetMoney);
             _lua.Globals["isMounted"] = new Func<bool>(IsMounted);
+            _lua.Globals["isPrivateMessageEnabled"] = new Func<bool>(IsPrivateMessageEnabled);
+            _lua.Globals["getTime"] = new GetTimeDelegate(GetTime);
+            _lua.Globals["isMorning"] = new Func<bool>(IsMorning);
+            _lua.Globals["isMorning"] = new Func<bool>(IsNoon);
+            _lua.Globals["isMorning"] = new Func<bool>(IsNight);
+
             _lua.Globals["isCurrentPCBoxRefreshed"] = new Func<bool>(IsCurrentPCBoxRefreshed);
             _lua.Globals["getCurrentPCBoxId"] = new Func<int>(GetCurrentPCBoxId);
             _lua.Globals["isPCOpen"] = new Func<bool>(IsPCOpen);
             _lua.Globals["getCurrentPCBoxId"] = new Func<int>(GetCurrentPCBoxId);
             _lua.Globals["getCurrentPCBoxSize"] = new Func<int>(GetCurrentPCBoxSize);
+            _lua.Globals["getPCBoxCount"] = new Func<int>(GetPCBoxCount);
+            _lua.Globals["getPCPokemonCount"] = new Func<int>(GetPCPokemonCount);
+
+            _lua.Globals["getPokemonIdFromPC"] = new Func<int, int, int>(GetPokemonIdFromPC);
             _lua.Globals["getPokemonNameFromPC"] = new Func<int, int, string>(GetPokemonNameFromPC);
-            _lua.Globals["getPokemonCurrentHPFromPC"] = new Func<int, int, int>(GetPokemonCurrentHPFromPC);
-            _lua.Globals["getPokemonMaxHPFromPC"] = new Func<int, int, int>(GetPokemonMaxHPFromPC);
-            _lua.Globals["getPokemonTotalXPFromPC"] = new Func<int, int, int>(GetPokemonTotalXPFromPC);
-            _lua.Globals["getPokemonRemainingXPFromPC"] = new Func<int, int, int>(GetPokemonRemainingXPFromPC);
+            _lua.Globals["getPokemonHealthFromPC"] = new Func<int, int, int>(GetPokemonHealthFromPC);
+            _lua.Globals["getPokemonHealthPercentFromPC"] = new Func<int, int, int>(GetPokemonHealthPercentFromPC);
+            _lua.Globals["getPokemonMaxHealthFromPC"] = new Func<int, int, int>(GetPokemonMaxHealthFromPC);
+            _lua.Globals["getPokemonLevelFromPC"] = new Func<int, int, int>(GetPokemonLevelFromPC);
+            _lua.Globals["getPokemonTotalExperienceFromPC"] = new Func<int, int, int>(GetPokemonTotalExperienceFromPC);
+            _lua.Globals["getPokemonRemainingExperienceFromPC"] = new Func<int, int, int>(GetPokemonRemainingExperienceFromPC);
+            _lua.Globals["getPokemonStatusFromPC"] = new Func<int, int, string>(GetPokemonStatusFromPC);
+            _lua.Globals["getPokemonHeldItemFromPC"] = new Func<int, int, string>(GetPokemonHeldItemFromPC);
+            _lua.Globals["getPokemonUniqueIdFromPC"] = new Func<int, int, int>(GetPokemonUniqueIdFromPC);
+            _lua.Globals["getPokemonRemainingPowerPointsFromPC"] = new Func<int, int, int, int>(GetPokemonRemainingPowerPointsFromPC);
+            _lua.Globals["getPokemonMaxPowerPointsFromPC"] = new Func<int, int, int, int>(GetPokemonMaxPowerPointsFromPC);
             _lua.Globals["isPokemonFromPCShiny"] = new Func<int, int, bool>(IsPokemonFromPCShiny);
-            _lua.Globals["getPokemonMoveFromPC"] = new Func<int, int, int, string>(GetPokemonMoveFromPC);
-            _lua.Globals["getPokemonMoveCurrentPPFromPC"] = new Func<int, int, int, int>(GetPokemonMoveCurrentPPFromPC);
-            _lua.Globals["getPokemonMoveMaxPPFromPC"] = new Func<int, int, int, int>(GetPokemonMoveMaxPPFromPC);
+            _lua.Globals["getPokemonMoveFromPC"] = new Func<int, int, int, string>(GetPokemonMoveFromPC);       
             _lua.Globals["getPokemonNatureFromPC"] = new Func<int, int, string>(GetPokemonNatureFromPC);
             _lua.Globals["getPokemonAbilityFromPC"] = new Func<int, int, string>(GetPokemonAbilityFromPC);
             _lua.Globals["getPokemonEffortValueFromPC"] = new Func<int, int, string, int>(GetPokemonEffortValueFromPC);
@@ -162,10 +192,6 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonRegionFromPC"] = new Func<int, int, string>(GetPokemonRegionFromPC);
             _lua.Globals["getPokemonOriginalTrainerFromPC"] = new Func<int, int, string>(GetPokemonOriginalTrainerFromPC);
             _lua.Globals["getPokemonGenderFromPC"] = new Func<int, int, string>(GetPokemonGenderFromPC);
-            _lua.Globals["getPokemonStatusFromPC"] = new Func<int, int, string>(GetPokemonStatusFromPC);
-            _lua.Globals["getPCBoxCount"] = new Func<int>(GetPCBoxCount);
-            _lua.Globals["getPCPokemonCount"] = new Func<int>(GetPCPokemonCount);
-            _lua.Globals["isPrivateMessageEnable"] = new Func<bool>(IsPrivateMessageEnable);
 
             // Battle conditions
             _lua.Globals["isOpponentShiny"] = new Func<bool>(IsOpponentShiny);
@@ -208,7 +234,6 @@ namespace PROBot.Scripting
             _lua.Globals["releasePokemonFromPC"] = new Func<int, int, bool>(ReleasePokemonFromPC);
             _lua.Globals["enablePrivateMessage"] = new Func<bool>(EnablePrivateMessage);
             _lua.Globals["disablePrivateMessage"] = new Func<bool>(DisablePrivateMessage);
-
 
             // Path functions
             _lua.Globals["pushDialogAnswer"] = new Action<int>(PushDialogAnswer);
@@ -365,6 +390,28 @@ namespace PROBot.Scripting
             return Bot.Game.Team[index - 1].Name;
         }
 
+        // API: PROShine unique ID of the pokemon of the current box matching the ID.
+        private int GetPokemonUniqueId(int pokemonUid)
+        {
+            if (pokemonUid < 1 || pokemonUid > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonUniqueId: tried to retrieve the non-existing pokemon " + pokemonUid + ".");
+                return -1;
+            }
+            PokemonStats ev = Bot.Game.Team[pokemonUid - 1].EV;
+
+            // Converting a base 31 to 10
+            // The odds of having twice the same pokemon unique ID being
+            // 1 against 887,503,680
+            int uniqueId = (ev.Attack - 1);
+            uniqueId += (ev.Defence - 1) * (int)Math.Pow(31, 1);
+            uniqueId += (ev.Speed - 1) * (int)Math.Pow(31, 2);
+            uniqueId += (ev.SpAttack - 1) * (int)Math.Pow(31, 3);
+            uniqueId += (ev.SpDefence - 1) * (int)Math.Pow(31, 4);
+            uniqueId += (ev.Health - 1) * (int)Math.Pow(31, 5);
+            return uniqueId;
+        }
+
         // API: Returns the current health of the specified pokémon in the team.
         private int GetPokemonHealth(int index)
         {
@@ -388,6 +435,112 @@ namespace PROBot.Scripting
             return pokemon.CurrentHealth * 100 / pokemon.MaxHealth;
         }
 
+        // API: Returns the maximum health of the specified pokémon in the team.
+        private int GetPokemonMaxHealth(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonMaxHealth: tried to retrieve the non-existing pokemon " + index + ".");
+                return 0;
+            }
+            Pokemon pokemon = Bot.Game.Team[index - 1];
+            return pokemon.MaxHealth;
+        }
+
+        // API: Shyniness of the pokemon of the current box matching the ID.
+        private bool IsPokemonShiny(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: isPokemonShiny: tried to retrieve the non-existing pokemon " + index + ".");
+                return false;
+            }
+            Pokemon pokemon = Bot.Game.Team[index - 1];
+            return pokemon.IsShiny;
+        }
+
+        // API: Move of the pokemon of the current box matching the ID.
+        private string GetPokemonMove(int index, int moveId)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonMove: tried to retrieve the non-existing pokemon " + index + ".");
+                return null;
+            }
+            if (moveId < 1 || moveId > 4)
+            {
+                Fatal("error: getPokemonMove: tried to access an impossible move #" + moveId + ".");
+                return null;
+            }
+            Pokemon pokemon = Bot.Game.Team[index - 1];
+            return pokemon.Moves[moveId].Name;
+        }
+
+        // API: Max move PP of the pokemon of the current box matching the ID.
+        private int GetPokemonMaxPowerPoints(int index, int moveId)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonMove: tried to retrieve the non-existing pokemon " + index + ".");
+                return -1;
+            }
+            if (moveId < 1 || moveId > 4)
+            {
+                Fatal("error: getPokemonMove: tried to access an impossible move #" + moveId + ".");
+                return -1;
+            }
+            Pokemon pokemon = Bot.Game.Team[index - 1];
+            return pokemon.Moves[moveId].MaxPoints;
+        }
+
+        // API: Nature of the pokemon of the current box matching the ID.
+        private string GetPokemonNature(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonNature: tried to retrieve the non-existing pokemon " + index + ".");
+                return null;
+            }
+            Pokemon pokemon = Bot.Game.Team[index - 1];
+            return pokemon.Nature.Name;
+        }
+
+        // API: Ability of the pokemon of the current box matching the ID.
+        private string GetPokemonAbility(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonAbility: tried to retrieve the non-existing pokemon " + index + ".");
+                return null;
+            }
+            Pokemon pokemon = Bot.Game.Team[index - 1];
+            return pokemon.Ability.Name;
+        }
+
+        // API: Returns the experience total of a pokemon level.
+        private int GetPokemonTotalExperience(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonTotalXP: tried to retrieve the non-existing pokemon " + index + ".");
+                return 0;
+            }
+            Pokemon pokemon = Bot.Game.Team[index - 1];
+            return pokemon.Experience.TotalLevelExperience;
+        }
+
+        // API: Returns the remaining experience of a pokemon before next level.
+        private int GetPokemonRemainingExperience(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonRemainingXP: tried to retrieve the non-existing pokemon " + index + ".");
+                return 0;
+            }
+            Pokemon pokemon = Bot.Game.Team[index - 1];
+            return pokemon.Experience.RemainingExperience;
+        }
+
         // API: Returns the level of the specified pokémon in the team.
         private int GetPokemonLevel(int index)
         {
@@ -397,6 +550,50 @@ namespace PROBot.Scripting
                 return 0;
             }
             return Bot.Game.Team[index - 1].Level;
+        }
+
+        // API: Returns the happiness of the specified pokémon in the team.
+        private int GetPokemonHappiness(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonHappiness: tried to retrieve the non-existing pokemon " + index + ".");
+                return -1;
+            }
+            return Bot.Game.Team[index - 1].Happiness;
+        }
+
+        // API: Returns the region of capture of the specified pokémon in the team.
+        private string GetPokemonRegion(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonRegion: tried to retrieve the non-existing pokemon " + index + ".");
+                return null;
+            }
+            return Bot.Game.Team[index - 1].Region.ToString();
+        }
+
+        // API: Returns the original trainer of the specified pokémon in the team.
+        private string GetPokemonOriginalTrainer(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonOriginalTrainer: tried to retrieve the non-existing pokemon " + index + ".");
+                return null;
+            }
+            return Bot.Game.Team[index - 1].OriginalTrainer;
+        }
+
+        // API: Returns the gender of the specified pokémon in the team.
+        private string GetPokemonGender(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonGender: tried to retrieve the non-existing pokemon " + index + ".");
+                return null;
+            }
+            return Bot.Game.Team[index - 1].Gender;
         }
 
         // API: Returns the status of the specified pokémon in the team.
@@ -1028,7 +1225,7 @@ namespace PROBot.Scripting
         }
 
         // API: Check if the private message from normal users are blocked
-        private bool IsPrivateMessageEnable()
+        private bool IsPrivateMessageEnabled()
         {
             return Bot.Game.IsPrivateMessageOn;
         }
@@ -1043,6 +1240,49 @@ namespace PROBot.Scripting
         private bool DisablePrivateMessage()
         {
             return ExecuteAction(Bot.Game.PrivateMessageOff());
+        }
+
+        private delegate int GetTimeDelegate(out int minute);
+
+        // API: Return the current in game hour and minute
+        private int GetTime(out int minute)
+        {
+            DateTime dt = Convert.ToDateTime(Bot.Game.PokemonTime);
+            minute = dt.Minute;
+            return dt.Hour;
+        }
+
+        // API: Return true if morning time
+        private bool IsMorning()
+        {
+            DateTime dt = Convert.ToDateTime(Bot.Game.PokemonTime);
+            if (dt.Hour >= 4 && dt.Hour < 10)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        // API: Return true if noon time
+        private bool IsNoon()
+        {
+            DateTime dt = Convert.ToDateTime(Bot.Game.PokemonTime);
+            if (dt.Hour >= 10 && dt.Hour < 20)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        // API: Return true if night time
+        private bool IsNight()
+        {
+            DateTime dt = Convert.ToDateTime(Bot.Game.PokemonTime);
+            if (dt.Hour >= 20 || dt.Hour < 4)
+            {
+                return true;
+            }
+            return false;
         }
 
         // API: Check if the PC is open. Moving close the PC, usePC() opens it.
@@ -1204,28 +1444,80 @@ namespace PROBot.Scripting
             return Bot.Game.CurrentPCBox[boxPokemonId - 1].Name;
         }
 
-        // API: Current HP of the pokemon of the current box matching the ID.
-        private int GetPokemonCurrentHPFromPC(int boxId, int boxPokemonId)
+        // API: Pokedex ID of the pokemon of the current box matching the ID.
+        private int GetPokemonIdFromPC(int boxId, int boxPokemonId)
         {
-            if (!IsPCAccessValid("getPokemonCurrentHPFromPC", boxId, boxPokemonId))
+            if (!IsPCAccessValid("getPokemonNationalIdFromPC", boxId, boxPokemonId))
+            {
+                return -1;
+            }
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Id;
+        }
+
+        // API: PROShine custom unique ID of the pokemon of the current box matching the ID.
+        private int GetPokemonUniqueIdFromPC(int boxId, int boxPokemonId)
+        {
+            if (!IsPCAccessValid("getPokemonUniqueIdFromPC", boxId, boxPokemonId))
+            {
+                return -1;
+            }
+            PokemonStats ev = Bot.Game.CurrentPCBox[boxPokemonId - 1].EV;
+
+            // Converting a base 31 to 10
+            // The odds of having twice the same pokemon unique ID being
+            // 1 against 887,503,680
+            int uniqueId = (ev.Attack - 1);
+            uniqueId += (ev.Defence - 1) * (int)Math.Pow(31, 1);
+            uniqueId += (ev.Speed - 1) * (int)Math.Pow(31, 2);
+            uniqueId += (ev.SpAttack - 1) * (int)Math.Pow(31, 3);
+            uniqueId += (ev.SpDefence - 1) * (int)Math.Pow(31, 4);
+            uniqueId += (ev.Health - 1) * (int)Math.Pow(31, 5);
+            return uniqueId;
+        }
+
+        // API: Current HP of the pokemon of the current box matching the ID.
+        private int GetPokemonHealthFromPC(int boxId, int boxPokemonId)
+        {
+            if (!IsPCAccessValid("getPokemonCurrentHealthFromPC", boxId, boxPokemonId))
             {
                 return -1;
             }
             return Bot.Game.CurrentPCBox[boxPokemonId - 1].CurrentHealth;
         }
 
-        // API: Max HP of the pokemon of the current box matching the ID.
-        private int GetPokemonMaxHPFromPC(int boxId, int boxPokemonId)
+        // API: Returns the percentage of remaining health of the specified pokémon in the team.
+        private int GetPokemonHealthPercentFromPC(int boxId, int boxPokemonId)
         {
-            if (!IsPCAccessValid("getPokemonMaxHPFromPC", boxId, boxPokemonId))
+            if (!IsPCAccessValid("getPokemonCurrentHealthPercentFromPC", boxId, boxPokemonId))
+            {
+                return -1;
+            }
+            Pokemon pokemon = Bot.Game.CurrentPCBox[boxPokemonId - 1];
+            return pokemon.CurrentHealth * 100 / pokemon.MaxHealth;
+        }
+
+        // API: Max HP of the pokemon of the current box matching the ID.
+        private int GetPokemonMaxHealthFromPC(int boxId, int boxPokemonId)
+        {
+            if (!IsPCAccessValid("getPokemonMaxHealthFromPC", boxId, boxPokemonId))
             {
                 return -1;
             }
             return Bot.Game.CurrentPCBox[boxPokemonId - 1].MaxHealth;
         }
 
+        // API: Level of the pokemon of the current box matching the ID.
+        private int GetPokemonLevelFromPC(int boxId, int boxPokemonId)
+        {
+            if (!IsPCAccessValid("getPokemonMaxHealthFromPC", boxId, boxPokemonId))
+            {
+                return -1;
+            }
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Level;
+        }
+
         // API: Total of experience cost of a level for the pokemon of the current box matching the ID.
-        private int GetPokemonTotalXPFromPC(int boxId, int boxPokemonId)
+        private int GetPokemonTotalExperienceFromPC(int boxId, int boxPokemonId)
         {
             if (!IsPCAccessValid("getPokemonTotalXPFromPC", boxId, boxPokemonId))
             {
@@ -1235,7 +1527,7 @@ namespace PROBot.Scripting
         }
 
         // API: Remaining experience before the next level of the pokemon of the current box matching the ID.
-        private int GetPokemonRemainingXPFromPC(int boxId, int boxPokemonId)
+        private int GetPokemonRemainingExperienceFromPC(int boxId, int boxPokemonId)
         {
             if (!IsPCAccessValid("getPokemonRemainingXPFromPC", boxId, boxPokemonId))
             {
@@ -1270,7 +1562,7 @@ namespace PROBot.Scripting
         }
 
         // API: Current move PP of the pokemon of the current box matching the ID.
-        private int GetPokemonMoveCurrentPPFromPC(int boxId, int boxPokemonId, int moveId)
+        private int GetPokemonRemainingPowerPointsFromPC(int boxId, int boxPokemonId, int moveId)
         {
             if (!IsPCAccessValid("getPokemonMoveCurrentPPFromPC", boxId, boxPokemonId))
             {
@@ -1285,7 +1577,7 @@ namespace PROBot.Scripting
         }
 
         // API: Max move PP of the pokemon of the current box matching the ID.
-        private int GetPokemonMoveMaxPPFromPC(int boxId, int boxPokemonId, int moveId)
+        private int GetPokemonMaxPowerPointsFromPC(int boxId, int boxPokemonId, int moveId)
         {
             if (!IsPCAccessValid("getPokemonMoveMaxPPFromPC", boxId, boxPokemonId))
             {
@@ -1402,7 +1694,19 @@ namespace PROBot.Scripting
             }
             return Bot.Game.CurrentPCBox[boxPokemonId - 1].Status;
         }
- 
+
+        // API: Returns the item held by the specified pokemon in the PC, null if empty.
+        private string GetPokemonHeldItemFromPC(int boxId, int boxPokemonId)
+        {
+            if (!IsPCAccessValid("getPokemonHeldItemFromPC", boxId, boxPokemonId))
+            {
+                return null;
+            }
+            string itemHeld = Bot.Game.CurrentPCBox[boxPokemonId - 1].ItemHeld;
+            return itemHeld == string.Empty ? null : itemHeld;
+        }
+
+        // API: Releases the specified pokemon in the team.
         private bool ReleasePokemonFromTeam(int pokemonUid)
         {
             if (pokemonUid < 1 || pokemonUid > 6 || pokemonUid > Bot.Game.Team.Count)
@@ -1424,6 +1728,7 @@ namespace PROBot.Scripting
             return ExecuteAction(Bot.Game.ReleasePokemonFromTeam(pokemonUid));
         }
 
+        // API: Releases the specified pokemon in the PC.
         private bool ReleasePokemonFromPC(int boxId, int boxPokemonId)
         {
             if (!IsPCAccessValid("releasePokemonFromPC", boxId, boxPokemonId))
