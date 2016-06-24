@@ -160,6 +160,7 @@ namespace PROBot.Scripting
             _lua.Globals["isMorning"] = new Func<bool>(IsMorning);
             _lua.Globals["isNoon"] = new Func<bool>(IsNoon);
             _lua.Globals["isNight"] = new Func<bool>(IsNight);
+            _lua.Globals["isOutside"] = new Func<bool>(IsOutside);
 
             _lua.Globals["isCurrentPCBoxRefreshed"] = new Func<bool>(IsCurrentPCBoxRefreshed);
             _lua.Globals["getCurrentPCBoxId"] = new Func<int>(GetCurrentPCBoxId);
