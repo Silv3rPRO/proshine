@@ -147,7 +147,7 @@ namespace PROProtocol
                         
                         if (npcName != "TileScript")
                         {
-                            OriginalNpcs.Add(new Npc(npcId, npcName, x, y, losLength));
+                            OriginalNpcs.Add(new Npc(npcId, npcName, x, y, losLength, path));
                         }
 
                         reader.ReadInt16();
@@ -258,7 +258,7 @@ namespace PROProtocol
             }
             foreach (Npc npc in Npcs)
             {
-                if (npc.PositionX == destinationX && npc.PositionY == destinationY && npc.LosLength < 100)
+                if (npc.PositionX == destinationX && npc.PositionY == destinationY && npc.LosLength < 100 && !npc.IsMoving)
                 {
                     return MoveResult.Fail;
                 }
