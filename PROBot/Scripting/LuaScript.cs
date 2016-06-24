@@ -130,7 +130,12 @@ namespace PROBot.Scripting
             _lua.Globals["getRemainingPowerPoints"] = new Func<int, string, int>(GetRemainingPowerPoints);
             _lua.Globals["getPokemonMaxPowerPoints"] = new Func<int, int, int>(GetPokemonMaxPowerPoints);
             _lua.Globals["isPokemonShiny"] = new Func<int, bool>(IsPokemonShiny);
-            _lua.Globals["getPokemonMove"] = new Func<int, int, string>(GetPokemonMove);
+            _lua.Globals["getPokemonMoveName"] = new Func<int, int, string>(GetPokemonMoveName);
+            _lua.Globals["getPokemonMoveAccuracy"] = new Func<int, int, int>(GetPokemonMoveAccuracy);
+            _lua.Globals["getPokemonMovePower"] = new Func<int, int, int>(GetPokemonMovePower);
+            _lua.Globals["getPokemonMoveType"] = new Func<int, int, string>(GetPokemonMoveType);
+            _lua.Globals["getPokemonMoveDamageType"] = new Func<int, int, string>(GetPokemonMoveDamageType);
+            _lua.Globals["getPokemonMoveStatus"] = new Func<int, int, bool>(GetPokemonMoveStatus);
             _lua.Globals["getPokemonNature"] = new Func<int, string>(GetPokemonNature);
             _lua.Globals["getPokemonAbility"] = new Func<int, string>(GetPokemonAbility);
             _lua.Globals["getPokemonEffortValue"] = new Func<int, string, int>(GetPokemonEffortValue);
@@ -184,7 +189,12 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonRemainingPowerPointsFromPC"] = new Func<int, int, int, int>(GetPokemonRemainingPowerPointsFromPC);
             _lua.Globals["getPokemonMaxPowerPointsFromPC"] = new Func<int, int, int, int>(GetPokemonMaxPowerPointsFromPC);
             _lua.Globals["isPokemonFromPCShiny"] = new Func<int, int, bool>(IsPokemonFromPCShiny);
-            _lua.Globals["getPokemonMoveFromPC"] = new Func<int, int, int, string>(GetPokemonMoveFromPC);       
+            _lua.Globals["getPokemonMoveNameFromPC"] = new Func<int, int, int, string>(GetPokemonMoveNameFromPC);
+            _lua.Globals["getPokemonMoveAccuracyFromPC"] = new Func<int, int, int, int>(GetPokemonMoveAccuracyFromPC);
+            _lua.Globals["getPokemonMovePowerFromPC"] = new Func<int, int, int, int>(GetPokemonMovePowerFromPC);
+            _lua.Globals["getPokemonMoveTypeFromPC"] = new Func<int, int, int, string>(GetPokemonMoveTypeFromPC);
+            _lua.Globals["getPokemonMoveDamageTypeFromPC"] = new Func<int, int, int, string>(GetPokemonMoveDamageTypeFromPC);
+            _lua.Globals["getPokemonMoveStatusFromPC"] = new Func<int, int, int, bool>(GetPokemonMoveStatusFromPC);
             _lua.Globals["getPokemonNatureFromPC"] = new Func<int, int, string>(GetPokemonNatureFromPC);
             _lua.Globals["getPokemonAbilityFromPC"] = new Func<int, int, string>(GetPokemonAbilityFromPC);
             _lua.Globals["getPokemonEffortValueFromPC"] = new Func<int, int, string, int>(GetPokemonEffortValueFromPC);
@@ -448,7 +458,7 @@ namespace PROBot.Scripting
             return pokemon.MaxHealth;
         }
 
-        // API: Shyniness of the pokemon of the current box matching the ID.
+        // API: Returns the shyniness of the specified pokémon in the team.
         private bool IsPokemonShiny(int index)
         {
             if (index < 1 || index > Bot.Game.Team.Count)
@@ -460,8 +470,8 @@ namespace PROBot.Scripting
             return pokemon.IsShiny;
         }
 
-        // API: Move of the pokemon of the current box matching the ID.
-        private string GetPokemonMove(int index, int moveId)
+        // API: Returns the move of the specified pokémon in the team at the specified index.
+        private string GetPokemonMoveName(int index, int moveId)
         {
             if (index < 1 || index > Bot.Game.Team.Count)
             {
@@ -475,6 +485,91 @@ namespace PROBot.Scripting
             }
             Pokemon pokemon = Bot.Game.Team[index - 1];
             return pokemon.Moves[moveId].Name;
+        }
+
+        // API: Returns the move accuracy of the specified pokémon in the team at the specified index.
+        private int GetPokemonMoveAccuracy(int index, int moveId)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonMoveAccuracy: tried to retrieve the non-existing pokemon " + index + ".");
+                return -1;
+            }
+            if (moveId < 1 || moveId > 4)
+            {
+                Fatal("error: getPokemonMoveAccuracy: tried to access an impossible move #" + moveId + ".");
+                return -1;
+            }
+            Pokemon pokemon = Bot.Game.Team[index - 1];
+            return pokemon.Moves[moveId].Data.Accuracy;
+        }
+
+        // API: Returns the move power of the specified pokémon in the team at the specified index.
+        private int GetPokemonMovePower(int index, int moveId)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonMovePower: tried to retrieve the non-existing pokemon " + index + ".");
+                return -1;
+            }
+            if (moveId < 1 || moveId > 4)
+            {
+                Fatal("error: getPokemonMovePower: tried to access an impossible move #" + moveId + ".");
+                return -1;
+            }
+            Pokemon pokemon = Bot.Game.Team[index - 1];
+            return pokemon.Moves[moveId].Data.Power;
+        }
+
+        // API: Returns the move type of the specified pokémon in the team at the specified index.
+        private string GetPokemonMoveType(int index, int moveId)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonMoveType: tried to retrieve the non-existing pokemon " + index + ".");
+                return null;
+            }
+            if (moveId < 1 || moveId > 4)
+            {
+                Fatal("error: getPokemonMoveType: tried to access an impossible move #" + moveId + ".");
+                return null;
+            }
+            Pokemon pokemon = Bot.Game.Team[index - 1];
+            return pokemon.Moves[moveId].Data.Type.ToString();
+        }
+
+        // API: Returns the move damage type of the specified pokémon in the team at the specified index.
+        private string GetPokemonMoveDamageType(int index, int moveId)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonMoveDamageType: tried to retrieve the non-existing pokemon " + index + ".");
+                return null;
+            }
+            if (moveId < 1 || moveId > 4)
+            {
+                Fatal("error: getPokemonMoveDamageType: tried to access an impossible move #" + moveId + ".");
+                return null;
+            }
+            Pokemon pokemon = Bot.Game.Team[index - 1];
+            return pokemon.Moves[moveId].Data.DamageType.ToString();
+        }
+
+        // API: Returns true if the move of the specified pokémon in the team at the specified index can apply a status .
+        private bool GetPokemonMoveStatus(int index, int moveId)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonMoveStatus: tried to retrieve the non-existing pokemon " + index + ".");
+                return false;
+            }
+            if (moveId < 1 || moveId > 4)
+            {
+                Fatal("error: getPokemonMoveStatus: tried to access an impossible move #" + moveId + ".");
+                return false;
+            }
+            Pokemon pokemon = Bot.Game.Team[index - 1];
+            return pokemon.Moves[moveId].Data.Status;
         }
 
         // API: Max move PP of the pokemon of the current box matching the ID.
@@ -1554,18 +1649,93 @@ namespace PROBot.Scripting
         }
 
         // API: Move of the pokemon of the current box matching the ID.
-        private string GetPokemonMoveFromPC(int boxId, int boxPokemonId, int moveId)
+        private string GetPokemonMoveNameFromPC(int boxId, int boxPokemonId, int moveId)
         {
-            if (!IsPCAccessValid("getPokemonMoveFromPC", boxId, boxPokemonId))
+            if (!IsPCAccessValid("getPokemonMoveNameFromPC", boxId, boxPokemonId))
             {
                 return null;
             }
             if (moveId < 1 || moveId > 4)
             {
-                Fatal("error: getPokemonMoveFromPC: tried to access an impossible move #" + moveId + ".");
+                Fatal("error: getPokemonMoveNameFromPC: tried to access an impossible move #" + moveId + ".");
                 return null;
             }
             return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId].Name;
+        }
+
+        // API: Returns the move accuracy of the specified pokémon in the box at the specified index.
+        private int GetPokemonMoveAccuracyFromPC(int boxId, int boxPokemonId, int moveId)
+        {
+            if (!IsPCAccessValid("getPokemonMoveAccuracyFromPC", boxId, boxPokemonId))
+            {
+                return -1;
+            }
+            if (moveId < 1 || moveId > 4)
+            {
+                Fatal("error: getPokemonMoveAccuracyFromPC: tried to access an impossible move #" + moveId + ".");
+                return -1;
+            }
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId].Data.Accuracy;
+        }
+
+        // API: Returns the move power of the specified pokémon in the box at the specified index.
+        private int GetPokemonMovePowerFromPC(int boxId, int boxPokemonId, int moveId)
+        {
+            if (!IsPCAccessValid("getPokemonMovePowerFromPC", boxId, boxPokemonId))
+            {
+                return -1;
+            }
+            if (moveId < 1 || moveId > 4)
+            {
+                Fatal("error: getPokemonMovePowerFromPC: tried to access an impossible move #" + moveId + ".");
+                return -1;
+            }
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId].Data.Power;
+        }
+
+        // API: Returns the move type of the specified pokémon in the box at the specified index.
+        private string GetPokemonMoveTypeFromPC(int boxId, int boxPokemonId, int moveId)
+        {
+            if (!IsPCAccessValid("getPokemonMoveTypeFromPC", boxId, boxPokemonId))
+            {
+                return null;
+            }
+            if (moveId < 1 || moveId > 4)
+            {
+                Fatal("error: getPokemonMoveTypeFromPC: tried to access an impossible move #" + moveId + ".");
+                return null;
+            }
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId].Data.Type.ToString();
+        }
+
+        // API: Returns the move damage type of the specified pokémon in the box at the specified index.
+        private string GetPokemonMoveDamageTypeFromPC(int boxId, int boxPokemonId, int moveId)
+        {
+            if (!IsPCAccessValid("getPokemonMoveDamageTypeFromPC", boxId, boxPokemonId))
+            {
+                return null;
+            }
+            if (moveId < 1 || moveId > 4)
+            {
+                Fatal("error: getPokemonMoveDamageTypeFromPC: tried to access an impossible move #" + moveId + ".");
+                return null;
+            }
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId].Data.DamageType.ToString();
+        }
+
+        // API: Returns true if the move of the specified pokémon in the box at the specified index can apply a status .
+        private bool GetPokemonMoveStatusFromPC(int boxId, int boxPokemonId, int moveId)
+        {
+            if (!IsPCAccessValid("getPokemonMoveStatusTypeFromPC", boxId, boxPokemonId))
+            {
+                return false;
+            }
+            if (moveId < 1 || moveId > 4)
+            {
+                Fatal("error: getPokemonMoveStatusTypeFromPC: tried to access an impossible move #" + moveId + ".");
+                return false;
+            }
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId].Data.Status;
         }
 
         // API: Current move PP of the pokemon of the current box matching the ID.
