@@ -409,17 +409,17 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonUniqueId: tried to retrieve the non-existing pokemon " + pokemonUid + ".");
                 return -1;
             }
-            PokemonStats ev = Bot.Game.Team[pokemonUid - 1].EV;
+            PokemonStats iv = Bot.Game.Team[pokemonUid - 1].IV;
 
             // Converting a base 31 to 10
             // The odds of having twice the same pokemon unique ID being
             // 1 against 887,503,680
-            int uniqueId = (ev.Attack - 1);
-            uniqueId += (ev.Defence - 1) * (int)Math.Pow(31, 1);
-            uniqueId += (ev.Speed - 1) * (int)Math.Pow(31, 2);
-            uniqueId += (ev.SpAttack - 1) * (int)Math.Pow(31, 3);
-            uniqueId += (ev.SpDefence - 1) * (int)Math.Pow(31, 4);
-            uniqueId += (ev.Health - 1) * (int)Math.Pow(31, 5);
+            int uniqueId = (iv.Attack - 1);
+            uniqueId += (iv.Defence - 1) * (int)Math.Pow(31, 1);
+            uniqueId += (iv.Speed - 1) * (int)Math.Pow(31, 2);
+            uniqueId += (iv.SpAttack - 1) * (int)Math.Pow(31, 3);
+            uniqueId += (iv.SpDefence - 1) * (int)Math.Pow(31, 4);
+            uniqueId += (iv.Health - 1) * (int)Math.Pow(31, 5);
             return uniqueId;
         }
 
@@ -484,7 +484,7 @@ namespace PROBot.Scripting
                 return null;
             }
             Pokemon pokemon = Bot.Game.Team[index - 1];
-            return pokemon.Moves[moveId].Name;
+            return pokemon.Moves[moveId - 1].Name;
         }
 
         // API: Returns the move accuracy of the specified pokémon in the team at the specified index.
@@ -501,7 +501,7 @@ namespace PROBot.Scripting
                 return -1;
             }
             Pokemon pokemon = Bot.Game.Team[index - 1];
-            return pokemon.Moves[moveId].Data.Accuracy;
+            return pokemon.Moves[moveId - 1].Data.Accuracy;
         }
 
         // API: Returns the move power of the specified pokémon in the team at the specified index.
@@ -518,7 +518,7 @@ namespace PROBot.Scripting
                 return -1;
             }
             Pokemon pokemon = Bot.Game.Team[index - 1];
-            return pokemon.Moves[moveId].Data.Power;
+            return pokemon.Moves[moveId - 1].Data.Power;
         }
 
         // API: Returns the move type of the specified pokémon in the team at the specified index.
@@ -535,7 +535,7 @@ namespace PROBot.Scripting
                 return null;
             }
             Pokemon pokemon = Bot.Game.Team[index - 1];
-            return pokemon.Moves[moveId].Data.Type.ToString();
+            return pokemon.Moves[moveId - 1].Data.Type.ToString();
         }
 
         // API: Returns the move damage type of the specified pokémon in the team at the specified index.
@@ -552,7 +552,7 @@ namespace PROBot.Scripting
                 return null;
             }
             Pokemon pokemon = Bot.Game.Team[index - 1];
-            return pokemon.Moves[moveId].Data.DamageType.ToString();
+            return pokemon.Moves[moveId - 1].Data.DamageType.ToString();
         }
 
         // API: Returns true if the move of the specified pokémon in the team at the specified index can apply a status .
@@ -569,7 +569,7 @@ namespace PROBot.Scripting
                 return false;
             }
             Pokemon pokemon = Bot.Game.Team[index - 1];
-            return pokemon.Moves[moveId].Data.Status;
+            return pokemon.Moves[moveId - 1].Data.Status;
         }
 
         // API: Max move PP of the pokemon of the current box matching the ID.
@@ -586,7 +586,7 @@ namespace PROBot.Scripting
                 return -1;
             }
             Pokemon pokemon = Bot.Game.Team[index - 1];
-            return pokemon.Moves[moveId].MaxPoints;
+            return pokemon.Moves[moveId - 1].MaxPoints;
         }
 
         // API: Nature of the pokemon of the current box matching the ID.
@@ -1563,17 +1563,17 @@ namespace PROBot.Scripting
             {
                 return -1;
             }
-            PokemonStats ev = Bot.Game.CurrentPCBox[boxPokemonId - 1].EV;
+            PokemonStats iv = Bot.Game.CurrentPCBox[boxPokemonId - 1].IV;
 
             // Converting a base 31 to 10
             // The odds of having twice the same pokemon unique ID being
             // 1 against 887,503,680
-            int uniqueId = (ev.Attack - 1);
-            uniqueId += (ev.Defence - 1) * (int)Math.Pow(31, 1);
-            uniqueId += (ev.Speed - 1) * (int)Math.Pow(31, 2);
-            uniqueId += (ev.SpAttack - 1) * (int)Math.Pow(31, 3);
-            uniqueId += (ev.SpDefence - 1) * (int)Math.Pow(31, 4);
-            uniqueId += (ev.Health - 1) * (int)Math.Pow(31, 5);
+            int uniqueId = (iv.Attack - 1);
+            uniqueId += (iv.Defence - 1) * (int)Math.Pow(31, 1);
+            uniqueId += (iv.Speed - 1) * (int)Math.Pow(31, 2);
+            uniqueId += (iv.SpAttack - 1) * (int)Math.Pow(31, 3);
+            uniqueId += (iv.SpDefence - 1) * (int)Math.Pow(31, 4);
+            uniqueId += (iv.Health - 1) * (int)Math.Pow(31, 5);
             return uniqueId;
         }
 
@@ -1660,7 +1660,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMoveNameFromPC: tried to access an impossible move #" + moveId + ".");
                 return null;
             }
-            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId].Name;
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId - 1].Name;
         }
 
         // API: Returns the move accuracy of the specified pokémon in the box at the specified index.
@@ -1675,7 +1675,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMoveAccuracyFromPC: tried to access an impossible move #" + moveId + ".");
                 return -1;
             }
-            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId].Data.Accuracy;
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId - 1].Data.Accuracy;
         }
 
         // API: Returns the move power of the specified pokémon in the box at the specified index.
@@ -1690,7 +1690,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMovePowerFromPC: tried to access an impossible move #" + moveId + ".");
                 return -1;
             }
-            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId].Data.Power;
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId - 1].Data.Power;
         }
 
         // API: Returns the move type of the specified pokémon in the box at the specified index.
@@ -1705,7 +1705,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMoveTypeFromPC: tried to access an impossible move #" + moveId + ".");
                 return null;
             }
-            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId].Data.Type.ToString();
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId - 1].Data.Type.ToString();
         }
 
         // API: Returns the move damage type of the specified pokémon in the box at the specified index.
@@ -1720,7 +1720,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMoveDamageTypeFromPC: tried to access an impossible move #" + moveId + ".");
                 return null;
             }
-            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId].Data.DamageType.ToString();
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId - 1].Data.DamageType.ToString();
         }
 
         // API: Returns true if the move of the specified pokémon in the box at the specified index can apply a status .
@@ -1735,7 +1735,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMoveStatusTypeFromPC: tried to access an impossible move #" + moveId + ".");
                 return false;
             }
-            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId].Data.Status;
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId - 1].Data.Status;
         }
 
         // API: Current move PP of the pokemon of the current box matching the ID.
@@ -1750,7 +1750,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMoveCurrentPPFromPC: tried to access an impossible move #" + moveId + ".");
                 return -1;
             }
-            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId].CurrentPoints;
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId - 1].CurrentPoints;
         }
 
         // API: Max move PP of the pokemon of the current box matching the ID.
@@ -1765,7 +1765,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMoveMaxPPFromPC: tried to access an impossible move #" + moveId + ".");
                 return -1;
             }
-            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId].MaxPoints;
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Moves[moveId - 1].MaxPoints;
         }
 
         // API: Nature of the pokemon of the current box matching the ID.
@@ -1802,7 +1802,7 @@ namespace PROBot.Scripting
                 return 0;
             }
 
-            return Bot.Game.Team[boxPokemonId - 1].EV.GetStat(_stats[statType.ToUpperInvariant()]);
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].EV.GetStat(_stats[statType.ToUpperInvariant()]);
         }
 
         // API: Returns the individual value for the specified stat of the specified pokémon in the PC.
