@@ -71,7 +71,7 @@ namespace PROProtocol
             Status = data[21];
             Gender = data[22];
 
-            OriginalTrainer = data[28];
+            OriginalTrainer = data[29];
             Region = (Region)Convert.ToInt32(data[47]);
             Form = Convert.ToInt32(data[48]);
 
