@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace PROProtocol
 {
@@ -3265,6 +3265,12 @@ namespace PROProtocol
             Moves[531].Type = "electric";
             Moves[531].Status = false;
             Moves[531].DamageType = DamageType.Special;
+            Moves[533].Name = "scald";
+            Moves[533].Power = 80;
+            Moves[533].Accuracy = 100;
+            Moves[533].Type = "water";
+            Moves[533].Status = false;
+            Moves[533].DamageType = DamageType.Special;
         }
 
 
@@ -3803,6 +3809,7 @@ namespace PROProtocol
             MoveNames[530] = "Dragon Tail";
             MoveNames[531] = "Circle Throw";
             MoveNames[532] = "Volt Switch";
+            MoveNames[533] = "Scald";
         }
     }
 }
