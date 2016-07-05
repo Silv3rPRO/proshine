@@ -17,6 +17,11 @@
             get { return Data?.Name; }
         }
 
+        public string Name_PP
+        {
+            get { return Name + " " + CurrentPoints + "/" + MaxPoints; }
+        }
+
         public PokemonMove(int position, int id, int maxPoints, int currentPoints)
         {
             Position = position;
