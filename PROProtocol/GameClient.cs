@@ -12,6 +12,9 @@ namespace PROProtocol
         public bool IsConnected { get; private set; }
         public bool IsAuthenticated { get; private set; }
         public string PlayerName { get; private set; }
+        public int Pokedex_Owned { get; private set; }
+        public int Pokedex_Seen { get; private set; }
+        public int Pokedex_Evolved { get; private set; }
 
         public int PlayerX { get; private set; }
         public int PlayerY { get; private set; }
