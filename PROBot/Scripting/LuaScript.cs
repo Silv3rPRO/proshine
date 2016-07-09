@@ -114,6 +114,9 @@ namespace PROBot.Scripting
             _lua.Globals["getPlayerX"] = new Func<int>(GetPlayerX);
             _lua.Globals["getPlayerY"] = new Func<int>(GetPlayerY);
             _lua.Globals["getMapName"] = new Func<string>(GetMapName);
+            _lua.Globals["getPokedexOwned"] = new Func<int>(GetPokedexOwned);
+            _lua.Globals["getPokedexSeen"] = new Func<int>(GetPokedexSeen);
+            _lua.Globals["getPokedexEvolved"] = new Func<int>(GetPokedexEvolved);
             _lua.Globals["getTeamSize"] = new Func<int>(GetTeamSize);
 
             _lua.Globals["getPokemonId"] = new Func<int, int>(GetPokemonId);
@@ -372,7 +375,25 @@ namespace PROBot.Scripting
         {
             return Bot.Game.MapName;
         }
+        
+        // API: Returns Owned Entry of the pokedex
+        private int GetPokedexOwned()
+        {
+            return Bot.Game.Pokedex_Owned;
+        }
 
+        // API: Returns Seen Entry of the pokedex
+        private int GetPokedexSeen()
+        {
+            return Bot.Game.Pokedex_Seen;
+        }
+
+        // API: Returns Evolved Entry of the pokedex
+        private int GetPokedexEvolved()
+        {
+            return Bot.Game.Pokedex_Evolved;
+        }
+        
         // API: Returns the amount of pokémon in the team.
         private int GetTeamSize()
         {
