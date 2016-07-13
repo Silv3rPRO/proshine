@@ -1159,10 +1159,13 @@ namespace PROProtocol
             PositionUpdated?.Invoke(MapName, PlayerX, playerY);
         }
 
-        private void OnPlayerInfos(string[] data)
+         private void OnPlayerInfos(string[] data)
         {
             string[] playerData = data[1].Split('|');
             PlayerName = playerData[0];
+            Pokedex_Owned = Convert.ToInt32(playerData[4]);
+            Pokedex_Seen = Convert.ToInt32(playerData[5]);
+            Pokedex_Evolved = Convert.ToInt32(playerData[6]);
         }
 
         private void OnUpdateTime(string[] data)
