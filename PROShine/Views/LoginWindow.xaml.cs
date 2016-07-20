@@ -178,15 +178,15 @@ namespace PROShine
             ShowAccounts = !ShowAccounts;
             if (ShowAccounts)
             {
-                AccountList.Visibility = Visibility.Visible;
-                AccountList.Width = 150;
-                ShowAccountsButton.Content = "<";
-            }
-            else
-            {
                 AccountList.Width = 0;
                 AccountList.Visibility = Visibility.Hidden;
                 ShowAccountsButton.Content = ">";
+            }
+            else
+                AccountList.Visibility = Visibility.Visible;
+                AccountList.Width = 150;
+                ShowAccountsButton.Content = "<";
+            {
             }
         }
 
@@ -211,7 +211,11 @@ namespace PROShine
                     {
                         PasswordTextBox.Password = account.Password;
                     }
-                    if (account.Server == "BLUE")
+                    if (account.Server == "YELLOW")
+                    {
+                        ServerComboBox.SelectedIndex = 2;
+                    }
+                    else if (account.Server == "BLUE")
                     {
                         ServerComboBox.SelectedIndex = 1;
                     }
