@@ -380,19 +380,19 @@ namespace PROBot.Scripting
         // API: Returns Owned Entry of the pokedex
         private int GetPokedexOwned()
         {
-            return Bot.Game.Pokedex_Owned;
+            return Bot.Game.PokedexOwned;
         }
 
         // API: Returns Seen Entry of the pokedex
         private int GetPokedexSeen()
         {
-            return Bot.Game.Pokedex_Seen;
+            return Bot.Game.PokedexSeen;
         }
 
         // API: Returns Evolved Entry of the pokedex
         private int GetPokedexEvolved()
         {
-            return Bot.Game.Pokedex_Evolved;
+            return Bot.Game.PokedexEvolved;
         }
         
         // API: Returns the amount of pokémon in the team.

@@ -12,14 +12,15 @@ namespace PROProtocol
         public bool IsConnected { get; private set; }
         public bool IsAuthenticated { get; private set; }
         public string PlayerName { get; private set; }
-        public int Pokedex_Owned { get; private set; }
-        public int Pokedex_Seen { get; private set; }
-        public int Pokedex_Evolved { get; private set; }
 
         public int PlayerX { get; private set; }
         public int PlayerY { get; private set; }
         public string MapName { get; private set; }
         public Map Map { get; private set; }
+
+        public int PokedexOwned { get; private set; }
+        public int PokedexSeen { get; private set; }
+        public int PokedexEvolved { get; private set; }
 
         public bool IsInBattle { get; private set; }
         public bool IsSurfing { get; private set; }
@@ -1163,9 +1164,9 @@ namespace PROProtocol
         {
             string[] playerData = data[1].Split('|');
             PlayerName = playerData[0];
-            Pokedex_Owned = Convert.ToInt32(playerData[4]);
-            Pokedex_Seen = Convert.ToInt32(playerData[5]);
-            Pokedex_Evolved = Convert.ToInt32(playerData[6]);
+            PokedexOwned = Convert.ToInt32(playerData[4]);
+            PokedexSeen = Convert.ToInt32(playerData[5]);
+            PokedexEvolved = Convert.ToInt32(playerData[6]);
         }
 
         private void OnUpdateTime(string[] data)
