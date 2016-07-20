@@ -64,10 +64,10 @@
                 </Grid>
             </Grid>
             <Grid Margin="2" Grid.Column="1">
-                <Button Name="ShowAccountsButton" Content="&lt;" HorizontalAlignment="Stretch" Click="ShowAccounts_Click" />
+                <Button Name="ShowAccountsButton" Content="&gt;" HorizontalAlignment="Stretch" Click="ShowAccounts_Click" />
             </Grid>
         </Grid>
-        <Grid Name="AccountList"  Margin="2" Grid.Column="1" Visibility="Visible" Width="150">
+        <Grid Name="AccountList"  Margin="2" Grid.Column="1" Visibility="Hidden" Width="0">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="30" />

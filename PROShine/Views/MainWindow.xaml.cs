@@ -76,7 +76,7 @@ namespace PROShine
 
             SetTitle(null);
 
-            LogMessage("Running " + App.Name + " by " + App.Author + ", version " + App.Version + " Customized by Emuuung");
+            LogMessage("Running " + App.Name + " by " + App.Author + ", version " + App.Version;
 
             Task.Run(() => UpdateClients());
         }
@@ -84,7 +84,7 @@ namespace PROShine
         private void SetTitle(string username)
         {
             Title = username == null ? "" : username + " - ";
-            Title += App.Name + " " + App.Version + " Customized by Emuuung";
+            Title += App.Name + " " + App.Version;
 #if DEBUG
             Title += " (debug)";
 #endif

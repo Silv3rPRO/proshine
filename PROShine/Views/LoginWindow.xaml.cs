@@ -178,14 +178,14 @@ namespace PROShine
             ShowAccounts = !ShowAccounts;
             if (ShowAccounts)
             {
-                AccountList.Width = 0;
-                AccountList.Visibility = Visibility.Hidden;
-                ShowAccountsButton.Content = ">";
-            }
-            else
                 AccountList.Visibility = Visibility.Visible;
                 AccountList.Width = 150;
                 ShowAccountsButton.Content = "<";
+            }
+            else
+                AccountList.Width = 0;
+                AccountList.Visibility = Visibility.Hidden;
+                ShowAccountsButton.Content = ">";
             {
             }
         }
