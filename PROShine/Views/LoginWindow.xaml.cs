@@ -183,10 +183,10 @@ namespace PROShine
                 ShowAccountsButton.Content = "<";
             }
             else
+            {
                 AccountList.Width = 0;
                 AccountList.Visibility = Visibility.Hidden;
                 ShowAccountsButton.Content = ">";
-            {
             }
         }
 
