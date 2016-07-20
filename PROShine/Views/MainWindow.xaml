@@ -90,8 +90,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="7*" />
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Background="#FFB5C3DA" HorizontalAlignment="Stretch">
             <Menu IsMainMenu="True" Background="#FFB5C3DA" Foreground="#FF101020" FontSize="13.333">
