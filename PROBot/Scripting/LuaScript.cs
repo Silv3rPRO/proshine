@@ -160,6 +160,7 @@ namespace PROBot.Scripting
             _lua.Globals["isShopOpen"] = new Func<bool>(IsShopOpen);
             _lua.Globals["getMoney"] = new Func<int>(GetMoney);
             _lua.Globals["isMounted"] = new Func<bool>(IsMounted);
+            _lua.Globals["isSurfing"] = new Func<bool>(IsSurfing);
             _lua.Globals["isPrivateMessageEnabled"] = new Func<bool>(IsPrivateMessageEnabled);
             _lua.Globals["getTime"] = new GetTimeDelegate(GetTime);
             _lua.Globals["isMorning"] = new Func<bool>(IsMorning);
@@ -887,6 +888,12 @@ namespace PROBot.Scripting
         private bool IsMounted()
         {
             return Bot.Game.IsBiking;
+        }
+        
+        // API: Returns true if the player is surfing 
+        private bool IsSurfing()
+        {
+            return Bot.Game.IsSurfing;
         }
 
         // API: Returns true if the opponent pokémon is shiny.
