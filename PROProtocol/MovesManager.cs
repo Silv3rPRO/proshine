@@ -30,24 +30,26 @@ namespace PROProtocol
             }
         }
 
-        public MoveData[] Moves = new MoveData[533];
-        public string[] MoveNames = new string[533];
+        public const int MovesCount = 536;
+
+        public MoveData[] Moves = new MoveData[MovesCount];
+        public string[] MoveNames = new string[MovesCount];
         private Dictionary<string, MoveData> _namesToMoves;
-        private MoveData[] _idsToMoves = new MoveData[533];
+        private MoveData[] _idsToMoves = new MoveData[MovesCount];
 
         private MovesManager()
         {
             LoadMoves();
 
             _namesToMoves = new Dictionary<string, MoveData>();
-            for (int i = 0; i < 533; i++)
+            for (int i = 0; i < MovesCount; i++)
             {
                 if (Moves[i].Name != null && !_namesToMoves.ContainsKey(Moves[i].Name))
                 {
                     _namesToMoves.Add(Moves[i].Name, Moves[i]);
                 }
             }
-            for (int i = 0; i < 533; i++)
+            for (int i = 0; i < MovesCount; i++)
             {
                 string lowerName = MoveNames[i].ToLowerInvariant();
                 if (_namesToMoves.ContainsKey(lowerName))
@@ -59,7 +61,7 @@ namespace PROProtocol
 
         public MoveData GetMoveData(int moveId)
         {
-            if (moveId > 0 && moveId < 533)
+            if (moveId > 0 && moveId < MovesCount)
             {
                 return _idsToMoves[moveId];
             }
@@ -69,7 +71,7 @@ namespace PROProtocol
         private void LoadMoves()
         {
             LoadMoveNames();
-            for (int i = 0; i < 533; i++)
+            for (int i = 0; i < MovesCount; i++)
             {
                 Moves[i] = new MoveData();
             }
@@ -3265,12 +3267,24 @@ namespace PROProtocol
             Moves[531].Type = "electric";
             Moves[531].Status = false;
             Moves[531].DamageType = DamageType.Special;
-            Moves[533].Name = "scald";
-            Moves[533].Power = 80;
+            Moves[532].Name = "sticky web";
+            Moves[532].Power = -1;
+            Moves[532].Accuracy = 100;
+            Moves[532].Type = "bug";
+            Moves[532].Status = true;
+            Moves[532].DamageType = DamageType.Special;
+            Moves[533].Name = "horn leech";
+            Moves[533].Power = 75;
             Moves[533].Accuracy = 100;
-            Moves[533].Type = "water";
+            Moves[533].Type = "grass";
             Moves[533].Status = false;
-            Moves[533].DamageType = DamageType.Special;
+            Moves[533].DamageType = DamageType.Physical;
+            Moves[534].Name = "scald";
+            Moves[534].Power = 80;
+            Moves[534].Accuracy = 100;
+            Moves[534].Type = "water";
+            Moves[534].Status = false;
+            Moves[534].DamageType = DamageType.Special;
         }
 
 
@@ -3809,7 +3823,9 @@ namespace PROProtocol
             MoveNames[530] = "Dragon Tail";
             MoveNames[531] = "Circle Throw";
             MoveNames[532] = "Volt Switch";
-            MoveNames[533] = "Scald";
+            MoveNames[533] = "Sticky Web";
+            MoveNames[534] = "Horn Leech";
+            MoveNames[535] = "Scald";
         }
     }
 }
