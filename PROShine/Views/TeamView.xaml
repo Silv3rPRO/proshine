@@ -22,6 +22,10 @@
                         <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}"/>
                         <GridViewColumn Header="HP" DisplayMemberBinding="{Binding Health}"/>
                         <GridViewColumn Header="Remaining Exp" DisplayMemberBinding="{Binding Experience.RemainingExperience}"/>
+                        <GridViewColumn Header="Move 1" DisplayMemberBinding="{Binding Moves[0].Name_PP}"/>
+                        <GridViewColumn Header="Move 2" DisplayMemberBinding="{Binding Moves[1].Name_PP}"/>
+                        <GridViewColumn Header="Move 3" DisplayMemberBinding="{Binding Moves[2].Name_PP}"/>
+                        <GridViewColumn Header="Move 4" DisplayMemberBinding="{Binding Moves[3].Name_PP}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
