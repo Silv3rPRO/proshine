@@ -60,6 +60,10 @@
     <Compile Include="Utils\TaskUtils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BrightNetwork\BrightNetwork.csproj">
+      <Project>{f6f45690-9361-4da4-8a8a-18d782e29752}</Project>
+      <Name>BrightNetwork</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PROProtocol\PROProtocol.csproj">
       <Project>{c9a1afc8-2228-4542-b2c7-b6eca1461c84}</Project>
       <Name>PROProtocol</Name>

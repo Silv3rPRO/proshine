@@ -86,7 +86,7 @@ namespace PROBot
         private void LoginUpdate()
         {
             GameClient client;
-            GameConnection.Server server = Account.Server == "BLUE" ? GameConnection.Server.Blue : GameConnection.Server.Red;
+            GameServer server = GameServerExtensions.FromName(Account.Server);
             if (Account.Socks.Version != SocksVersion.None)
             {
                 // TODO: Clean this code.

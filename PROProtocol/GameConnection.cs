@@ -8,17 +8,9 @@ namespace PROProtocol
 {
     public class GameConnection : SimpleTextClient
     {
-        public enum Server
-        {
-            Red,
-            Blue
-        }
-        
-        private const string RedAddress = "46.28.203.224";
-        private const string BlueAddress = "46.28.207.53";
         private const int ServerPort = 800;
 
-        private Server _server;
+        private GameServer _server;
         private bool _useSocks;
         private int _socksVersion;
         private string _socksHost;
@@ -26,7 +18,7 @@ namespace PROProtocol
         private string _socksUser;
         private string _socksPass;
 
-        public GameConnection(Server server)
+        public GameConnection(GameServer server)
             : base(new BrightClient())
         {
             PacketDelimiter = "|.\\\r\n";
@@ -35,7 +27,7 @@ namespace PROProtocol
             _server = server;
         }
 
-        public GameConnection(Server server, int socksVersion, string socksHost, int socksPort, string socksUser, string socksPass)
+        public GameConnection(GameServer server, int socksVersion, string socksHost, int socksPort, string socksUser, string socksPass)
             : this(server)
         {
             _useSocks = true;
@@ -48,7 +40,7 @@ namespace PROProtocol
 
         public async void Connect()
         {
-            string host = _server == Server.Blue ? BlueAddress : RedAddress;
+            string host = _server.GetAddress();
             
             if (!_useSocks)
             {

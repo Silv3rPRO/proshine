@@ -39,6 +39,7 @@
     <Compile Include="ChatChannel.cs" />
     <Compile Include="ChatEmotes.cs" />
     <Compile Include="EffortValuesManager.cs" />
+    <Compile Include="GameServer.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="MapClient.cs" />
     <Compile Include="MapConnection.cs" />

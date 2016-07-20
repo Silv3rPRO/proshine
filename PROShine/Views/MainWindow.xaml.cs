@@ -152,7 +152,7 @@ namespace PROShine
             lock (Bot)
             {
                 account.Password = login.Password;
-                account.Server = login.IsBlueServer ? "BLUE" : "RED";
+                account.Server = login.Server;
                 if (login.HasProxy)
                 {
                     account.Socks.Version = (SocksVersion)login.ProxyVersion;

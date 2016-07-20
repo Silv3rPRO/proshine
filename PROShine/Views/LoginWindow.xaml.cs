@@ -21,9 +21,9 @@ namespace PROShine
             get { return PasswordTextBox.Password; }
         }
 
-        public bool IsBlueServer
+        public string Server
         {
-            get { return ServerComboBox.Text.Trim().ToUpperInvariant().Contains("BLUE"); }
+            get { return ServerComboBox.Text.Trim().ToUpperInvariant().Split(' ')[0]; }
         }
 
         public bool HasProxy
@@ -72,7 +72,7 @@ namespace PROShine
             Title = App.Name + " - " + Title;
             UsernameTextBox.Focus();
 
-            ServerComboBox.ItemsSource = new List<string>() { "Red Server", "Blue Server" };
+            ServerComboBox.ItemsSource = new List<string>() { "Red Server", "Blue Server", "Yellow Server" };
             ServerComboBox.SelectedIndex = 0;
             RefreshAccountList();
         }
@@ -292,14 +292,7 @@ namespace PROShine
             {
                 account.Password = PasswordTextBox.Password;
             }
-            if (IsBlueServer)
-            {
-                account.Server = "BLUE";
-            }
-            else
-            {
-                account.Server = "RED";
-            }
+            account.Server = Server;
             if (HasProxy)
             {
                 SocksVersion socksVersion = SocksVersion.None;
