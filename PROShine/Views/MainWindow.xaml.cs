@@ -76,7 +76,7 @@ namespace PROShine
 
             SetTitle(null);
 
-            LogMessage("Running " + App.Name + " by " + App.Author + ", version " + App.Version;
+            LogMessage("Running " + App.Name + " by " + App.Author + ", version " + App.Version);
 
             Task.Run(() => UpdateClients());
         }
