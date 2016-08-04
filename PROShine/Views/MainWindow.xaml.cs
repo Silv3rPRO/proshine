@@ -704,7 +704,7 @@ namespace PROShine
 
         private void MenuWebsite_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("https://proshine-bot.ml/");
+            Process.Start("https://proshine-bot.com/");
         }
 
         private void StartScriptButton_Click(object sender, RoutedEventArgs e)
