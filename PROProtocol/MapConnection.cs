@@ -9,7 +9,7 @@ namespace PROProtocol
     {
         // TODO: Remove the duplication with GameConnection by creating an abstract class?
 
-        private const string ServerAddress = "46.28.207.193";
+        private const string ServerAddress = "95.183.48.126";
         private const int ServerPort = 803;
 
         private bool _useSocks;
