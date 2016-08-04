@@ -6,14 +6,16 @@ namespace PROBot
 {
     public class BattleAI
     {
+        private const int DoubleEdge = 70;
         private const int DragonRage = 74;
         private const int DreamEater = 76;
         private const int Explosion = 87;
         private const int FalseSwipe = 93;
         private const int NightShade = 193;
-        public const int Psywave = 217;
+        private const int Psywave = 217;
         private const int SeismicToss = 249;
         private const int Selfdestruct = 250;
+        private const int Synchronoise = 492;
 
         private HashSet<int> _levitatingPokemons = new HashSet<int>()
             {
@@ -175,7 +177,8 @@ namespace PROBot
                     continue;
                 }
 
-                if (move.Id == Explosion || move.Id == Selfdestruct)
+                if (move.Id == Explosion || move.Id == Selfdestruct ||
+                    (move.Id == DoubleEdge && ActivePokemon.CurrentHealth < _client.ActiveBattle.OpponentHealth / 3))
                 {
                     continue;
                 }
@@ -210,6 +213,16 @@ namespace PROBot
                 if (power < 0.01) continue;
 
                 power = ApplySpecialEffects(move, power);
+
+                if (move.Id == Synchronoise)
+                {
+                    if (playerType1 != opponentType1 && playerType1 != opponentType2 &&
+                        (playerType2 == PokemonType.None || playerType2 != opponentType1) &&
+                        (playerType2 == PokemonType.None || playerType2 != opponentType2))
+                    {
+                        power = 0;
+                    }
+                }
 
                 if (power < 0.01) continue;
 
@@ -250,7 +263,8 @@ namespace PROBot
                 foreach (PokemonMove move in pokemon.Moves)
                 {
                     MovesManager.MoveData moveData = MovesManager.Instance.GetMoveData(move.Id);
-                    if (move.CurrentPoints > 0 && IsMoveOffensive(move, moveData) && move.Id != DreamEater)
+                    if (move.CurrentPoints > 0 && IsMoveOffensive(move, moveData) &&
+                        move.Id != DreamEater && move.Id != Synchronoise && move.Id != DoubleEdge)
                     {
                         return true;
                     }
