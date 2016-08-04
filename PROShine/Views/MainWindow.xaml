@@ -106,7 +106,8 @@
                     <MenuItem Name="MenuPathScript" Header="Script: None" Click="MenuPathScript_Click" />
                 </MenuItem>
                 <MenuItem Header="Help">
-                    <MenuItem Header="Website" Click="MenuWebsite_Click" />
+                    <MenuItem Header="Forum" Click="MenuForum_Click" />
+                    <MenuItem Header="GitHub" Click="MenuGitHub_Click" />
                     <MenuItem Header="About" Click="MenuAbout_Click" />
                 </MenuItem>
             </Menu>

@@ -702,9 +702,14 @@ namespace PROShine
             MessageBox.Show(App.Name + " version " + App.Version + ", by " + App.Author + "." + Environment.NewLine + App.Description, App.Name + " - About");
         }
 
-        private void MenuWebsite_Click(object sender, RoutedEventArgs e)
+        private void MenuForum_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("https://proshine-bot.com/");
+        }
+
+        private void MenuGitHub_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://github.com/Silv3rPRO/proshine");
         }
 
         private void StartScriptButton_Click(object sender, RoutedEventArgs e)
