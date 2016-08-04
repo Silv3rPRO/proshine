@@ -211,7 +211,11 @@ namespace PROShine
                     {
                         PasswordTextBox.Password = account.Password;
                     }
-                    if (account.Server == "BLUE")
+                    if (account.Server == "YELLOW")
+                    {
+                        ServerComboBox.SelectedIndex = 2;
+                    }
+                    else if (account.Server == "BLUE")
                     {
                         ServerComboBox.SelectedIndex = 1;
                     }
