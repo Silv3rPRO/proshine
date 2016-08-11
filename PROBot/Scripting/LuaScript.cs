@@ -239,6 +239,7 @@ namespace PROBot.Scripting
             _lua.Globals["sortTeamRangeByLevelDescending"] = new Func<int, int, bool>(SortTeamRangeByLevelDescending);
             _lua.Globals["buyItem"] = new Func<string, int, bool>(BuyItem);
             _lua.Globals["usePC"] = new Func<bool>(UsePC);
+            _lua.Globals["usePC_Dest"] = new Func<bool>(UsePC_Dest);
             _lua.Globals["openPCBox"] = new Func<int, bool>(OpenPCBox);
             _lua.Globals["depositPokemonToPC"] = new Func<int, bool>(DepositPokemonToPC);
             _lua.Globals["withdrawPokemonFromPC"] = new Func<int, int, bool>(WithdrawPokemonFromPC);
@@ -1419,6 +1420,13 @@ namespace PROBot.Scripting
         private bool IsPCOpen()
         {
             return Bot.Game.IsPCOpen;
+        }
+        
+        // API: Move to the PC on specificed Coordinates and opens it, refreshing the first box.
+        private bool UsePC_Dest(int PC_x , int PC_y)
+        {
+            if (!ValidateAction("usePc_Dest", false)) return false;
+            return ExecuteAction(Bot.OpenPC_Dest(PC_x , PC_y));
         }
 
         // API: Move to the PC and opens it, refreshing the first box.
