@@ -239,7 +239,7 @@ namespace PROBot.Scripting
             _lua.Globals["sortTeamRangeByLevelDescending"] = new Func<int, int, bool>(SortTeamRangeByLevelDescending);
             _lua.Globals["buyItem"] = new Func<string, int, bool>(BuyItem);
             _lua.Globals["usePC"] = new Func<bool>(UsePC);
-            _lua.Globals["usePC_Dest"] = new Func<bool>(UsePC_Dest);
+            _lua.Globals["usePC_Dest"] = new Func<int, int, bool>(UsePC_Dest);
             _lua.Globals["openPCBox"] = new Func<int, bool>(OpenPCBox);
             _lua.Globals["depositPokemonToPC"] = new Func<int, bool>(DepositPokemonToPC);
             _lua.Globals["withdrawPokemonFromPC"] = new Func<int, int, bool>(WithdrawPokemonFromPC);
