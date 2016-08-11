@@ -277,6 +277,23 @@ namespace PROBot
                 return MoveToCell(pcPosition.Item1, pcPosition.Item2 + 1);
             }
         }
+        
+        public bool OpenPC_Dest(int PC_x, int PC_y)
+        {
+            if (Game.IsPCOpen)
+            {
+                return false;
+            }
+            int distance = Game.DistanceTo(PC_x, PC_y);
+            if (distance == 1)
+            {
+                return Game.OpenPC();
+            }
+            else
+            {
+                return MoveToCell(PC_x, PC_y +1);
+            }
+        }
 
         public bool RefreshPCBox(int boxId)
         {
