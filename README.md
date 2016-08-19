@@ -2,7 +2,7 @@
 
 A free, open-source and advanced bot for Pokémon Revolution Online.
 
-Community: https://proshine-bot.ml/
+Community: https://proshine-bot.com/
 
 Scripts: https://github.com/Silv3rPRO/proshine-scripts
 
