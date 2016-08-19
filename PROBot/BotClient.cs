@@ -214,10 +214,13 @@ namespace PROBot
 
         public bool MoveToLink(string destinationMap)
         {
-            Tuple<int, int> nearest = Game.Map.GetNearestLink(destinationMap, Game.PlayerX, Game.PlayerY);
+            IEnumerable<Tuple<int, int>> nearest = Game.Map.GetNearestLinks(destinationMap, Game.PlayerX, Game.PlayerY);
             if (nearest != null)
             {
-                return MoveToCell(nearest.Item1, nearest.Item2);
+                foreach (Tuple<int, int> link in nearest)
+                {
+                    if (MoveToCell(link.Item1, link.Item2)) return true;
+                }
             }
             return false;
         }

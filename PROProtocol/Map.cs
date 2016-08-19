@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace PROProtocol
 {
@@ -412,25 +413,11 @@ namespace PROProtocol
             }
         }
 
-        public Tuple<int, int> GetNearestLink(string linkName, int x, int y)
+        public IEnumerable<Tuple<int, int>> GetNearestLinks(string linkName, int x, int y)
         {
             if (LinkDestinations.ContainsKey(linkName))
             {
-                List<Tuple<int, int>> links = LinkDestinations[linkName];
-
-                Tuple<int, int> nearest = null;
-                int bestDistance = 0;
-                foreach (Tuple<int, int> link in links)
-                {
-                    int distance = GameClient.DistanceBetween(x, y, link.Item1, link.Item2);
-                    if (nearest == null || distance < bestDistance)
-                    {
-                        nearest = link;
-                        bestDistance = distance;
-                    }
-                }
-
-                return nearest;
+                return LinkDestinations[linkName].OrderBy(link => GameClient.DistanceBetween(x, y, link.Item1, link.Item2));
             }
             return null;
         }
