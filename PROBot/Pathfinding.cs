@@ -147,7 +147,7 @@ namespace PROBot
                     node.Score += node.DirectionChangeCount / 4;
                     if (node.IsSurfing == true && current.IsSurfing == false)
                     {
-                        node.Score += 20;
+                        node.Score += 30;
                     }
 
                     if (!openList.ContainsKey(node.Hash))
