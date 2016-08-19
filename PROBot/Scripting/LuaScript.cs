@@ -1189,7 +1189,7 @@ namespace PROBot.Scripting
         {
             if (!ValidateAction("moveNearExit", false)) return false;
 
-            Tuple<int, int> nearest = Bot.Game.Map.GetNearestLink(mapName.ToUpperInvariant(), Bot.Game.PlayerX, Bot.Game.PlayerY);
+            Tuple<int, int> nearest = Bot.Game.Map.GetNearestLinks(mapName.ToUpperInvariant(), Bot.Game.PlayerX, Bot.Game.PlayerY).First();
             if (nearest == null)
             {
                 Fatal("error: moveNearExit: could not find the exit '" + mapName + "'.");
