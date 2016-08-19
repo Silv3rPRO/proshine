@@ -352,8 +352,7 @@ namespace PROProtocol
         {
             if (x >= 0 && x < Width && y >= 0 && y < Height)
             {
-                int num = Tiles2[x, y];
-                return num == 5437;
+                return Tiles2[x, y] == 5437 || Tiles3[x, y] == 5437;
             }
             return false;
         }
