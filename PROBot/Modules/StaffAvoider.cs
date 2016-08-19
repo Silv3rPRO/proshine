@@ -7,7 +7,7 @@ namespace PROBot.Modules
     {
         public event Action<bool> StateChanged;
 
-        private bool _isEnabled = true;
+        private bool _isEnabled = false;
         public bool IsEnabled
         {
             get { return _isEnabled; }
