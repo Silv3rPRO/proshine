@@ -210,8 +210,6 @@ namespace PROBot
                     power = 0;
                 }
 
-                if (power < 0.01) continue;
-
                 power = ApplySpecialEffects(move, power);
 
                 if (move.Id == Synchronoise)
