@@ -170,6 +170,7 @@ namespace PROBot.Scripting
             _lua.Globals["isNoon"] = new Func<bool>(IsNoon);
             _lua.Globals["isNight"] = new Func<bool>(IsNight);
             _lua.Globals["isOutside"] = new Func<bool>(IsOutside);
+            _lua.Globals["isAutoEvolve"] = new Func<bool>(IsAutoEvolve);
 
             _lua.Globals["isCurrentPCBoxRefreshed"] = new Func<bool>(IsCurrentPCBoxRefreshed);
             _lua.Globals["getCurrentPCBoxId"] = new Func<int>(GetCurrentPCBoxId);
@@ -249,6 +250,8 @@ namespace PROBot.Scripting
             _lua.Globals["releasePokemonFromPC"] = new Func<int, int, bool>(ReleasePokemonFromPC);
             _lua.Globals["enablePrivateMessage"] = new Func<bool>(EnablePrivateMessage);
             _lua.Globals["disablePrivateMessage"] = new Func<bool>(DisablePrivateMessage);
+            _lua.Globals["enableAutoEvolve"] = new Func<bool>(EnableAutoEvolve);
+            _lua.Globals["disableAutoEvolve"] = new Func<bool>(DisableAutoEvolve);
 
             // Path functions
             _lua.Globals["pushDialogAnswer"] = new Action<int>(PushDialogAnswer);
@@ -1348,6 +1351,26 @@ namespace PROBot.Scripting
             return false;
         }
 
+        // API: Return the state Auto Evolve
+        private bool IsAutoEvolve()
+        {
+            return Bot.PokemonEvolver.IsEnabled;
+        }
+
+        // API: Enable auto evolve on PrO Shine client.
+        private bool EnableAutoEvolve()
+        {
+            Bot.PokemonEvolver.IsEnabled = true;
+            return Bot.PokemonEvolver.IsEnabled;
+        }
+
+        // API: Disable auto evolve on PrO Shine client.
+        private bool DisableAutoEvolve()
+        {
+            Bot.PokemonEvolver.IsEnabled = false;
+            return !Bot.PokemonEvolver.IsEnabled;
+        }
+        
         // API: Check if the private message from normal users are blocked.
         private bool IsPrivateMessageEnabled()
         {
