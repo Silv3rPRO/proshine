@@ -252,7 +252,6 @@ namespace PROBot.Scripting
             _lua.Globals["disablePrivateMessage"] = new Func<bool>(DisablePrivateMessage);
             _lua.Globals["enableAutoEvolve"] = new Func<bool>(EnableAutoEvolve);
             _lua.Globals["disableAutoEvolve"] = new Func<bool>(DisableAutoEvolve);
-            _lua.Globals["requestResync"] = new Func<bool>(RequestResync);
 
             // Path functions
             _lua.Globals["pushDialogAnswer"] = new Action<int>(PushDialogAnswer);
@@ -1388,14 +1387,6 @@ namespace PROBot.Scripting
         private bool DisablePrivateMessage()
         {
             return ExecuteAction(Bot.Game.PrivateMessageOff());
-        }
-
-        // API: Disable private messages from users.
-        private bool RequestResync()
-        {
-            Bot.LogMessage("Sending resynchronization request.");
-            Bot.Game.RequestResync();
-            return true;
         }
 
         private delegate int GetTimeDelegate(out int minute);
