@@ -16,7 +16,7 @@ namespace PROBot.Scripting
 #if DEBUG
         public int TimeoutDelay = 60000;
 #else
-        public int TimeoutDelay = 3000;
+        public int TimeoutDelay = 9000;
 #endif
 
         private Script _lua;
