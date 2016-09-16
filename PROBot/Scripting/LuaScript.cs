@@ -109,6 +109,7 @@ namespace PROBot.Scripting
             _lua.Options.CheckThreadAccess = false;
             _lua.Globals["log"] = new Action<string>(Log);
             _lua.Globals["fatal"] = new Action<string>(Fatal);
+            _lua.Globals["logout"] = new Action<string>(Logout);
             _lua.Globals["stringContains"] = new Func<string, string, bool>(StringContains);
             _lua.Globals["PlaySound"] = new Action<string>(PlaySound);
 
@@ -358,6 +359,14 @@ namespace PROBot.Scripting
             Bot.Stop();
         }
 
+        // API: Displays the specified message to the message log and logs out.
+        private void Logout(string message)
+        {
+            LogMessage(message);
+            Bot.Stop();
+            Bot.Logout(false);
+        }
+        
         // API: Returns true if the string contains the specified part, ignoring the case.
         private bool StringContains(string haystack, string needle)
         {
