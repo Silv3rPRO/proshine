@@ -444,9 +444,9 @@ namespace PROProtocol
             SendPacket("?|.|" + pokemonUid + "|.|" + teamSlot);
         }
 
-        private void SendRefreshPCRange(int start, int end)
+        private void SendRefreshPCBox(int box, string search)
         {
-            SendPacket("M|.|" + start + "|.|" + end);
+            SendPacket("M|.|" + box + "|.|" + search);
         }
 
         private void SendReleasePokemon(int pokemonUid)
@@ -517,28 +517,18 @@ namespace PROProtocol
             return true;
         }
 
-        private Tuple<int, int> GetPCBoxRange(int boxId)
-        {
-            if (!IsPCOpen || boxId < 1 || boxId > 67)
-            {
-                return null;
-            }
-            return new Tuple<int, int>((boxId - 1) * 15 + 7, (boxId - 1) * 15 + 21);
-        }
-
         public bool RefreshPCBox(int boxId)
         {
             if (!IsPCOpen || boxId < 1 || boxId > 67 || _refreshingPCBox.IsActive || IsPCBoxRefreshing)
             {
                 return false;
             }
-            var range = GetPCBoxRange(boxId);
             _refreshingPCBox.Set(Rand.Next(1500, 2000)); // this is the amount of time we wait for an answer
             CurrentPCBoxId = boxId;
             IsPCBoxRefreshing = true;
             CurrentPCBox = null;
             _refreshBoxTimeout = DateTime.UtcNow.AddSeconds(5); // this is to avoid a flood of the function
-            SendRefreshPCRange(range.Item1, range.Item2);
+            SendRefreshPCBox(boxId - 1, "ID");
             return true;
         }
 
