@@ -22,14 +22,17 @@ namespace PROBot.Scripting
         private Script _lua;
         private string _path;
         private string _content;
+        private IList<string> _libsContent;
+        private IDictionary<string, IList<DynValue>> _hookedFunctions;
 
         private bool _actionExecuted;
 
-        public LuaScript(BotClient bot, string path, string content)
+        public LuaScript(BotClient bot, string path, string content, IList<string> libsContent)
         {
             Bot = bot;
             _path = Path.GetDirectoryName(path);
             _content = content;
+            _libsContent = libsContent;
         }
 
         public override void Initialize()
@@ -93,7 +96,7 @@ namespace PROBot.Scripting
             _actionExecuted = false;
             try
             {
-                CallFunction(functionName);
+                CallFunction(functionName, true);
             }
             catch (ScriptRuntimeException ex)
             {
@@ -104,6 +107,8 @@ namespace PROBot.Scripting
 
         private void CreateLuaInstance()
         {
+            _hookedFunctions = new Dictionary<string, IList<DynValue>>();
+
             _lua = new Script(CoreModules.Preset_SoftSandbox | CoreModules.LoadMethods);
             _lua.Options.ScriptLoader = new CustomScriptLoader(_path) { ModulePaths = new [] { "?.lua" } };
             _lua.Options.CheckThreadAccess = false;
@@ -111,6 +116,7 @@ namespace PROBot.Scripting
             _lua.Globals["fatal"] = new Action<string>(Fatal);
             _lua.Globals["stringContains"] = new Func<string, string, bool>(StringContains);
             _lua.Globals["playSound"] = new Action<string>(PlaySound);
+            _lua.Globals["registerHook"] = new Action<string, DynValue>(RegisterHook);
 
             // General conditions
             _lua.Globals["getPlayerX"] = new Func<int>(GetPlayerX);
@@ -275,17 +281,11 @@ namespace PROBot.Scripting
             _lua.Globals["forgetMove"] = new Func<string, bool>(ForgetMove);
             _lua.Globals["forgetAnyMoveExcept"] = new Func<DynValue[], bool>(ForgetAnyMoveExcept);
 
-            try
+            foreach (string content in _libsContent)
             {
-                TaskUtils.CallActionWithTimeout(() => _lua.DoString(_content), delegate
-                {
-                    throw new Exception("The execution of the script timed out.");
-                }, TimeoutDelay);
+                CallContent(content);
             }
-            catch (SyntaxErrorException ex)
-            {
-                throw new Exception(ex.DecoratedMessage, ex);
-            }
+            CallContent(_content);
         }
 
         private void CallFunctionSafe(string functionName, params object[] args)
@@ -294,7 +294,7 @@ namespace PROBot.Scripting
             {
                 try
                 {
-                    CallFunction(functionName, args);
+                    CallFunction(functionName, false, args);
                 }
                 catch (ScriptRuntimeException ex)
                 {
@@ -311,9 +311,36 @@ namespace PROBot.Scripting
             }
         }
 
-        private void CallFunction(string functionName, params object[] args)
+        private void CallContent(string content)
         {
-            DynValue function = _lua.Globals.Get(functionName);
+            try
+            {
+                TaskUtils.CallActionWithTimeout(() => _lua.DoString(content), delegate
+                {
+                    throw new Exception("The execution of the script timed out.");
+                }, TimeoutDelay);
+            }
+            catch (SyntaxErrorException ex)
+            {
+                throw new Exception(ex.DecoratedMessage, ex);
+            }
+        }
+
+        private void CallFunction(string functionName, bool isPathAction, params object[] args)
+        {
+            if (_hookedFunctions.ContainsKey(functionName))
+            {
+                foreach (DynValue function in _hookedFunctions[functionName])
+                {
+                    CallDynValueFunction(function, "hook:" + functionName, args);
+                    if (isPathAction && _actionExecuted) return;
+                }
+            }
+            CallDynValueFunction(_lua.Globals.Get(functionName), functionName, args);
+        }
+
+        private void CallDynValueFunction(DynValue function, string functionName, params object[] args)
+        {
             if (function.Type != DataType.Function) return;
             TaskUtils.CallActionWithTimeout(() => _lua.Call(function, args), delegate
             {
@@ -381,6 +408,21 @@ namespace PROBot.Scripting
                         player.Play();
                     }
                 };
+        }
+
+        // API: Calls the specified function when the specified event occurs.
+        private void RegisterHook(string eventName, DynValue callback)
+        {
+            if (callback.Type != DataType.Function)
+            {
+                Fatal("error: registerHook: the callback must be a function.");
+                return;
+            }
+            if (!_hookedFunctions.ContainsKey(eventName))
+            {
+                _hookedFunctions.Add(eventName, new List<DynValue>());
+            }
+            _hookedFunctions[eventName].Add(callback);
         }
 
         // API: Returns the X-coordinate of the current cell.

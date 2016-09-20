@@ -188,7 +188,7 @@ namespace PROShine
         {
             OpenFileDialog openDialog = new OpenFileDialog
             {
-                Filter = App.Name + " Scripts|*.lua;*.json;*.txt|All Files|*.*"
+                Filter = App.Name + " Scripts|*.lua;*.txt|All Files|*.*"
             };
 
             bool? result = openDialog.ShowDialog();

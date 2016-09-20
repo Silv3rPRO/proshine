@@ -182,21 +182,20 @@ namespace PROBot
         {
             string input = File.ReadAllText(filename);
 
-            bool isJsonScript = false;
-            if (!filename.ToUpperInvariant().EndsWith(".LUA"))
+            List<string> libs = new List<string>();
+            if (Directory.Exists("Libs"))
             {
-                if (filename.ToUpperInvariant().EndsWith(".JSON") || input.Contains("\"name\":"))
+                string[] files = Directory.GetFiles("Libs");
+                foreach (string file in files)
                 {
-                    isJsonScript = true;
+                    if (file.ToUpperInvariant().EndsWith(".LUA"))
+                    {
+                        libs.Add(File.ReadAllText(file));
+                    }
                 }
             }
 
-            if (isJsonScript)
-            {
-                throw new Exception("JSON scripts are no longer supported by PROShine. Please use Lua instead.");
-            }
-
-            BaseScript script = new LuaScript(this, Path.GetFullPath(filename), input);
+            BaseScript script = new LuaScript(this, Path.GetFullPath(filename), input, libs);
 
             Stop();
             Script = script;
