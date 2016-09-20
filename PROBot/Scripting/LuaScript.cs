@@ -2099,7 +2099,7 @@ namespace PROBot.Scripting
             {
                 Bot.Game.PushDialogAnswer(answerValue.CastToString());
             }
-            if (answerValue.Type == DataType.Number)
+            else if (answerValue.Type == DataType.Number)
             {
                 Bot.Game.PushDialogAnswer((int)answerValue.CastToNumber());
             }
