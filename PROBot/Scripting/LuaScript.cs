@@ -292,7 +292,14 @@ namespace PROBot.Scripting
         {
             try
             {
-                CallFunction(functionName, args);
+                try
+                {
+                    CallFunction(functionName, args);
+                }
+                catch (ScriptRuntimeException ex)
+                {
+                    throw new Exception(ex.DecoratedMessage, ex);
+                }
             }
             catch (Exception ex)
             {
