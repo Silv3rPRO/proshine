@@ -83,7 +83,7 @@ namespace PROShine
 
         private void SetTitle(string username)
         {
-            Title = username == null ? "" : username + " - ";
+            Title = username == null ? "" : Bot.Account.Server + " - " + username + " - ";
             Title += App.Name + " " + App.Version;
 #if DEBUG
             Title += " (debug)";
