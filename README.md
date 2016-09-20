@@ -18,7 +18,4 @@ Scripts: https://github.com/Silv3rPRO/proshine-scripts
 
 ## Contributors
 
-* [Silv3r](https://github.com/Silv3rPRO/)
-* [g0ld](https://github.com/g0ldPRO/)
-* [Rympex](https://github.com/Rympex)
-* [Emuuung](https://github.com/Emuuung)
+https://github.com/Silv3rPRO/proshine/graphs/contributors
