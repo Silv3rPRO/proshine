@@ -110,7 +110,7 @@ namespace PROBot.Scripting
             _lua.Globals["log"] = new Action<string>(Log);
             _lua.Globals["fatal"] = new Action<string>(Fatal);
             _lua.Globals["stringContains"] = new Func<string, string, bool>(StringContains);
-            _lua.Globals["PlaySound"] = new Action<string>(PlaySound);
+            _lua.Globals["playSound"] = new Action<string>(PlaySound);
 
             // General conditions
             _lua.Globals["getPlayerX"] = new Func<int>(GetPlayerX);
