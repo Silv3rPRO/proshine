@@ -43,6 +43,7 @@ namespace PROProtocol
         public bool IsScriptActive { get; private set; }
         public string ScriptId { get; private set; }
         public int ScriptStatus { get; private set; }
+        public string[] DialogContent { get; private set; }
 
         public Battle ActiveBattle { get; private set; }
         public Shop OpenedShop { get; private set; }
@@ -95,7 +96,7 @@ namespace PROProtocol
         private List<Direction> _movements = new List<Direction>();
         private Direction? _slidingDirection;
         private bool _surfAfterMovement;
-        private Queue<int> _dialogResponses = new Queue<int>();
+        private Queue<object> _dialogResponses = new Queue<object>();
 
         private Timeout _movementTimeout = new Timeout();
         private Timeout _battleTimeout = new Timeout();
@@ -343,12 +344,7 @@ namespace PROProtocol
                 }
                 else if (ScriptStatus == 3 || ScriptStatus == 4)
                 {
-                    int response = 1;
-                    if (_dialogResponses.Count > 0)
-                    {
-                        response = _dialogResponses.Dequeue();
-                    }
-                    SendDialogResponse(response);
+                    SendDialogResponse(GetNextDialogResponse());
                     _dialogTimeout.Set();
                 }
                 else if (ScriptStatus == 1234) // Yes, this is a magic value. I don't care.
@@ -358,6 +354,30 @@ namespace PROProtocol
                     _dialogTimeout.Set();
                 }
             }
+        }
+
+        private int GetNextDialogResponse()
+        {
+            if (_dialogResponses.Count > 0)
+            {
+                object response = _dialogResponses.Dequeue();
+                if (response is int)
+                {
+                    return (int)response;
+                }
+                else if (response is string)
+                {
+                    string text = ((string)response).ToUpperInvariant();
+                    for (int i = 1; i < DialogContent.Length; ++i)
+                    {
+                        if (DialogContent[i].ToUpperInvariant().Equals(text))
+                        {
+                            return i;
+                        }
+                    }
+                }
+            }
+            return 1;
         }
 
         public int DistanceTo(int cellX, int cellY)
@@ -819,6 +839,11 @@ namespace PROProtocol
         public void PushDialogAnswer(int index)
         {
             _dialogResponses.Enqueue(index);
+        }
+
+        public void PushDialogAnswer(string text)
+        {
+            _dialogResponses.Enqueue(text);
         }
 
         public bool BuyItem(int itemId, int quantity)
@@ -1341,10 +1366,10 @@ namespace PROProtocol
             int status = Convert.ToInt32(data[1]);
             string script = data[3];
 
+            DialogContent = script.Split(new string[] { "-#-" }, StringSplitOptions.None);
             if (script.Contains("-#-") && status > 1)
             {
-                string[] messageData = script.Split(new string[] { "-#-" }, StringSplitOptions.None);
-                script = messageData[0];
+                script = DialogContent[0];
             }
             string[] messages = script.Split(new string[] { "-=-" }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string message in messages)

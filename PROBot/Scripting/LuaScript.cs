@@ -256,7 +256,7 @@ namespace PROBot.Scripting
             _lua.Globals["disableAutoEvolve"] = new Func<bool>(DisableAutoEvolve);
 
             // Path functions
-            _lua.Globals["pushDialogAnswer"] = new Action<int>(PushDialogAnswer);
+            _lua.Globals["pushDialogAnswer"] = new Action<DynValue>(PushDialogAnswer);
 
             // General actions
             _lua.Globals["useItem"] = new Func<string, bool>(UseItem);
@@ -2051,9 +2051,20 @@ namespace PROBot.Scripting
         }
 
         // API: Adds the specified answer to the answer queue. It will be used in the next dialog.
-        private void PushDialogAnswer(int answerIndex)
+        private void PushDialogAnswer(DynValue answerValue)
         {
-            Bot.Game.PushDialogAnswer(answerIndex);
+            if (answerValue.Type == DataType.String)
+            {
+                Bot.Game.PushDialogAnswer(answerValue.CastToString());
+            }
+            if (answerValue.Type == DataType.Number)
+            {
+                Bot.Game.PushDialogAnswer((int)answerValue.CastToNumber());
+            }
+            else
+            {
+                Fatal("error: pushDialogAnswer: the argument must be a number (index) or a string (search text).");
+            }
         }
 
         private static HashSet<int> _outOfCombatItemScopes = new HashSet<int> { 8, 10, 15 };
