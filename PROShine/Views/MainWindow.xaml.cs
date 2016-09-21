@@ -633,9 +633,10 @@ namespace PROShine
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(logPath, true))
                 {
                     file.WriteLine("[" + DateTime.Now.ToLongTimeString() + "] " + message);
+                    file.Close();
                 }
             }
-            catch{} //tried to logfile before logging in/file created
+            catch{}
         }
 
         private void LogMessage(string format, params object[] args)
