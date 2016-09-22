@@ -331,6 +331,7 @@ namespace PROShine
                 }
                 TabItem tab = TabControl.SelectedItem as TabItem;
                 text = Regex.Replace(text, @"\[(-|.{6})\]", "");
+                if (text.Length == 0) return;
                 if (_localChatTab == tab)
                 {
                     text = text.Replace('|', '#');
