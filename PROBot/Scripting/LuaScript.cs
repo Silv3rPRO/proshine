@@ -411,12 +411,12 @@ namespace PROBot.Scripting
         private void PlaySound(string file)
         {
             if (File.Exists(file))
+            {
+                using (SoundPlayer player = new SoundPlayer(file))
                 {
-                    using (SoundPlayer player = new SoundPlayer(file))
-                    {
-                        player.Play();
-                    }
-                };
+                    player.Play();
+                }
+            };
         }
 
         // API: Calls the specified function when the specified event occurs.
