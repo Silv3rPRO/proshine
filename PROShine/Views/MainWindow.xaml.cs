@@ -281,7 +281,7 @@ namespace PROShine
                 {
                     if (Bot.Game != null)
                     {
-                        SetTitle(Bot.Account.Name);
+                        SetTitle(Bot.Account.Name + " - " + Bot.Game.Server);
                         UpdateBotMenu();
                         LogoutMenuItem.IsEnabled = true;
                         LoginButton.IsEnabled = true;

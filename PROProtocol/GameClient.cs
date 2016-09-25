@@ -138,6 +138,14 @@ namespace PROProtocol
             }
         }
 
+        public GameServer Server
+        {
+            get
+            {
+                return _connection.Server;
+            }
+        }
+
         public bool IsMapLoaded
         {
             get { return Map != null; }

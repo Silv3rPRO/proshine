@@ -10,7 +10,8 @@ namespace PROProtocol
     {
         private const int ServerPort = 800;
 
-        private GameServer _server;
+        public GameServer Server;
+
         private bool _useSocks;
         private int _socksVersion;
         private string _socksHost;
@@ -24,7 +25,7 @@ namespace PROProtocol
             PacketDelimiter = "|.\\\r\n";
             TextEncoding = Encoding.GetEncoding(1252);
 
-            _server = server;
+            Server = server;
         }
 
         public GameConnection(GameServer server, int socksVersion, string socksHost, int socksPort, string socksUser, string socksPass)
@@ -40,7 +41,7 @@ namespace PROProtocol
 
         public async void Connect()
         {
-            string host = _server.GetAddress();
+            string host = Server.GetAddress();
             
             if (!_useSocks)
             {
