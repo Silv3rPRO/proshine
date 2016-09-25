@@ -64,6 +64,7 @@ namespace PROProtocol
         public event Action<int> QueueUpdated;
 
         public event Action<string, int, int> PositionUpdated;
+        public event Action<string, int, int> TeleportationOccuring;
         public event Action PokemonsUpdated;
         public event Action InventoryUpdated;
         public event Action BattleStarted;
@@ -126,6 +127,14 @@ namespace PROProtocol
                     && !_itemUseTimeout.IsActive
                     && !_fishingTimeout.IsActive
                     && !_refreshingPCBox.IsActive;
+            }
+        }
+
+        public bool IsTeleporting
+        {
+            get
+            {
+                return _teleportationTimeout.IsActive;
             }
         }
 
@@ -1136,6 +1145,8 @@ namespace PROProtocol
             int playerY = Convert.ToInt32(mapData[2]);
             if (playerX != PlayerX || playerY != PlayerY || map != MapName)
             {
+                TeleportationOccuring?.Invoke(map, playerX, playerY);
+
                 PlayerX = playerX;
                 PlayerY = playerY;
                 LoadMap(map);
