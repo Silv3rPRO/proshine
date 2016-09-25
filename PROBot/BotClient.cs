@@ -92,7 +92,7 @@ namespace PROBot
             else
             {
                 int distance = GameClient.DistanceBetween(x, y, Game.PlayerX, Game.PlayerY);
-                if (distance < 5)
+                if (distance < 8)
                 {
                     message += " [OK, lag, distance=" + distance + "]";
                 }
