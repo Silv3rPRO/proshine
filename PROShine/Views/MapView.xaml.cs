@@ -182,7 +182,7 @@ namespace PROShine.Views
 
             lock (_bot)
             {
-                if (_bot.Game == null || _bot.Game.Map == null) return;
+                if (_bot.Game == null || _bot.Game.Map == null || _player == null) return;
                 UpdatePositionDelta();
             }
         }
