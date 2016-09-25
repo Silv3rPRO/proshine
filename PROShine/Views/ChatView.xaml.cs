@@ -375,8 +375,6 @@ namespace PROShine
         private void PlayNotification()
         {
             Window window = Window.GetWindow(this);
-            if (!window.IsActive || !IsVisible)
-            {
                 IntPtr handle = new WindowInteropHelper(window).Handle;
                 FlashWindowHelper.Flash(handle);
 
@@ -387,7 +385,6 @@ namespace PROShine
                         player.Play();
                     }
                 }
-            }
         }
     }
 }

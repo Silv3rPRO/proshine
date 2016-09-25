@@ -29,7 +29,19 @@ namespace PROShine
         int? _lastQueueBreakPoint;
 
         private int _queuePosition;
-
+        string logPath;
+        
+        private void InitLogFile(string server, string name)
+        {
+            string logDT = DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss") + "_" + server + "_" + name;
+            if (!Directory.Exists(@"Logs"))
+            {
+                Directory.CreateDirectory(@"Logs");
+            }
+            logPath = @"Logs\" + logDT + ".txt";
+            File.Create(logPath);
+        }
+        
         public MainWindow()
         {
 #if !DEBUG
@@ -83,7 +95,7 @@ namespace PROShine
 
         private void SetTitle(string username)
         {
-            Title = username == null ? "" : username + " - ";
+            Title = username == null ? "" : Bot.Account.Server + " - " + username + " - ";
             Title += App.Name + " " + App.Version;
 #if DEBUG
             Title += " (debug)";
@@ -161,6 +173,7 @@ namespace PROShine
                     account.Socks.Username = login.ProxyUsername;
                     account.Socks.Password = login.ProxyPassword;
                 }
+                InitLogFile(account.Server, account.Name);
                 Bot.Login(account);
             }
         }
@@ -615,6 +628,15 @@ namespace PROShine
         private void LogMessage(string message)
         {
             AppendLineToTextBox(MessageTextBox, "[" + DateTime.Now.ToLongTimeString() + "] " + message);
+            try
+            {
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(logPath, true))
+                {
+                    file.WriteLine("[" + DateTime.Now.ToLongTimeString() + "] " + message);
+                    file.Close();
+                }
+            }
+            catch{}
         }
 
         private void LogMessage(string format, params object[] args)
