@@ -726,6 +726,11 @@ namespace PROShine
             Process.Start("https://github.com/Silv3rPRO/proshine");
         }
 
+        private void MenuDonate_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://www.patreon.com/proshine");
+        }
+
         private void StartScriptButton_Click(object sender, RoutedEventArgs e)
         {
             lock (Bot)

@@ -106,8 +106,10 @@
                     <MenuItem Name="MenuPathScript" Header="Script: None" Click="MenuPathScript_Click" />
                 </MenuItem>
                 <MenuItem Header="Help">
-                    <MenuItem Header="Forum" Click="MenuForum_Click" />
-                    <MenuItem Header="GitHub" Click="MenuGitHub_Click" />
+                    <MenuItem Header="Community (Forum)" Click="MenuForum_Click" />
+                    <MenuItem Header="Source code (GitHub)" Click="MenuGitHub_Click" />
+                    <MenuItem Header="Donate (Patreon)" Click="MenuDonate_Click" />
+                    <Separator />
                     <MenuItem Header="About" Click="MenuAbout_Click" />
                 </MenuItem>
             </Menu>
