@@ -936,7 +936,7 @@ namespace PROProtocol
             OpenedShop = null;
             IsPCOpen = false;
             // DSSock.sendMove
-            SendPacket("#|.|" + direction);
+            SendPacket("/|.|" + direction);
         }
 
         private void SendAttack(string number)
