@@ -92,6 +92,7 @@
     <Compile Include="Controls\ButtonTabHeader.xaml.cs">
       <DependentUpon>ButtonTabHeader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileLogger.cs" />
     <Compile Include="Views\ChatPanel.xaml.cs">
       <DependentUpon>ChatPanel.xaml</DependentUpon>
     </Compile>

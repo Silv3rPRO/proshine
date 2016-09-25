@@ -23,6 +23,9 @@ namespace PROShine
         public InventoryView Inventory { get; private set; }
         public ChatView Chat { get; private set; }
         public PlayersView Players { get; private set; }
+
+        public FileLogger FileLog { get; private set; }
+
         DateTime _refreshPlayers;
         int _refreshPlayersDelay;
         DateTime _lastQueueBreakPointTime;
@@ -59,6 +62,8 @@ namespace PROShine
             Inventory = new InventoryView();
             Chat = new ChatView(Bot);
             Players = new PlayersView(Bot);
+
+            FileLog = new FileLogger();
 
             _refreshPlayers = DateTime.UtcNow;
             _refreshPlayersDelay = 5000;
@@ -447,6 +452,11 @@ namespace PROShine
                     Bot.Game.InvalidPacket += Client_InvalidPacket;
                     Bot.Game.PokeTimeUpdated += Client_PokeTimeUpdated;
                     Bot.Game.ShopOpened += Client_ShopOpened;
+                    FileLog.OpenFile(Bot.Account.Name, Bot.Game.Server.ToString());
+                }
+                else
+                {
+                    FileLog.CloseFile();
                 }
             }
         }
@@ -614,7 +624,9 @@ namespace PROShine
         
         private void LogMessage(string message)
         {
-            AppendLineToTextBox(MessageTextBox, "[" + DateTime.Now.ToLongTimeString() + "] " + message);
+            message = "[" + DateTime.Now.ToLongTimeString() + "] " + message;
+            AppendLineToTextBox(MessageTextBox, message);
+            FileLog.Append(message);
         }
 
         private void LogMessage(string format, params object[] args)
