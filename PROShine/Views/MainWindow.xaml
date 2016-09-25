@@ -184,7 +184,7 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <ToggleButton Name="TeamButton" Grid.Row="0" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020" Click="TeamButton_Click">
+                    <ToggleButton Name="TeamButton" Grid.Row="0" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020">
                         <ToggleButton.Content>
                             <StackPanel>
                                 <fa:FontAwesome Icon="Paw" Foreground="#FF101020" FontSize="15" Margin="4,1,4,1" />
@@ -192,7 +192,7 @@
                             </StackPanel>
                         </ToggleButton.Content>
                     </ToggleButton>
-                    <ToggleButton Name="InventoryButton" Grid.Row="1" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020" Click="InventoryButton_Click">
+                    <ToggleButton Name="InventoryButton" Grid.Row="1" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020">
                         <ToggleButton.Content>
                             <StackPanel>
                                 <fa:FontAwesome Icon="Suitcase" Foreground="#FF101020" FontSize="15" Margin="4,1,4,1" />
@@ -200,7 +200,7 @@
                             </StackPanel>
                         </ToggleButton.Content>
                     </ToggleButton>
-                    <ToggleButton Name="ChatButton" Grid.Row="2" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020" Click="ChatButton_Click">
+                    <ToggleButton Name="ChatButton" Grid.Row="2" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020">
                         <ToggleButton.Content>
                             <StackPanel>
                                 <fa:FontAwesome Icon="Comment" Foreground="#FF101020" FontSize="15" Margin="4,1,4,1" />
@@ -208,7 +208,7 @@
                             </StackPanel>
                         </ToggleButton.Content>
                     </ToggleButton>
-                    <ToggleButton Name="PlayersButton" Grid.Row="3" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020" Click="PlayersButton_Click">
+                    <ToggleButton Name="PlayersButton" Grid.Row="3" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020">
                         <ToggleButton.Content>
                             <StackPanel>
                                 <fa:FontAwesome Icon="Users" Foreground="#FF101020" FontSize="15" Margin="4,1,4,1" />

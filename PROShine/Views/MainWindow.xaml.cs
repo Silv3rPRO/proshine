@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 namespace PROShine
@@ -23,6 +24,14 @@ namespace PROShine
         public InventoryView Inventory { get; private set; }
         public ChatView Chat { get; private set; }
         public PlayersView Players { get; private set; }
+
+        private struct TabView
+        {
+            public UserControl View;
+            public ContentControl Content;
+            public ToggleButton Button;
+        }
+        private List<TabView> _views = new List<TabView>();
 
         public FileLogger FileLog { get; private set; }
 
@@ -68,22 +77,62 @@ namespace PROShine
             _refreshPlayers = DateTime.UtcNow;
             _refreshPlayersDelay = 5000;
 
-            TeamContent.Content = Team;
-            InventoryContent.Content = Inventory;
-            ChatContent.Content = Chat;
-            PlayersContent.Content = Players;
-
-            TeamContent.Visibility = Visibility.Visible;
-            InventoryContent.Visibility = Visibility.Collapsed;
-            ChatContent.Visibility = Visibility.Collapsed;
-            PlayersContent.Visibility = Visibility.Collapsed;
-            TeamButton.IsChecked = true;
+            AddView(Team, TeamContent, TeamButton, true);
+            AddView(Inventory, InventoryContent, InventoryButton);
+            AddView(Chat, ChatContent, ChatButton);
+            AddView(Players, PlayersContent, PlayersButton);
 
             SetTitle(null);
 
             LogMessage("Running " + App.Name + " by " + App.Author + ", version " + App.Version);
 
             Task.Run(() => UpdateClients());
+        }
+
+        private void AddView(UserControl view, ContentControl content, ToggleButton button, bool visible = false)
+        {
+            _views.Add(new TabView
+            {
+                View = view,
+                Content = content,
+                Button = button
+            });
+            content.Content = view;
+            if (visible)
+            {
+                content.Visibility = Visibility.Visible;
+                button.IsChecked = true;
+            }
+            else
+            {
+                content.Visibility = Visibility.Collapsed;
+            }
+            button.Click += ViewButton_Click;
+        }
+
+        private void ViewButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (TabView view in _views)
+            {
+                if (view.Button == sender)
+                {
+                    view.Content.Visibility = Visibility.Visible;
+                    view.Button.IsChecked = true;
+                    if (view.View == Players)
+                    {
+                        _refreshPlayersDelay = 5000;
+                    }
+                    else
+                    {
+                        _refreshPlayersDelay = 200;
+                    }
+                }
+                else
+                {
+                    view.Content.Visibility = Visibility.Collapsed;
+                    view.Button.IsChecked = false;
+                }
+            }
         }
 
         private void SetTitle(string username)
@@ -655,58 +704,6 @@ namespace PROShine
             }
             textBox.CaretIndex = textBox.Text.Length;
             textBox.ScrollToEnd();
-        }
-
-        private void TeamButton_Click(object sender, RoutedEventArgs e)
-        {
-            TeamContent.Visibility = Visibility.Visible;
-            InventoryContent.Visibility = Visibility.Collapsed;
-            ChatContent.Visibility = Visibility.Collapsed;
-            PlayersContent.Visibility = Visibility.Collapsed;
-            TeamButton.IsChecked = true;
-            InventoryButton.IsChecked = false;
-            ChatButton.IsChecked = false;
-            PlayersButton.IsChecked = false;
-            _refreshPlayersDelay = 5000;
-        }
-
-        private void InventoryButton_Click(object sender, RoutedEventArgs e)
-        {
-            TeamContent.Visibility = Visibility.Collapsed;
-            InventoryContent.Visibility = Visibility.Visible;
-            ChatContent.Visibility = Visibility.Collapsed;
-            PlayersContent.Visibility = Visibility.Collapsed;
-            TeamButton.IsChecked = false;
-            InventoryButton.IsChecked = true;
-            ChatButton.IsChecked = false;
-            PlayersButton.IsChecked = false;
-            _refreshPlayersDelay = 5000;
-        }
-
-        private void ChatButton_Click(object sender, RoutedEventArgs e)
-        {
-            TeamContent.Visibility = Visibility.Collapsed;
-            InventoryContent.Visibility = Visibility.Collapsed;
-            ChatContent.Visibility = Visibility.Visible;
-            PlayersContent.Visibility = Visibility.Collapsed;
-            TeamButton.IsChecked = false;
-            InventoryButton.IsChecked = false;
-            ChatButton.IsChecked = true;
-            PlayersButton.IsChecked = false;
-            _refreshPlayersDelay = 5000;
-        }
-
-        private void PlayersButton_Click(object sender, RoutedEventArgs e)
-        {
-            TeamContent.Visibility = Visibility.Collapsed;
-            InventoryContent.Visibility = Visibility.Collapsed;
-            ChatContent.Visibility = Visibility.Collapsed;
-            PlayersContent.Visibility = Visibility.Visible;
-            TeamButton.IsChecked = false;
-            InventoryButton.IsChecked = false;
-            ChatButton.IsChecked = false;
-            PlayersButton.IsChecked = true;
-            _refreshPlayersDelay = 200;
         }
 
         private void MenuAbout_Click(object sender, RoutedEventArgs e)
