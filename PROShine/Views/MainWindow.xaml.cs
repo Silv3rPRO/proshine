@@ -494,13 +494,19 @@ namespace PROShine
                     Bot.Game.InvalidPacket += Client_InvalidPacket;
                     Bot.Game.PokeTimeUpdated += Client_PokeTimeUpdated;
                     Bot.Game.ShopOpened += Client_ShopOpened;
+                }
+            }
+            Dispatcher.InvokeAsync(delegate
+            {
+                if (Bot.Game != null)
+                {
                     FileLog.OpenFile(Bot.Account.Name, Bot.Game.Server.ToString());
                 }
                 else
                 {
                     FileLog.CloseFile();
                 }
-            }
+            });
         }
 
         private void Client_QueueUpdated(int position)
