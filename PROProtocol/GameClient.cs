@@ -1345,7 +1345,7 @@ namespace PROProtocol
 
             if (ActiveBattle.IsFinished)
             {
-                _battleTimeout.Set(Rand.Next(1000, 3000));
+                _battleTimeout.Set(Rand.Next(1500, 5000));
             }
             else
             {
