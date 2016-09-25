@@ -118,14 +118,7 @@ namespace PROShine
                 {
                     view.Content.Visibility = Visibility.Visible;
                     view.Button.IsChecked = true;
-                    if (view.View == Players)
-                    {
-                        _refreshPlayersDelay = 5000;
-                    }
-                    else
-                    {
-                        _refreshPlayersDelay = 200;
-                    }
+                    _refreshPlayersDelay = view.View == Players ? 200 : 5000;
                 }
                 else
                 {
