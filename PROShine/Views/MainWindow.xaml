@@ -183,6 +183,7 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <ToggleButton Name="TeamButton" Grid.Row="0" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020">
                         <ToggleButton.Content>
@@ -216,6 +217,14 @@
                             </StackPanel>
                         </ToggleButton.Content>
                     </ToggleButton>
+                    <ToggleButton Name="MapButton" Grid.Row="4" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020">
+                        <ToggleButton.Content>
+                            <StackPanel>
+                                <fa:FontAwesome Icon="Cube"  Foreground="#FF101020" FontSize="15" Margin="4,1,4,1" />
+                                <TextBlock Text="Map" Margin="4,1,4,1" />
+                            </StackPanel>
+                        </ToggleButton.Content>
+                    </ToggleButton>
                 </Grid>
             </Grid>
             <Grid Grid.Column="1" Margin="0,4,4,4">
@@ -223,6 +232,7 @@
                 <ContentControl Name="InventoryContent" />
                 <ContentControl Name="ChatContent" />
                 <ContentControl Name="PlayersContent" />
+                <ContentControl Name="MapContent" />
             </Grid>
         </Grid>
         <GridSplitter ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="4" Grid.Row="3" Background="Transparent"/>

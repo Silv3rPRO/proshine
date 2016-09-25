@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using PROBot;
 using PROProtocol;
+using PROShine.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,6 +25,7 @@ namespace PROShine
         public InventoryView Inventory { get; private set; }
         public ChatView Chat { get; private set; }
         public PlayersView Players { get; private set; }
+        public MapView Map { get; private set; }
 
         private struct TabView
         {
@@ -71,6 +73,7 @@ namespace PROShine
             Inventory = new InventoryView();
             Chat = new ChatView(Bot);
             Players = new PlayersView(Bot);
+            Map = new MapView(Bot);
 
             FileLog = new FileLogger();
 
@@ -81,6 +84,7 @@ namespace PROShine
             AddView(Inventory, InventoryContent, InventoryButton);
             AddView(Chat, ChatContent, ChatButton);
             AddView(Players, PlayersContent, PlayersButton);
+            AddView(Map, MapContent, MapButton);
 
             SetTitle(null);
 
@@ -494,6 +498,8 @@ namespace PROShine
                     Bot.Game.InvalidPacket += Client_InvalidPacket;
                     Bot.Game.PokeTimeUpdated += Client_PokeTimeUpdated;
                     Bot.Game.ShopOpened += Client_ShopOpened;
+                    Bot.Game.MapLoaded += Map.Client_MapLoaded;
+                    Bot.Game.PositionUpdated += Map.Client_PositionUpdated;
                 }
             }
             Dispatcher.InvokeAsync(delegate

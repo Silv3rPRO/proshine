@@ -65,6 +65,7 @@ namespace PROProtocol
 
         public event Action<string, int, int> PositionUpdated;
         public event Action<string, int, int> TeleportationOccuring;
+        public event Action<string> MapLoaded;
         public event Action PokemonsUpdated;
         public event Action InventoryUpdated;
         public event Action BattleStarted;
@@ -905,6 +906,8 @@ namespace PROProtocol
 
                 CanUseCut = HasCutAbility();
                 CanUseSmashRock = HasRockSmashAbility();
+
+                MapLoaded?.Invoke(MapName);
             }
             else
             {
