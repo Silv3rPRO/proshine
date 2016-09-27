@@ -124,7 +124,12 @@ namespace PROShine.Views
         {
             lock (_bot)
             {
-                if (_bot.Game != null && _bot.Game.IsMapLoaded && _bot.Game.AreNpcReceived && _bot.Game.IsInactive && _bot.Running != BotClient.State.Started)
+                if (_bot.Game != null &&
+                    _bot.Game.IsMapLoaded &&
+                    _bot.Game.AreNpcReceived &&
+                    _bot.Game.IsInactive &&
+                    !_bot.Game.IsInBattle &&
+                    _bot.Running != BotClient.State.Started)
                 {
                     _bot.Game.Move(direction);
                 }
