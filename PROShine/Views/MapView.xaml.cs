@@ -20,7 +20,7 @@ namespace PROShine.Views
 
         private bool _isMapDirty;
         private UniformGrid _mapGrid;
-        private Rectangle _player;
+        private Shape _player;
 
         public MapView(BotClient bot)
         {
@@ -169,7 +169,7 @@ namespace PROShine.Views
                 _mapGrid = grid;
                 MapCanvas.Children.Add(grid);
 
-                _player = new Rectangle() { Fill = Brushes.Red, Width = _cellWidth, Height = _cellWidth };
+                _player = new Ellipse() { Fill = Brushes.Red, Width = _cellWidth, Height = _cellWidth };
                 MapCanvas.Children.Add(_player);
 
                 UpdatePositionDelta();
