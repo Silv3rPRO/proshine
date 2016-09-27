@@ -20,6 +20,7 @@ namespace PROShine.Views
 
         private bool _isMapDirty;
         private UniformGrid _mapGrid;
+        private bool _isPlayerDirty;
         private Shape _player;
 
         public MapView(BotClient bot)
@@ -57,6 +58,10 @@ namespace PROShine.Views
                 if (_isMapDirty)
                 {
                     RefreshMap();
+                }
+                if (_isPlayerDirty)
+                {
+                    RefreshPlayer();
                 }
                 parent.KeyDown += Parent_KeyDown;
             }
@@ -172,23 +177,28 @@ namespace PROShine.Views
                 _player = new Ellipse() { Fill = Brushes.Red, Width = _cellWidth, Height = _cellWidth };
                 MapCanvas.Children.Add(_player);
 
-                UpdatePositionDelta();
+                UpdatePlayerPosition();
             }
         }
 
         public void RefreshPlayer()
         {
-            if (!IsVisible) return;
+            if (!IsVisible)
+            {
+                _isPlayerDirty = true;
+            }
 
             lock (_bot)
             {
                 if (_bot.Game == null || _bot.Game.Map == null || _player == null) return;
-                UpdatePositionDelta();
+                UpdatePlayerPosition();
             }
         }
 
-        private void UpdatePositionDelta()
+        private void UpdatePlayerPosition()
         {
+            _isPlayerDirty = false;
+
             double canFillX = Math.Floor(MapCanvas.ActualWidth / _cellWidth);
             double canFillY = Math.Floor(MapCanvas.ActualHeight / _cellWidth);
 
