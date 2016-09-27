@@ -40,6 +40,7 @@ namespace PROShine.Views
                 { 7, Brushes.White },
                 { 8, Brushes.White },
                 { 9, Brushes.White },
+                { 10, Brushes.LightGray },
                 { 12, Brushes.LightSkyBlue },
                 { 14, Brushes.Gray }
             };
