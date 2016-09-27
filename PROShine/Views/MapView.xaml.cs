@@ -32,12 +32,16 @@ namespace PROShine.Views
             _colliderColors = new Dictionary<int, Brush>
             {
                 { 0, Brushes.White },
+                { 2, Brushes.Gray },
+                { 3, Brushes.Gray },
+                { 4, Brushes.Gray },
                 { 5, Brushes.LightSkyBlue },
                 { 6, Brushes.LightGreen },
                 { 7, Brushes.White },
                 { 8, Brushes.White },
                 { 9, Brushes.White },
-                { 12, Brushes.LightSkyBlue }
+                { 12, Brushes.LightSkyBlue },
+                { 14, Brushes.Gray }
             };
 
             IsVisibleChanged += MapView_IsVisibleChanged;
