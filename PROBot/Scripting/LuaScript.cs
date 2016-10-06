@@ -116,6 +116,7 @@ namespace PROBot.Scripting
             _lua.Globals["fatal"] = new Action<string>(Fatal);
             _lua.Globals["logout"] = new Action<string>(Logout);
             _lua.Globals["stringContains"] = new Func<string, string, bool>(StringContains);
+            _lua.Globals["getBotName"] = new Func<string>(GetBotName);
             _lua.Globals["playSound"] = new Action<string>(PlaySound);
             _lua.Globals["registerHook"] = new Action<string, DynValue>(RegisterHook);
 
@@ -406,7 +407,13 @@ namespace PROBot.Scripting
         {
             return haystack.ToUpperInvariant().Contains(needle.ToUpperInvariant());
         }
-        
+
+        // API: Return the name of the User's Bot
+        private string GetBotName()
+        {
+            return Bot.Account.Name;
+        }
+
         // API: Returns playing a custom sound.
         private void PlaySound(string file)
         {
