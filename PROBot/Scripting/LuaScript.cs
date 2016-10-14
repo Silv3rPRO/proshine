@@ -164,6 +164,7 @@ namespace PROBot.Scripting
             _lua.Globals["getActiveHeadbuttTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveHeadbuttTrees);
             _lua.Globals["getActiveBerryTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveBerryTrees);
             _lua.Globals["getDiscoverableItems"] = new Func<List<Dictionary<string, int>>>(GetDiscoverableItems);
+            _lua.Globals["getNpcData"] = new Func<List<Dictionary<string, int>>>(GetNpcData);
 
             _lua.Globals["hasItem"] = new Func<string, bool>(HasItem);
             _lua.Globals["getItemQuantity"] = new Func<string, int>(GetItemQuantity);
@@ -499,6 +500,26 @@ namespace PROBot.Scripting
                 items.Add(npcData);
             }
             return items;
+        }
+
+        // API return npc data on current map, format : { { "x" = x , "y" = y, "num" = num }, {...}, ... }
+        private List<Dictionary<string, int>> GetNpcData()
+        {
+            if (!Bot.Game.AreNpcDestroyed || !Bot.Game.AreNpcReceived)
+            {
+                LogMessage("Not all data for NPCs were received /!\\");
+                return null;
+            }
+            var lNpc = new List<Dictionary<string, int>>();
+            foreach (Npc npc in Bot.Game.Map.Npcs)
+            {
+                var npcData = new Dictionary<string, int>();
+                npcData["x"] = npc.PositionX;
+                npcData["y"] = npc.PositionY;
+                npcData["num"] = npc.Num;
+                lNpc.Add(npcData);
+            }
+            return lNpc;
         }
 
         // API: Returns true if the string contains the specified part, ignoring the case.
