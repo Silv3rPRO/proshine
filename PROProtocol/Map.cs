@@ -145,10 +145,10 @@ namespace PROProtocol
                         reader.ReadSingle();
 
                         int npcId = reader.ReadInt16();
-                        
+
                         if (npcName != "TileScript")
                         {
-                            OriginalNpcs.Add(new Npc(npcId, npcName, x, y, losLength, path));
+                            OriginalNpcs.Add(new Npc(npcId, npcName, isBattler, num, x, y, losLength, path));
                         }
 
                         reader.ReadInt16();
@@ -323,7 +323,7 @@ namespace PROProtocol
             }
             return false;
         }
-        
+
         public bool IsNormalGround(int x, int y)
         {
             if (x >= 0 && x < Width && y >= 0 && y < Height)
@@ -583,7 +583,7 @@ namespace PROProtocol
                 int destinationY = y;
                 bool destinationGround = isOnGround;
                 bool isSurfing = false;
-                
+
                 int slider = GetSlider(destinationX, destinationY);
                 if (slider != -1)
                 {
