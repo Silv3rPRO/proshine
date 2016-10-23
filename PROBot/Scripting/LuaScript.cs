@@ -435,7 +435,7 @@ namespace PROBot.Scripting
                 return null;
             }
             var digSpots = new List<Dictionary<string, int>>();
-            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Num == 70))
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Num == 70 || npc.Num == 71))
             {
                 var npcData = new Dictionary<string, int>();
                 npcData["x"] = npc.PositionX;
