@@ -468,7 +468,7 @@ namespace PROBot.Scripting
         private List<Dictionary<string, int>> GetDiscoverableItems()
         {
             var items = new List<Dictionary<string, int>>();
-            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Type == 11))
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Type == 11 && npc.LosLength < 100))
             {
                 var npcData = new Dictionary<string, int>();
                 npcData["x"] = npc.PositionX;
