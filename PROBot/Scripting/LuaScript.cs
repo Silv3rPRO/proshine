@@ -426,7 +426,7 @@ namespace PROBot.Scripting
         private List<Dictionary<string, int>> GetActiveDigSpots()
         {
             var digSpots = new List<Dictionary<string, int>>();
-            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Num == 70 || npc.Num == 71))
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Type == 70 || npc.Type == 71))
             {
                 var npcData = new Dictionary<string, int>();
                 npcData["x"] = npc.PositionX;
@@ -440,7 +440,7 @@ namespace PROBot.Scripting
         private List<Dictionary<string, int>> GetActiveHeadbuttTrees()
         {
             var trees = new List<Dictionary<string, int>>();
-            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Num == 101))
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Type == 101))
             {
                 var npcData = new Dictionary<string, int>();
                 npcData["x"] = npc.PositionX;
@@ -454,7 +454,7 @@ namespace PROBot.Scripting
         private List<Dictionary<string, int>> GetActiveBerryTrees()
         {
             var trees = new List<Dictionary<string, int>>();
-            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Num > 40 && npc.Num < 53))
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Type > 40 && npc.Type < 53))
             {
                 var npcData = new Dictionary<string, int>();
                 npcData["x"] = npc.PositionX;
@@ -468,7 +468,7 @@ namespace PROBot.Scripting
         private List<Dictionary<string, int>> GetDiscoverableItems()
         {
             var items = new List<Dictionary<string, int>>();
-            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Num == 11))
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Type == 11))
             {
                 var npcData = new Dictionary<string, int>();
                 npcData["x"] = npc.PositionX;
@@ -487,7 +487,7 @@ namespace PROBot.Scripting
                 var npcData = new Dictionary<string, int>();
                 npcData["x"] = npc.PositionX;
                 npcData["y"] = npc.PositionY;
-                npcData["num"] = npc.Num;
+                npcData["num"] = npc.Type;
                 lNpc.Add(npcData);
             }
             return lNpc;

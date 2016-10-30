@@ -6,7 +6,7 @@
         public string Name { get; private set; }
         public bool IsBattler { get; private set; }
         public bool CanBattle { get; set; }
-        public int Num { get; private set; }
+        public int Type { get; private set; }
         public int PositionX { get; private set; }
         public int PositionY { get; private set; }
         public int LosLength { get; private set; }
@@ -15,13 +15,13 @@
 
         private string _path;
 
-        public Npc(int id, string name, bool isBattler, int num, int x, int y, int losLength, string path)
+        public Npc(int id, string name, bool isBattler, int type, int x, int y, int losLength, string path)
         {
             Id = id;
             Name = name;
             IsBattler = isBattler;
             CanBattle = isBattler;
-            Num = num;
+            Type = type;
             PositionX = x;
             PositionY = y;
             LosLength = losLength;
@@ -30,7 +30,7 @@
 
         public Npc Clone()
         {
-            return new Npc(Id, Name, IsBattler, Num, PositionX, PositionY, LosLength, _path);
+            return new Npc(Id, Name, IsBattler, Type, PositionX, PositionY, LosLength, _path);
         }
     }
 }
