@@ -41,8 +41,7 @@ namespace PROShine.Views
                 { 8, Brushes.White },
                 { 9, Brushes.White },
                 { 10, Brushes.LightGray },
-                { 12, Brushes.LightSkyBlue },
-                { 14, Brushes.Gray }
+                { 12, Brushes.LightSkyBlue }
             };
 
             IsVisibleChanged += MapView_IsVisibleChanged;
@@ -96,7 +95,7 @@ namespace PROShine.Views
             else if (e.Key == Key.Subtract)
             {
                 _cellWidth -= 2;
-                if (_cellWidth < 2) _cellWidth = 2;
+                if (_cellWidth < 4) _cellWidth = 4;
                 RefreshMap();
             }
             else if (e.Key == Key.Up)
@@ -154,6 +153,8 @@ namespace PROShine.Views
 
                 UniformGrid grid = new UniformGrid();
 
+                grid.Background = Brushes.White;
+
                 grid.Columns = _bot.Game.Map.DimensionX;
                 grid.Rows = _bot.Game.Map.DimensionY;
                 grid.Width = grid.Columns * _cellWidth;
@@ -176,6 +177,19 @@ namespace PROShine.Views
                         else
                         {
                             rect.Fill = Brushes.Black;
+                        }
+                        if (collider == 2)
+                        {
+                            rect.Height = _cellWidth / 4;
+                        }
+                        if (collider == 3 || collider == 4)
+                        {
+                            rect.Width = _cellWidth / 4;
+                        }
+                        if (collider == 14)
+                        {
+                            rect.Height = _cellWidth / 4;
+                            rect.VerticalAlignment = VerticalAlignment.Top;
                         }
                         grid.Children.Add(rect);
                     }
