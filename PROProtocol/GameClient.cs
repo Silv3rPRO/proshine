@@ -152,6 +152,7 @@ namespace PROProtocol
             get { return Map != null; }
         }
         public bool AreNpcReceived { get; private set; }
+        public bool AreNpcDestroyed { get; private set; }
 
         public GameClient(GameConnection connection, MapConnection mapConnection)
         {
@@ -449,7 +450,7 @@ namespace PROProtocol
             }
             SendPacket(toSend);
         }
-        
+
         public void SendGiveItem(int pokemonUid, int itemId)
         {
             SendMessage("/giveitem " + pokemonUid + "," + itemId);
@@ -703,7 +704,7 @@ namespace PROProtocol
                 }
             }
         }
-        
+
         public bool GiveItemToPokemon(int pokemonUid, int itemId)
         {
             if (!(pokemonUid >= 1 && pokemonUid <= Team.Count))
@@ -1223,8 +1224,13 @@ namespace PROProtocol
             if (!IsMapLoaded) return;
 
             Map.Npcs.Clear();
+            string[] battlerDefeated = data[1].Split('|');
             foreach (Npc npc in Map.OriginalNpcs)
             {
+                if (!battlerDefeated.Contains(npc.Id.ToString()))
+                {
+                    npc.setBattle(true);
+                }
                 Map.Npcs.Add(npc.Clone());
             }
 
@@ -1255,6 +1261,7 @@ namespace PROProtocol
                     }
                 }
             }
+            AreNpcDestroyed = true;
         }
 
         private void OnTeamUpdate(string[] data)

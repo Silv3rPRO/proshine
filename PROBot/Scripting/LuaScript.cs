@@ -160,6 +160,12 @@ namespace PROBot.Scripting
             _lua.Globals["isPokemonUsable"] = new Func<int, bool>(IsPokemonUsable);
             _lua.Globals["getUsablePokemonCount"] = new Func<int>(GetUsablePokemonCount);
             _lua.Globals["hasMove"] = new Func<int, string, bool>(HasMove);
+            _lua.Globals["getActiveBattlers"] = new Func<Dictionary<string, Dictionary<string, int>>>(GetActiveBattlers);
+            _lua.Globals["getActiveDigSpots"] = new Func<List<Dictionary<string, int>>>(GetActiveDigSpots);
+            _lua.Globals["getActiveHeadbuttTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveHeadbuttTrees);
+            _lua.Globals["getActiveBerryTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveBerryTrees);
+            _lua.Globals["getDiscoverableItems"] = new Func<List<Dictionary<string, int>>>(GetDiscoverableItems);
+            _lua.Globals["getNpcData"] = new Func<List<Dictionary<string, int>>>(GetNpcData);
 
             _lua.Globals["hasItem"] = new Func<string, bool>(HasItem);
             _lua.Globals["getItemQuantity"] = new Func<string, int>(GetItemQuantity);
@@ -401,13 +407,128 @@ namespace PROBot.Scripting
             Bot.Stop();
             Bot.Logout(false);
         }
-        
+
+        // API return an array of all NPCs that can be challenged on the current map. format : {"npcName" = {"x" = x, "y" = y}}
+        private Dictionary<string, Dictionary<string, int>> GetActiveBattlers()
+        {
+            if (!Bot.Game.AreNpcReceived)
+            {
+                LogMessage("NPC battle infos were not received /!\\");
+                return null;
+            }
+            var activeBattlers = new Dictionary<string, Dictionary<string, int>>();
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.CanBattle))
+            {
+                var npcData = new Dictionary<string, int>();
+                npcData["x"] = npc.PositionX;
+                npcData["y"] = npc.PositionY;
+                activeBattlers[npc.Name] = npcData;
+            }
+            return activeBattlers;
+        }
+
+        // API return an array of all usable Dig Spots on the currrent map. format : {index = {"x" = x, "y" = y}}
+        private List<Dictionary<string, int>> GetActiveDigSpots()
+        {
+            if (!Bot.Game.AreNpcDestroyed)
+            {
+                LogMessage("Data for used digspots were not received yet /!\\");
+                return null;
+            }
+            var digSpots = new List<Dictionary<string, int>>();
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Num == 70 || npc.Num == 71))
+            {
+                var npcData = new Dictionary<string, int>();
+                npcData["x"] = npc.PositionX;
+                npcData["y"] = npc.PositionY;
+                digSpots.Add(npcData);
+            }
+            return digSpots;
+        }
+
+        // API return an array of all usable Headbutt trees on the currrent map. format : {index = {"x" = x, "y" = y}}
+        private List<Dictionary<string, int>> GetActiveHeadbuttTrees()
+        {
+            if (!Bot.Game.AreNpcDestroyed)
+            {
+                LogMessage("Data for used headbutt Trees were not received yet /!\\");
+                return null;
+            }
+            var trees = new List<Dictionary<string, int>>();
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Num == 101))
+            {
+                var npcData = new Dictionary<string, int>();
+                npcData["x"] = npc.PositionX;
+                npcData["y"] = npc.PositionY;
+                trees.Add(npcData);
+            }
+            return trees;
+        }
+
+        // API return an array of all harvestable berry trees on the currrent map. format : {index = {"x" = x, "y" = y}}
+        private List<Dictionary<string, int>> GetActiveBerryTrees()
+        {
+            if (!Bot.Game.AreNpcDestroyed)
+            {
+                LogMessage("Data for used Berry Trees were not received yet /!\\");
+                return null;
+            }
+            var trees = new List<Dictionary<string, int>>();
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Num > 40 && npc.Num < 53))
+            {
+                var npcData = new Dictionary<string, int>();
+                npcData["x"] = npc.PositionX;
+                npcData["y"] = npc.PositionY;
+                trees.Add(npcData);
+            }
+            return trees;
+        }
+
+        // API return an array of all discoverable items on the currrent map. format : {index = {"x" = x, "y" = y}}
+        private List<Dictionary<string, int>> GetDiscoverableItems()
+        {
+            if (!Bot.Game.AreNpcDestroyed)
+            {
+                LogMessage("Data for discovered items were not received yet /!\\");
+                return null;
+            }
+            var items = new List<Dictionary<string, int>>();
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Num == 11))
+            {
+                var npcData = new Dictionary<string, int>();
+                npcData["x"] = npc.PositionX;
+                npcData["y"] = npc.PositionY;
+                items.Add(npcData);
+            }
+            return items;
+        }
+
+        // API return npc data on current map, format : { { "x" = x , "y" = y, "num" = num }, {...}, ... }
+        private List<Dictionary<string, int>> GetNpcData()
+        {
+            if (!Bot.Game.AreNpcDestroyed || !Bot.Game.AreNpcReceived)
+            {
+                LogMessage("Not all data for NPCs were received /!\\");
+                return null;
+            }
+            var lNpc = new List<Dictionary<string, int>>();
+            foreach (Npc npc in Bot.Game.Map.Npcs)
+            {
+                var npcData = new Dictionary<string, int>();
+                npcData["x"] = npc.PositionX;
+                npcData["y"] = npc.PositionY;
+                npcData["num"] = npc.Num;
+                lNpc.Add(npcData);
+            }
+            return lNpc;
+        }
+
         // API: Returns true if the string contains the specified part, ignoring the case.
         private bool StringContains(string haystack, string needle)
         {
             return haystack.ToUpperInvariant().Contains(needle.ToUpperInvariant());
         }
-        
+
         // API: Returns playing a custom sound.
         private void PlaySound(string file)
         {
@@ -458,7 +579,7 @@ namespace PROBot.Scripting
         {
             return Bot.Game.MapName;
         }
-        
+
         // API: Returns Owned Entry of the pokedex
         private int GetPokedexOwned()
         {
@@ -476,7 +597,7 @@ namespace PROBot.Scripting
         {
             return Bot.Game.PokedexEvolved;
         }
-        
+
         // API: Returns the amount of pokémon in the team.
         private int GetTeamSize()
         {
@@ -992,8 +1113,8 @@ namespace PROBot.Scripting
         {
             return Bot.Game.IsBiking;
         }
-        
-        // API: Returns true if the player is surfing 
+
+        // API: Returns true if the player is surfing
         private bool IsSurfing()
         {
             return Bot.Game.IsSurfing;
@@ -1310,7 +1431,7 @@ namespace PROBot.Scripting
         private bool TalkToNpcOnCell(int cellX, int cellY)
         {
             if (!ValidateAction("talkToNpcOnCell", false)) return false;
-            
+
             Npc target = Bot.Game.Map.Npcs.FirstOrDefault(npc => npc.PositionX == cellX && npc.PositionY == cellY);
             if (target == null)
             {
@@ -1449,7 +1570,7 @@ namespace PROBot.Scripting
             Bot.PokemonEvolver.IsEnabled = false;
             return !Bot.PokemonEvolver.IsEnabled;
         }
-        
+
         // API: Check if the private message from normal users are blocked.
         private bool IsPrivateMessageEnabled()
         {
@@ -2057,7 +2178,7 @@ namespace PROBot.Scripting
             }
 
             ShopItem item = Bot.Game.OpenedShop.Items.FirstOrDefault(i => i.Name.Equals(itemName, StringComparison.InvariantCultureIgnoreCase));
-            
+
             if (item == null)
             {
                 Fatal("error: buyItem: the item '" + itemName + "' does not exist in the opened shop.");
@@ -2066,7 +2187,7 @@ namespace PROBot.Scripting
 
             return ExecuteAction(Bot.Game.BuyItem(item.Id, quantity));
         }
-        
+
         // API: Give the specified item on the specified pokemon.
         private bool GiveItemToPokemon(string itemName, int pokemonIndex)
         {
@@ -2087,7 +2208,7 @@ namespace PROBot.Scripting
 
             return ExecuteAction(Bot.Game.GiveItemToPokemon(pokemonIndex, item.Id));
         }
-        
+
         // API: Take the held item from the specified pokemon.
         private bool TakeItemFromPokemon(int index)
         {
@@ -2173,7 +2294,7 @@ namespace PROBot.Scripting
             }
             return false;
         }
-        
+
         // API: Uses the most effective offensive move available.
         private bool Attack()
         {
@@ -2205,7 +2326,7 @@ namespace PROBot.Scripting
 
             return ExecuteAction(Bot.AI.SendUsablePokemon());
         }
-        
+
         // API: Sends the first available pokemon different from the active one.
         private bool SendAnyPokemon()
         {
