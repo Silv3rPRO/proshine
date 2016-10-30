@@ -75,14 +75,5 @@
             }
             throw new System.Exception("The direction '" + c + "' does not exist");
         }
-
-        public static Direction FromVector(int vx, int vy)
-        {
-            if (vy < 0) return Direction.Up;
-            if (vy > 0) return Direction.Down;
-            if (vx < 0) return Direction.Left;
-            if (vx > 0) return Direction.Right;
-            throw new System.Exception("The vector (" + vx + "," + vy + ") cannot be translated into a direction");
-        }
     }
 }

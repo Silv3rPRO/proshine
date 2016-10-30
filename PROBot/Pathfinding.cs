@@ -119,14 +119,9 @@ namespace PROBot
             {
                 Node current = GetBestNode(openList.Values);
                 int distance = Math.Abs(current.X - toX) + Math.Abs(current.Y - toY);
-                if (distance == 0)
+                if (distance <= requiredDistance)
                 {
                     return current;
-                }
-                else if (distance <= requiredDistance)
-                {
-                    Map.MoveResult result = _client.Map.CanMove(DirectionExtensions.FromVector(toX - current.X, toY - current.Y), toX, toY, current.IsOnGround, current.IsSurfing, _client.CanUseCut, _client.CanUseSmashRock);
-                    if (result != Map.MoveResult.Fail) return current;
                 }
 
                 openList.Remove(current.Hash);

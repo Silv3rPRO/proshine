@@ -11,7 +11,6 @@ namespace PROProtocol
         {
             Success,
             Fail,
-            NpcBlocking,
             Jump,
             NoLongerSurfing,
             OnGround,
@@ -258,6 +257,13 @@ namespace PROProtocol
             {
                 return MoveResult.Fail;
             }
+            foreach (Npc npc in Npcs)
+            {
+                if (npc.PositionX == destinationX && npc.PositionY == destinationY && npc.LosLength < 100 && !npc.IsMoving)
+                {
+                    return MoveResult.Fail;
+                }
+            }
 
             if (direction == Direction.Up && GetCollider(destinationX, destinationY + 1) == 14)
             {
@@ -293,14 +299,6 @@ namespace PROProtocol
             if (GetSlider(destinationX, destinationY) != -1)
             {
                 return MoveResult.Sliding;
-            }
-
-            foreach (Npc npc in Npcs)
-            {
-                if (npc.PositionX == destinationX && npc.PositionY == destinationY && npc.LosLength < 100 && !npc.IsMoving)
-                {
-                    return MoveResult.NpcBlocking;
-                }
             }
             return MoveResult.Success;
         }
@@ -606,7 +604,7 @@ namespace PROProtocol
                     isOnGround = destinationGround;
                 }
             }
-            while (slidingDirection != null && result != MoveResult.Fail && result != MoveResult.NpcBlocking);
+            while (slidingDirection != null && result != MoveResult.Fail);
         }
     }
 }
