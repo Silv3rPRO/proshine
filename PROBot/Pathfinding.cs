@@ -118,10 +118,17 @@ namespace PROBot
             while (openList.Count > 0)
             {
                 Node current = GetBestNode(openList.Values);
-                int distance = Math.Abs(current.X - toX) + Math.Abs(current.Y - toY);
-                if (distance <= requiredDistance)
+                int distance = GameClient.DistanceBetween(current.X, current.Y, toX, toY);
+                if (distance == 0)
                 {
                     return current;
+                }
+                else if (distance <= requiredDistance)
+                {
+                    if (_client.Map.CanInteract(current.X, current.Y, toX, toY))
+                    {
+                        return current;
+                    }
                 }
 
                 openList.Remove(current.Hash);

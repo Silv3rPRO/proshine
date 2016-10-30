@@ -251,8 +251,8 @@ namespace PROBot
 
         public bool TalkToNpc(Npc target)
         {
-            int distance = Game.DistanceTo(target.PositionX, target.PositionY);
-            if (distance == 1)
+            bool canInteract = Game.Map.CanInteract(Game.PlayerX, Game.PlayerY, target.PositionX, target.PositionY);
+            if (canInteract)
             {
                 Game.TalkToNpc(target.Id);
                 return true;
