@@ -121,7 +121,8 @@
             "Sniper",
             "Magic Guard",
             "No Guard",
-            "Delta Stream"
+            "Delta Stream",
+            "Unnerve"
         };
     }
 }
