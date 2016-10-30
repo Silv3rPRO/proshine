@@ -152,7 +152,6 @@ namespace PROProtocol
             get { return Map != null; }
         }
         public bool AreNpcReceived { get; private set; }
-        public bool AreNpcDestroyed { get; private set; }
 
         public GameClient(GameConnection connection, MapConnection mapConnection)
         {
@@ -1223,18 +1222,18 @@ namespace PROProtocol
         {
             if (!IsMapLoaded) return;
 
+            IEnumerable<int> defeatedBattlers = data[1].Split('|').Select(id => int.Parse(id));
+
             Map.Npcs.Clear();
-            string[] battlerDefeated = data[1].Split('|');
             foreach (Npc npc in Map.OriginalNpcs)
             {
-                if (!battlerDefeated.Contains(npc.Id.ToString()))
+                Npc clone = npc.Clone();
+                if (defeatedBattlers.Contains(npc.Id))
                 {
-                    npc.setBattle(true);
+                    clone.CanBattle = false;
                 }
-                Map.Npcs.Add(npc.Clone());
+                Map.Npcs.Add(clone);
             }
-
-            AreNpcReceived = true;
         }
 
         private void OnNpcDestroy(string[] data)
@@ -1242,12 +1241,6 @@ namespace PROProtocol
             if (!IsMapLoaded) return;
 
             string[] npcData = data[1].Split('|');
-
-            Map.Npcs.Clear();
-            foreach (Npc npc in Map.OriginalNpcs)
-            {
-                Map.Npcs.Add(npc.Clone());
-            }
 
             foreach (string npcText in npcData)
             {
@@ -1261,7 +1254,8 @@ namespace PROProtocol
                     }
                 }
             }
-            AreNpcDestroyed = true;
+
+            AreNpcReceived = true;
         }
 
         private void OnTeamUpdate(string[] data)

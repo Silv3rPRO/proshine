@@ -411,11 +411,6 @@ namespace PROBot.Scripting
         // API return an array of all NPCs that can be challenged on the current map. format : {"npcName" = {"x" = x, "y" = y}}
         private Dictionary<string, Dictionary<string, int>> GetActiveBattlers()
         {
-            if (!Bot.Game.AreNpcReceived)
-            {
-                LogMessage("NPC battle infos were not received /!\\");
-                return null;
-            }
             var activeBattlers = new Dictionary<string, Dictionary<string, int>>();
             foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.CanBattle))
             {
@@ -430,11 +425,6 @@ namespace PROBot.Scripting
         // API return an array of all usable Dig Spots on the currrent map. format : {index = {"x" = x, "y" = y}}
         private List<Dictionary<string, int>> GetActiveDigSpots()
         {
-            if (!Bot.Game.AreNpcDestroyed)
-            {
-                LogMessage("Data for used digspots were not received yet /!\\");
-                return null;
-            }
             var digSpots = new List<Dictionary<string, int>>();
             foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Num == 70 || npc.Num == 71))
             {
@@ -449,11 +439,6 @@ namespace PROBot.Scripting
         // API return an array of all usable Headbutt trees on the currrent map. format : {index = {"x" = x, "y" = y}}
         private List<Dictionary<string, int>> GetActiveHeadbuttTrees()
         {
-            if (!Bot.Game.AreNpcDestroyed)
-            {
-                LogMessage("Data for used headbutt Trees were not received yet /!\\");
-                return null;
-            }
             var trees = new List<Dictionary<string, int>>();
             foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Num == 101))
             {
@@ -468,11 +453,6 @@ namespace PROBot.Scripting
         // API return an array of all harvestable berry trees on the currrent map. format : {index = {"x" = x, "y" = y}}
         private List<Dictionary<string, int>> GetActiveBerryTrees()
         {
-            if (!Bot.Game.AreNpcDestroyed)
-            {
-                LogMessage("Data for used Berry Trees were not received yet /!\\");
-                return null;
-            }
             var trees = new List<Dictionary<string, int>>();
             foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Num > 40 && npc.Num < 53))
             {
@@ -487,11 +467,6 @@ namespace PROBot.Scripting
         // API return an array of all discoverable items on the currrent map. format : {index = {"x" = x, "y" = y}}
         private List<Dictionary<string, int>> GetDiscoverableItems()
         {
-            if (!Bot.Game.AreNpcDestroyed)
-            {
-                LogMessage("Data for discovered items were not received yet /!\\");
-                return null;
-            }
             var items = new List<Dictionary<string, int>>();
             foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Num == 11))
             {
@@ -506,11 +481,6 @@ namespace PROBot.Scripting
         // API return npc data on current map, format : { { "x" = x , "y" = y, "num" = num }, {...}, ... }
         private List<Dictionary<string, int>> GetNpcData()
         {
-            if (!Bot.Game.AreNpcDestroyed || !Bot.Game.AreNpcReceived)
-            {
-                LogMessage("Not all data for NPCs were received /!\\");
-                return null;
-            }
             var lNpc = new List<Dictionary<string, int>>();
             foreach (Npc npc in Bot.Game.Map.Npcs)
             {
