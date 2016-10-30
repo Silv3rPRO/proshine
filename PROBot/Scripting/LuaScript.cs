@@ -478,7 +478,7 @@ namespace PROBot.Scripting
             return items;
         }
 
-        // API return npc data on current map, format : { { "x" = x , "y" = y, "num" = num }, {...}, ... }
+        // API return npc data on current map, format : { { "x" = x , "y" = y, "type" = type }, {...}, ... }
         private List<Dictionary<string, int>> GetNpcData()
         {
             var lNpc = new List<Dictionary<string, int>>();
@@ -487,7 +487,7 @@ namespace PROBot.Scripting
                 var npcData = new Dictionary<string, int>();
                 npcData["x"] = npc.PositionX;
                 npcData["y"] = npc.PositionY;
-                npcData["num"] = npc.Type;
+                npcData["type"] = npc.Type;
                 lNpc.Add(npcData);
             }
             return lNpc;
