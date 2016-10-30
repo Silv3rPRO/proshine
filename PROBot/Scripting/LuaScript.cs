@@ -122,6 +122,7 @@ namespace PROBot.Scripting
             // General conditions
             _lua.Globals["getPlayerX"] = new Func<int>(GetPlayerX);
             _lua.Globals["getPlayerY"] = new Func<int>(GetPlayerY);
+            _lua.Globals["getAccountName"] = new Func<string>(GetAccountName);
             _lua.Globals["getMapName"] = new Func<string>(GetMapName);
             _lua.Globals["getPokedexOwned"] = new Func<int>(GetPokedexOwned);
             _lua.Globals["getPokedexSeen"] = new Func<int>(GetPokedexSeen);
@@ -444,6 +445,12 @@ namespace PROBot.Scripting
         private int GetPlayerY()
         {
             return Bot.Game.PlayerY;
+        }
+
+        // API: Returns current account name.
+        private string GetAccountName()
+        {
+            return Bot.Account.Name;
         }
 
         // API: Returns the name of the current map.
