@@ -244,6 +244,7 @@ namespace PROBot.Scripting
             _lua.Globals["moveToRectangle"] = new Func<int, int, int, int, bool>(MoveToRectangle);
             _lua.Globals["moveToGrass"] = new Func<bool>(MoveToGrass);
             _lua.Globals["moveToWater"] = new Func<bool>(MoveToWater);
+            _lua.Globals["moveRandom"] = new Func<bool>(MoveRandom); 
             _lua.Globals["moveNearExit"] = new Func<string, bool>(MoveNearExit);
             _lua.Globals["talkToNpc"] = new Func<string, bool>(TalkToNpc);
             _lua.Globals["talkToNpcOnCell"] = new Func<int, int, bool>(TalkToNpcOnCell);
@@ -1286,6 +1287,14 @@ namespace PROBot.Scripting
             if (!ValidateAction("moveToGrass", false)) return false;
 
             return ExecuteAction(MoveToCellType((x, y) => Bot.Game.Map.IsGrass(x, y)));
+        }
+
+        // API: Move randomly avoiding water and links.
+        private bool MoveRandom()
+        {
+            if (!ValidateAction("moveRandom", false)) return false;
+
+            return ExecuteAction(MoveToCellType((x, y) => Bot.Game.Map.IsNormalGround(x, y)));
         }
 
         // API: Moves to the nearest water area then move randomly inside it.
