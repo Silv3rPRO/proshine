@@ -122,7 +122,8 @@
             "Magic Guard",
             "No Guard",
             "Delta Stream",
-            "Unnerve"
+            "Unnerve",
+            "Analytic"
         };
     }
 }
