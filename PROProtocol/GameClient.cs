@@ -536,7 +536,7 @@ namespace PROProtocol
                 return false;
             }
             int pokemonUid = GetPokemonPCUid(boxId, boxPokemonId);
-            if (pokemonUid == -1 || pokemonUid != CurrentPCBox[boxPokemonId].Uid)
+            if (pokemonUid == -1 || pokemonUid != CurrentPCBox[boxPokemonId - 1].Uid)
             {
                 return false;
             }
