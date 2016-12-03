@@ -166,7 +166,7 @@ namespace PROBot.Scripting
             _lua.Globals["getActiveHeadbuttTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveHeadbuttTrees);
             _lua.Globals["getActiveBerryTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveBerryTrees);
             _lua.Globals["getDiscoverableItems"] = new Func<List<Dictionary<string, int>>>(GetDiscoverableItems);
-            _lua.Globals["getNpcData"] = new Func<List<Dictionary<string, int>>>(GetNpcData);
+            _lua.Globals["getNpcData"] = new Func<List<Dictionary<string, string>>>(GetNpcData);
 
             _lua.Globals["hasItem"] = new Func<string, bool>(HasItem);
             _lua.Globals["getItemQuantity"] = new Func<string, int>(GetItemQuantity);
@@ -455,8 +455,9 @@ namespace PROBot.Scripting
         // API return an array of all harvestable berry trees on the currrent map. format : {index = {"x" = x, "y" = y}}
         private List<Dictionary<string, int>> GetActiveBerryTrees()
         {
+            int[] berries = {42, 43, 44, 45, 49, 50, 51, 52, 55, 56, 57, 58, 59, 60, 61, 62};
             var trees = new List<Dictionary<string, int>>();
-            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Type > 40 && npc.Type < 53))
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => Array.Exists(berries, e => e == npc.Type)))
             {
                 var npcData = new Dictionary<string, int>();
                 npcData["x"] = npc.PositionX;
@@ -481,15 +482,19 @@ namespace PROBot.Scripting
         }
 
         // API return npc data on current map, format : { { "x" = x , "y" = y, "type" = type }, {...}, ... }
-        private List<Dictionary<string, int>> GetNpcData()
+        private List<Dictionary<string, string>> GetNpcData()
         {
-            var lNpc = new List<Dictionary<string, int>>();
+            var lNpc = new List<Dictionary<string, string>>();
             foreach (Npc npc in Bot.Game.Map.Npcs)
             {
-                var npcData = new Dictionary<string, int>();
-                npcData["x"] = npc.PositionX;
-                npcData["y"] = npc.PositionY;
-                npcData["type"] = npc.Type;
+                var npcData = new Dictionary<string, string>();
+                npcData["x"] = npc.PositionX.ToString();
+                npcData["y"] = npc.PositionY.ToString();
+                npcData["type"] = npc.Type.ToString();
+                npcData["name"] = npc.Name;
+                npcData["isBattler"] = npc.IsBattler.ToString();
+                npcData["id"] = npc.Id.ToString();
+                npcData["los"] = npc.LosLength.ToString();
                 lNpc.Add(npcData);
             }
             return lNpc;
