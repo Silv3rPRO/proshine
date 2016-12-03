@@ -138,6 +138,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonTotalExperience"] = new Func<int, int>(GetPokemonTotalExperience);
             _lua.Globals["getPokemonRemainingExperience"] = new Func<int, int>(GetPokemonRemainingExperience);
             _lua.Globals["getPokemonStatus"] = new Func<int, string>(GetPokemonStatus);
+            _lua.Globals["getPokemonForm"] = new Func<int, int>(GetPokemonForm);
             _lua.Globals["getPokemonHeldItem"] = new Func<int, string>(GetPokemonHeldItem);
             _lua.Globals["getPokemonUniqueId"] = new Func<int, int>(GetPokemonUniqueId);
             _lua.Globals["getRemainingPowerPoints"] = new Func<int, string, int>(GetRemainingPowerPoints);
@@ -236,6 +237,7 @@ namespace PROBot.Scripting
             _lua.Globals["getOpponentHealthPercent"] = new Func<int>(GetOpponentHealthPercent);
             _lua.Globals["getOpponentLevel"] = new Func<int>(GetOpponentLevel);
             _lua.Globals["getOpponentStatus"] = new Func<string>(GetOpponentStatus);
+            _lua.Globals["getOpponentForm"] = new Func<int>(GetOpponentForm);
             _lua.Globals["isOpponentEffortValue"] = new Func<string, bool>(IsOpponentEffortValue);
 
             // Path actions
@@ -898,6 +900,17 @@ namespace PROBot.Scripting
             return Bot.Game.Team[index - 1].Status;
         }
 
+        // API: Returns the form of the specified pokémon in the team (0 if no form).
+        private int GetPokemonForm(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonForm: tried to retrieve the non-existing pokemon " + index + ".");
+                return 0;
+            }
+            return Bot.Game.Team[index - 1].Form;
+        }
+
         // API: Returns the item held by the specified pokemon in the team, null if empty.
         private string GetPokemonHeldItem(int index)
         {
@@ -1198,6 +1211,17 @@ namespace PROBot.Scripting
                 return null;
             }
             return Bot.Game.ActiveBattle.OpponentStatus;
+        }
+
+        // API: Returns the form of the opponent pokémon in the current battle (0 if no form).
+        private int GetOpponentForm()
+        {
+            if (!Bot.Game.IsInBattle)
+            {
+                Fatal("error: getOpponentForm can only be used in battle.");
+                return 0;
+            }
+            return Bot.Game.ActiveBattle.AlternateForm;
         }
 
         private static Dictionary<string, StatType> _stats = new Dictionary<string, StatType>()
