@@ -244,9 +244,9 @@ namespace PROBot.Scripting
             _lua.Globals["moveToCell"] = new Func<int, int, bool>(MoveToCell);
             _lua.Globals["moveToMap"] = new Func<string, bool>(MoveToMap);
             _lua.Globals["moveToRectangle"] = new Func<int, int, int, int, bool>(MoveToRectangle);
+            _lua.Globals["moveToNormalGround"] = new Func<bool>(MoveToNormalGround);
             _lua.Globals["moveToGrass"] = new Func<bool>(MoveToGrass);
             _lua.Globals["moveToWater"] = new Func<bool>(MoveToWater);
-            _lua.Globals["moveToRandom"] = new Func<bool>(MoveToRandom);
             _lua.Globals["moveNearExit"] = new Func<string, bool>(MoveNearExit);
             _lua.Globals["talkToNpc"] = new Func<string, bool>(TalkToNpc);
             _lua.Globals["talkToNpcOnCell"] = new Func<int, int, bool>(TalkToNpcOnCell);
@@ -1310,20 +1310,20 @@ namespace PROBot.Scripting
             return ExecuteAction(Bot.MoveToCell(x, y));
         }
 
+        // API: Move randomly avoiding water and links.
+        private bool MoveToNormalGround()
+        {
+            if (!ValidateAction("moveToNormalGround", false)) return false;
+
+            return ExecuteAction(MoveToCellType((x, y) => Bot.Game.Map.IsNormalGround(x, y)));
+        }
+
         // API: Moves to the nearest grass patch then move randomly inside it.
         private bool MoveToGrass()
         {
             if (!ValidateAction("moveToGrass", false)) return false;
 
             return ExecuteAction(MoveToCellType((x, y) => Bot.Game.Map.IsGrass(x, y)));
-        }
-
-        // API: Move randomly avoiding water and links.
-        private bool MoveToRandom()
-        {
-            if (!ValidateAction("moveToRandom", false)) return false;
-
-            return ExecuteAction(MoveToCellType((x, y) => Bot.Game.Map.IsNormalGround(x, y)));
         }
 
         // API: Moves to the nearest water area then move randomly inside it.
