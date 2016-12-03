@@ -540,6 +540,7 @@ namespace PROProtocol
             {
                 return false;
             }
+            _refreshingPCBox.Set(Rand.Next(1500, 2000));
             SendReleasePokemon(pokemonUid);
             return true;
         }
@@ -551,6 +552,7 @@ namespace PROProtocol
             {
                 return false;
             }
+            _refreshingPCBox.Set(Rand.Next(1500, 2000));
             SendReleasePokemon(pokemonUid);
             return true;
         }
