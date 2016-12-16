@@ -1162,7 +1162,7 @@ namespace PROBot.Scripting
             }
 
             PokemonStats stats = EffortValuesManager.Instance.BattleValues[Bot.Game.ActiveBattle.OpponentId];
-            return stats.GetEffortValue(_stats[statType.ToUpperInvariant()]);
+            return stats.GetStat(_stats[statType.ToUpperInvariant()]);
         }
 
         // API: Moves to the specified coordinates.
