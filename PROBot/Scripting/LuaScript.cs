@@ -231,6 +231,7 @@ namespace PROBot.Scripting
             _lua.Globals["getOpponentLevel"] = new Func<int>(GetOpponentLevel);
             _lua.Globals["getOpponentStatus"] = new Func<string>(GetOpponentStatus);
             _lua.Globals["isOpponentEffortValue"] = new Func<string, bool>(IsOpponentEffortValue);
+            _lua.Globals["getOpponentEffortValue"] = new Func<string, int>(GetOpponentEffortValue); 
 
             // Path actions
             _lua.Globals["moveToCell"] = new Func<int, int, bool>(MoveToCell);
@@ -1141,6 +1142,28 @@ namespace PROBot.Scripting
 
             PokemonStats stats = EffortValuesManager.Instance.BattleValues[Bot.Game.ActiveBattle.OpponentId];
             return stats.HasOnly(_stats[statType.ToUpperInvariant()]);
+        }
+
+        // API: Returns the amount of a particular EV given by the opponent.
+        private int GetOpponentEffortValue(string statType)
+        {
+            if (!Bot.Game.IsInBattle)
+            {
+                Fatal("error: getOpponentEffortValue can only be used in battle.");
+                return -1;
+            }
+            if (!_stats.ContainsKey(statType.ToUpperInvariant()))
+            {
+                Fatal("error: getOpponentEffortValue: the stat '" + statType + "' does not exist.");
+                return -1;
+            }
+            if (!EffortValuesManager.Instance.BattleValues.ContainsKey(Bot.Game.ActiveBattle.OpponentId))
+            {
+                return -1;
+            }
+
+            PokemonStats stats = EffortValuesManager.Instance.BattleValues[Bot.Game.ActiveBattle.OpponentId];
+            return stats.GetEffortValue(_stats[statType.ToUpperInvariant()]);
         }
 
         // API: Moves to the specified coordinates.
