@@ -225,7 +225,6 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonRegionFromPC"] = new Func<int, int, string>(GetPokemonRegionFromPC);
             _lua.Globals["getPokemonOriginalTrainerFromPC"] = new Func<int, int, string>(GetPokemonOriginalTrainerFromPC);
             _lua.Globals["getPokemonGenderFromPC"] = new Func<int, int, string>(GetPokemonGenderFromPC);
-            _lua.Globals["getPokemonFormFromPC"] = new Func<int, int, int>(GetPokemonFormFromPC);
 
             // Battle conditions
             _lua.Globals["isOpponentShiny"] = new Func<bool>(IsOpponentShiny);
@@ -240,6 +239,7 @@ namespace PROBot.Scripting
             _lua.Globals["getOpponentStatus"] = new Func<string>(GetOpponentStatus);
             _lua.Globals["getOpponentForm"] = new Func<int>(GetOpponentForm);
             _lua.Globals["isOpponentEffortValue"] = new Func<string, bool>(IsOpponentEffortValue);
+            _lua.Globals["getOpponentEffortValue"] = new Func<string, int>(GetOpponentEffortValue); 
 
             // Path actions
             _lua.Globals["moveToCell"] = new Func<int, int, bool>(MoveToCell);
@@ -1271,6 +1271,28 @@ namespace PROBot.Scripting
             return stats.HasOnly(_stats[statType.ToUpperInvariant()]);
         }
 
+        // API: Returns the amount of a particular EV given by the opponent.
+        private int GetOpponentEffortValue(string statType)
+        {
+            if (!Bot.Game.IsInBattle)
+            {
+                Fatal("error: getOpponentEffortValue can only be used in battle.");
+                return -1;
+            }
+            if (!_stats.ContainsKey(statType.ToUpperInvariant()))
+            {
+                Fatal("error: getOpponentEffortValue: the stat '" + statType + "' does not exist.");
+                return -1;
+            }
+            if (!EffortValuesManager.Instance.BattleValues.ContainsKey(Bot.Game.ActiveBattle.OpponentId))
+            {
+                return -1;
+            }
+
+            PokemonStats stats = EffortValuesManager.Instance.BattleValues[Bot.Game.ActiveBattle.OpponentId];
+            return stats.GetStat(_stats[statType.ToUpperInvariant()]);
+        }
+
         // API: Moves to the specified coordinates.
         private bool MoveToCell(int x, int y)
         {
@@ -2120,16 +2142,6 @@ namespace PROBot.Scripting
                 return null;
             }
             return Bot.Game.CurrentPCBox[boxPokemonId - 1].Gender;
-        }
-        
-        // API: Form of the pokémon in the current box matching the ID. (0 if no form)
-        private int GetPokemonFormFromPC(int boxId, int boxPokemonId)
-        {
-            if (!IsPCAccessValid("getPokemonFormFromPC", boxId, boxPokemonId))
-            {
-                return -1;
-            }
-            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Form;
         }
 
         // API: Status of the pokemon of the current box matching the ID.
