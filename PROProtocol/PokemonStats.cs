@@ -80,26 +80,5 @@ namespace PROProtocol
             }
             return true;
         }
-
-        public int GetEffortValue(StatType type)
-        {
-            switch (type)
-            {
-                case StatType.Health:
-                    return Health;
-                case StatType.Attack:
-                    return Attack;
-                case StatType.Defence:
-                    return Defence;
-                case StatType.SpAttack:
-                    return SpAttack;
-                case StatType.SpDefence:
-                    return SpDefence;
-                case StatType.Speed:
-                    return Speed;
-                default:
-                    return -1;
-            }
-        }
     }
 }
