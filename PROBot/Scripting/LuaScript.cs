@@ -225,6 +225,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonRegionFromPC"] = new Func<int, int, string>(GetPokemonRegionFromPC);
             _lua.Globals["getPokemonOriginalTrainerFromPC"] = new Func<int, int, string>(GetPokemonOriginalTrainerFromPC);
             _lua.Globals["getPokemonGenderFromPC"] = new Func<int, int, string>(GetPokemonGenderFromPC);
+            _lua.Globals["getPokemonFormFromPC"] = new Func<int, int, int>(GetPokemonFormFromPC);
 
             // Battle conditions
             _lua.Globals["isOpponentShiny"] = new Func<bool>(IsOpponentShiny);
@@ -2142,6 +2143,16 @@ namespace PROBot.Scripting
                 return null;
             }
             return Bot.Game.CurrentPCBox[boxPokemonId - 1].Gender;
+        }
+
+        // API: Form of the pokémon in the current box matching the ID. (0 if no form)
+        private int GetPokemonFormFromPC(int boxId, int boxPokemonId)
+        {
+            if (!IsPCAccessValid("getPokemonFormFromPC", boxId, boxPokemonId))
+            {
+                return -1;
+            }
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Form;
         }
 
         // API: Status of the pokemon of the current box matching the ID.
