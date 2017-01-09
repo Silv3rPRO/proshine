@@ -91,7 +91,7 @@ namespace PROProtocol
         public event Action<Shop> ShopOpened;
         public event Action<List<Pokemon>> PCBoxUpdated;
 
-        private const string Version = "0.958x";
+        private const string Version = "0.96";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
