@@ -2295,7 +2295,7 @@ namespace PROBot.Scripting
         }
         
         // API: Writes a string, a number, or a table of strings and/or numbers to file
-        // overwrite is an optional paramater, and will append the line(s) if absent
+        // overwrite is an optional parameter, and will append the line(s) if absent
         private void LogToFile(string file, DynValue text, bool overwrite = false)
         {
             Directory.CreateDirectory(fileDirectory);
