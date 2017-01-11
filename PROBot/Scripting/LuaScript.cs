@@ -26,7 +26,9 @@ namespace PROBot.Scripting
         private IDictionary<string, IList<DynValue>> _hookedFunctions;
 
         private bool _actionExecuted;
-
+        
+        private string fileDirectory = "Logs/";
+        
         public LuaScript(BotClient bot, string path, string content, IList<string> libsContent)
         {
             Bot = bot;
@@ -282,6 +284,11 @@ namespace PROBot.Scripting
             // Move learning actions
             _lua.Globals["forgetMove"] = new Func<string, bool>(ForgetMove);
             _lua.Globals["forgetAnyMoveExcept"] = new Func<DynValue[], bool>(ForgetAnyMoveExcept);
+            
+            // File editing actions
+            _lua.Globals["logToFile"] = new Action<string, DynValue, bool>(LogToFile);
+            _lua.Globals["readFromFile"] = new Func<string, string[]>(ReadFromFile);
+            _lua.Globals["setFileDirectory"] = new Action<string>(SetFileDirectory);
 
             foreach (string content in _libsContent)
             {
@@ -2285,6 +2292,46 @@ namespace PROBot.Scripting
                 return true;
             }
             return false;
+        }
+        
+        // API: Writes a string, a number, or a table of strings and/or numbers to file
+        // overwrite is an optional paramater, and will append the line(s) if absent
+        private void LogToFile(string file, DynValue text, bool overwrite = false)
+        {
+            Directory.CreateDirectory(fileDirectory);
+            file = fileDirectory + file;
+            if (text.Type == DataType.Table)
+            {
+                DynValue[] lines = text.Table.Values.ToArray();
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    if (overwrite && i == 0)
+                        File.WriteAllText(file, lines[0].CastToString() + "\r\n");
+                    else
+                        File.AppendAllText(file, lines[i].CastToString() + "\r\n");
+                }
+            }
+            else
+            {
+                if (overwrite)
+                    File.WriteAllText(file, text.CastToString() + "\r\n");
+                else
+                    File.AppendAllText(file, text.CastToString() + "\r\n");
+            }
+        }
+
+        // API: Returns a table of every line in file
+        private string[] ReadFromFile(string file)
+        {
+            file = fileDirectory + file;
+            if (!File.Exists(file)) return new string[] { "" };
+            return File.ReadAllLines(file);
+        }
+        
+        // API: Sets the fileDirectory to a new path (starting from ProShine root directory) for future LogToFile or ReadFromFile calls
+        private void SetFileDirectory(string dir)
+        {
+            fileDirectory = dir + "/";
         }
     }
 }
