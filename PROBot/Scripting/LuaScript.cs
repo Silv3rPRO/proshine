@@ -2328,7 +2328,7 @@ namespace PROBot.Scripting
             return File.ReadAllLines(file);
         }
         
-        // API: Sets the fileDirectory to a new path (starting from ProShine root directory) for future LogToFile or ReadFromFile calls
+        // API: Sets fileDirectory to a new path (starting from ProShine root directory) for future LogToFile or ReadFromFile calls
         private void SetFileDirectory(string dir)
         {
             fileDirectory = dir + "/";
