@@ -26,7 +26,7 @@ namespace PROBot.Scripting
         private IDictionary<string, IList<DynValue>> _hookedFunctions;
 
         private bool _actionExecuted;
-        
+
         public LuaScript(BotClient bot, string path, string content, IList<string> libsContent)
         {
             Bot = bot;
