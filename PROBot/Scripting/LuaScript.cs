@@ -27,8 +27,6 @@ namespace PROBot.Scripting
 
         private bool _actionExecuted;
         
-        private string fileDirectory = "Logs/";
-        
         public LuaScript(BotClient bot, string path, string content, IList<string> libsContent)
         {
             Bot = bot;
@@ -288,7 +286,6 @@ namespace PROBot.Scripting
             // File editing actions
             _lua.Globals["logToFile"] = new Action<string, DynValue, bool>(LogToFile);
             _lua.Globals["readFromFile"] = new Func<string, string[]>(ReadFromFile);
-            _lua.Globals["setFileDirectory"] = new Action<string>(SetFileDirectory);
 
             foreach (string content in _libsContent)
             {
@@ -2298,8 +2295,14 @@ namespace PROBot.Scripting
         // overwrite is an optional parameter, and will append the line(s) if absent
         private void LogToFile(string file, DynValue text, bool overwrite = false)
         {
+            if (file.Contains(".."))
+            {
+                Fatal("Error: Invalid File write access");
+                return;
+            }
+            
             Directory.CreateDirectory(fileDirectory);
-            file = fileDirectory + file;
+            file = "Logs/" + file;
             if (text.Type == DataType.Table)
             {
                 DynValue[] lines = text.Table.Values.ToArray();
@@ -2323,15 +2326,15 @@ namespace PROBot.Scripting
         // API: Returns a table of every line in file
         private string[] ReadFromFile(string file)
         {
-            file = fileDirectory + file;
+            if (file.Contains(".."))
+            {
+                Fatal("Error: Invalid File read access");
+                return new string[] { "" };
+            }
+            
+            file = "Logs/" + file;
             if (!File.Exists(file)) return new string[] { "" };
             return File.ReadAllLines(file);
-        }
-        
-        // API: Sets fileDirectory to a new path (starting from ProShine root directory) for future LogToFile or ReadFromFile calls
-        private void SetFileDirectory(string dir)
-        {
-            fileDirectory = dir + "/";
         }
     }
 }
