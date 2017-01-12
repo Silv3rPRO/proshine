@@ -2295,6 +2295,7 @@ namespace PROBot.Scripting
         // overwrite is an optional parameter, and will append the line(s) if absent
         private void LogToFile(string file, DynValue text, bool overwrite = false)
         {
+            // Restricting access to Logs folder
             if (file.Contains(".."))
             {
                 Fatal("Error: Invalid File write access");
@@ -2302,6 +2303,10 @@ namespace PROBot.Scripting
             }
             
             file = "Logs/" + file;
+            
+            // Creating all necessary folders
+            Directory.CreateDirectory(file.Remove(file.LastIndexOf("/")));
+            
             if (text.Type == DataType.Table)
             {
                 DynValue[] lines = text.Table.Values.ToArray();
