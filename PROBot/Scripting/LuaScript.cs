@@ -2301,7 +2301,6 @@ namespace PROBot.Scripting
                 return;
             }
             
-            Directory.CreateDirectory(fileDirectory);
             file = "Logs/" + file;
             if (text.Type == DataType.Table)
             {
