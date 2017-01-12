@@ -218,6 +218,8 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonOriginalTrainerFromPC"] = new Func<int, int, string>(GetPokemonOriginalTrainerFromPC);
             _lua.Globals["getPokemonGenderFromPC"] = new Func<int, int, string>(GetPokemonGenderFromPC);
             _lua.Globals["getPokemonFormFromPC"] = new Func<int, int, int>(GetPokemonFormFromPC);
+            
+            _lua.Globals["getServer"] = new Func<string>(GetServer);
 
             // Battle conditions
             _lua.Globals["isOpponentShiny"] = new Func<bool>(IsOpponentShiny);
@@ -2339,6 +2341,22 @@ namespace PROBot.Scripting
             file = "Logs/" + file;
             if (!File.Exists(file)) return new string[] { "" };
             return File.ReadAllLines(file);
+        }
+        
+        // API: Returns the connected server
+        private string GetServer()
+        {
+            switch(Bot.Game.Server)
+            {
+                case (GameServer.Blue):
+                    return "Blue";
+                case (GameServer.Red):
+                    return "Red";
+                case (GameServer.Yellow):
+                    return "Yellow";
+                default:
+                    return "Unknown";
+            }
         }
     }
 }
