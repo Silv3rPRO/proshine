@@ -170,6 +170,10 @@ namespace PROBot.Scripting
 
             _lua.Globals["hasItem"] = new Func<string, bool>(HasItem);
             _lua.Globals["getItemQuantity"] = new Func<string, int>(GetItemQuantity);
+            //hasItemID
+            _lua.Globals["hasItemId"] = new Func<int, bool>(HasItemId);
+            _lua.Globals["getItemQuantityId"] = new Func<int, int>(GetItemQuantityID);
+            
             _lua.Globals["hasPokemonInTeam"] = new Func<string, bool>(HasPokemonInTeam);
             _lua.Globals["isTeamSortedByLevelAscending"] = new Func<bool>(IsTeamSortedByLevelAscending);
             _lua.Globals["isTeamSortedByLevelDescending"] = new Func<bool>(IsTeamSortedByLevelDescending);
@@ -1026,6 +1030,17 @@ namespace PROBot.Scripting
         private int GetItemQuantity(string itemName)
         {
             return Bot.Game.GetItemFromName(itemName.ToUpperInvariant())?.Quantity ?? 0;
+        }
+
+         // API: Returns true if the specified item is in the inventory.
+        private bool HasItemId(int itemid)
+        {
+            return Bot.Game.HasItemId(itemid);
+        }
+        // API: Returns the quantity of the specified item in the inventory.
+        private int GetItemQuantityID(int itemid)
+        {
+            return Bot.Game.GetItemFromId(itemid)?.Quantity ?? 0;
         }
 
         // API: Returns true if the specified pokémon is present in the team.
