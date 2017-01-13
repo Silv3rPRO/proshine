@@ -54,6 +54,11 @@ namespace PROProtocol
         {
             get { return CurrentHealth + "/" + MaxHealth; }
         }
+        
+        public string Item
+        {
+            get { return ItemHeld; }
+        }
 
         internal Pokemon(string[] data)
         {
