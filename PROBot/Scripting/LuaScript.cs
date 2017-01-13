@@ -235,7 +235,7 @@ namespace PROBot.Scripting
             // Path actions
             _lua.Globals["moveToCell"] = new Func<int, int, bool>(MoveToCell);
             _lua.Globals["moveToMap"] = new Func<string, bool>(MoveToMap);
-            _lua.Globals["moveToRectangle"] = new Func<int, int, int, int, bool>(MoveToRectangle);
+            _lua.Globals["moveToRectangle"] = new Func<DynValue, int, int, int, bool>(MoveToRectangle);
             _lua.Globals["moveToGrass"] = new Func<bool>(MoveToGrass);
             _lua.Globals["moveToWater"] = new Func<bool>(MoveToWater);
             _lua.Globals["moveNearExit"] = new Func<string, bool>(MoveNearExit);
@@ -1160,11 +1160,40 @@ namespace PROBot.Scripting
         }
 
         // API: Moves to a random accessible cell of the specified rectangle.
-        private bool MoveToRectangle(int minX, int minY, int maxX, int maxY)
+        // Parameters can be four integers, or a table of four integers.
+        private bool MoveToRectangle(DynValue minX, int minY = -1, int maxX = -1, int maxY = -1)
         {
             if (!ValidateAction("moveToRectangle", false)) return false;
 
-            if (minX > maxX || minY > maxY)
+            int x1, y1, x2, y2;
+
+            if (minX.Type == DataType.Table)
+            {
+                DynValue[] rect = minX.Table.Values.ToArray();
+
+                if (rect.Length != 4)
+                {
+                    Fatal("error: moveToRectangle: table must contain exactly 4 integers.");
+                    return false;
+                }
+
+                x1 = (int)rect[0].CastToNumber();
+                y1 = (int)rect[1].CastToNumber();
+                x2 = (int)rect[2].CastToNumber();
+                y2 = (int)rect[3].CastToNumber();
+            }
+            else
+            {
+                if (minX.Type != DataType.Number || minY == -1 || maxX == -1 || maxY == -1)
+                    return false;
+
+                x1 = (int)minX.CastToNumber();
+                y1 = minY;
+                x2 = maxX;
+                y2 = maxY;
+            }
+
+            if (x1 > x2 || y1 > y2)
             {
                 Fatal("error: moveToRectangle: the maximum cell cannot be less than the minimum cell.");
                 return false;
@@ -1176,8 +1205,8 @@ namespace PROBot.Scripting
             do
             {
                 if (++tries > 100) return false;
-                x = Bot.Game.Rand.Next(minX, maxX + 1);
-                y = Bot.Game.Rand.Next(minY, maxY + 1);
+                x = Bot.Game.Rand.Next(x1, x2 + 1);
+                y = Bot.Game.Rand.Next(y1, y2 + 1);
             } while (x == Bot.Game.PlayerX && y == Bot.Game.PlayerY);
 
             return ExecuteAction(Bot.MoveToCell(x, y));
