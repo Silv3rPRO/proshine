@@ -282,6 +282,12 @@ namespace PROBot.Scripting
             // Move learning actions
             _lua.Globals["forgetMove"] = new Func<string, bool>(ForgetMove);
             _lua.Globals["forgetAnyMoveExcept"] = new Func<DynValue[], bool>(ForgetAnyMoveExcept);
+            
+            // Custom option slider functions
+            _lua.Globals["setOption"] = new Action<int, bool>(SetOption);
+            _lua.Globals["getOption"] = new Func<int, bool>(GetOption);
+            _lua.Globals["setOptionName"] = new Action<int, string>(SetOptionName);
+            _lua.Globals["setOptionDescription"] = new Action<int, string>(SetOptionDescription);
 
             foreach (string content in _libsContent)
             {
@@ -2285,6 +2291,38 @@ namespace PROBot.Scripting
                 return true;
             }
             return false;
+        }
+
+        private void SetOption(int option, bool value)
+        {
+            if (option < 1 || option > Bot.Options.Length)
+                return;
+
+            Bot.Options[option - 1].IsEnabled = value;
+        }
+
+        private bool GetOption(int option)
+        {
+            if (option < 1 || option > Bot.Options.Length)
+                return false;
+
+            return Bot.Options[option - 1].IsEnabled;
+        }
+
+        private void SetOptionName(int option, string content)
+        {
+            if (option < 1 || option > Bot.Options.Length)
+                return;
+
+            Bot.Options[option - 1].Name = content + ": ";
+        }
+
+        private void SetOptionDescription(int option, string content)
+        {
+            if (option < 1 || option > Bot.Options.Length)
+                return;
+
+            Bot.Options[option - 1].Description = content;
         }
     }
 }
