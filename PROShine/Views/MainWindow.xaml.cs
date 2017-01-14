@@ -62,6 +62,22 @@ namespace PROShine
             Bot.ConnectionClosed += Bot_ConnectionClosed;
             Bot.MessageLogged += Bot_LogMessage;
 
+            Bot.Options[0].EnabledStateChanged += Bot_Option1StateChanged;
+            Bot.Options[0].NameChanged += Bot_Option1NameChanged;
+            Bot.Options[0].DescriptionChanged += Bot_Option1DescriptionChanged;
+            Bot.Options[1].EnabledStateChanged += Bot_Option2StateChanged;
+            Bot.Options[1].NameChanged += Bot_Option2NameChanged;
+            Bot.Options[1].DescriptionChanged += Bot_Option2DescriptionChanged;
+            Bot.Options[2].EnabledStateChanged += Bot_Option3StateChanged;
+            Bot.Options[2].NameChanged += Bot_Option3NameChanged;
+            Bot.Options[2].DescriptionChanged += Bot_Option3DescriptionChanged;
+            Bot.Options[3].EnabledStateChanged += Bot_Option4StateChanged;
+            Bot.Options[3].NameChanged += Bot_Option4NameChanged;
+            Bot.Options[3].DescriptionChanged += Bot_Option4DescriptionChanged;
+            Bot.Options[4].EnabledStateChanged += Bot_Option5StateChanged;
+            Bot.Options[4].NameChanged += Bot_Option5NameChanged;
+            Bot.Options[4].DescriptionChanged += Bot_Option5DescriptionChanged;
+
             InitializeComponent();
             AutoReconnectSwitch.IsChecked = Bot.AutoReconnector.IsEnabled;
             AvoidStaffSwitch.IsChecked = Bot.StaffAvoider.IsEnabled;
@@ -467,6 +483,136 @@ namespace PROShine
             });
         }
 
+        private void Bot_Option1StateChanged(bool value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                if (ScriptOption1.IsChecked == value) return;
+                ScriptOption1.IsChecked = value;
+            });
+        }
+
+        private void Bot_Option1NameChanged(string value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                if ((string)ScriptOption1.Content == value) return;
+                ScriptOption1.Content = value;
+            });
+        }
+
+        private void Bot_Option1DescriptionChanged(string value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                ScriptOption1.ToolTip = value;
+            });
+        }
+
+        private void Bot_Option2StateChanged(bool value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                if (ScriptOption2.IsChecked == value) return;
+                ScriptOption2.IsChecked = value;
+            });
+        }
+
+        private void Bot_Option2NameChanged(string value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                if ((string)ScriptOption2.Content == value) return;
+                ScriptOption2.Content = value;
+            });
+        }
+
+        private void Bot_Option2DescriptionChanged(string value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                ScriptOption2.ToolTip = value;
+            });
+        }
+
+        private void Bot_Option3StateChanged(bool value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                if (ScriptOption3.IsChecked == value) return;
+                ScriptOption3.IsChecked = value;
+            });
+        }
+
+        private void Bot_Option3NameChanged(string value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                if ((string)ScriptOption3.Content == value) return;
+                ScriptOption3.Content = value;
+            });
+        }
+
+        private void Bot_Option3DescriptionChanged(string value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                ScriptOption3.ToolTip = value;
+            });
+        }
+
+        private void Bot_Option4StateChanged(bool value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                if (ScriptOption4.IsChecked == value) return;
+                ScriptOption4.IsChecked = value;
+            });
+        }
+
+        private void Bot_Option4NameChanged(string value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                if ((string)ScriptOption4.Content == value) return;
+                ScriptOption4.Content = value;
+            });
+        }
+
+        private void Bot_Option4DescriptionChanged(string value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                ScriptOption4.ToolTip = value;
+            });
+        }
+
+        private void Bot_Option5StateChanged(bool value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                if (ScriptOption5.IsChecked == value) return;
+                ScriptOption5.IsChecked = value;
+            });
+        }
+
+        private void Bot_Option5NameChanged(string value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                if ((string)ScriptOption5.Content == value) return;
+                ScriptOption5.Content = value;
+            });
+        }
+
+        private void Bot_Option5DescriptionChanged(string value)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                ScriptOption5.ToolTip = value;
+            });
+        }
+
         private void Bot_ClientChanged()
         {
             lock (Bot)
@@ -804,6 +950,86 @@ namespace PROShine
             lock (Bot)
             {
                 Bot.AutoReconnector.IsEnabled = false;
+            }
+        }
+
+        private void Option1_Checked(object sender, RoutedEventArgs e)
+        {
+            lock(Bot)
+            {
+                Bot.Options[0].IsEnabled = true;
+            }
+        }
+
+        private void Option1_Unchecked(object sender, RoutedEventArgs e)
+        {
+            lock (Bot)
+            {
+                Bot.Options[0].IsEnabled = false;
+            }
+        }
+
+        private void Option2_Checked(object sender, RoutedEventArgs e)
+        {
+            lock (Bot)
+            {
+                Bot.Options[1].IsEnabled = true;
+            }
+        }
+
+        private void Option2_Unchecked(object sender, RoutedEventArgs e)
+        {
+            lock (Bot)
+            {
+                Bot.Options[1].IsEnabled = false;
+            }
+        }
+
+        private void Option3_Checked(object sender, RoutedEventArgs e)
+        {
+            lock (Bot)
+            {
+                Bot.Options[2].IsEnabled = true;
+            }
+        }
+
+        private void Option3_Unchecked(object sender, RoutedEventArgs e)
+        {
+            lock (Bot)
+            {
+                Bot.Options[2].IsEnabled = false;
+            }
+        }
+
+        private void Option4_Checked(object sender, RoutedEventArgs e)
+        {
+            lock (Bot)
+            {
+                Bot.Options[3].IsEnabled = true;
+            }
+        }
+
+        private void Option4_Unchecked(object sender, RoutedEventArgs e)
+        {
+            lock (Bot)
+            {
+                Bot.Options[3].IsEnabled = false;
+            }
+        }
+
+        private void Option5_Checked(object sender, RoutedEventArgs e)
+        {
+            lock (Bot)
+            {
+                Bot.Options[4].IsEnabled = true;
+            }
+        }
+
+        private void Option5_Unchecked(object sender, RoutedEventArgs e)
+        {
+            lock (Bot)
+            {
+                Bot.Options[4].IsEnabled = false;
             }
         }
 
