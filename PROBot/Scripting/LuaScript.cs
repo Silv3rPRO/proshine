@@ -1333,7 +1333,7 @@ namespace PROBot.Scripting
         }
 
         // API: Moves to a random accessible cell of the specified rectangle.
-        private bool MoveToRectangle(DynValue[] values)
+        private bool MoveToRectangle(params DynValue[] values)
         {
             if (values.Length != 1 && values.Length != 4 ||
                 (values.Length == 1 && values[0].Type != DataType.Table) ||
