@@ -1338,8 +1338,8 @@ namespace PROBot.Scripting
             if (values.Length != 1 && values.Length != 4 ||
                 (values.Length == 1 && values[0].Type != DataType.Table) ||
                 (values.Length == 4
-                    && values[0].Type != DataType.Number && values[1].Type != DataType.Number
-                    && values[2].Type != DataType.Number && values[3].Type != DataType.Number))
+                    && (values[0].Type != DataType.Number || values[1].Type != DataType.Number
+                    || values[2].Type != DataType.Number || values[3].Type != DataType.Number)))
             {
                 Fatal("error: moveToRectangle: must receive either a table or four numbers.");
                 return false;
