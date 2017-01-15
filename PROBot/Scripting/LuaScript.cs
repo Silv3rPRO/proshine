@@ -230,6 +230,8 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonOriginalTrainerFromPC"] = new Func<int, int, string>(GetPokemonOriginalTrainerFromPC);
             _lua.Globals["getPokemonGenderFromPC"] = new Func<int, int, string>(GetPokemonGenderFromPC);
             _lua.Globals["getPokemonFormFromPC"] = new Func<int, int, int>(GetPokemonFormFromPC);
+            
+            _lua.Globals["getServer"] = new Func<string>(GetServer);
 
             // Battle conditions
             _lua.Globals["isOpponentShiny"] = new Func<bool>(IsOpponentShiny);
@@ -297,6 +299,10 @@ namespace PROBot.Scripting
             // Move learning actions
             _lua.Globals["forgetMove"] = new Func<string, bool>(ForgetMove);
             _lua.Globals["forgetAnyMoveExcept"] = new Func<DynValue[], bool>(ForgetAnyMoveExcept);
+            
+            // File editing actions
+            _lua.Globals["logToFile"] = new Action<string, DynValue, bool>(LogToFile);
+            _lua.Globals["readFromFile"] = new Func<string, string[]>(ReadFromFile);
 
             foreach (string content in _libsContent)
             {
@@ -2459,6 +2465,72 @@ namespace PROBot.Scripting
                 return true;
             }
             return false;
+        }
+        
+        // API: Writes a string, a number, or a table of strings and/or numbers to file
+        // overwrite is an optional parameter, and will append the line(s) if absent
+        private void LogToFile(string file, DynValue text, bool overwrite = false)
+        {
+            // Restricting access to Logs folder
+            if (file.Contains(".."))
+            {
+                Fatal("Error: Invalid File write access");
+                return;
+            }
+            
+            file = "Logs/" + file;
+            
+            // Creating all necessary folders
+            Directory.CreateDirectory(file.Remove(file.LastIndexOf("/")));
+            
+            if (text.Type == DataType.Table)
+            {
+                DynValue[] lines = text.Table.Values.ToArray();
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    if (overwrite && i == 0)
+                        File.WriteAllText(file, lines[0].CastToString() + "\r\n");
+                    else
+                        File.AppendAllText(file, lines[i].CastToString() + "\r\n");
+                }
+            }
+            else
+            {
+                if (overwrite)
+                    File.WriteAllText(file, text.CastToString() + "\r\n");
+                else
+                    File.AppendAllText(file, text.CastToString() + "\r\n");
+            }
+        }
+
+        // API: Returns a table of every line in file
+        private string[] ReadFromFile(string file)
+        {
+            if (file.Contains(".."))
+            {
+                Fatal("Error: Invalid File read access");
+                return new string[] { "" };
+            }
+            
+            file = "Logs/" + file;
+            if (!File.Exists(file)) return new string[] { "" };
+            return File.ReadAllLines(file);
+        }
+        
+        // API: Returns the connected server
+        private string GetServer()
+        {
+            switch(Bot.Game.Server)
+            {
+                case (GameServer.Blue):
+                    return "Blue";
+                case (GameServer.Red):
+                    return "Red";
+                case (GameServer.Yellow):
+                    return "Yellow";
+                default:
+                    return "Unknown";
+            }
         }
     }
 }
