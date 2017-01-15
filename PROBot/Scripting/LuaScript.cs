@@ -111,7 +111,7 @@ namespace PROBot.Scripting
             _hookedFunctions = new Dictionary<string, IList<DynValue>>();
 
             _lua = new Script(CoreModules.Preset_SoftSandbox | CoreModules.LoadMethods);
-            _lua.Options.ScriptLoader = new CustomScriptLoader(_path) { ModulePaths = new [] { "?.lua" } };
+            _lua.Options.ScriptLoader = new CustomScriptLoader(_path) { ModulePaths = new[] { "?.lua" } };
             _lua.Options.CheckThreadAccess = false;
             _lua.Globals["log"] = new Action<string>(Log);
             _lua.Globals["fatal"] = new Action<string>(Fatal);
@@ -171,10 +171,9 @@ namespace PROBot.Scripting
 
             _lua.Globals["hasItem"] = new Func<string, bool>(HasItem);
             _lua.Globals["getItemQuantity"] = new Func<string, int>(GetItemQuantity);
-            //hasItemID
             _lua.Globals["hasItemId"] = new Func<int, bool>(HasItemId);
             _lua.Globals["getItemQuantityId"] = new Func<int, int>(GetItemQuantityID);
-            
+
             _lua.Globals["hasPokemonInTeam"] = new Func<string, bool>(HasPokemonInTeam);
             _lua.Globals["isTeamSortedByLevelAscending"] = new Func<bool>(IsTeamSortedByLevelAscending);
             _lua.Globals["isTeamSortedByLevelDescending"] = new Func<bool>(IsTeamSortedByLevelDescending);
@@ -231,7 +230,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonOriginalTrainerFromPC"] = new Func<int, int, string>(GetPokemonOriginalTrainerFromPC);
             _lua.Globals["getPokemonGenderFromPC"] = new Func<int, int, string>(GetPokemonGenderFromPC);
             _lua.Globals["getPokemonFormFromPC"] = new Func<int, int, int>(GetPokemonFormFromPC);
-            
+
             _lua.Globals["getServer"] = new Func<string>(GetServer);
 
             // Battle conditions
@@ -247,12 +246,13 @@ namespace PROBot.Scripting
             _lua.Globals["getOpponentStatus"] = new Func<string>(GetOpponentStatus);
             _lua.Globals["getOpponentForm"] = new Func<int>(GetOpponentForm);
             _lua.Globals["isOpponentEffortValue"] = new Func<string, bool>(IsOpponentEffortValue);
-            _lua.Globals["getOpponentEffortValue"] = new Func<string, int>(GetOpponentEffortValue); 
+            _lua.Globals["getOpponentEffortValue"] = new Func<string, int>(GetOpponentEffortValue);
 
             // Path actions
             _lua.Globals["moveToCell"] = new Func<int, int, bool>(MoveToCell);
             _lua.Globals["moveToMap"] = new Func<string, bool>(MoveToMap);
-            _lua.Globals["moveToRectangle"] = new Func<int, int, int, int, bool>(MoveToRectangle);
+            _lua.Globals["moveToRectangle"] = new Func<DynValue[], bool>(MoveToRectangle);
+
             _lua.Globals["moveToNormalGround"] = new Func<bool>(MoveToNormalGround);
             _lua.Globals["moveToGrass"] = new Func<bool>(MoveToGrass);
             _lua.Globals["moveToWater"] = new Func<bool>(MoveToWater);
@@ -300,7 +300,7 @@ namespace PROBot.Scripting
             // Move learning actions
             _lua.Globals["forgetMove"] = new Func<string, bool>(ForgetMove);
             _lua.Globals["forgetAnyMoveExcept"] = new Func<DynValue[], bool>(ForgetAnyMoveExcept);
-            
+
             // File editing actions
             _lua.Globals["logToFile"] = new Action<string, DynValue, bool>(LogToFile);
             _lua.Globals["readLinesFromFile"] = new Func<string, string[]>(ReadLinesFromFile);
@@ -469,7 +469,7 @@ namespace PROBot.Scripting
         // API return an array of all harvestable berry trees on the currrent map. format : {index = {"x" = x, "y" = y}}
         private List<Dictionary<string, int>> GetActiveBerryTrees()
         {
-            int[] berries = {42, 43, 44, 45, 49, 50, 51, 52, 55, 56, 57, 58, 59, 60, 61, 62};
+            int[] berries = { 42, 43, 44, 45, 49, 50, 51, 52, 55, 56, 57, 58, 59, 60, 61, 62 };
             var trees = new List<Dictionary<string, int>>();
             foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => Array.Exists(berries, e => e == npc.Type)))
             {
@@ -1039,7 +1039,7 @@ namespace PROBot.Scripting
             return Bot.Game.GetItemFromName(itemName.ToUpperInvariant())?.Quantity ?? 0;
         }
 
-         // API: Returns true if the specified item is in the inventory.
+        // API: Returns true if the specified item is in the inventory.
         private bool HasItemId(int itemid)
         {
             return Bot.Game.HasItemId(itemid);
@@ -1330,6 +1330,25 @@ namespace PROBot.Scripting
             if (!ValidateAction("moveToMap", false)) return false;
 
             return ExecuteAction(Bot.MoveToLink(mapName.ToUpperInvariant()));
+        }
+
+        // API: Moves to a random accessible cell of the specified rectangle.
+        private bool MoveToRectangle(DynValue[] values)
+        {
+            if (values.Length != 1 && values.Length != 4 ||
+                (values.Length == 1 && values[0].Type != DataType.Table) ||
+                (values.Length == 4
+                    && values[0].Type != DataType.Number && values[1].Type != DataType.Number
+                    && values[2].Type != DataType.Number && values[3].Type != DataType.Number))
+            {
+                Fatal("error: moveToRectangle: must receive either a table or four numbers.");
+                return false;
+            }
+            if (values.Length == 1)
+            {
+                values = values[0].Table.Values.ToArray();
+            }
+            return MoveToRectangle((int)values[0].Number, (int)values[1].Number, (int)values[2].Number, (int)values[3].Number);
         }
 
         // API: Moves to a random accessible cell of the specified rectangle.
