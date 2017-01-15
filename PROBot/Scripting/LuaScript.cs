@@ -2484,7 +2484,7 @@ namespace PROBot.Scripting
             file = info.FullName;
 
             // Creating all necessary folders
-            //Directory.CreateDirectory(file.Remove(file.LastIndexOf("/")));
+            Directory.CreateDirectory(Path.GetDirectoryName(info.FullName));
             
             if (text.Type == DataType.Table)
             {
