@@ -2471,17 +2471,20 @@ namespace PROBot.Scripting
         // overwrite is an optional parameter, and will append the line(s) if absent
         private void LogToFile(string file, DynValue text, bool overwrite = false)
         {
+            DirectoryInfo directory = new DirectoryInfo("Logs/");
+            FileInfo info = new FileInfo("Logs/" + file);
+
             // Restricting access to Logs folder
-            if (file.Contains(".."))
+            if (!info.FullName.StartsWith(directory.FullName))
             {
-                Fatal("Error: Invalid File write access");
+                Fatal("Error: Invalid file write access");
                 return;
             }
-            
-            file = "Logs/" + file;
-            
+
+            file = info.FullName;
+
             // Creating all necessary folders
-            Directory.CreateDirectory(file.Remove(file.LastIndexOf("/")));
+            //Directory.CreateDirectory(file.Remove(file.LastIndexOf("/")));
             
             if (text.Type == DataType.Table)
             {
@@ -2506,13 +2509,17 @@ namespace PROBot.Scripting
         // API: Returns a table of every line in file
         private string[] ReadLinesFromFile(string file)
         {
-            if (file.Contains(".."))
+            DirectoryInfo directory = new DirectoryInfo("Logs/");
+            FileInfo info = new FileInfo("Logs/" + file);
+
+            if (!info.FullName.StartsWith(directory.FullName))
             {
                 Fatal("Error: Invalid File read access");
                 return new string[] { "" };
             }
-            
-            file = "Logs/" + file;
+
+            file = info.FullName;
+
             if (!File.Exists(file)) return new string[] { "" };
             return File.ReadAllLines(file);
         }
