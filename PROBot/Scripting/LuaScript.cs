@@ -302,7 +302,7 @@ namespace PROBot.Scripting
             
             // File editing actions
             _lua.Globals["logToFile"] = new Action<string, DynValue, bool>(LogToFile);
-            _lua.Globals["readFromFile"] = new Func<string, string[]>(ReadFromFile);
+            _lua.Globals["readLinesFromFile"] = new Func<string, string[]>(ReadLinesFromFile);
 
             foreach (string content in _libsContent)
             {
@@ -2504,7 +2504,7 @@ namespace PROBot.Scripting
         }
 
         // API: Returns a table of every line in file
-        private string[] ReadFromFile(string file)
+        private string[] ReadLinesFromFile(string file)
         {
             if (file.Contains(".."))
             {
