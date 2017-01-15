@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Text;
 
 namespace PROBot.Scripting
 {
@@ -2481,29 +2482,28 @@ namespace PROBot.Scripting
                 return;
             }
 
-            file = info.FullName;
-
             // Creating all necessary folders
             Directory.CreateDirectory(Path.GetDirectoryName(info.FullName));
+
+            StringBuilder sb = new StringBuilder();
             
             if (text.Type == DataType.Table)
             {
                 DynValue[] lines = text.Table.Values.ToArray();
                 for (int i = 0; i < lines.Length; i++)
                 {
-                    if (overwrite && i == 0)
-                        File.WriteAllText(file, lines[0].CastToString() + "\r\n");
-                    else
-                        File.AppendAllText(file, lines[i].CastToString() + "\r\n");
+                    sb.AppendLine(lines[i].CastToString());
                 }
             }
             else
             {
-                if (overwrite)
-                    File.WriteAllText(file, text.CastToString() + "\r\n");
-                else
-                    File.AppendAllText(file, text.CastToString() + "\r\n");
+                sb.AppendLine(text.CastToString());
             }
+
+            if (overwrite)
+                File.WriteAllText(info.FullName, sb.ToString());
+            else
+                File.AppendAllText(info.FullName, sb.ToString());
         }
 
         // API: Returns a table of every line in file
@@ -2515,12 +2515,12 @@ namespace PROBot.Scripting
             if (!info.FullName.StartsWith(directory.FullName))
             {
                 Fatal("Error: Invalid File read access");
-                return new string[] { "" };
+                return new string[] { };
             }
 
             file = info.FullName;
 
-            if (!File.Exists(file)) return new string[] { "" };
+            if (!File.Exists(file)) return new string[] { };
             return File.ReadAllLines(file);
         }
         
