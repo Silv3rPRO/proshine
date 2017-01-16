@@ -10,6 +10,11 @@ namespace PROBot.Modules
         private bool _isEnabled = false;
         private string _name, _description;
         private int _index;
+        
+        public void Reset()
+        {
+            _isEnabled = false;
+        }
 
         public bool IsEnabled
         {
