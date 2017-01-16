@@ -700,7 +700,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMove: tried to retrieve the non-existing pokemon " + index + ".");
                 return null;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMove: tried to access an impossible move #" + moveId + ".");
                 return null;
@@ -717,7 +717,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMoveAccuracy: tried to retrieve the non-existing pokemon " + index + ".");
                 return -1;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMoveAccuracy: tried to access an impossible move #" + moveId + ".");
                 return -1;
@@ -734,7 +734,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMovePower: tried to retrieve the non-existing pokemon " + index + ".");
                 return -1;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMovePower: tried to access an impossible move #" + moveId + ".");
                 return -1;
@@ -751,7 +751,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMoveType: tried to retrieve the non-existing pokemon " + index + ".");
                 return null;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMoveType: tried to access an impossible move #" + moveId + ".");
                 return null;
@@ -768,7 +768,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMoveDamageType: tried to retrieve the non-existing pokemon " + index + ".");
                 return null;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMoveDamageType: tried to access an impossible move #" + moveId + ".");
                 return null;
@@ -785,7 +785,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMoveStatus: tried to retrieve the non-existing pokemon " + index + ".");
                 return false;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMoveStatus: tried to access an impossible move #" + moveId + ".");
                 return false;
@@ -802,7 +802,7 @@ namespace PROBot.Scripting
                 Fatal("error: getPokemonMove: tried to retrieve the non-existing pokemon " + index + ".");
                 return -1;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMove: tried to access an impossible move #" + moveId + ".");
                 return -1;
@@ -1985,7 +1985,7 @@ namespace PROBot.Scripting
             {
                 return null;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMoveNameFromPC: tried to access an impossible move #" + moveId + ".");
                 return null;
@@ -2000,7 +2000,7 @@ namespace PROBot.Scripting
             {
                 return -1;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMoveAccuracyFromPC: tried to access an impossible move #" + moveId + ".");
                 return -1;
@@ -2015,7 +2015,7 @@ namespace PROBot.Scripting
             {
                 return -1;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMovePowerFromPC: tried to access an impossible move #" + moveId + ".");
                 return -1;
@@ -2030,7 +2030,7 @@ namespace PROBot.Scripting
             {
                 return null;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMoveTypeFromPC: tried to access an impossible move #" + moveId + ".");
                 return null;
@@ -2045,7 +2045,7 @@ namespace PROBot.Scripting
             {
                 return null;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMoveDamageTypeFromPC: tried to access an impossible move #" + moveId + ".");
                 return null;
@@ -2060,7 +2060,7 @@ namespace PROBot.Scripting
             {
                 return false;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMoveStatusTypeFromPC: tried to access an impossible move #" + moveId + ".");
                 return false;
@@ -2075,7 +2075,7 @@ namespace PROBot.Scripting
             {
                 return -1;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMoveCurrentPPFromPC: tried to access an impossible move #" + moveId + ".");
                 return -1;
@@ -2090,7 +2090,7 @@ namespace PROBot.Scripting
             {
                 return -1;
             }
-            if (moveId < 1 || moveId > 4)
+            if (moveId < 0 || moveId > 4)
             {
                 Fatal("error: getPokemonMoveMaxPPFromPC: tried to access an impossible move #" + moveId + ".");
                 return -1;
