@@ -52,11 +52,11 @@ namespace PROBot
             AutoReconnector = new AutoReconnector(this);
             MovementResynchronizer = new MovementResynchronizer(this);
             Rand = new Random();
-            Options = new OptionSlider[] { new OptionSlider("Option 1: ", "Custom option 1 for use in scripts"),
-                                           new OptionSlider("Option 2: ", "Custom option 2 for use in scripts"),
-                                           new OptionSlider("Option 3: ", "Custom option 3 for use in scripts"),
-                                           new OptionSlider("Option 4: ", "Custom option 4 for use in scripts"),
-                                           new OptionSlider("Option 5: ", "Custom option 5 for use in scripts")
+            Options = new OptionSlider[] { new OptionSlider("Option 1: ", "Custom option 1 for use in scripts", 1),
+                                           new OptionSlider("Option 2: ", "Custom option 2 for use in scripts", 2),
+                                           new OptionSlider("Option 3: ", "Custom option 3 for use in scripts", 3),
+                                           new OptionSlider("Option 4: ", "Custom option 4 for use in scripts", 4),
+                                           new OptionSlider("Option 5: ", "Custom option 5 for use in scripts", 5)
             };
         }
 
