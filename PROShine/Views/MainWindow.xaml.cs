@@ -263,18 +263,20 @@ namespace PROShine
                 {
                     lock (Bot)
                     {
-                        /*
-                        Setting each slider to false in this way can cause the bot to freeze. A better solution is needed.
-                        
+                        foreach (var slider in Bot.Options)
+                            slider.Reset();
+
                         ScriptOption1.Visibility = Visibility.Collapsed;
                         ScriptOption2.Visibility = Visibility.Collapsed;
                         ScriptOption3.Visibility = Visibility.Collapsed;
                         ScriptOption4.Visibility = Visibility.Collapsed;
                         ScriptOption5.Visibility = Visibility.Collapsed;
-                        
-                        foreach (var slider in Bot.Options)
-                            slider.IsEnabled = false;
-                        */
+
+                        ScriptOption1.IsChecked = false;
+                        ScriptOption2.IsChecked = false;
+                        ScriptOption3.IsChecked = false;
+                        ScriptOption4.IsChecked = false;
+                        ScriptOption5.IsChecked = false;
                         
                         Bot.LoadScript(openDialog.FileName);
                         MenuPathScript.Header = "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine + openDialog.FileName;
