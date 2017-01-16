@@ -272,11 +272,25 @@ namespace PROShine
                         ScriptOption4.Visibility = Visibility.Collapsed;
                         ScriptOption5.Visibility = Visibility.Collapsed;
 
+                        // Surely there's a better way to do this
+
                         ScriptOption1.IsChecked = false;
                         ScriptOption2.IsChecked = false;
                         ScriptOption3.IsChecked = false;
                         ScriptOption4.IsChecked = false;
                         ScriptOption5.IsChecked = false;
+
+                        ScriptOption1.Content = "Option1: ";
+                        ScriptOption2.Content = "Option2: ";
+                        ScriptOption3.Content = "Option3: ";
+                        ScriptOption4.Content = "Option4: ";
+                        ScriptOption5.Content = "Option5: ";
+
+                        ScriptOption1.ToolTip = "Custom option 1 for use in scripts";
+                        ScriptOption2.ToolTip = "Custom option 2 for use in scripts";
+                        ScriptOption3.ToolTip = "Custom option 3 for use in scripts";
+                        ScriptOption4.ToolTip = "Custom option 4 for use in scripts";
+                        ScriptOption5.ToolTip = "Custom option 5 for use in scripts";
                         
                         Bot.LoadScript(openDialog.FileName);
                         MenuPathScript.Header = "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine + openDialog.FileName;
