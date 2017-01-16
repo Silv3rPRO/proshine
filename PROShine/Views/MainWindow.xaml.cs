@@ -44,6 +44,8 @@ namespace PROShine
 
         private int _queuePosition;
 
+        private CheckBox[] _options = new CheckBox[5];
+
         public MainWindow()
         {
 #if !DEBUG
@@ -99,11 +101,14 @@ namespace PROShine
 
             Task.Run(() => UpdateClients());
 
-            ScriptOption1.Visibility = Visibility.Collapsed;
-            ScriptOption2.Visibility = Visibility.Collapsed;
-            ScriptOption3.Visibility = Visibility.Collapsed;
-            ScriptOption4.Visibility = Visibility.Collapsed;
-            ScriptOption5.Visibility = Visibility.Collapsed;
+            _options[0] = ScriptOption1;
+            _options[1] = ScriptOption2;
+            _options[2] = ScriptOption3;
+            _options[3] = ScriptOption4;
+            _options[4] = ScriptOption5;
+
+            foreach (var option in _options)
+                option.Visibility = Visibility.Collapsed;
         }
 
         private void AddView(UserControl view, ContentControl content, ToggleButton button, bool visible = false)
@@ -266,31 +271,13 @@ namespace PROShine
                         foreach (var slider in Bot.Options)
                             slider.Reset();
 
-                        ScriptOption1.Visibility = Visibility.Collapsed;
-                        ScriptOption2.Visibility = Visibility.Collapsed;
-                        ScriptOption3.Visibility = Visibility.Collapsed;
-                        ScriptOption4.Visibility = Visibility.Collapsed;
-                        ScriptOption5.Visibility = Visibility.Collapsed;
-
-                        // Surely there's a better way to do this
-
-                        ScriptOption1.IsChecked = false;
-                        ScriptOption2.IsChecked = false;
-                        ScriptOption3.IsChecked = false;
-                        ScriptOption4.IsChecked = false;
-                        ScriptOption5.IsChecked = false;
-
-                        ScriptOption1.Content = "Option1: ";
-                        ScriptOption2.Content = "Option2: ";
-                        ScriptOption3.Content = "Option3: ";
-                        ScriptOption4.Content = "Option4: ";
-                        ScriptOption5.Content = "Option5: ";
-
-                        ScriptOption1.ToolTip = "Custom option 1 for use in scripts";
-                        ScriptOption2.ToolTip = "Custom option 2 for use in scripts";
-                        ScriptOption3.ToolTip = "Custom option 3 for use in scripts";
-                        ScriptOption4.ToolTip = "Custom option 4 for use in scripts";
-                        ScriptOption5.ToolTip = "Custom option 5 for use in scripts";
+                        for (int i = 0; i < _options.Length; i++)
+                        {
+                            _options[i].Visibility = Visibility.Collapsed;
+                            _options[i].IsChecked = false;
+                            _options[i].Content = "Option " + (i + 1) + ": ";
+                            _options[i].ToolTip = "Custom option  " + (i + 1) + " for use in scripts";
+                        }
                         
                         Bot.LoadScript(openDialog.FileName);
                         MenuPathScript.Header = "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine + openDialog.FileName;
@@ -513,29 +500,8 @@ namespace PROShine
         {
             Dispatcher.InvokeAsync(delegate
             {
-                switch(index)
-                {
-                    case (1):
-                        ScriptOption1.Visibility = Visibility.Visible;
-                        ScriptOption1.IsChecked = value;
-                        break;
-                    case (2):
-                        ScriptOption2.Visibility = Visibility.Visible;
-                        ScriptOption2.IsChecked = value;
-                        break;
-                    case (3):
-                        ScriptOption3.Visibility = Visibility.Visible;
-                        ScriptOption3.IsChecked = value;
-                        break;
-                    case (4):
-                        ScriptOption4.Visibility = Visibility.Visible;
-                        ScriptOption4.IsChecked = value;
-                        break;
-                    case (5):
-                        ScriptOption5.Visibility = Visibility.Visible;
-                        ScriptOption5.IsChecked = value;
-                        break;
-                }
+                _options[index - 1].Visibility = Visibility.Visible;
+                _options[index - 1].IsChecked = value;
             });
         }
 
@@ -543,29 +509,8 @@ namespace PROShine
         {
             Dispatcher.InvokeAsync(delegate
             {
-                switch (index)
-                {
-                    case (1):
-                        ScriptOption1.Visibility = Visibility.Visible;
-                        ScriptOption1.Content = value;
-                        break;
-                    case (2):
-                        ScriptOption2.Visibility = Visibility.Visible;
-                        ScriptOption2.Content = value;
-                        break;
-                    case (3):
-                        ScriptOption3.Visibility = Visibility.Visible;
-                        ScriptOption3.Content = value;
-                        break;
-                    case (4):
-                        ScriptOption4.Visibility = Visibility.Visible;
-                        ScriptOption4.Content = value;
-                        break;
-                    case (5):
-                        ScriptOption5.Visibility = Visibility.Visible;
-                        ScriptOption5.Content = value;
-                        break;
-                }
+                _options[index - 1].Visibility = Visibility.Visible;
+                _options[index - 1].Content = value;
             });
         }
 
@@ -573,29 +518,8 @@ namespace PROShine
         {
             Dispatcher.InvokeAsync(delegate
             {
-                switch (index)
-                {
-                    case (1):
-                        ScriptOption1.Visibility = Visibility.Visible;
-                        ScriptOption1.ToolTip = value;
-                        break;
-                    case (2):
-                        ScriptOption2.Visibility = Visibility.Visible;
-                        ScriptOption2.ToolTip = value;
-                        break;
-                    case (3):
-                        ScriptOption3.Visibility = Visibility.Visible;
-                        ScriptOption3.ToolTip = value;
-                        break;
-                    case (4):
-                        ScriptOption4.Visibility = Visibility.Visible;
-                        ScriptOption4.ToolTip = value;
-                        break;
-                    case (5):
-                        ScriptOption5.Visibility = Visibility.Visible;
-                        ScriptOption5.ToolTip = value;
-                        break;
-                }
+                _options[index - 1].Visibility = Visibility.Visible;
+                _options[index - 1].ToolTip = value;
             });
         }
 
