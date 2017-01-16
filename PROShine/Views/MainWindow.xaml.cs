@@ -62,21 +62,12 @@ namespace PROShine
             Bot.ConnectionClosed += Bot_ConnectionClosed;
             Bot.MessageLogged += Bot_LogMessage;
 
-            Bot.Options[0].EnabledStateChanged += Bot_Option1StateChanged;
-            Bot.Options[0].NameChanged += Bot_Option1NameChanged;
-            Bot.Options[0].DescriptionChanged += Bot_Option1DescriptionChanged;
-            Bot.Options[1].EnabledStateChanged += Bot_Option2StateChanged;
-            Bot.Options[1].NameChanged += Bot_Option2NameChanged;
-            Bot.Options[1].DescriptionChanged += Bot_Option2DescriptionChanged;
-            Bot.Options[2].EnabledStateChanged += Bot_Option3StateChanged;
-            Bot.Options[2].NameChanged += Bot_Option3NameChanged;
-            Bot.Options[2].DescriptionChanged += Bot_Option3DescriptionChanged;
-            Bot.Options[3].EnabledStateChanged += Bot_Option4StateChanged;
-            Bot.Options[3].NameChanged += Bot_Option4NameChanged;
-            Bot.Options[3].DescriptionChanged += Bot_Option4DescriptionChanged;
-            Bot.Options[4].EnabledStateChanged += Bot_Option5StateChanged;
-            Bot.Options[4].NameChanged += Bot_Option5NameChanged;
-            Bot.Options[4].DescriptionChanged += Bot_Option5DescriptionChanged;
+            for (int i = 0; i < Bot.Options.Length; i++)
+            {
+                Bot.Options[i].EnabledStateChanged += Bot_OptionStateChanged;
+                Bot.Options[i].NameChanged += Bot_OptionNameChanged;
+                Bot.Options[i].DescriptionChanged += Bot_OptionDescriptionChanged;
+            }
 
             InitializeComponent();
             AutoReconnectSwitch.IsChecked = Bot.AutoReconnector.IsEnabled;
@@ -107,6 +98,12 @@ namespace PROShine
             LogMessage("Running " + App.Name + " by " + App.Author + ", version " + App.Version);
 
             Task.Run(() => UpdateClients());
+
+            ScriptOption1.Visibility = Visibility.Collapsed;
+            ScriptOption2.Visibility = Visibility.Collapsed;
+            ScriptOption3.Visibility = Visibility.Collapsed;
+            ScriptOption4.Visibility = Visibility.Collapsed;
+            ScriptOption5.Visibility = Visibility.Collapsed;
         }
 
         private void AddView(UserControl view, ContentControl content, ToggleButton button, bool visible = false)
@@ -266,6 +263,12 @@ namespace PROShine
                 {
                     lock (Bot)
                     {
+                        ScriptOption1.Visibility = Visibility.Collapsed;
+                        ScriptOption2.Visibility = Visibility.Collapsed;
+                        ScriptOption3.Visibility = Visibility.Collapsed;
+                        ScriptOption4.Visibility = Visibility.Collapsed;
+                        ScriptOption5.Visibility = Visibility.Collapsed;
+                        
                         Bot.LoadScript(openDialog.FileName);
                         MenuPathScript.Header = "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine + openDialog.FileName;
                         LogMessage("Script \"{0}\" by \"{1}\" successfully loaded", Bot.Script.Name, Bot.Script.Author);
@@ -483,133 +486,93 @@ namespace PROShine
             });
         }
 
-        private void Bot_Option1StateChanged(bool value)
+        private void Bot_OptionStateChanged(bool value, int index)
         {
             Dispatcher.InvokeAsync(delegate
             {
-                if (ScriptOption1.IsChecked == value) return;
-                ScriptOption1.IsChecked = value;
+                switch(index)
+                {
+                    case (1):
+                        ScriptOption1.Visibility = Visibility.Visible;
+                        ScriptOption1.IsChecked = value;
+                        break;
+                    case (2):
+                        ScriptOption2.Visibility = Visibility.Visible;
+                        ScriptOption2.IsChecked = value;
+                        break;
+                    case (3):
+                        ScriptOption3.Visibility = Visibility.Visible;
+                        ScriptOption3.IsChecked = value;
+                        break;
+                    case (4):
+                        ScriptOption4.Visibility = Visibility.Visible;
+                        ScriptOption4.IsChecked = value;
+                        break;
+                    case (5):
+                        ScriptOption5.Visibility = Visibility.Visible;
+                        ScriptOption5.IsChecked = value;
+                        break;
+                }
             });
         }
 
-        private void Bot_Option1NameChanged(string value)
+        private void Bot_OptionNameChanged(string value, int index)
         {
             Dispatcher.InvokeAsync(delegate
             {
-                if ((string)ScriptOption1.Content == value) return;
-                ScriptOption1.Content = value;
+                switch (index)
+                {
+                    case (1):
+                        ScriptOption1.Visibility = Visibility.Visible;
+                        ScriptOption1.Content = value;
+                        break;
+                    case (2):
+                        ScriptOption2.Visibility = Visibility.Visible;
+                        ScriptOption2.Content = value;
+                        break;
+                    case (3):
+                        ScriptOption3.Visibility = Visibility.Visible;
+                        ScriptOption3.Content = value;
+                        break;
+                    case (4):
+                        ScriptOption4.Visibility = Visibility.Visible;
+                        ScriptOption4.Content = value;
+                        break;
+                    case (5):
+                        ScriptOption5.Visibility = Visibility.Visible;
+                        ScriptOption5.Content = value;
+                        break;
+                }
             });
         }
 
-        private void Bot_Option1DescriptionChanged(string value)
+        private void Bot_OptionDescriptionChanged(string value, int index)
         {
             Dispatcher.InvokeAsync(delegate
             {
-                ScriptOption1.ToolTip = value;
-            });
-        }
-
-        private void Bot_Option2StateChanged(bool value)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                if (ScriptOption2.IsChecked == value) return;
-                ScriptOption2.IsChecked = value;
-            });
-        }
-
-        private void Bot_Option2NameChanged(string value)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                if ((string)ScriptOption2.Content == value) return;
-                ScriptOption2.Content = value;
-            });
-        }
-
-        private void Bot_Option2DescriptionChanged(string value)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                ScriptOption2.ToolTip = value;
-            });
-        }
-
-        private void Bot_Option3StateChanged(bool value)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                if (ScriptOption3.IsChecked == value) return;
-                ScriptOption3.IsChecked = value;
-            });
-        }
-
-        private void Bot_Option3NameChanged(string value)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                if ((string)ScriptOption3.Content == value) return;
-                ScriptOption3.Content = value;
-            });
-        }
-
-        private void Bot_Option3DescriptionChanged(string value)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                ScriptOption3.ToolTip = value;
-            });
-        }
-
-        private void Bot_Option4StateChanged(bool value)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                if (ScriptOption4.IsChecked == value) return;
-                ScriptOption4.IsChecked = value;
-            });
-        }
-
-        private void Bot_Option4NameChanged(string value)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                if ((string)ScriptOption4.Content == value) return;
-                ScriptOption4.Content = value;
-            });
-        }
-
-        private void Bot_Option4DescriptionChanged(string value)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                ScriptOption4.ToolTip = value;
-            });
-        }
-
-        private void Bot_Option5StateChanged(bool value)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                if (ScriptOption5.IsChecked == value) return;
-                ScriptOption5.IsChecked = value;
-            });
-        }
-
-        private void Bot_Option5NameChanged(string value)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                if ((string)ScriptOption5.Content == value) return;
-                ScriptOption5.Content = value;
-            });
-        }
-
-        private void Bot_Option5DescriptionChanged(string value)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                ScriptOption5.ToolTip = value;
+                switch (index)
+                {
+                    case (1):
+                        ScriptOption1.Visibility = Visibility.Visible;
+                        ScriptOption1.ToolTip = value;
+                        break;
+                    case (2):
+                        ScriptOption2.Visibility = Visibility.Visible;
+                        ScriptOption2.ToolTip = value;
+                        break;
+                    case (3):
+                        ScriptOption3.Visibility = Visibility.Visible;
+                        ScriptOption3.ToolTip = value;
+                        break;
+                    case (4):
+                        ScriptOption4.Visibility = Visibility.Visible;
+                        ScriptOption4.ToolTip = value;
+                        break;
+                    case (5):
+                        ScriptOption5.Visibility = Visibility.Visible;
+                        ScriptOption5.ToolTip = value;
+                        break;
+                }
             });
         }
 
