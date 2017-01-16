@@ -49,6 +49,7 @@
     <Compile Include="BotClient.cs" />
     <Compile Include="Modules\MovementResynchronizer.cs" />
     <Compile Include="Modules\MoveTeacher.cs" />
+    <Compile Include="Modules\OptionSlider.cs" />
     <Compile Include="Modules\PokemonEvolver.cs" />
     <Compile Include="Pathfinding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
