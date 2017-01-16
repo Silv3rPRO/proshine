@@ -863,83 +863,23 @@ namespace PROShine
             }
         }
 
-        private void Option1_Checked(object sender, RoutedEventArgs e)
+        private void Option_Checked(object sender, RoutedEventArgs e)
         {
             lock(Bot)
             {
-                Bot.Options[0].IsEnabled = true;
+                for (int i = 0; i < _options.Length; i++)
+                    if (_options[i] == sender)
+                        Bot.Options[i].IsEnabled = true;
             }
         }
 
-        private void Option1_Unchecked(object sender, RoutedEventArgs e)
+        private void Option_Unchecked(object sender, RoutedEventArgs e)
         {
             lock (Bot)
             {
-                Bot.Options[0].IsEnabled = false;
-            }
-        }
-
-        private void Option2_Checked(object sender, RoutedEventArgs e)
-        {
-            lock (Bot)
-            {
-                Bot.Options[1].IsEnabled = true;
-            }
-        }
-
-        private void Option2_Unchecked(object sender, RoutedEventArgs e)
-        {
-            lock (Bot)
-            {
-                Bot.Options[1].IsEnabled = false;
-            }
-        }
-
-        private void Option3_Checked(object sender, RoutedEventArgs e)
-        {
-            lock (Bot)
-            {
-                Bot.Options[2].IsEnabled = true;
-            }
-        }
-
-        private void Option3_Unchecked(object sender, RoutedEventArgs e)
-        {
-            lock (Bot)
-            {
-                Bot.Options[2].IsEnabled = false;
-            }
-        }
-
-        private void Option4_Checked(object sender, RoutedEventArgs e)
-        {
-            lock (Bot)
-            {
-                Bot.Options[3].IsEnabled = true;
-            }
-        }
-
-        private void Option4_Unchecked(object sender, RoutedEventArgs e)
-        {
-            lock (Bot)
-            {
-                Bot.Options[3].IsEnabled = false;
-            }
-        }
-
-        private void Option5_Checked(object sender, RoutedEventArgs e)
-        {
-            lock (Bot)
-            {
-                Bot.Options[4].IsEnabled = true;
-            }
-        }
-
-        private void Option5_Unchecked(object sender, RoutedEventArgs e)
-        {
-            lock (Bot)
-            {
-                Bot.Options[4].IsEnabled = false;
+                for (int i = 0; i < _options.Length; i++)
+                    if (_options[i] == sender)
+                        Bot.Options[i].IsEnabled = false;
             }
         }
 
