@@ -269,6 +269,9 @@ namespace PROShine
                         ScriptOption4.Visibility = Visibility.Collapsed;
                         ScriptOption5.Visibility = Visibility.Collapsed;
                         
+                        foreach (var slider in Bot.Options)
+                            slider.IsEnabled = false;
+                        
                         Bot.LoadScript(openDialog.FileName);
                         MenuPathScript.Header = "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine + openDialog.FileName;
                         LogMessage("Script \"{0}\" by \"{1}\" successfully loaded", Bot.Script.Name, Bot.Script.Author);
