@@ -62,11 +62,11 @@ namespace PROShine
             Bot.ConnectionClosed += Bot_ConnectionClosed;
             Bot.MessageLogged += Bot_LogMessage;
 
-            for (int i = 0; i < Bot.Options.Length; i++)
+            foreach (var slider in Bot.Options)
             {
-                Bot.Options[i].EnabledStateChanged += Bot_OptionStateChanged;
-                Bot.Options[i].NameChanged += Bot_OptionNameChanged;
-                Bot.Options[i].DescriptionChanged += Bot_OptionDescriptionChanged;
+                slider.EnabledStateChanged += Bot_OptionStateChanged;
+                slider.NameChanged += Bot_OptionNameChanged;
+                slider.DescriptionChanged += Bot_OptionDescriptionChanged;
             }
 
             InitializeComponent();
