@@ -14,6 +14,8 @@ namespace PROBot.Modules
         public void Reset()
         {
             _isEnabled = false;
+            _name = "Option " + _index + ": ";
+            _description = "Custom option " + _index + " for use in scripts";
         }
 
         public bool IsEnabled
