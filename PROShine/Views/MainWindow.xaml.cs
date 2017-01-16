@@ -276,7 +276,7 @@ namespace PROShine
                             _options[i].Visibility = Visibility.Collapsed;
                             _options[i].IsChecked = false;
                             _options[i].Content = "Option " + (i + 1) + ": ";
-                            _options[i].ToolTip = "Custom option  " + (i + 1) + " for use in scripts";
+                            _options[i].ToolTip = "Custom option " + (i + 1) + " for use in scripts";
                         }
                         
                         Bot.LoadScript(openDialog.FileName);
