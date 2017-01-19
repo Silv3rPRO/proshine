@@ -58,7 +58,7 @@ namespace PROBot
 
         public void CreateSlider(int index, bool enable)
         {
-            Options[index] = new OptionSlider("Option " + index + ": ", "Custom option " + index + " for use in scripts");
+            Options[index] = new OptionSlider("Option " + index + ": ", "Custom option " + index + " for use in scripts.");
             Options[index].IsEnabled = enable;
             SliderCreated?.Invoke(Options[index]);
         }
@@ -66,7 +66,7 @@ namespace PROBot
         public void CreateSlider(int index, string content, bool isName)
         {
             if (isName)
-                Options[index] = new OptionSlider(content, "Custom option " + index + " for use in scripts");
+                Options[index] = new OptionSlider(content, "Custom option " + index + " for use in scripts.");
             else
                 Options[index] = new OptionSlider("Option " + index + ": ", content);
 
