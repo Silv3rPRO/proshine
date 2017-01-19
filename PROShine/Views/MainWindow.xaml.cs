@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using PROBot;
+using PROBot.Modules;
 using PROProtocol;
 using PROShine.Views;
 using System;
