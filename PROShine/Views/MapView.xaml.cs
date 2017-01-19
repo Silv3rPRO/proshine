@@ -302,6 +302,20 @@ namespace PROShine.Views
             Canvas.SetTop(_mapGrid, deltaY * _cellWidth);
             Canvas.SetLeft(_player, (_bot.Game.PlayerX + deltaX) * _cellWidth);
             Canvas.SetTop(_player, (_bot.Game.PlayerY + deltaY) * _cellWidth);
+            
+            PlayerInfos[] players = new PlayerInfos[_bot.Game.Players.Count];
+            _bot.Game.Players.Values.CopyTo(players, 0);
+            for(int i = 0; i<players.Length; i++)
+            {
+                Canvas.SetLeft(_otherPlayers[i], (players[i].PosX + deltaX) * _cellWidth);
+                Canvas.SetTop(_otherPlayers[i], (players[i].PosY + deltaY) * _cellWidth);
+            }
+
+            for(int i=0; i<_bot.Game.Map.Npcs.Count;i++)
+            {
+                Canvas.SetLeft(_npcs[i], (_bot.Game.Map.Npcs[i].PositionX + deltaX) * _cellWidth);
+                Canvas.SetTop(_npcs[i], (_bot.Game.Map.Npcs[i].PositionY + deltaY) * _cellWidth);
+            }
         }
 
         private Tuple<double, double> GetDrawingOffset()
