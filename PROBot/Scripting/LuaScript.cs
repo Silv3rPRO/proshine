@@ -2565,6 +2565,7 @@ namespace PROBot.Scripting
             }
 	}
 	
+	// API: Sets the Option Slider at index option, or creates it if it doesn't exist
         private void SetOption(int option, bool value)
         {
             if (!Bot.Options.ContainsKey(option))
@@ -2576,6 +2577,7 @@ namespace PROBot.Scripting
             Bot.Options[option].IsEnabled = value;
         }
 
+	// API: Returns the state of the Option Slider at index option, or false if it doesn't exist
         private bool GetOption(int option)
         {
             if (!Bot.Options.ContainsKey(option))
@@ -2584,6 +2586,7 @@ namespace PROBot.Scripting
             return Bot.Options[option].IsEnabled;
         }
 
+	// API: Sets the Option Slider's name at index option, or creates it if it doesn't exist
         private void SetOptionName(int option, string content)
         {
             if (!Bot.Options.ContainsKey(option))
@@ -2595,6 +2598,7 @@ namespace PROBot.Scripting
             Bot.Options[option].Name = content + ": ";
         }
 
+	// API: Sets the Option Slider's tooltip at index option, or creates it if it doesn't exist
         private void SetOptionDescription(int option, string content)
         {
             if (!Bot.Options.ContainsKey(option))
