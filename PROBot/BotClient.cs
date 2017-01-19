@@ -38,7 +38,7 @@ namespace PROBot
         public StaffAvoider StaffAvoider { get; private set; }
         public AutoReconnector AutoReconnector { get; private set; }
         public MovementResynchronizer MovementResynchronizer { get; private set; }
-        public OptionSlider[] Options { get; private set; }
+        public Dictionary<int, OptionSlider> Options { get; set; }
         
         private bool _loginRequested;
 
