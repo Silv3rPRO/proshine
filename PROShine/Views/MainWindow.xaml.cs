@@ -63,6 +63,7 @@ namespace PROShine
             Bot.ConnectionOpened += Bot_ConnectionOpened;
             Bot.ConnectionClosed += Bot_ConnectionClosed;
             Bot.MessageLogged += Bot_LogMessage;
+            Bot.SliderCreated += Bot_SliderCreated;
 
             foreach (var slider in Bot.Options)
             {
@@ -102,7 +103,6 @@ namespace PROShine
             Task.Run(() => UpdateClients());
 
             _options = new ObservableCollection<OptionSlider>();
-            Bot.SliderCreated += Bot_SliderCreated;
         }
 
         public void Bot_SliderCreated(OptionSlider option)
