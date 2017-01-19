@@ -19,7 +19,7 @@ namespace PROProtocol
         public string OpponentGender { get; private set; }
         public string OpponentStatus { get; private set; }
         public bool AlreadyCaught { get; private set; }
-        public string AlternateForm { get; private set; }
+        public int AlternateForm { get; private set; }
 
         public bool IsFinished { get; private set; }
 
@@ -49,7 +49,7 @@ namespace PROProtocol
             OpponentGender = data[9];
             OpponentStatus = data[10];
             AlreadyCaught = (data[11] == "1");
-            AlternateForm = data[12];
+            AlternateForm = int.Parse(data[12]);
         }
 
         public bool ProcessMessage(List<Pokemon> team, string message)
@@ -138,7 +138,7 @@ namespace PROProtocol
                     OpponentStatus = status;
                     OpponentGender = gender;
                     AlreadyCaught = alreadyCaught;
-                    AlternateForm = alternateForm;
+                    AlternateForm = int.Parse(alternateForm);
                 }
                 return true;
             }

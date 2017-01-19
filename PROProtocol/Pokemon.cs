@@ -7,6 +7,8 @@ namespace PROProtocol
     {
         public int Uid { get; private set; }
         public int Id { get; private set; }
+        public int DatabaseId { get; private set; }
+
         public int Level {
             get
             {
@@ -57,6 +59,7 @@ namespace PROProtocol
         {
             Uid = Convert.ToInt32(data[0]);
             Id = Convert.ToInt32(data[1]);
+            DatabaseId = Convert.ToInt32(data[2]);
             MaxHealth = Convert.ToInt32(data[5]);
             CurrentHealth = Convert.ToInt32(data[6]);
 

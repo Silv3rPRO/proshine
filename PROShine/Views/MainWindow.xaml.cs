@@ -44,6 +44,8 @@ namespace PROShine
 
         private int _queuePosition;
 
+        private CheckBox[] _options = new CheckBox[5];
+
         public MainWindow()
         {
 #if !DEBUG
@@ -61,6 +63,13 @@ namespace PROShine
             Bot.ConnectionOpened += Bot_ConnectionOpened;
             Bot.ConnectionClosed += Bot_ConnectionClosed;
             Bot.MessageLogged += Bot_LogMessage;
+
+            foreach (var slider in Bot.Options)
+            {
+                slider.EnabledStateChanged += Bot_OptionStateChanged;
+                slider.NameChanged += Bot_OptionNameChanged;
+                slider.DescriptionChanged += Bot_OptionDescriptionChanged;
+            }
 
             InitializeComponent();
             AutoReconnectSwitch.IsChecked = Bot.AutoReconnector.IsEnabled;
@@ -91,6 +100,15 @@ namespace PROShine
             LogMessage("Running " + App.Name + " by " + App.Author + ", version " + App.Version);
 
             Task.Run(() => UpdateClients());
+
+            _options[0] = ScriptOption1;
+            _options[1] = ScriptOption2;
+            _options[2] = ScriptOption3;
+            _options[3] = ScriptOption4;
+            _options[4] = ScriptOption5;
+
+            foreach (var option in _options)
+                option.Visibility = Visibility.Collapsed;
         }
 
         private void AddView(UserControl view, ContentControl content, ToggleButton button, bool visible = false)
@@ -250,6 +268,17 @@ namespace PROShine
                 {
                     lock (Bot)
                     {
+                        foreach (var slider in Bot.Options)
+                            slider.Reset();
+
+                        for (int i = 0; i < _options.Length; i++)
+                        {
+                            _options[i].Visibility = Visibility.Collapsed;
+                            _options[i].IsChecked = false;
+                            _options[i].Content = Bot.Options[i].Name;
+                            _options[i].ToolTip = Bot.Options[i].Description;
+                        }
+                        
                         Bot.LoadScript(openDialog.FileName);
                         MenuPathScript.Header = "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine + openDialog.FileName;
                         LogMessage("Script \"{0}\" by \"{1}\" successfully loaded", Bot.Script.Name, Bot.Script.Author);
@@ -464,6 +493,33 @@ namespace PROShine
             {
                 if (AutoEvolveSwitch.IsChecked == value) return;
                 AutoEvolveSwitch.IsChecked = value;
+            });
+        }
+
+        private void Bot_OptionStateChanged(bool value, int index)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                _options[index - 1].Visibility = Visibility.Visible;
+                _options[index - 1].IsChecked = value;
+            });
+        }
+
+        private void Bot_OptionNameChanged(string value, int index)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                _options[index - 1].Visibility = Visibility.Visible;
+                _options[index - 1].Content = value;
+            });
+        }
+
+        private void Bot_OptionDescriptionChanged(string value, int index)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                _options[index - 1].Visibility = Visibility.Visible;
+                _options[index - 1].ToolTip = value;
             });
         }
 
@@ -804,6 +860,26 @@ namespace PROShine
             lock (Bot)
             {
                 Bot.AutoReconnector.IsEnabled = false;
+            }
+        }
+
+        private void Option_Checked(object sender, RoutedEventArgs e)
+        {
+            lock(Bot)
+            {
+                for (int i = 0; i < _options.Length; i++)
+                    if (_options[i] == sender)
+                        Bot.Options[i].IsEnabled = true;
+            }
+        }
+
+        private void Option_Unchecked(object sender, RoutedEventArgs e)
+        {
+            lock (Bot)
+            {
+                for (int i = 0; i < _options.Length; i++)
+                    if (_options[i] == sender)
+                        Bot.Options[i].IsEnabled = false;
             }
         }
 

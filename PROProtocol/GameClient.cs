@@ -91,7 +91,7 @@ namespace PROProtocol
         public event Action<Shop> ShopOpened;
         public event Action<List<Pokemon>> PCBoxUpdated;
 
-        private const string Version = "0.957";
+        private const string Version = "0.96";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -449,7 +449,7 @@ namespace PROProtocol
             }
             SendPacket(toSend);
         }
-        
+
         public void SendGiveItem(int pokemonUid, int itemId)
         {
             SendMessage("/giveitem " + pokemonUid + "," + itemId);
@@ -536,10 +536,11 @@ namespace PROProtocol
                 return false;
             }
             int pokemonUid = GetPokemonPCUid(boxId, boxPokemonId);
-            if (pokemonUid == -1 || pokemonUid != CurrentPCBox[boxPokemonId].Uid)
+            if (pokemonUid == -1 || pokemonUid != CurrentPCBox[boxPokemonId - 1].Uid)
             {
                 return false;
             }
+            _refreshingPCBox.Set(Rand.Next(1500, 2000));
             SendReleasePokemon(pokemonUid);
             return true;
         }
@@ -551,6 +552,7 @@ namespace PROProtocol
             {
                 return false;
             }
+            _refreshingPCBox.Set(Rand.Next(1500, 2000));
             SendReleasePokemon(pokemonUid);
             return true;
         }
@@ -703,7 +705,7 @@ namespace PROProtocol
                 }
             }
         }
-        
+
         public bool GiveItemToPokemon(int pokemonUid, int itemId)
         {
             if (!(pokemonUid >= 1 && pokemonUid <= Team.Count))
@@ -1222,13 +1224,18 @@ namespace PROProtocol
         {
             if (!IsMapLoaded) return;
 
+            IEnumerable<int> defeatedBattlers = data[1].Split(new [] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(id => int.Parse(id));
+
             Map.Npcs.Clear();
             foreach (Npc npc in Map.OriginalNpcs)
             {
-                Map.Npcs.Add(npc.Clone());
+                Npc clone = npc.Clone();
+                if (defeatedBattlers.Contains(npc.Id))
+                {
+                    clone.CanBattle = false;
+                }
+                Map.Npcs.Add(clone);
             }
-
-            AreNpcReceived = true;
         }
 
         private void OnNpcDestroy(string[] data)
@@ -1236,12 +1243,6 @@ namespace PROProtocol
             if (!IsMapLoaded) return;
 
             string[] npcData = data[1].Split('|');
-
-            Map.Npcs.Clear();
-            foreach (Npc npc in Map.OriginalNpcs)
-            {
-                Map.Npcs.Add(npc.Clone());
-            }
 
             foreach (string npcText in npcData)
             {
@@ -1255,6 +1256,8 @@ namespace PROProtocol
                     }
                 }
             }
+
+            AreNpcReceived = true;
         }
 
         private void OnTeamUpdate(string[] data)

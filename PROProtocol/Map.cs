@@ -116,9 +116,9 @@ namespace PROProtocol
                         int x = reader.ReadInt16();
                         int y = reader.ReadInt16();
 
-                        int b1 = reader.ReadByte();
+                        int direction = reader.ReadByte();
                         int losLength = reader.ReadByte();
-                        int num = reader.ReadInt16();
+                        int type = reader.ReadInt16();
 
                         ReadString(reader);
                         string path = ReadString(reader);
@@ -145,10 +145,10 @@ namespace PROProtocol
                         reader.ReadSingle();
 
                         int npcId = reader.ReadInt16();
-                        
+
                         if (npcName != "TileScript")
                         {
-                            OriginalNpcs.Add(new Npc(npcId, npcName, x, y, losLength, path));
+                            OriginalNpcs.Add(new Npc(npcId, npcName, isBattler, type, x, y, losLength, path));
                         }
 
                         reader.ReadInt16();
@@ -303,6 +303,17 @@ namespace PROProtocol
             return MoveResult.Success;
         }
 
+        public bool CanInteract(int playerX, int playerY, int npcX, int npcY)
+        {
+            int distance = GameClient.DistanceBetween(playerX, playerY, npcX, npcY);
+            if (distance != 1) return false;
+            int playerCollider = GetCollider(playerX, playerY);
+            int npcCollider = GetCollider(npcX, npcY);
+            if (playerCollider == 14 && npcCollider == 14 && playerY == npcY) return true;
+            if (playerCollider == 14 || npcCollider == 14) return false;
+            return true;
+        }
+
         public bool IsGrass(int x, int y)
         {
             if (x >= 0 && x < Width && y >= 0 && y < Height)
@@ -323,7 +334,7 @@ namespace PROProtocol
             }
             return false;
         }
-        
+
         public bool IsNormalGround(int x, int y)
         {
             if (x >= 0 && x < Width && y >= 0 && y < Height)
@@ -583,7 +594,7 @@ namespace PROProtocol
                 int destinationY = y;
                 bool destinationGround = isOnGround;
                 bool isSurfing = false;
-                
+
                 int slider = GetSlider(destinationX, destinationY);
                 if (slider != -1)
                 {

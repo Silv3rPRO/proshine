@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Text;
 
 namespace PROBot.Scripting
 {
@@ -110,7 +111,7 @@ namespace PROBot.Scripting
             _hookedFunctions = new Dictionary<string, IList<DynValue>>();
 
             _lua = new Script(CoreModules.Preset_SoftSandbox | CoreModules.LoadMethods);
-            _lua.Options.ScriptLoader = new CustomScriptLoader(_path) { ModulePaths = new [] { "?.lua" } };
+            _lua.Options.ScriptLoader = new CustomScriptLoader(_path) { ModulePaths = new[] { "?.lua" } };
             _lua.Options.CheckThreadAccess = false;
             _lua.Globals["log"] = new Action<string>(Log);
             _lua.Globals["fatal"] = new Action<string>(Fatal);
@@ -122,6 +123,7 @@ namespace PROBot.Scripting
             // General conditions
             _lua.Globals["getPlayerX"] = new Func<int>(GetPlayerX);
             _lua.Globals["getPlayerY"] = new Func<int>(GetPlayerY);
+            _lua.Globals["getAccountName"] = new Func<string>(GetAccountName);
             _lua.Globals["getMapName"] = new Func<string>(GetMapName);
             _lua.Globals["getPokedexOwned"] = new Func<int>(GetPokedexOwned);
             _lua.Globals["getPokedexSeen"] = new Func<int>(GetPokedexSeen);
@@ -137,6 +139,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonTotalExperience"] = new Func<int, int>(GetPokemonTotalExperience);
             _lua.Globals["getPokemonRemainingExperience"] = new Func<int, int>(GetPokemonRemainingExperience);
             _lua.Globals["getPokemonStatus"] = new Func<int, string>(GetPokemonStatus);
+            _lua.Globals["getPokemonForm"] = new Func<int, int>(GetPokemonForm);
             _lua.Globals["getPokemonHeldItem"] = new Func<int, string>(GetPokemonHeldItem);
             _lua.Globals["getPokemonUniqueId"] = new Func<int, int>(GetPokemonUniqueId);
             _lua.Globals["getRemainingPowerPoints"] = new Func<int, string, int>(GetRemainingPowerPoints);
@@ -159,9 +162,18 @@ namespace PROBot.Scripting
             _lua.Globals["isPokemonUsable"] = new Func<int, bool>(IsPokemonUsable);
             _lua.Globals["getUsablePokemonCount"] = new Func<int>(GetUsablePokemonCount);
             _lua.Globals["hasMove"] = new Func<int, string, bool>(HasMove);
+            _lua.Globals["getActiveBattlers"] = new Func<Dictionary<string, Dictionary<string, int>>>(GetActiveBattlers);
+            _lua.Globals["getActiveDigSpots"] = new Func<List<Dictionary<string, int>>>(GetActiveDigSpots);
+            _lua.Globals["getActiveHeadbuttTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveHeadbuttTrees);
+            _lua.Globals["getActiveBerryTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveBerryTrees);
+            _lua.Globals["getDiscoverableItems"] = new Func<List<Dictionary<string, int>>>(GetDiscoverableItems);
+            _lua.Globals["getNpcData"] = new Func<List<Dictionary<string, string>>>(GetNpcData);
 
             _lua.Globals["hasItem"] = new Func<string, bool>(HasItem);
             _lua.Globals["getItemQuantity"] = new Func<string, int>(GetItemQuantity);
+            _lua.Globals["hasItemId"] = new Func<int, bool>(HasItemId);
+            _lua.Globals["getItemQuantityId"] = new Func<int, int>(GetItemQuantityID);
+
             _lua.Globals["hasPokemonInTeam"] = new Func<string, bool>(HasPokemonInTeam);
             _lua.Globals["isTeamSortedByLevelAscending"] = new Func<bool>(IsTeamSortedByLevelAscending);
             _lua.Globals["isTeamSortedByLevelDescending"] = new Func<bool>(IsTeamSortedByLevelDescending);
@@ -219,6 +231,8 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonGenderFromPC"] = new Func<int, int, string>(GetPokemonGenderFromPC);
             _lua.Globals["getPokemonFormFromPC"] = new Func<int, int, int>(GetPokemonFormFromPC);
 
+            _lua.Globals["getServer"] = new Func<string>(GetServer);
+
             // Battle conditions
             _lua.Globals["isOpponentShiny"] = new Func<bool>(IsOpponentShiny);
             _lua.Globals["isAlreadyCaught"] = new Func<bool>(IsAlreadyCaught);
@@ -230,12 +244,16 @@ namespace PROBot.Scripting
             _lua.Globals["getOpponentHealthPercent"] = new Func<int>(GetOpponentHealthPercent);
             _lua.Globals["getOpponentLevel"] = new Func<int>(GetOpponentLevel);
             _lua.Globals["getOpponentStatus"] = new Func<string>(GetOpponentStatus);
+            _lua.Globals["getOpponentForm"] = new Func<int>(GetOpponentForm);
             _lua.Globals["isOpponentEffortValue"] = new Func<string, bool>(IsOpponentEffortValue);
+            _lua.Globals["getOpponentEffortValue"] = new Func<string, int>(GetOpponentEffortValue);
 
             // Path actions
             _lua.Globals["moveToCell"] = new Func<int, int, bool>(MoveToCell);
             _lua.Globals["moveToMap"] = new Func<string, bool>(MoveToMap);
-            _lua.Globals["moveToRectangle"] = new Func<int, int, int, int, bool>(MoveToRectangle);
+            _lua.Globals["moveToRectangle"] = new Func<DynValue[], bool>(MoveToRectangle);
+
+            _lua.Globals["moveToNormalGround"] = new Func<bool>(MoveToNormalGround);
             _lua.Globals["moveToGrass"] = new Func<bool>(MoveToGrass);
             _lua.Globals["moveToWater"] = new Func<bool>(MoveToWater);
             _lua.Globals["moveNearExit"] = new Func<string, bool>(MoveNearExit);
@@ -282,6 +300,16 @@ namespace PROBot.Scripting
             // Move learning actions
             _lua.Globals["forgetMove"] = new Func<string, bool>(ForgetMove);
             _lua.Globals["forgetAnyMoveExcept"] = new Func<DynValue[], bool>(ForgetAnyMoveExcept);
+            
+            // Custom option slider functions
+            _lua.Globals["setOption"] = new Action<int, bool>(SetOption);
+            _lua.Globals["getOption"] = new Func<int, bool>(GetOption);
+            _lua.Globals["setOptionName"] = new Action<int, string>(SetOptionName);
+            _lua.Globals["setOptionDescription"] = new Action<int, string>(SetOptionDescription);
+
+            // File editing actions
+            _lua.Globals["logToFile"] = new Action<string, DynValue, bool>(LogToFile);
+            _lua.Globals["readLinesFromFile"] = new Func<string, string[]>(ReadLinesFromFile);
 
             foreach (string content in _libsContent)
             {
@@ -401,13 +429,103 @@ namespace PROBot.Scripting
             Bot.Stop();
             Bot.Logout(false);
         }
-        
+
+        // API return an array of all NPCs that can be challenged on the current map. format : {"npcName" = {"x" = x, "y" = y}}
+        private Dictionary<string, Dictionary<string, int>> GetActiveBattlers()
+        {
+            var activeBattlers = new Dictionary<string, Dictionary<string, int>>();
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.CanBattle))
+            {
+                var npcData = new Dictionary<string, int>();
+                npcData["x"] = npc.PositionX;
+                npcData["y"] = npc.PositionY;
+                activeBattlers[npc.Name] = npcData;
+            }
+            return activeBattlers;
+        }
+
+        // API return an array of all usable Dig Spots on the currrent map. format : {index = {"x" = x, "y" = y}}
+        private List<Dictionary<string, int>> GetActiveDigSpots()
+        {
+            var digSpots = new List<Dictionary<string, int>>();
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Type == 70 || npc.Type == 71))
+            {
+                var npcData = new Dictionary<string, int>();
+                npcData["x"] = npc.PositionX;
+                npcData["y"] = npc.PositionY;
+                digSpots.Add(npcData);
+            }
+            return digSpots;
+        }
+
+        // API return an array of all usable Headbutt trees on the currrent map. format : {index = {"x" = x, "y" = y}}
+        private List<Dictionary<string, int>> GetActiveHeadbuttTrees()
+        {
+            var trees = new List<Dictionary<string, int>>();
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Type == 101))
+            {
+                var npcData = new Dictionary<string, int>();
+                npcData["x"] = npc.PositionX;
+                npcData["y"] = npc.PositionY;
+                trees.Add(npcData);
+            }
+            return trees;
+        }
+
+        // API return an array of all harvestable berry trees on the currrent map. format : {index = {"x" = x, "y" = y}}
+        private List<Dictionary<string, int>> GetActiveBerryTrees()
+        {
+            int[] berries = { 42, 43, 44, 45, 49, 50, 51, 52, 55, 56, 57, 58, 59, 60, 61, 62 };
+            var trees = new List<Dictionary<string, int>>();
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => Array.Exists(berries, e => e == npc.Type)))
+            {
+                var npcData = new Dictionary<string, int>();
+                npcData["x"] = npc.PositionX;
+                npcData["y"] = npc.PositionY;
+                trees.Add(npcData);
+            }
+            return trees;
+        }
+
+        // API return an array of all discoverable items on the currrent map. format : {index = {"x" = x, "y" = y}}
+        private List<Dictionary<string, int>> GetDiscoverableItems()
+        {
+            var items = new List<Dictionary<string, int>>();
+            foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.Type == 11 && npc.LosLength < 100))
+            {
+                var npcData = new Dictionary<string, int>();
+                npcData["x"] = npc.PositionX;
+                npcData["y"] = npc.PositionY;
+                items.Add(npcData);
+            }
+            return items;
+        }
+
+        // API return npc data on current map, format : { { "x" = x , "y" = y, "type" = type }, {...}, ... }
+        private List<Dictionary<string, string>> GetNpcData()
+        {
+            var lNpc = new List<Dictionary<string, string>>();
+            foreach (Npc npc in Bot.Game.Map.Npcs)
+            {
+                var npcData = new Dictionary<string, string>();
+                npcData["x"] = npc.PositionX.ToString();
+                npcData["y"] = npc.PositionY.ToString();
+                npcData["type"] = npc.Type.ToString();
+                npcData["name"] = npc.Name;
+                npcData["isBattler"] = npc.IsBattler.ToString();
+                npcData["id"] = npc.Id.ToString();
+                npcData["los"] = npc.LosLength.ToString();
+                lNpc.Add(npcData);
+            }
+            return lNpc;
+        }
+
         // API: Returns true if the string contains the specified part, ignoring the case.
         private bool StringContains(string haystack, string needle)
         {
             return haystack.ToUpperInvariant().Contains(needle.ToUpperInvariant());
         }
-        
+
         // API: Returns playing a custom sound.
         private void PlaySound(string file)
         {
@@ -447,12 +565,18 @@ namespace PROBot.Scripting
             return Bot.Game.PlayerY;
         }
 
+        // API: Returns current account name.
+        private string GetAccountName()
+        {
+            return Bot.Account.Name;
+        }
+
         // API: Returns the name of the current map.
         private string GetMapName()
         {
             return Bot.Game.MapName;
         }
-        
+
         // API: Returns Owned Entry of the pokedex
         private int GetPokedexOwned()
         {
@@ -470,7 +594,7 @@ namespace PROBot.Scripting
         {
             return Bot.Game.PokedexEvolved;
         }
-        
+
         // API: Returns the amount of pokémon in the team.
         private int GetTeamSize()
         {
@@ -801,6 +925,17 @@ namespace PROBot.Scripting
             return Bot.Game.Team[index - 1].Status;
         }
 
+        // API: Returns the form of the specified pokémon in the team (0 if no form).
+        private int GetPokemonForm(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonForm: tried to retrieve the non-existing pokemon " + index + ".");
+                return 0;
+            }
+            return Bot.Game.Team[index - 1].Form;
+        }
+
         // API: Returns the item held by the specified pokemon in the team, null if empty.
         private string GetPokemonHeldItem(int index)
         {
@@ -910,6 +1045,17 @@ namespace PROBot.Scripting
             return Bot.Game.GetItemFromName(itemName.ToUpperInvariant())?.Quantity ?? 0;
         }
 
+        // API: Returns true if the specified item is in the inventory.
+        private bool HasItemId(int itemid)
+        {
+            return Bot.Game.HasItemId(itemid);
+        }
+        // API: Returns the quantity of the specified item in the inventory.
+        private int GetItemQuantityID(int itemid)
+        {
+            return Bot.Game.GetItemFromId(itemid)?.Quantity ?? 0;
+        }
+
         // API: Returns true if the specified pokémon is present in the team.
         private bool HasPokemonInTeam(string pokemonName)
         {
@@ -986,8 +1132,8 @@ namespace PROBot.Scripting
         {
             return Bot.Game.IsBiking;
         }
-        
-        // API: Returns true if the player is surfing 
+
+        // API: Returns true if the player is surfing
         private bool IsSurfing()
         {
             return Bot.Game.IsSurfing;
@@ -1103,6 +1249,17 @@ namespace PROBot.Scripting
             return Bot.Game.ActiveBattle.OpponentStatus;
         }
 
+        // API: Returns the form of the opponent pokémon in the current battle (0 if no form).
+        private int GetOpponentForm()
+        {
+            if (!Bot.Game.IsInBattle)
+            {
+                Fatal("error: getOpponentForm can only be used in battle.");
+                return 0;
+            }
+            return Bot.Game.ActiveBattle.AlternateForm;
+        }
+
         private static Dictionary<string, StatType> _stats = new Dictionary<string, StatType>()
         {
             { "HP", StatType.Health },
@@ -1143,6 +1300,28 @@ namespace PROBot.Scripting
             return stats.HasOnly(_stats[statType.ToUpperInvariant()]);
         }
 
+        // API: Returns the amount of a particular EV given by the opponent.
+        private int GetOpponentEffortValue(string statType)
+        {
+            if (!Bot.Game.IsInBattle)
+            {
+                Fatal("error: getOpponentEffortValue can only be used in battle.");
+                return -1;
+            }
+            if (!_stats.ContainsKey(statType.ToUpperInvariant()))
+            {
+                Fatal("error: getOpponentEffortValue: the stat '" + statType + "' does not exist.");
+                return -1;
+            }
+            if (!EffortValuesManager.Instance.BattleValues.ContainsKey(Bot.Game.ActiveBattle.OpponentId))
+            {
+                return -1;
+            }
+
+            PokemonStats stats = EffortValuesManager.Instance.BattleValues[Bot.Game.ActiveBattle.OpponentId];
+            return stats.GetStat(_stats[statType.ToUpperInvariant()]);
+        }
+
         // API: Moves to the specified coordinates.
         private bool MoveToCell(int x, int y)
         {
@@ -1157,6 +1336,25 @@ namespace PROBot.Scripting
             if (!ValidateAction("moveToMap", false)) return false;
 
             return ExecuteAction(Bot.MoveToLink(mapName.ToUpperInvariant()));
+        }
+
+        // API: Moves to a random accessible cell of the specified rectangle.
+        private bool MoveToRectangle(params DynValue[] values)
+        {
+            if (values.Length != 1 && values.Length != 4 ||
+                (values.Length == 1 && values[0].Type != DataType.Table) ||
+                (values.Length == 4
+                    && (values[0].Type != DataType.Number || values[1].Type != DataType.Number
+                    || values[2].Type != DataType.Number || values[3].Type != DataType.Number)))
+            {
+                Fatal("error: moveToRectangle: must receive either a table or four numbers.");
+                return false;
+            }
+            if (values.Length == 1)
+            {
+                values = values[0].Table.Values.ToArray();
+            }
+            return MoveToRectangle((int)values[0].Number, (int)values[1].Number, (int)values[2].Number, (int)values[3].Number);
         }
 
         // API: Moves to a random accessible cell of the specified rectangle.
@@ -1181,6 +1379,14 @@ namespace PROBot.Scripting
             } while (x == Bot.Game.PlayerX && y == Bot.Game.PlayerY);
 
             return ExecuteAction(Bot.MoveToCell(x, y));
+        }
+
+        // API: Move randomly avoiding water and links.
+        private bool MoveToNormalGround()
+        {
+            if (!ValidateAction("moveToNormalGround", false)) return false;
+
+            return ExecuteAction(MoveToCellType((x, y) => Bot.Game.Map.IsNormalGround(x, y)));
         }
 
         // API: Moves to the nearest grass patch then move randomly inside it.
@@ -1304,7 +1510,7 @@ namespace PROBot.Scripting
         private bool TalkToNpcOnCell(int cellX, int cellY)
         {
             if (!ValidateAction("talkToNpcOnCell", false)) return false;
-            
+
             Npc target = Bot.Game.Map.Npcs.FirstOrDefault(npc => npc.PositionX == cellX && npc.PositionY == cellY);
             if (target == null)
             {
@@ -1443,7 +1649,7 @@ namespace PROBot.Scripting
             Bot.PokemonEvolver.IsEnabled = false;
             return !Bot.PokemonEvolver.IsEnabled;
         }
-        
+
         // API: Check if the private message from normal users are blocked.
         private bool IsPrivateMessageEnabled()
         {
@@ -1985,7 +2191,7 @@ namespace PROBot.Scripting
             }
             return Bot.Game.CurrentPCBox[boxPokemonId - 1].Gender;
         }
-        
+
         // API: Form of the pokémon in the current box matching the ID. (0 if no form)
         private int GetPokemonFormFromPC(int boxId, int boxPokemonId)
         {
@@ -2061,7 +2267,7 @@ namespace PROBot.Scripting
             }
 
             ShopItem item = Bot.Game.OpenedShop.Items.FirstOrDefault(i => i.Name.Equals(itemName, StringComparison.InvariantCultureIgnoreCase));
-            
+
             if (item == null)
             {
                 Fatal("error: buyItem: the item '" + itemName + "' does not exist in the opened shop.");
@@ -2070,7 +2276,7 @@ namespace PROBot.Scripting
 
             return ExecuteAction(Bot.Game.BuyItem(item.Id, quantity));
         }
-        
+
         // API: Give the specified item on the specified pokemon.
         private bool GiveItemToPokemon(string itemName, int pokemonIndex)
         {
@@ -2091,7 +2297,7 @@ namespace PROBot.Scripting
 
             return ExecuteAction(Bot.Game.GiveItemToPokemon(pokemonIndex, item.Id));
         }
-        
+
         // API: Take the held item from the specified pokemon.
         private bool TakeItemFromPokemon(int index)
         {
@@ -2177,7 +2383,7 @@ namespace PROBot.Scripting
             }
             return false;
         }
-        
+
         // API: Uses the most effective offensive move available.
         private bool Attack()
         {
@@ -2209,7 +2415,7 @@ namespace PROBot.Scripting
 
             return ExecuteAction(Bot.AI.SendUsablePokemon());
         }
-        
+
         // API: Sends the first available pokemon different from the active one.
         private bool SendAnyPokemon()
         {
@@ -2285,6 +2491,110 @@ namespace PROBot.Scripting
                 return true;
             }
             return false;
+        }
+        
+        // API: Writes a string, a number, or a table of strings and/or numbers to file
+        // overwrite is an optional parameter, and will append the line(s) if absent
+        private void LogToFile(string file, DynValue text, bool overwrite = false)
+        {
+            DirectoryInfo directory = new DirectoryInfo("Logs/");
+            FileInfo info = new FileInfo("Logs/" + file);
+
+            // Restricting access to Logs folder
+            if (!info.FullName.StartsWith(directory.FullName))
+            {
+                Fatal("Error: Invalid file write access");
+                return;
+            }
+
+            // Creating all necessary folders
+            Directory.CreateDirectory(Path.GetDirectoryName(info.FullName));
+
+            StringBuilder sb = new StringBuilder();
+            
+            if (text.Type == DataType.Table)
+            {
+                DynValue[] lines = text.Table.Values.ToArray();
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    sb.AppendLine(lines[i].CastToString());
+                }
+            }
+            else
+            {
+                sb.AppendLine(text.CastToString());
+            }
+
+            if (overwrite)
+                File.WriteAllText(info.FullName, sb.ToString());
+            else
+                File.AppendAllText(info.FullName, sb.ToString());
+        }
+
+        // API: Returns a table of every line in file
+        private string[] ReadLinesFromFile(string file)
+        {
+            DirectoryInfo directory = new DirectoryInfo("Logs/");
+            FileInfo info = new FileInfo("Logs/" + file);
+
+            if (!info.FullName.StartsWith(directory.FullName))
+            {
+                Fatal("Error: Invalid File read access");
+                return new string[] { };
+            }
+
+            file = info.FullName;
+
+            if (!File.Exists(file)) return new string[] { };
+            return File.ReadAllLines(file);
+        }
+        
+        // API: Returns the connected server
+        private string GetServer()
+        {
+            switch(Bot.Game.Server)
+            {
+                case (GameServer.Blue):
+                    return "Blue";
+                case (GameServer.Red):
+                    return "Red";
+                case (GameServer.Yellow):
+                    return "Yellow";
+                default:
+                    return "Unknown";
+            }
+		}
+
+        private void SetOption(int option, bool value)
+        {
+            if (option < 1 || option > Bot.Options.Length)
+                return;
+
+            Bot.Options[option - 1].IsEnabled = value;
+        }
+
+        private bool GetOption(int option)
+        {
+            if (option < 1 || option > Bot.Options.Length)
+                return false;
+
+            return Bot.Options[option - 1].IsEnabled;
+        }
+
+        private void SetOptionName(int option, string content)
+        {
+            if (option < 1 || option > Bot.Options.Length)
+                return;
+
+            Bot.Options[option - 1].Name = content + ": ";
+        }
+
+        private void SetOptionDescription(int option, string content)
+        {
+            if (option < 1 || option > Bot.Options.Length)
+                return;
+
+            Bot.Options[option - 1].Description = content;
         }
     }
 }
