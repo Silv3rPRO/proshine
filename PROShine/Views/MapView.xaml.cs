@@ -22,7 +22,9 @@ namespace PROShine.Views
         private UniformGrid _mapGrid;
         private bool _isPlayerDirty;
         private Shape _player;
-
+        private Shape[] _otherPlayers;
+        private Shape[] _npcs;
+        
         public MapView(BotClient bot)
         {
             InitializeComponent();
@@ -52,6 +54,60 @@ namespace PROShine.Views
         private void MapView_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Keyboard.Focus(this);
+            
+            //calculate clicked cell
+            Tuple<double, double> drawingOffset = GetDrawingOffset();
+            double deltaX = drawingOffset.Item1;
+            double deltaY = drawingOffset.Item2;
+            int ingameX = (int)((e.GetPosition(this).X/_cellWidth - deltaX));
+            int ingameY = (int)((e.GetPosition(this).Y / _cellWidth) - deltaY);
+
+            LogCellInfo(ingameX, ingameY);
+        }
+
+        private void LogCellInfo(int x, int y)
+        {
+            string log = "";
+            log += string.Format("Clicked Cell: ({0},{1})\r\n", x, y);
+            if (_bot.Game.Map.HasLink(x, y))
+            {
+                log += "Link:\r\n";
+                log += "    destination map: " + _bot.Game.Map.Links[x, y].DestinationMap + "\r\n";
+                log += "\r\n";
+            }
+
+            PlayerInfos[] playersOnCell = _bot.Game.Players.Values.Where(player => player.PosX == x && player.PosY == y).ToArray();
+            if (playersOnCell.Length > 0)
+            {
+                log += string.Format("{0} player(s): \r\n", playersOnCell.Length);
+                foreach(PlayerInfos player in playersOnCell)
+                {
+                    log += "    " + player.Name + "\r\n";
+                    log += "        in Battle: " + player.IsInBattle.ToString() + "\r\n";
+                    log += "        membership: " + player.IsMember.ToString() + "\r\n";
+                    log += "        afk: " + player.IsAfk.ToString() + "\r\n";
+                }
+                log += "\r\n";
+            }
+
+            Npc[] npcsOnCell = _bot.Game.Map.Npcs.Where(npc => npc.PositionX == x && npc.PositionY == y).ToArray();
+            if (npcsOnCell.Length > 0)
+            {
+                log += string.Format("{0} npc(s): \r\n", npcsOnCell.Length);
+                foreach (Npc npc in npcsOnCell)
+                {
+                    log += "    ID: " + npc.Id + "\r\n";
+                    log += "        name: " + (npc.Name==""?"[unnamed]":npc.Name) + "\r\n";
+                    if(npc.IsBattler)
+                        log += "        type: Battler\r\n";
+                    else if(npc.Type==10)
+                        log += "        type: Headbutting Tree\r\n";
+                    else
+                        log += "        type: Standard\r\n";
+                }
+                log += "\r\n";
+            }
+            _bot.LogMessage(log);
         }
 
         private void MapView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -201,6 +257,20 @@ namespace PROShine.Views
                 _player = new Ellipse() { Fill = Brushes.Red, Width = _cellWidth, Height = _cellWidth };
                 MapCanvas.Children.Add(_player);
 
+                _otherPlayers = new Shape[_bot.Game.Players.Count];
+                for(int i = 0; i < _otherPlayers.Length; i++)
+                {
+                    _otherPlayers[i] = new Ellipse() { Fill = Brushes.Green, Width = _cellWidth, Height = _cellWidth };
+                    MapCanvas.Children.Add(_otherPlayers[i]);
+                }
+
+                _npcs = new Shape[_bot.Game.Map.Npcs.Count];
+                for (int i = 0; i < _npcs.Length; i++)
+                {
+                    _npcs[i] = new Ellipse() { Fill = Brushes.DarkOrange, Width = _cellWidth, Height = _cellWidth };
+                    MapCanvas.Children.Add(_npcs[i]);
+                }
+
                 UpdatePlayerPosition();
             }
         }
@@ -222,7 +292,19 @@ namespace PROShine.Views
         private void UpdatePlayerPosition()
         {
             _isPlayerDirty = false;
+            
+            Tuple<double, double> drawingOffset = GetDrawingOffset();
+            double deltaX = drawingOffset.Item1;
+            double deltaY = drawingOffset.Item2;
 
+            Canvas.SetLeft(_mapGrid, deltaX * _cellWidth);
+            Canvas.SetTop(_mapGrid, deltaY * _cellWidth);
+            Canvas.SetLeft(_player, (_bot.Game.PlayerX + deltaX) * _cellWidth);
+            Canvas.SetTop(_player, (_bot.Game.PlayerY + deltaY) * _cellWidth);
+        }
+
+        private Tuple<double, double> GetDrawingOffset()
+        {
             double canFillX = Math.Floor(MapCanvas.ActualWidth / _cellWidth);
             double canFillY = Math.Floor(MapCanvas.ActualHeight / _cellWidth);
 
@@ -238,13 +320,34 @@ namespace PROShine.Views
             if (deltaX > 0) deltaX = 0;
             if (deltaY > 0) deltaY = 0;
 
-            Canvas.SetLeft(_mapGrid, deltaX * _cellWidth);
-            Canvas.SetTop(_mapGrid, deltaY * _cellWidth);
-            Canvas.SetLeft(_player, (_bot.Game.PlayerX + deltaX) * _cellWidth);
-            Canvas.SetTop(_player, (_bot.Game.PlayerY + deltaY) * _cellWidth);
+            return new Tuple<double, double>(deltaX, deltaY);
         }
 
         public void Client_MapLoaded(string mapName)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                RefreshMap();
+            });
+        }
+
+        public void Client_PlayerEnteredMap(PlayerInfos player)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                RefreshMap();
+            });
+        }
+
+        public void Client_PlayerLeftMap(PlayerInfos player)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                RefreshMap();
+            });
+        }
+
+        public void Client_PlayerMoved(PlayerInfos player)
         {
             Dispatcher.InvokeAsync(delegate
             {
