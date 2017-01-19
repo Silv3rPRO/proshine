@@ -2563,38 +2563,47 @@ namespace PROBot.Scripting
                 default:
                     return "Unknown";
             }
-		}
-
+	}
+	
         private void SetOption(int option, bool value)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.Options.ContainsKey(option))
+            {
+                Bot.CreateSlider(option, value);
                 return;
+            }
 
-            Bot.Options[option - 1].IsEnabled = value;
+            Bot.Options[option].IsEnabled = value;
         }
 
         private bool GetOption(int option)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.Options.ContainsKey(option))
                 return false;
 
-            return Bot.Options[option - 1].IsEnabled;
+            return Bot.Options[option].IsEnabled;
         }
 
         private void SetOptionName(int option, string content)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.Options.ContainsKey(option))
+            {
+                Bot.CreateSlider(option, content + ": ", true);
                 return;
+            }
 
-            Bot.Options[option - 1].Name = content + ": ";
+            Bot.Options[option].Name = content + ": ";
         }
 
         private void SetOptionDescription(int option, string content)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.Options.ContainsKey(option))
+            {
+                Bot.CreateSlider(option, content, false);
                 return;
+            }
 
-            Bot.Options[option - 1].Description = content;
+            Bot.Options[option].Description = content;
         }
     }
 }
