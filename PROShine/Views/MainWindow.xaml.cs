@@ -107,7 +107,7 @@ namespace PROShine
             });
         }
 
-        private void Remove_Sliders()
+        private void RemoveSliders()
         {
             Dispatcher.InvokeAsync(delegate
             {
@@ -274,7 +274,7 @@ namespace PROShine
                 {
                     lock (Bot)
                     {
-                        Remove_Sliders();
+                        RemoveSliders();
                         
                         Bot.LoadScript(openDialog.FileName);
                         MenuPathScript.Header = "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine + openDialog.FileName;
