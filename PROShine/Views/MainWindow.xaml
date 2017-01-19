@@ -172,24 +172,22 @@
                     <TextBlock>Reconnect after a few minutes and start the last script.</TextBlock>
                 </CheckBox.ToolTip>
             </CheckBox>
-            <WrapPanel>
-                <ItemsControl Name="OptionSliders">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <CheckBox HorizontalAlignment="Left" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1" IsChecked="{Binding IsEnabled}" Content="{Binding Name}">
-                                <CheckBox.ToolTip>
-                                    <TextBlock><Run Text="{Binding Description}"/></TextBlock>
-                                </CheckBox.ToolTip>
-                            </CheckBox>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </WrapPanel>
+            <ItemsControl Name="OptionSliders">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox HorizontalAlignment="Left" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1" IsChecked="{Binding IsEnabled}" Content="{Binding Name}">
+                            <CheckBox.ToolTip>
+                                <TextBlock><Run Text="{Binding Description}"/></TextBlock>
+                            </CheckBox.ToolTip>
+                        </CheckBox>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </WrapPanel>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
