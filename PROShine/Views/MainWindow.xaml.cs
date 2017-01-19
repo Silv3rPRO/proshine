@@ -65,13 +65,6 @@ namespace PROShine
             Bot.MessageLogged += Bot_LogMessage;
             Bot.SliderCreated += Bot_SliderCreated;
 
-            foreach (var slider in Bot.Options)
-            {
-                slider.EnabledStateChanged += Bot_OptionStateChanged;
-                slider.NameChanged += Bot_OptionNameChanged;
-                slider.DescriptionChanged += Bot_OptionDescriptionChanged;
-            }
-
             InitializeComponent();
             AutoReconnectSwitch.IsChecked = Bot.AutoReconnector.IsEnabled;
             AvoidStaffSwitch.IsChecked = Bot.StaffAvoider.IsEnabled;
