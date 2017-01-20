@@ -314,7 +314,7 @@ namespace PROShine.Views
                 Canvas.SetTop(_otherPlayers[i], (players[i].PosY + deltaY) * _cellWidth);
             }
 
-            for(int i=0; i<_bot.Game.Map.Npcs.Count;i++)
+            for(int i=0; i<_npcs.Length;i++)
             {
                 Canvas.SetLeft(_npcs[i], (_bot.Game.Map.Npcs[i].PositionX + deltaX) * _cellWidth);
                 Canvas.SetTop(_npcs[i], (_bot.Game.Map.Npcs[i].PositionY + deltaY) * _cellWidth);
