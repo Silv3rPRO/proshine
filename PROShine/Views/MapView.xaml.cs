@@ -57,7 +57,7 @@ namespace PROShine.Views
             Keyboard.Focus(this);
             
             if (_bot.Game != null)
-	        {
+	    {
                 //calculate clicked cell
                 Tuple<double, double> drawingOffset = GetDrawingOffset();
                 double deltaX = drawingOffset.Item1;
