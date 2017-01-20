@@ -113,8 +113,6 @@ namespace PROShine
         {
             Dispatcher.InvokeAsync(delegate
             {
-                Bot.Options = new Dictionary<int, OptionSlider>();
-                _options = new ObservableCollection<OptionSlider>();
                 OptionSliders.ItemsSource = _options;
             });
         }
@@ -276,6 +274,9 @@ namespace PROShine
                 {
                     lock (Bot)
                     {
+                        Bot.Options.Clear();
+                        _options.Clear();
+                        
                         RemoveSliders();
                         
                         Bot.LoadScript(openDialog.FileName);
