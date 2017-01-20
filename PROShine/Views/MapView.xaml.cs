@@ -56,14 +56,17 @@ namespace PROShine.Views
         {
             Keyboard.Focus(this);
             
-            //calculate clicked cell
-            Tuple<double, double> drawingOffset = GetDrawingOffset();
-            double deltaX = drawingOffset.Item1;
-            double deltaY = drawingOffset.Item2;
-            int ingameX = (int)((e.GetPosition(this).X/_cellWidth - deltaX));
-            int ingameY = (int)((e.GetPosition(this).Y / _cellWidth) - deltaY);
+            if (_bot.Game != null)
+	        {
+                //calculate clicked cell
+                Tuple<double, double> drawingOffset = GetDrawingOffset();
+                double deltaX = drawingOffset.Item1;
+                double deltaY = drawingOffset.Item2;
+                int ingameX = (int)((e.GetPosition(this).X/_cellWidth - deltaX));
+                int ingameY = (int)((e.GetPosition(this).Y / _cellWidth) - deltaY);
 
-            LogCellInfo(ingameX, ingameY);
+                LogCellInfo(ingameX, ingameY);
+            }
         }
 
         private void LogCellInfo(int x, int y)
