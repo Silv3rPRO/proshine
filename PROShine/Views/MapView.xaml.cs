@@ -25,6 +25,7 @@ namespace PROShine.Views
         private Shape _player;
         private Shape[] _otherPlayers;
         private Shape[] _npcs;
+        private Point _lastDisplayedCell = new Point(-1, -1);
         
         public MapView(BotClient bot)
         {
@@ -52,32 +53,52 @@ namespace PROShine.Views
             SizeChanged += MapView_SizeChanged;
         }
 
-        private void MapView_MouseDown(object sender, MouseButtonEventArgs e)
+        private void MapCanvas_MouseEnter(object sender, MouseEventArgs e)
         {
-            Keyboard.Focus(this);
-            
             if (_bot.Game != null)
-	    {
-                //calculate clicked cell
+                floatingTip.IsOpen = true;
+        }
+
+        private void MapCanvas_MouseLeave(object sender, MouseEventArgs e)
+        {
+            floatingTip.IsOpen = false;
+        }
+
+        private void MapCanvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_bot.Game != null)
+            {
                 Tuple<double, double> drawingOffset = GetDrawingOffset();
                 double deltaX = drawingOffset.Item1;
                 double deltaY = drawingOffset.Item2;
-                int ingameX = (int)((e.GetPosition(this).X/_cellWidth - deltaX));
+                int ingameX = (int)((e.GetPosition(this).X / _cellWidth - deltaX));
                 int ingameY = (int)((e.GetPosition(this).Y / _cellWidth) - deltaY);
 
-                LogCellInfo(ingameX, ingameY);
+                if(this._lastDisplayedCell.X!=ingameX || this._lastDisplayedCell.Y != ingameY)
+                    LogCellInfo(ingameX, ingameY);
+
+                Point currentPos = e.GetPosition(MapCanvas);
+
+                floatingTip.HorizontalOffset = currentPos.X + 20;
+                floatingTip.VerticalOffset = currentPos.Y;
             }
+        }   
+
+        private void MapView_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Keyboard.Focus(this);
         }
 
         private void LogCellInfo(int x, int y)
         {
+            _lastDisplayedCell = new Point(x, y);
+
             string log = "";
             log += string.Format("Clicked Cell: ({0},{1})\r\n", x, y);
             if (_bot.Game.Map.HasLink(x, y))
             {
                 log += "Link:\r\n";
                 log += "    destination map: " + _bot.Game.Map.Links[x, y].DestinationMap + "\r\n";
-                log += "\r\n";
             }
 
             PlayerInfos[] playersOnCell = _bot.Game.Players.Values.Where(player => player.PosX == x && player.PosY == y).ToArray();
@@ -91,7 +112,6 @@ namespace PROShine.Views
                     log += "        membership: " + player.IsMember.ToString() + "\r\n";
                     log += "        afk: " + player.IsAfk.ToString() + "\r\n";
                 }
-                log += "\r\n";
             }
 
             Npc[] npcsOnCell = _bot.Game.Map.Npcs.Where(npc => npc.PositionX == x && npc.PositionY == y).ToArray();
@@ -103,11 +123,10 @@ namespace PROShine.Views
                     log += "    ID: " + npc.Id + "\r\n";
                     log += "        name: " + (npc.Name==""?"[unnamed]":npc.Name) + "\r\n";
                     log += "        type: " + npc.TypeDescription + "\r\n";
-		    log += "        battler: " + npc.IsBattler.ToString() + "\r\n";
+                    log += "        battler: " + npc.IsBattler.ToString() + "\r\n";
                 }
-                log += "\r\n";
             }
-            _bot.LogMessage(log);
+            tipText.Text = log;
         }
 
         private void MapView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
