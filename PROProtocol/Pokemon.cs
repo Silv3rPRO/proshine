@@ -33,6 +33,13 @@ namespace PROProtocol
         public Region Region { get; private set; }
         public int Form { get; private set; }
 
+        public int AtkEV { get; private set; }
+        public int DefEV { get; private set; }
+        public int SpdEV { get; private set; }
+        public int SpAtkEV { get; private set; }
+        public int SpDefEV { get; private set; }
+        public int HPEV { get; private set; }
+
         private string _status;
         public string Status {
             get
@@ -86,6 +93,13 @@ namespace PROProtocol
             Stats = new PokemonStats(data, 23, MaxHealth);
             IV = new PokemonStats(data, 30);
             EV = new PokemonStats(data, 41);
+
+            AtkEV = EV.Attack;
+            DefEV = EV.Defence;
+            SpdEV = EV.Speed;
+            SpAtkEV = EV.SpAttack;
+            SpDefEV = EV.SpDefence;
+            HPEV = EV.Health;
         }
 
         public void UpdateHealth(int max, int current)
