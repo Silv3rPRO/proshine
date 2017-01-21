@@ -102,12 +102,8 @@ namespace PROShine.Views
                 {
                     log += "    ID: " + npc.Id + "\r\n";
                     log += "        name: " + (npc.Name==""?"[unnamed]":npc.Name) + "\r\n";
-                    if(npc.IsBattler)
-                        log += "        type: Battler\r\n";
-                    else if(npc.Type==10)
-                        log += "        type: Headbutting Tree\r\n";
-                    else
-                        log += "        type: Standard\r\n";
+                    log += "        type: " + npc.TypeDescription + "\r\n";
+		    log += "        battler: " + npc.IsBattler.ToString() + "\r\n";
                 }
                 log += "\r\n";
             }
