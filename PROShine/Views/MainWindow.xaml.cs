@@ -117,6 +117,16 @@ namespace PROShine
             TextOptions.ItemsSource = _textOptions = new ObservableCollection<TextOption>();
         }
 
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            // On pressing enter, take focus from the textbox and give it to the selected button in _views
+            // This is necessary to update the content of the TextOption
+            if (e.Key == Key.Enter || e.Key == Key.Return)
+                foreach (TabView view in _views)
+                    if (view.Button.IsChecked.Value)
+                        Keyboard.Focus(view.Button);
+        }
+
         public void Bot_TextOptionChanged()
         {
             Dispatcher.InvokeAsync(delegate
