@@ -64,4 +64,56 @@ namespace PROBot.Modules
             _index = index;
         }
     }
+    
+    public class TextOption
+    {
+        public event Action StateChanged;
+
+        private string _name, _description, _content;
+
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    StateChanged?.Invoke();
+                }
+            }
+        }
+
+        public string Description
+        {
+            get { return _description; }
+            set
+            {
+                if (_description != value)
+                {
+                    _description = value;
+                    StateChanged?.Invoke();
+                }
+            }
+        }
+
+        public string Content {
+            get { return _content; }
+            set
+            {
+                if (_content != value)
+                {
+                    _content = value;
+                    StateChanged?.Invoke();
+                }
+            }
+        }
+
+        public TextOption(string name, string description, string content)
+        {
+            _name = name;
+            _description = description;
+            _content = content;
+        }
+    }
 }
