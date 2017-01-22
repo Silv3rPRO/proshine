@@ -5,7 +5,6 @@ namespace PROProtocol
     {
         private static Dictionary<int, string> typeDescriptions = new Dictionary<int, string>()
         {
-            //TODO: add all the npc types
             {   1, "pokemon"},
             {   2, "camper" },
             {   3, "picnicker"},
@@ -16,20 +15,37 @@ namespace PROProtocol
             {   9, "old lady"},
             {  10, "interactive environment"},
             {  11, "item" },
+            {  17, "fisherman" },
             {  18, "scientist" },
             {  19, "biker"},
-            {  17, "fisherman" },
             {  25, "lass"},
             {  33, "black belt" },
             {  34, "sailor" },
+            {  42, "cherry tree"},
+            {  43, "pecha tree"},
             {  44, "oran tree"},
+            {  45, "leppa tree"},
+            {  49, "chesto tree"},
+            {  50, "rawst tree"},
+            {  51, "aspear tree"},
+            {  52, "persim tree"},
+            {  55, "pomeg tree"},
+            {  56, "kelpsy tree"},
+            {  57, "qualot tree"},
+            {  58, "hondew tree"},
+            {  59, "grepa tree"},
+            {  60, "tomato tree"},
             {  61, "sitrus tree"},
+            {  62, "lum tree"},
+            {  63, "abandoned pokemon"},
             {  69, "hiker"},
-            {  70, "digspot" },
-            {  71, "digspot" },
+            {  70, "road digspot" },
+            {  71, "cave digspot" },
             {  74, "chuck" },
             { 101, "headbuttable tree" },
             { 111, "bill" },
+            { 119, "pokestop"},
+        };
         };
         
         public int Id { get; private set; }
