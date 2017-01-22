@@ -38,7 +38,7 @@ namespace PROBot
         public StaffAvoider StaffAvoider { get; private set; }
         public AutoReconnector AutoReconnector { get; private set; }
         public MovementResynchronizer MovementResynchronizer { get; private set; }
-        public Dictionary<int, OptionSlider> Options { get; set; }
+        public Dictionary<int, OptionSlider> SliderOptions { get; set; }
         
         private bool _loginRequested;
 
@@ -53,24 +53,24 @@ namespace PROBot
             AutoReconnector = new AutoReconnector(this);
             MovementResynchronizer = new MovementResynchronizer(this);
             Rand = new Random();
-            Options = new Dictionary<int, OptionSlider>();
+            SliderOptions = new Dictionary<int, OptionSlider>();
         }
 
         public void CreateSlider(int index, bool enable)
         {
-            Options[index] = new OptionSlider("Option " + index + ": ", "Custom option " + index + " for use in scripts.");
-            Options[index].IsEnabled = enable;
-            SliderCreated?.Invoke(Options[index]);
+            SliderOptions[index] = new OptionSlider("Option " + index + ": ", "Custom option " + index + " for use in scripts.");
+            SliderOptions[index].IsEnabled = enable;
+            SliderCreated?.Invoke(SliderOptions[index]);
         }
 
         public void CreateSlider(int index, string content, bool isName)
         {
             if (isName)
-                Options[index] = new OptionSlider(content, "Custom option " + index + " for use in scripts.");
+                SliderOptions[index] = new OptionSlider(content, "Custom option " + index + " for use in scripts.");
             else
-                Options[index] = new OptionSlider("Option " + index + ": ", content);
+                SliderOptions[index] = new OptionSlider("Option " + index + ": ", content);
 
-            SliderCreated?.Invoke(Options[index]);
+            SliderCreated?.Invoke(SliderOptions[index]);
         }
 
         public void LogMessage(string message)
