@@ -67,6 +67,7 @@ namespace PROShine
             Bot.ConnectionOpened += Bot_ConnectionOpened;
             Bot.ConnectionClosed += Bot_ConnectionClosed;
             Bot.MessageLogged += Bot_LogMessage;
+            Bot.TextboxCreated += Bot_TextboxCreated;
 
             foreach (var slider in Bot.Options)
             {
