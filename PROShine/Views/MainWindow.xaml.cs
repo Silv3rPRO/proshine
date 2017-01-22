@@ -46,7 +46,7 @@ namespace PROShine
 
         private int _queuePosition;
 
-        private ObservableCollection<OptionSlider> _options;
+        private ObservableCollection<OptionSlider> _sliderOptions;
 
         public MainWindow()
         {
@@ -97,23 +97,24 @@ namespace PROShine
 
             Task.Run(() => UpdateClients());
 
-            _options = new ObservableCollection<OptionSlider>();
+            OptionSliders.ItemsSource = _sliderOptions = new ObservableCollection<OptionSlider>();
+        }
+
+        public void Bot_SliderOptionChanged()
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                OptionSliders.Items.Refresh();
+            });
         }
 
         public void Bot_SliderCreated(OptionSlider option)
         {
             Dispatcher.InvokeAsync(delegate
             {
-                _options.Add(option);
-                OptionSliders.ItemsSource = _options;
-            });
-        }
-
-        private void RemoveSliders()
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                OptionSliders.ItemsSource = _options;
+                _sliderOptions.Add(option);
+                option.StateChanged += Bot_SliderOptionChanged;
+                OptionSliders.Items.Refresh();
             });
         }
         
@@ -274,10 +275,9 @@ namespace PROShine
                 {
                     lock (Bot)
                     {
-                        Bot.Options.Clear();
-                        _options.Clear();
-                        
-                        RemoveSliders();
+                        Bot.SliderOptions.Clear();
+                        _sliderOptions.Clear();
+                        OptionSliders.Items.Refresh();
                         
                         Bot.LoadScript(openDialog.FileName);
                         MenuPathScript.Header = "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine + openDialog.FileName;
