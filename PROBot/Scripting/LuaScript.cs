@@ -2556,48 +2556,48 @@ namespace PROBot.Scripting
 	}
 	
 	// API: Sets the Option Slider at index option, or creates it if it doesn't exist
-        private void SetOption(int option, bool value)
+        private void SetOption(int index, bool value)
         {
-            if (!Bot.SliderOptions.ContainsKey(option))
+            if (!Bot.SliderOptions.ContainsKey(index))
             {
-                Bot.CreateSlider(option, value);
+                Bot.CreateSlider(index, value);
                 return;
             }
 
-            Bot.SliderOptions[option].IsEnabled = value;
+            Bot.SliderOptions[index].IsEnabled = value;
         }
 
 	// API: Returns the state of the Option Slider at index option, or false if it doesn't exist
-        private bool GetOption(int option)
+        private bool GetOption(int index)
         {
-            if (!Bot.SliderOptions.ContainsKey(option))
+            if (!Bot.SliderOptions.ContainsKey(index))
                 return false;
 
-            return Bot.SliderOptions[option].IsEnabled;
+            return Bot.SliderOptions[index].IsEnabled;
         }
 
 	// API: Sets the Option Slider's name at index option, or creates it if it doesn't exist
-        private void SetOptionName(int option, string content)
+        private void SetOptionName(int index, string content)
         {
-            if (!Bot.SliderOptions.ContainsKey(option))
+            if (!Bot.SliderOptions.ContainsKey(index))
             {
-                Bot.CreateSlider(option, content + ": ", true);
+                Bot.CreateSlider(index, content + ": ", true);
                 return;
             }
 
-            Bot.SliderOptions[option].Name = content + ": ";
+            Bot.SliderOptions[index].Name = content + ": ";
         }
 
 	// API: Sets the Option Slider's tooltip at index option, or creates it if it doesn't exist
-        private void SetOptionDescription(int option, string content)
+        private void SetOptionDescription(int index, string content)
         {
-            if (!Bot.SliderOptions.ContainsKey(option))
+            if (!Bot.SliderOptions.ContainsKey(index))
             {
-                Bot.CreateSlider(option, content, false);
+                Bot.CreateSlider(index, content, false);
                 return;
             }
 
-            Bot.SliderOptions[option].Description = content;
+            Bot.SliderOptions[index].Description = content;
         }
     }
 }
