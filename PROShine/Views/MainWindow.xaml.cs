@@ -14,6 +14,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using System.Windows.Input;
+using System.Collections.ObjectModel;
+using PROBot.Modules;
 
 namespace PROShine
 {
@@ -45,6 +48,7 @@ namespace PROShine
         private int _queuePosition;
 
         private CheckBox[] _options = new CheckBox[5];
+        private ObservableCollection<TextOption> _textOptions;
 
         public MainWindow()
         {
@@ -63,6 +67,7 @@ namespace PROShine
             Bot.ConnectionOpened += Bot_ConnectionOpened;
             Bot.ConnectionClosed += Bot_ConnectionClosed;
             Bot.MessageLogged += Bot_LogMessage;
+            Bot.TextboxCreated += Bot_TextboxCreated;
 
             foreach (var slider in Bot.Options)
             {
@@ -109,6 +114,36 @@ namespace PROShine
 
             foreach (var option in _options)
                 option.Visibility = Visibility.Collapsed;
+                
+            TextOptions.ItemsSource = _textOptions = new ObservableCollection<TextOption>();
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            // On pressing enter, take focus from the textbox and give it to the selected button in _views
+            // This is necessary to update the content of the TextOption
+            if (e.Key == Key.Enter || e.Key == Key.Return)
+                foreach (TabView view in _views)
+                    if (view.Button.IsChecked.Value)
+                        Keyboard.Focus(view.Button);
+        }
+
+        public void Bot_TextOptionChanged()
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                TextOptions.Items.Refresh();
+            });
+        }
+
+        public void Bot_TextboxCreated(TextOption option)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                _textOptions.Add(option);
+                option.StateChanged += Bot_TextOptionChanged;
+                TextOptions.Items.Refresh();
+            });
         }
 
         private void AddView(UserControl view, ContentControl content, ToggleButton button, bool visible = false)
@@ -268,6 +303,10 @@ namespace PROShine
                 {
                     lock (Bot)
                     {
+                        Bot.TextOptions.Clear();
+                        _textOptions.Clear();
+                        TextOptions.Items.Refresh();
+                        
                         foreach (var slider in Bot.Options)
                             slider.Reset();
 
