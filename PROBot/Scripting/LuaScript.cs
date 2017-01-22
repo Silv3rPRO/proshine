@@ -2596,5 +2596,50 @@ namespace PROBot.Scripting
 
             Bot.Options[option - 1].Description = content;
         }
+	
+        // API: Sets the text of the TextOption at a particular index, or creates it if it doesn't exist
+        private void SetTextOption(int index, string content)
+        {
+            if (!Bot.TextOptions.ContainsKey(index))
+            {
+                Bot.CreateText(index, content);
+                return;
+            }
+
+            Bot.TextOptions[index].Content = content;
+        }
+
+        // API: Returns the text content of the TextOption at a particular index, or an empty string if it doesn't exist
+        private string GetTextOption(int index)
+        {
+            if (!Bot.TextOptions.ContainsKey(index))
+                return "";
+            
+            return Bot.TextOptions[index].Content;
+        }
+
+        // API: Sets the name of the TextOption at a particular index, or creates it if it doesn't exist
+        private void SetTextOptionName(int index, string content)
+        {
+            if (!Bot.TextOptions.ContainsKey(index))
+            {
+                Bot.CreateText(index, content + ": ", true);
+                return;
+            }
+
+            Bot.TextOptions[index].Name = content + ": ";
+        }
+
+        // API: Sets the tooltip description of the TextOption at a particular index, or creates it if it doesn't exist
+        private void SetTextOptionDescription(int index, string content)
+        {
+            if (!Bot.TextOptions.ContainsKey(index))
+            {
+                Bot.CreateText(index, content, false);
+                return;
+            }
+
+            Bot.TextOptions[index].Description = content;
+        }
     }
 }
