@@ -31,6 +31,7 @@ namespace PROBot
         public event Action ClientChanged;
         public event Action ConnectionOpened;
         public event Action ConnectionClosed;
+        public event Action<TextOption> TextboxCreated;
 
         public PokemonEvolver PokemonEvolver { get; private set; }
         public MoveTeacher MoveTeacher { get; private set; }
@@ -38,6 +39,7 @@ namespace PROBot
         public AutoReconnector AutoReconnector { get; private set; }
         public MovementResynchronizer MovementResynchronizer { get; private set; }
         public OptionSlider[] Options { get; private set; }
+        public Dictionary<int, TextOption> TextOptions { get; set; }
         
         private bool _loginRequested;
 
@@ -58,6 +60,23 @@ namespace PROBot
                                            new OptionSlider("Option 4: ", "Custom option 4 for use in scripts", 4),
                                            new OptionSlider("Option 5: ", "Custom option 5 for use in scripts", 5)
             };
+            TextOptions = new Dictionary<int, TextOption>();
+        }
+
+        public void CreateText(int index, string content)
+        {
+            TextOptions[index] = new TextOption("Text " + index + ": ", "Custom text option " + index + " for use in scripts.", content);
+            TextboxCreated?.Invoke(TextOptions[index]);
+        }
+
+        public void CreateText(int index, string content, bool isName)
+        {
+            if (isName)
+                TextOptions[index] = new TextOption(content, "Custom text option " + index + " for use in scripts.", "");
+            else
+                TextOptions[index] = new TextOption("Text " + index + ": ", content, "");
+
+            TextboxCreated?.Invoke(TextOptions[index]);
         }
 
         public void LogMessage(string message)
