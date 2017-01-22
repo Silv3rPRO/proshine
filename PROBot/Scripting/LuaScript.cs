@@ -2555,7 +2555,7 @@ namespace PROBot.Scripting
             return Bot.Game != null ? Bot.Game.Server.ToString() : "None";
 	}
 	
-	// API: Sets the Option Slider at index option, or creates it if it doesn't exist
+	// API: Sets the Option Slider at a particular index, or creates it if it doesn't exist
         private void SetOption(int index, bool value)
         {
             if (!Bot.SliderOptions.ContainsKey(index))
@@ -2567,7 +2567,7 @@ namespace PROBot.Scripting
             Bot.SliderOptions[index].IsEnabled = value;
         }
 
-	// API: Returns the state of the Option Slider at index option, or false if it doesn't exist
+	// API: Returns the state of the Option Slider at a particular index, or false if it doesn't exist
         private bool GetOption(int index)
         {
             if (!Bot.SliderOptions.ContainsKey(index))
@@ -2576,7 +2576,7 @@ namespace PROBot.Scripting
             return Bot.SliderOptions[index].IsEnabled;
         }
 
-	// API: Sets the Option Slider's name at index option, or creates it if it doesn't exist
+	// API: Sets the Option Slider's name at a particular index, or creates it if it doesn't exist
         private void SetOptionName(int index, string content)
         {
             if (!Bot.SliderOptions.ContainsKey(index))
@@ -2588,7 +2588,7 @@ namespace PROBot.Scripting
             Bot.SliderOptions[index].Name = content + ": ";
         }
 
-	// API: Sets the Option Slider's tooltip at index option, or creates it if it doesn't exist
+	// API: Sets the Option Slider's tooltip at a particular index, or creates it if it doesn't exist
         private void SetOptionDescription(int index, string content)
         {
             if (!Bot.SliderOptions.ContainsKey(index))
