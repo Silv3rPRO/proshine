@@ -307,6 +307,12 @@ namespace PROBot.Scripting
             _lua.Globals["setOptionName"] = new Action<int, string>(SetOptionName);
             _lua.Globals["setOptionDescription"] = new Action<int, string>(SetOptionDescription);
 
+            // Custom text option functions
+            _lua.Globals["setTextOption"] = new Action<int, string>(SetTextOption);
+            _lua.Globals["getTextOption"] = new Func<int, string>(GetTextOption);
+            _lua.Globals["setTextOptionName"] = new Action<int, string>(SetTextOptionName);
+            _lua.Globals["setTextOptionDescription"] = new Action<int, string>(SetTextOptionDescription);
+
             // File editing actions
             _lua.Globals["logToFile"] = new Action<string, DynValue, bool>(LogToFile);
             _lua.Globals["readLinesFromFile"] = new Func<string, string[]>(ReadLinesFromFile);
