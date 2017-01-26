@@ -247,6 +247,7 @@ namespace PROBot.Scripting
             _lua.Globals["getOpponentForm"] = new Func<int>(GetOpponentForm);
             _lua.Globals["isOpponentEffortValue"] = new Func<string, bool>(IsOpponentEffortValue);
             _lua.Globals["getOpponentEffortValue"] = new Func<string, int>(GetOpponentEffortValue);
+            _lua.Globals["getOpponentType"] = new Func<string[]>(GetOpponentType);
 
             // Path actions
             _lua.Globals["moveToCell"] = new Func<int, int, bool>(MoveToCell);
@@ -1320,6 +1321,20 @@ namespace PROBot.Scripting
 
             PokemonStats stats = EffortValuesManager.Instance.BattleValues[Bot.Game.ActiveBattle.OpponentId];
             return stats.GetStat(_stats[statType.ToUpperInvariant()]);
+        }
+        
+        // API: Returns the type of the opponent pokémon in the current battle as an array of length 2.
+        private string[] GetOpponentType()
+        {
+            if (!Bot.Game.IsInBattle)
+            {
+                Fatal("error: getOpponentType can only be used in battle.");
+                return null;
+            }
+
+            int id = Bot.Game.ActiveBattle.OpponentId;
+	    
+            return new string[] { TypesManager.Instance.Type1[id].ToString(), TypesManager.Instance.Type2[id].ToString() };
         }
 
         // API: Moves to the specified coordinates.
