@@ -1332,7 +1332,12 @@ namespace PROBot.Scripting
                 return null;
             }
 
-            int id = Bot.Game.ActiveBattle.OpponentId;
+            int id = Bot.Game.ActiveBattle.OpponentId;	    
+
+            if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
+            {
+                return new string[] {"Unknown", "Unknown"};
+            }
 	    
             return new string[] { TypesManager.Instance.Type1[id].ToString(), TypesManager.Instance.Type2[id].ToString() };
         }
