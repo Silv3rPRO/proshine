@@ -212,6 +212,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonTotalExperienceFromPC"] = new Func<int, int, int>(GetPokemonTotalExperienceFromPC);
             _lua.Globals["getPokemonRemainingExperienceFromPC"] = new Func<int, int, int>(GetPokemonRemainingExperienceFromPC);
             _lua.Globals["getPokemonStatusFromPC"] = new Func<int, int, string>(GetPokemonStatusFromPC);
+            _lua.Globals["getPokemonTypeFromPC"] = new Func<int, int, string[]>(GetPokemonTypeFromPC);
             _lua.Globals["getPokemonHeldItemFromPC"] = new Func<int, int, string>(GetPokemonHeldItemFromPC);
             _lua.Globals["getPokemonUniqueIdFromPC"] = new Func<int, int, int>(GetPokemonUniqueIdFromPC);
             _lua.Globals["getPokemonRemainingPowerPointsFromPC"] = new Func<int, int, int, int>(GetPokemonRemainingPowerPointsFromPC);
@@ -1413,7 +1414,7 @@ namespace PROBot.Scripting
 
             if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
             {
-                return new string[] {"Unknown", "Unknown"};
+                return new string[] { "Unknown", "Unknown" };
             }
 	    
             return new string[] { TypesManager.Instance.Type1[id].ToString(), TypesManager.Instance.Type2[id].ToString() };
@@ -2308,6 +2309,24 @@ namespace PROBot.Scripting
             }
             return Bot.Game.CurrentPCBox[boxPokemonId - 1].Status;
         }
+
+	// API: Type of the pokemon of the current box matching the ID as an array of length 2.
+	private string[] GetPokemonTypeFromPC(int boxId, int boxPokemonId)
+	{
+		if (!IsPCAccessValid("getPokemonTypeFromPC", boxId, boxPokemonId))
+		{
+			return null;
+		}
+		
+		int id = Bot.Game.CurrentPCBox[boxPokemonId - 1].Id;
+		
+		if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
+		{
+			return new string[] { "Unknown", "Unknown" };
+		}
+
+		return new string[] { TypesManager.Instance.Type1[id].ToString(), TypesManager.Instance.Type2[id].ToString() };
+	}
 
         // API: Returns the item held by the specified pokemon in the PC, null if empty.
         private string GetPokemonHeldItemFromPC(int boxId, int boxPokemonId)
