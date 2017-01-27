@@ -18,7 +18,7 @@ namespace PROProtocol
 
         public string Name
         {
-            get { return ti.ToTitleCase(Data?.Name); }
+            get { return Data?.Name != null ? ti.ToTitleCase(Data?.Name) : Data?.Name; }
         }
 
         public string PP
