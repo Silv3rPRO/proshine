@@ -160,6 +160,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonOriginalTrainer"] = new Func<int, string>(GetPokemonOriginalTrainer);
             _lua.Globals["getPokemonGender"] = new Func<int, string>(GetPokemonGender);
             _lua.Globals["getPokemonType"] = new Func<int, string[]>(GetPokemonType);
+            _lua.Globals["getDamageMultiplier"] = new Func<string, DynValue[], double>(GetDamageMultiplier);
             _lua.Globals["isPokemonUsable"] = new Func<int, bool>(IsPokemonUsable);
             _lua.Globals["getUsablePokemonCount"] = new Func<int>(GetUsablePokemonCount);
             _lua.Globals["hasMove"] = new Func<int, string, bool>(HasMove);
@@ -1360,6 +1361,62 @@ namespace PROBot.Scripting
             }
 	    
             return new string[] { TypesManager.Instance.Type1[id].ToString(), TypesManager.Instance.Type2[id].ToString() };
+        }
+
+        private string[] _types = { "", "NORMAL", "FIGHTING", "FLYING", "POISON", "GROUND", "ROCK", "BUG", "GHOST", "STEEL", "FIRE", "WATER", "GRASS", "ELECTRIC", "PSYCHIC", "ICE", "DRAGON", "DARK", "FAIRY" };
+
+        // API: Returns the multiplier of the damage type between an attacking type and one or two defending types.
+        private double GetDamageMultiplier(string attacker, params DynValue[] defender)
+        {
+            if (defender[0].Type == DataType.Table)
+            {
+                if (defender[0].Table.Length == 1)
+                {
+                    defender = new DynValue[] { defender[0].Table.Values.ToArray()[0], DynValue.NewString("") };
+                }
+                else
+                {
+                    defender = defender[0].Table.Values.ToArray();
+                }
+            }            
+            else if (defender.Length == 1)
+            {
+                defender = new DynValue[] { defender[0], DynValue.NewString("") };
+            }
+
+            if (attacker.ToUpperInvariant() == "NONE")
+                attacker = "";
+
+            if (defender[0].CastToString().ToUpperInvariant() == "NONE")
+                defender[0] = DynValue.NewString("");
+
+            if (defender[1].CastToString().ToUpperInvariant() == "NONE")
+                defender[1] = DynValue.NewString("");
+
+            if (!Array.Exists(_types, e => e == attacker.ToUpperInvariant()))
+            {
+                Fatal("error: getDamageMultiplier: the damage type '" + attacker + "' does not exist.");
+                return -1;
+            }
+            
+            if (!Array.Exists(_types, e => e == defender[0].CastToString().ToUpperInvariant()))
+            {
+                Fatal("error: getDamageMultiplier: the damage type '" + defender[0].CastToString() + "' does not exist.");
+                return -1;
+            }
+            
+            if (!Array.Exists(_types, e => e == defender[1].CastToString().ToUpperInvariant()))
+            {
+                Fatal("error: getDamageMultiplier: the damage type '" + defender[1].CastToString() + "' does not exist.");
+                return -1;
+            }
+            
+            double power = 1;
+            
+            power *= TypesManager.Instance.GetMultiplier(PokemonTypeExtensions.FromName(attacker), PokemonTypeExtensions.FromName(defender[0].CastToString()));
+            power *= TypesManager.Instance.GetMultiplier(PokemonTypeExtensions.FromName(attacker), PokemonTypeExtensions.FromName(defender[1].CastToString()));
+
+            return power;
         }
 
         // API: Moves to the specified coordinates.
