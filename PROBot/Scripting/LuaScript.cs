@@ -159,6 +159,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonRegion"] = new Func<int, string>(GetPokemonRegion);
             _lua.Globals["getPokemonOriginalTrainer"] = new Func<int, string>(GetPokemonOriginalTrainer);
             _lua.Globals["getPokemonGender"] = new Func<int, string>(GetPokemonGender);
+            _lua.Globals["getPokemonType"] = new Func<int, string[]>(GetPokemonType);
             _lua.Globals["isPokemonUsable"] = new Func<int, bool>(IsPokemonUsable);
             _lua.Globals["getUsablePokemonCount"] = new Func<int>(GetUsablePokemonCount);
             _lua.Globals["hasMove"] = new Func<int, string, bool>(HasMove);
@@ -913,6 +914,25 @@ namespace PROBot.Scripting
                 return null;
             }
             return Bot.Game.Team[index - 1].Gender;
+        }
+
+        // API: Returns the type of the specified pokémon in the team as an array of length 2.
+        private string[] GetPokemonType(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonType: tried to retrieve the non-existing pokemon " + index + ".");
+                return null;
+            }
+
+            int id = Bot.Game.Team[index - 1].Id;
+
+            if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
+            {
+                return new string[] { "Unknown", "Unknown" };
+            }
+
+            return new string[] { TypesManager.Instance.Type1[id].ToString(), TypesManager.Instance.Type2[id].ToString() };
         }
 
         // API: Returns the status of the specified pokémon in the team.
