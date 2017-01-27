@@ -32,6 +32,19 @@ namespace PROProtocol
         public string OriginalTrainer { get; private set; }
         public Region Region { get; private set; }
         public int Form { get; private set; }
+        public PokemonType Type1 { get; private set; }
+        public PokemonType Type2 { get; private set; }
+        
+        public string Types
+        {
+            get
+            {
+                if (Type2 == PokemonType.None)
+                    return Type1.ToString();
+                else
+                    return Type1.ToString() + "/" + Type2.ToString();
+            }
+        }
 
         private string _status;
         public string Status {
@@ -86,6 +99,9 @@ namespace PROProtocol
             Stats = new PokemonStats(data, 23, MaxHealth);
             IV = new PokemonStats(data, 30);
             EV = new PokemonStats(data, 41);
+
+            Type1 = TypesManager.Instance.Type1[Id];
+            Type2 = TypesManager.Instance.Type2[Id];
         }
 
         public void UpdateHealth(int max, int current)
