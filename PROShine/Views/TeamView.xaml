@@ -32,10 +32,12 @@
                                     <Canvas Canvas.Top="30" Canvas.Left="10" Width="410" Height="260" Background="#232330">
                                         <TextBlock Canvas.Top="5" Canvas.Left="5" Text="Happiness:" FontSize="15" Foreground="White"/>
                                         <TextBlock Canvas.Top="5" Canvas.Left="82" Text="{Binding Happiness}" FontSize="15" Foreground="White"/>
-                                        <TextBlock Canvas.Top="29" Canvas.Left="5" Text="Health:" FontSize="15" Foreground="White"/>
-                                        <TextBlock Canvas.Top="29" Canvas.Left="57" Text="{Binding Health}" FontSize="15" Foreground="White"/>
-                                        <TextBlock Canvas.Top="53" Canvas.Left="5" Text="Status:" FontSize="15" Foreground="White"/>
-                                        <TextBlock Canvas.Top="53" Canvas.Left="54" Text="{Binding Status}" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="28" Canvas.Left="5" Text="Health:" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="28" Canvas.Left="57" Text="{Binding Health}" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="51" Canvas.Left="5" Text="Status:" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="51" Canvas.Left="54" Text="{Binding Status}" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="74" Canvas.Left="5" Text="Type:" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="74" Canvas.Left="45" Text="{Binding Types}" FontSize="15" Foreground="White"/>
 
                                         <!-- Exp -->
                                         <Canvas Canvas.Top="101" Canvas.Left="5" Width="134" Height="22" Background="#0D0D0D">
