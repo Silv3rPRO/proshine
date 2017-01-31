@@ -175,7 +175,7 @@
             <Button
                 Width="96"
                 Height="26"
-                Content=" Show Options "
+                Content="Show Options"
                 Name="OptionsButton"
                 Visibility="Collapsed"
                 Click="Options_Click"
