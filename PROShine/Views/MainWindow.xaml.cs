@@ -14,6 +14,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using System.Windows.Input;
+using System.Collections.ObjectModel;
+using PROBot.Modules;
 
 namespace PROShine
 {
@@ -44,7 +47,8 @@ namespace PROShine
 
         private int _queuePosition;
 
-        private CheckBox[] _options = new CheckBox[5];
+        private ObservableCollection<OptionSlider> _sliderOptions;
+        private ObservableCollection<TextOption> _textOptions;
 
         public MainWindow()
         {
@@ -63,14 +67,9 @@ namespace PROShine
             Bot.ConnectionOpened += Bot_ConnectionOpened;
             Bot.ConnectionClosed += Bot_ConnectionClosed;
             Bot.MessageLogged += Bot_LogMessage;
-
-            foreach (var slider in Bot.Options)
-            {
-                slider.EnabledStateChanged += Bot_OptionStateChanged;
-                slider.NameChanged += Bot_OptionNameChanged;
-                slider.DescriptionChanged += Bot_OptionDescriptionChanged;
-            }
-
+            Bot.SliderCreated += Bot_SliderCreated;
+            Bot.TextboxCreated += Bot_TextboxCreated;
+            
             InitializeComponent();
             AutoReconnectSwitch.IsChecked = Bot.AutoReconnector.IsEnabled;
             AvoidStaffSwitch.IsChecked = Bot.StaffAvoider.IsEnabled;
@@ -101,14 +100,52 @@ namespace PROShine
 
             Task.Run(() => UpdateClients());
 
-            _options[0] = ScriptOption1;
-            _options[1] = ScriptOption2;
-            _options[2] = ScriptOption3;
-            _options[3] = ScriptOption4;
-            _options[4] = ScriptOption5;
+            OptionSliders.ItemsSource = _sliderOptions = new ObservableCollection<OptionSlider>();
+            TextOptions.ItemsSource = _textOptions = new ObservableCollection<TextOption>();
+        }
 
-            foreach (var option in _options)
-                option.Visibility = Visibility.Collapsed;
+        private void Options_Click(object sender, RoutedEventArgs e)
+        {
+            if (OptionSliders.Visibility == Visibility.Collapsed)
+            {
+                OptionSliders.Visibility = Visibility.Visible;
+                TextOptions.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                OptionSliders.Visibility = Visibility.Collapsed;
+                TextOptions.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            // On pressing enter, take focus from the textbox and give it to the selected button in _views
+            // This is necessary to update the content of the TextOption
+            if (e.Key == Key.Enter || e.Key == Key.Return)
+                foreach (TabView view in _views)
+                    if (view.Button.IsChecked.Value)
+                        Keyboard.Focus(view.Button);
+        }
+
+        public void Bot_TextboxCreated(TextOption option)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                OptionsButton.Visibility = Visibility.Visible;
+                _textOptions.Add(option);
+                TextOptions.Items.Refresh();
+            });
+        }
+
+        public void Bot_SliderCreated(OptionSlider option)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                OptionsButton.Visibility = Visibility.Visible;
+                _sliderOptions.Add(option);
+                OptionSliders.Items.Refresh();
+            });
         }
 
         private void AddView(UserControl view, ContentControl content, ToggleButton button, bool visible = false)
@@ -268,16 +305,15 @@ namespace PROShine
                 {
                     lock (Bot)
                     {
-                        foreach (var slider in Bot.Options)
-                            slider.Reset();
-
-                        for (int i = 0; i < _options.Length; i++)
-                        {
-                            _options[i].Visibility = Visibility.Collapsed;
-                            _options[i].IsChecked = false;
-                            _options[i].Content = Bot.Options[i].Name;
-                            _options[i].ToolTip = Bot.Options[i].Description;
-                        }
+                        Bot.SliderOptions.Clear();
+                        Bot.TextOptions.Clear();
+                        _sliderOptions.Clear();
+                        _textOptions.Clear();
+                        OptionSliders.Items.Refresh();
+                        TextOptions.Items.Refresh();
+                        OptionsButton.Visibility = Visibility.Collapsed;
+                        OptionSliders.Visibility = Visibility.Collapsed;
+                        TextOptions.Visibility = Visibility.Collapsed;
                         
                         Bot.LoadScript(openDialog.FileName);
                         MenuPathScript.Header = "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine + openDialog.FileName;
