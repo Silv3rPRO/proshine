@@ -172,33 +172,49 @@
                     <TextBlock>Reconnect after a few minutes and start the last script.</TextBlock>
                 </CheckBox.ToolTip>
             </CheckBox>
-            <WrapPanel>
-                <CheckBox x:Name="ScriptOption1" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1" Content="Option 1: " Checked="Option_Checked" Unchecked="Option_Unchecked">
-                    <CheckBox.ToolTip>
-                        <TextBlock><Run Text="Custom option 1 for use in scripts"/></TextBlock>
-                    </CheckBox.ToolTip>
-                </CheckBox>
-                <CheckBox x:Name="ScriptOption2" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1" Content="Option 2: " Checked="Option_Checked" Unchecked="Option_Unchecked">
-                    <CheckBox.ToolTip>
-                        <TextBlock><Run Text="Custom option 2 for use in scripts"/></TextBlock>
-                    </CheckBox.ToolTip>
-                </CheckBox>
-                <CheckBox x:Name="ScriptOption3" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1" Content="Option 3: " Checked="Option_Checked" Unchecked="Option_Unchecked">
-                    <CheckBox.ToolTip>
-                        <TextBlock><Run Text="Custom option 3 for use in scripts"/></TextBlock>
-                    </CheckBox.ToolTip>
-                </CheckBox>
-                <CheckBox x:Name="ScriptOption4" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1" Content="Option 4: " Checked="Option_Checked" Unchecked="Option_Unchecked">
-                    <CheckBox.ToolTip>
-                        <TextBlock><Run Text="Custom option 4 for use in scripts"/></TextBlock>
-                    </CheckBox.ToolTip>
-                </CheckBox>
-                <CheckBox x:Name="ScriptOption5" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1" Content="Option 5: " Checked="Option_Checked" Unchecked="Option_Unchecked">
-                    <CheckBox.ToolTip>
-                        <TextBlock><Run Text="Custom option 5 for use in scripts"/></TextBlock>
-                    </CheckBox.ToolTip>
-                </CheckBox>
-            </WrapPanel>
+            <Button
+                Width="61"
+                Height="26"
+                Content=" Options "
+                Name="OptionsButton"
+                Visibility="Collapsed"
+                Click="Options_Click"
+                Margin="2,1,2,1"/>
+            <ItemsControl Name="OptionSliders" Visibility="Collapsed">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox HorizontalAlignment="Left" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1" Content="{Binding Name}" IsChecked="{Binding IsEnabled}">
+                            <CheckBox.ToolTip>
+                                <TextBlock Text="{Binding Description}"/>
+                            </CheckBox.ToolTip>
+                        </CheckBox>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <ItemsControl Name="TextOptions" Visibility="Collapsed">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ToolTip="{Binding Description}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="{Binding Name}"/>
+                            <TextBox Grid.Column="1" Text="{Binding Content}" KeyDown="TextBox_KeyDown" MinWidth="50"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </WrapPanel>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
