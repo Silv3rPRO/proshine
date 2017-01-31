@@ -532,33 +532,6 @@ namespace PROShine
             });
         }
 
-        private void Bot_OptionStateChanged(bool value, int index)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                _options[index - 1].Visibility = Visibility.Visible;
-                _options[index - 1].IsChecked = value;
-            });
-        }
-
-        private void Bot_OptionNameChanged(string value, int index)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                _options[index - 1].Visibility = Visibility.Visible;
-                _options[index - 1].Content = value;
-            });
-        }
-
-        private void Bot_OptionDescriptionChanged(string value, int index)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                _options[index - 1].Visibility = Visibility.Visible;
-                _options[index - 1].ToolTip = value;
-            });
-        }
-
         private void Bot_ClientChanged()
         {
             lock (Bot)
@@ -896,26 +869,6 @@ namespace PROShine
             lock (Bot)
             {
                 Bot.AutoReconnector.IsEnabled = false;
-            }
-        }
-
-        private void Option_Checked(object sender, RoutedEventArgs e)
-        {
-            lock(Bot)
-            {
-                for (int i = 0; i < _options.Length; i++)
-                    if (_options[i] == sender)
-                        Bot.Options[i].IsEnabled = true;
-            }
-        }
-
-        private void Option_Unchecked(object sender, RoutedEventArgs e)
-        {
-            lock (Bot)
-            {
-                for (int i = 0; i < _options.Length; i++)
-                    if (_options[i] == sender)
-                        Bot.Options[i].IsEnabled = false;
             }
         }
 
