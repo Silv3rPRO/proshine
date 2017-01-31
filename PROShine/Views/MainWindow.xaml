@@ -173,13 +173,13 @@
                 </CheckBox.ToolTip>
             </CheckBox>
             <Button
-                Width="61"
+                Width="96"
                 Height="26"
-                Content=" Options "
+                Content=" Show Options "
                 Name="OptionsButton"
                 Visibility="Collapsed"
                 Click="Options_Click"
-                Margin="2,1,2,1"/>
+                Margin="10,1,2,1"/>
             <ItemsControl Name="OptionSliders" Visibility="Collapsed">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
