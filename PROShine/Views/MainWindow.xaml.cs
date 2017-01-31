@@ -108,11 +108,13 @@ namespace PROShine
         {
             if (OptionSliders.Visibility == Visibility.Collapsed)
             {
+                OptionsButton.Content = " Hide Options ";
                 OptionSliders.Visibility = Visibility.Visible;
                 TextOptions.Visibility = Visibility.Visible;
             }
             else
             {
+                OptionsButton.Content = " Show Options ";
                 OptionSliders.Visibility = Visibility.Collapsed;
                 TextOptions.Visibility = Visibility.Collapsed;
             }
