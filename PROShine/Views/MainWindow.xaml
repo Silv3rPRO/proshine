@@ -210,7 +210,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0" Content="{Binding Name}"/>
-                            <TextBox Grid.Column="1" Text="{Binding Content}" KeyDown="TextBox_KeyDown" MinWidth="50"/>
+                            <TextBox Grid.Column="1" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" KeyDown="TextBox_KeyDown" MinWidth="50"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
