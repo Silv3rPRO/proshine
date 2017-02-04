@@ -2563,38 +2563,51 @@ namespace PROBot.Scripting
                 default:
                     return "Unknown";
             }
-		}
-
+	}
+	
+	// API: Sets the Option Slider at index option, or creates it if it doesn't exist
         private void SetOption(int option, bool value)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.Options.ContainsKey(option))
+            {
+                Bot.CreateSlider(option, value);
                 return;
+            }
 
-            Bot.Options[option - 1].IsEnabled = value;
+            Bot.Options[option].IsEnabled = value;
         }
 
+	// API: Returns the state of the Option Slider at index option, or false if it doesn't exist
         private bool GetOption(int option)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.Options.ContainsKey(option))
                 return false;
 
-            return Bot.Options[option - 1].IsEnabled;
+            return Bot.Options[option].IsEnabled;
         }
 
+	// API: Sets the Option Slider's name at index option, or creates it if it doesn't exist
         private void SetOptionName(int option, string content)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.Options.ContainsKey(option))
+            {
+                Bot.CreateSlider(option, content + ": ", true);
                 return;
+            }
 
-            Bot.Options[option - 1].Name = content + ": ";
+            Bot.Options[option].Name = content + ": ";
         }
 
+	// API: Sets the Option Slider's tooltip at index option, or creates it if it doesn't exist
         private void SetOptionDescription(int option, string content)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.Options.ContainsKey(option))
+            {
+                Bot.CreateSlider(option, content, false);
                 return;
+            }
 
-            Bot.Options[option - 1].Description = content;
+            Bot.Options[option].Description = content;
         }
     }
 }
