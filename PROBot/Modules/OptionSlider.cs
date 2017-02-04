@@ -1,22 +1,13 @@
-﻿using System;
+using System;
 
 namespace PROBot.Modules
 {
     public class OptionSlider
     {
-        public event Action<bool, int> EnabledStateChanged;
-        public event Action<string, int> NameChanged, DescriptionChanged;
+        public event Action StateChanged;
 
         private bool _isEnabled = false;
         private string _name, _description;
-        private int _index;
-        
-        public void Reset()
-        {
-            _isEnabled = false;
-            _name = "Option " + _index + ": ";
-            _description = "Custom option " + _index + " for use in scripts";
-        }
 
         public bool IsEnabled
         {
@@ -26,7 +17,7 @@ namespace PROBot.Modules
                 if (_isEnabled != value)
                 {
                     _isEnabled = value;
-                    EnabledStateChanged?.Invoke(value, _index);
+                    StateChanged?.Invoke();
                 }
             }
         }
@@ -39,7 +30,7 @@ namespace PROBot.Modules
                 if (_name != value)
                 {
                     _name = value;
-                    NameChanged?.Invoke(value, _index);
+                    StateChanged?.Invoke();
                 }
             }
         }
@@ -52,16 +43,15 @@ namespace PROBot.Modules
                 if (_description != value)
                 {
                     _description = value;
-                    DescriptionChanged?.Invoke(value, _index);
+                    StateChanged?.Invoke();
                 }
             }
         }
 
-        public OptionSlider (string name, string description, int index)
+        public OptionSlider(string name, string description)
         {
             _name = name;
             _description = description;
-            _index = index;
         }
     }
 }

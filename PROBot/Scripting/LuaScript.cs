@@ -2549,52 +2549,55 @@ namespace PROBot.Scripting
             return File.ReadAllLines(file);
         }
         
-        // API: Returns the connected server
+        // API: Returns the connected server, or "None" if not logged in
         private string GetServer()
         {
-            switch(Bot.Game.Server)
-            {
-                case (GameServer.Blue):
-                    return "Blue";
-                case (GameServer.Red):
-                    return "Red";
-                case (GameServer.Yellow):
-                    return "Yellow";
-                default:
-                    return "Unknown";
-            }
-		}
-
-        private void SetOption(int option, bool value)
+            return Bot.Game != null ? Bot.Game.Server.ToString() : "None";
+	}
+	
+	// API: Sets the Option Slider at a particular index, or creates it if it doesn't exist
+        private void SetOption(int index, bool value)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.SliderOptions.ContainsKey(index))
+            {
+                Bot.CreateSlider(index, value);
                 return;
+            }
 
-            Bot.Options[option - 1].IsEnabled = value;
+            Bot.SliderOptions[index].IsEnabled = value;
         }
 
-        private bool GetOption(int option)
+	// API: Returns the state of the Option Slider at a particular index, or false if it doesn't exist
+        private bool GetOption(int index)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.SliderOptions.ContainsKey(index))
                 return false;
 
-            return Bot.Options[option - 1].IsEnabled;
+            return Bot.SliderOptions[index].IsEnabled;
         }
 
-        private void SetOptionName(int option, string content)
+	// API: Sets the Option Slider's name at a particular index, or creates it if it doesn't exist
+        private void SetOptionName(int index, string content)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.SliderOptions.ContainsKey(index))
+            {
+                Bot.CreateSlider(index, content + ": ", true);
                 return;
+            }
 
-            Bot.Options[option - 1].Name = content + ": ";
+            Bot.SliderOptions[index].Name = content + ": ";
         }
 
-        private void SetOptionDescription(int option, string content)
+	// API: Sets the Option Slider's tooltip at a particular index, or creates it if it doesn't exist
+        private void SetOptionDescription(int index, string content)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.SliderOptions.ContainsKey(index))
+            {
+                Bot.CreateSlider(index, content, false);
                 return;
+            }
 
-            Bot.Options[option - 1].Description = content;
+            Bot.SliderOptions[index].Description = content;
         }
     }
 }
