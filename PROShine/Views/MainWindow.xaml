@@ -199,6 +199,25 @@
                     </CheckBox.ToolTip>
                 </CheckBox>
             </WrapPanel>
+            <ItemsControl Name="TextOptions">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ToolTip="{Binding Description}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="{Binding Name}"/>
+                            <TextBox Grid.Column="1" Text="{Binding Content}" KeyDown="TextBox_KeyDown"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </WrapPanel>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
