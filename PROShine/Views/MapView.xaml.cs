@@ -98,36 +98,36 @@ namespace PROShine.Views
 
                 StringBuilder logBuilder = new StringBuilder();
 
-                logBuilder.AppendLine(string.Format("Clicked Cell: ({0},{1})", x, y));
+                logBuilder.AppendLine(string.Format("Cell: ({0},{1})", x, y));
                 if (_bot.Game.Map.HasLink(x, y))
                 {
-                    logBuilder.AppendLine("Link:");
-                    logBuilder.Append("    destination map: " + _bot.Game.Map.Links[x, y].DestinationMap);
+                    logBuilder.AppendLine("Link: " + _bot.Game.Map.Links[x, y].DestinationMap);
                 }
 
                 PlayerInfos[] playersOnCell = _bot.Game.Players.Values.Where(player => player.PosX == x && player.PosY == y).ToArray();
                 if (playersOnCell.Length > 0)
                 {
-                    logBuilder.AppendLine(string.Format("{0} player(s):", playersOnCell.Length));
+                    logBuilder.AppendLine(string.Format("{0} player{1}:", playersOnCell.Length, playersOnCell.Length != 1 ? "s" : ""));
                     foreach (PlayerInfos player in playersOnCell)
                     {
-                        logBuilder.AppendLine("    " + player.Name);
-                        logBuilder.AppendLine("        in Battle: " + player.IsInBattle.ToString());
-                        logBuilder.AppendLine("        membership: " + player.IsMember.ToString());
-                        logBuilder.AppendLine("        afk: " + player.IsAfk.ToString());
+                        logBuilder.Append("  " + player.Name);
+                        if (player.IsInBattle) logBuilder.Append(" [in battle]");
+                        if (player.IsMember) logBuilder.Append(" [member]");
+                        if (player.IsAfk) logBuilder.Append(" [afk]");
+                        logBuilder.AppendLine();
                     }
                 }
 
                 Npc[] npcsOnCell = _bot.Game.Map.Npcs.Where(npc => npc.PositionX == x && npc.PositionY == y).ToArray();
                 if (npcsOnCell.Length > 0)
                 {
-                    logBuilder.AppendLine(string.Format("{0} npc(s):", npcsOnCell.Length));
+                    logBuilder.AppendLine(string.Format("{0} npc{1}:", npcsOnCell.Length, npcsOnCell.Length != 1 ? "s" : ""));
                     foreach (Npc npc in npcsOnCell)
                     {
-                        logBuilder.AppendLine("    ID: " + npc.Id);
-                        logBuilder.AppendLine("        name: " + (npc.Name == "" ? "[unnamed]" : npc.Name));
-                        logBuilder.AppendLine("        type: " + npc.TypeDescription);
-                        logBuilder.AppendLine("        battler: " + npc.IsBattler.ToString());
+                        logBuilder.AppendLine("  ID: " + npc.Id);
+                        if (npc.Name != string.Empty) logBuilder.AppendLine("    name: " + npc.Name);
+                        logBuilder.AppendLine("    type: " + npc.TypeDescription);
+                        logBuilder.AppendLine("    battler: " + npc.IsBattler.ToString());
                     }
                 }
 
