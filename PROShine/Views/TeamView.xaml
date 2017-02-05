@@ -14,6 +14,118 @@
                         Drop="List_Drop" 
                         DragEnter="List_DragEnter" 
                         AllowDrop="True" >
+                <ListView.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="ToolTipService.ShowDuration" Value="60000"/>
+                        <Setter Property="Control.ToolTip">
+                            <Setter.Value>
+                                <Canvas Height="300" Width="430" Background="#403F45">
+                                    <!-- Header -->
+                                    <TextBlock Canvas.Top="5" Canvas.Left="10" Text="{Binding Name}" FontSize="18" FontWeight="ExtraBold" Foreground="White"/>
+                                    <TextBlock Canvas.Top="8" Canvas.Left="184" Text="{Binding Gender}" FontSize="15" Foreground="White"/>
+                                    <TextBlock Canvas.Top="8" Canvas.Left="237" Text="Level:" FontSize="15" Foreground="White"/>
+                                    <TextBlock Canvas.Top="8" Canvas.Left="279" Text="{Binding Experience.CurrentLevel}" FontSize="15" Foreground="White"/>
+                                    <TextBlock Canvas.Top="8" Canvas.Left="324" Text="Id:" FontSize="15" Foreground="White"/>
+                                    <TextBlock Canvas.Top="8" Canvas.Left="345" Text="{Binding Id}" FontSize="15" Foreground="White"/>
+
+                                    <!-- Main -->
+                                    <Canvas Canvas.Top="30" Canvas.Left="10" Width="410" Height="260" Background="#232330">
+                                        <TextBlock Canvas.Top="5" Canvas.Left="5" Text="Happiness:" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="5" Canvas.Left="82" Text="{Binding Happiness}" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="28" Canvas.Left="5" Text="Health:" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="28" Canvas.Left="57" Text="{Binding Health}" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="51" Canvas.Left="5" Text="Status:" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="51" Canvas.Left="54" Text="{Binding Status}" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="74" Canvas.Left="5" Text="Type:" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="74" Canvas.Left="45" Text="{Binding Types}" FontSize="15" Foreground="White"/>
+
+                                        <!-- Exp -->
+                                        <Canvas Canvas.Top="101" Canvas.Left="5" Width="134" Height="22" Background="#0D0D0D">
+                                            <TextBlock Text="Exp" Canvas.Left="3" FontSize="15" FontWeight="ExtraBold" Foreground="White"/>
+                                        </Canvas>
+                                        <TextBlock Canvas.Top="124" Canvas.Left="5" Text="Till Next:" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="124" Canvas.Right="280" Text="{Binding Experience.RemainingExperience}" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="124" Canvas.Left="131" Text="XP" FontSize="15" Foreground="#63CBD6"/>
+
+                                        <!-- Moves -->
+                                        <Canvas Canvas.Top="150" Canvas.Left="5" Width="134" Height="22" Background="#0D0D0D">
+                                            <TextBlock Text="Moves" Canvas.Left="3" FontSize="15" FontWeight="ExtraBold" Foreground="White"/>
+                                        </Canvas>
+                                        <Canvas Canvas.Top="172" Canvas.Left="5" Width="258" Height="82" Background="#171717">
+                                            <TextBlock Text="{Binding Moves[0].Name}" Canvas.Left="3" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="{Binding Moves[1].Name}" Canvas.Top="20" Canvas.Left="3" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="{Binding Moves[2].Name}" Canvas.Top="40" Canvas.Left="3" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="{Binding Moves[3].Name}" Canvas.Top="60" Canvas.Left="3" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="{Binding Moves[0].PP}" Canvas.Right="5" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="{Binding Moves[1].PP}" Canvas.Top="20" Canvas.Right="5" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="{Binding Moves[2].PP}" Canvas.Top="40" Canvas.Right="5" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="{Binding Moves[3].PP}" Canvas.Top="60" Canvas.Right="5" FontSize="15" Foreground="White"/>
+                                        </Canvas>
+
+                                        <Canvas Canvas.Top="5" Canvas.Left="153" Width="110" Height="22" Background="#0D0D0D">
+                                            <TextBlock Text="Ability" Canvas.Left="3" FontSize="15" FontWeight="ExtraBold" Foreground="White"/>
+                                        </Canvas>
+                                        <TextBlock Canvas.Top="27" Canvas.Left="153" Text="{Binding Ability.Name}" FontSize="15" Foreground="White"/>
+
+                                        <Canvas Canvas.Top="66" Canvas.Left="153" Width="110" Height="22" Background="#0D0D0D">
+                                            <TextBlock Text="Nature" Canvas.Left="3" FontSize="15" FontWeight="ExtraBold" Foreground="White"/>
+                                        </Canvas>
+                                        <TextBlock Canvas.Top="88" Canvas.Left="153" Text="{Binding Nature.Name}" FontSize="15" Foreground="White"/>
+
+                                        <Canvas Canvas.Top="128" Canvas.Left="153" Width="110" Height="22" Background="#0D0D0D">
+                                            <TextBlock Text="OT" Canvas.Left="3" FontSize="15" FontWeight="ExtraBold" Foreground="White"/>
+                                        </Canvas>
+                                        <TextBlock Canvas.Top="150" Canvas.Left="153" Text="{Binding OriginalTrainer}" FontSize="15" Foreground="White"/>
+
+                                        <TextBlock Canvas.Top="5" Canvas.Left="275" Text="Item:" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="5" Canvas.Left="313" Text="{Binding ItemHeld}" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="27" Canvas.Left="275" Text="Is Shiny:" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="27" Canvas.Left="334" Text="{Binding IsShiny}" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="49" Canvas.Left="275" Text="Form:" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="49" Canvas.Left="318" Text="{Binding Form}" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="71" Canvas.Left="275" Text="Region:" FontSize="15" Foreground="White"/>
+                                        <TextBlock Canvas.Top="71" Canvas.Left="331" Text="{Binding Region}" FontSize="15" Foreground="White"/>
+
+                                        <!-- Stats -->
+                                        <TextBlock Text="Stat:" Canvas.Left="322" FontSize="15" Foreground="White" Canvas.Top="108"/>
+                                        <TextBlock Text="IV:" Canvas.Left="356" FontSize="15" Foreground="#D48600" Canvas.Top="108"/>
+                                        <TextBlock Text="EV:" Canvas.Left="379" FontSize="15" Foreground="#00D4D4" Canvas.Top="108"/>
+
+                                        <Canvas Canvas.Top="128" Canvas.Left="269" Width="135" Height="126" Background="#171717">
+                                            <TextBlock Text="ATK:" Canvas.Left="3" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="DEF:" Canvas.Top="21" Canvas.Left="3" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="SPD:" Canvas.Top="41" Canvas.Left="3" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="SPATK:" Canvas.Top="61" Canvas.Left="3" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="SPDEF:" Canvas.Top="81" Canvas.Left="3" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="HP:" Canvas.Top="101" Canvas.Left="3" FontSize="15" Foreground="White"/>
+
+                                            <TextBlock Text="{Binding Stats.Attack}" Canvas.Right="52" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="{Binding Stats.Defence}" Canvas.Top="21" Canvas.Right="52" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="{Binding Stats.Speed}" Canvas.Top="41" Canvas.Right="52" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="{Binding Stats.SpAttack}" Canvas.Top="61" Canvas.Right="52" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="{Binding Stats.SpDefence}" Canvas.Top="81" Canvas.Right="52" FontSize="15" Foreground="White"/>
+                                            <TextBlock Text="{Binding Stats.Health}" Canvas.Top="101" Canvas.Right="52" FontSize="15" Foreground="White"/>
+
+                                            <TextBlock Text="{Binding IV.Attack}" Canvas.Right="33" FontSize="15" Foreground="#D48600"/>
+                                            <TextBlock Text="{Binding IV.Defence}" Canvas.Top="21" Canvas.Right="33" FontSize="15" Foreground="#D48600"/>
+                                            <TextBlock Text="{Binding IV.Speed}" Canvas.Top="41" Canvas.Right="33" FontSize="15" Foreground="#D48600"/>
+                                            <TextBlock Text="{Binding IV.SpAttack}" Canvas.Top="61" Canvas.Right="33" FontSize="15" Foreground="#D48600"/>
+                                            <TextBlock Text="{Binding IV.SpDefence}" Canvas.Top="81" Canvas.Right="33" FontSize="15" Foreground="#D48600"/>
+                                            <TextBlock Text="{Binding IV.Health}" Canvas.Top="101" Canvas.Right="33" FontSize="15" Foreground="#D48600"/>
+
+                                            <TextBlock Text="{Binding EV.Attack}" Canvas.Right="6" FontSize="15" Foreground="#00D4D4"/>
+                                            <TextBlock Text="{Binding EV.Defence}" Canvas.Top="21" Canvas.Right="6" FontSize="15" Foreground="#00D4D4"/>
+                                            <TextBlock Text="{Binding EV.Speed}" Canvas.Top="41" Canvas.Right="6" FontSize="15" Foreground="#00D4D4"/>
+                                            <TextBlock Text="{Binding EV.SpAttack}" Canvas.Top="61" Canvas.Right="6" FontSize="15" Foreground="#00D4D4"/>
+                                            <TextBlock Text="{Binding EV.SpDefence}" Canvas.Top="81" Canvas.Right="6" FontSize="15" Foreground="#00D4D4"/>
+                                            <TextBlock Text="{Binding EV.Health}" Canvas.Top="101" Canvas.Right="6" FontSize="15" Foreground="#00D4D4"/>
+                                        </Canvas>
+                                    </Canvas>
+                                </Canvas>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>

@@ -126,6 +126,7 @@ namespace PROShine.Views
                     log += "        battler: " + npc.IsBattler.ToString() + "\r\n";
                 }
             }
+
             if (log.EndsWith("\r\n"))
                 log = log.Remove(log.LastIndexOf("\r\n"));
             tipText.Text = log;

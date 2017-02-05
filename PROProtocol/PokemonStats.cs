@@ -5,12 +5,12 @@ namespace PROProtocol
 {
     public class PokemonStats
     {
-        public int Health;
-        public int Attack;
-        public int Defence;
-        public int SpAttack;
-        public int SpDefence;
-        public int Speed;
+        public int Health { get; set; }
+        public int Attack { get; set; }
+        public int Defence { get; set; }
+        public int SpAttack { get; set; }
+        public int SpDefence { get; set; }
+        public int Speed { get; set; }
 
         public PokemonStats()
         {
