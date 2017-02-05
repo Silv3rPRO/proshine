@@ -8,8 +8,8 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Canvas Name="MapCanvas" ClipToBounds="True" MouseMove="MapCanvas_MouseMove" MouseEnter="MapCanvas_MouseEnter" MouseLeave="MapCanvas_MouseLeave">
-            <Popup Name="floatingTip" Placement="Relative" PlacementTarget="{Binding ElementName=MapCanvas}" IsOpen="True">
-                <TextBlock Name="tipText" Background="Gray"></TextBlock>
+            <Popup Name="FloatingTip" Placement="Relative" PlacementTarget="{Binding ElementName=MapCanvas}" IsOpen="True">
+                <TextBlock Name="TipText" Background="Gray"></TextBlock>
             </Popup>
         </Canvas>
     </Grid>

@@ -1,4 +1,4 @@
-using PROBot;
+﻿using PROBot;
 using PROProtocol;
 using System;
 using System.Collections.Generic;
@@ -57,12 +57,12 @@ namespace PROShine.Views
         private void MapCanvas_MouseEnter(object sender, MouseEventArgs e)
         {
             if (_bot.Game != null)
-                floatingTip.IsOpen = true;
+                FloatingTip.IsOpen = true;
         }
 
         private void MapCanvas_MouseLeave(object sender, MouseEventArgs e)
         {
-            floatingTip.IsOpen = false;
+            FloatingTip.IsOpen = false;
         }
 
         private void MapCanvas_MouseMove(object sender, MouseEventArgs e)
@@ -74,14 +74,14 @@ namespace PROShine.Views
                 double deltaY = drawingOffset.Item2;
                 int ingameX = (int)((e.GetPosition(this).X / _cellWidth - deltaX));
                 int ingameY = (int)((e.GetPosition(this).Y / _cellWidth) - deltaY);
-
-                if (this._lastDisplayedCell.X != ingameX || this._lastDisplayedCell.Y != ingameY)
+                
+                if (_lastDisplayedCell.X != ingameX || _lastDisplayedCell.Y != ingameY)
                     LogCellInfo(ingameX, ingameY);
 
                 Point currentPos = e.GetPosition(MapCanvas);
 
-                floatingTip.HorizontalOffset = currentPos.X + 20;
-                floatingTip.VerticalOffset = currentPos.Y;
+                FloatingTip.HorizontalOffset = currentPos.X + 20;
+                FloatingTip.VerticalOffset = currentPos.Y;
             }
         }   
 
@@ -132,7 +132,7 @@ namespace PROShine.Views
                 }
 
                 logBuilder.Length -= 2; //remove trailing NewLine
-                tipText.Text = logBuilder.ToString();
+                TipText.Text = logBuilder.ToString();
             }
         }
 
