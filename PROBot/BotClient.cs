@@ -31,13 +31,16 @@ namespace PROBot
         public event Action ClientChanged;
         public event Action ConnectionOpened;
         public event Action ConnectionClosed;
+        public event Action<OptionSlider> SliderCreated;
+        public event Action<TextOption> TextboxCreated;
 
         public PokemonEvolver PokemonEvolver { get; private set; }
         public MoveTeacher MoveTeacher { get; private set; }
         public StaffAvoider StaffAvoider { get; private set; }
         public AutoReconnector AutoReconnector { get; private set; }
         public MovementResynchronizer MovementResynchronizer { get; private set; }
-        public OptionSlider[] Options { get; private set; }
+        public Dictionary<int, OptionSlider> SliderOptions { get; set; }
+        public Dictionary<int, TextOption> TextOptions { get; set; }
         
         private bool _loginRequested;
 
@@ -52,12 +55,41 @@ namespace PROBot
             AutoReconnector = new AutoReconnector(this);
             MovementResynchronizer = new MovementResynchronizer(this);
             Rand = new Random();
-            Options = new OptionSlider[] { new OptionSlider("Option 1: ", "Custom option 1 for use in scripts", 1),
-                                           new OptionSlider("Option 2: ", "Custom option 2 for use in scripts", 2),
-                                           new OptionSlider("Option 3: ", "Custom option 3 for use in scripts", 3),
-                                           new OptionSlider("Option 4: ", "Custom option 4 for use in scripts", 4),
-                                           new OptionSlider("Option 5: ", "Custom option 5 for use in scripts", 5)
-            };
+            SliderOptions = new Dictionary<int, OptionSlider>();
+            TextOptions = new Dictionary<int, TextOption>();
+        }
+
+        public void CreateText(int index, string content)
+        {
+            TextOptions[index] = new TextOption("Text " + index + ": ", "Custom text option " + index + " for use in scripts.", content);
+            TextboxCreated?.Invoke(TextOptions[index]);
+        }
+
+        public void CreateText(int index, string content, bool isName)
+        {
+            if (isName)
+                TextOptions[index] = new TextOption(content, "Custom text option " + index + " for use in scripts.", "");
+            else
+                TextOptions[index] = new TextOption("Text " + index + ": ", content, "");
+
+            TextboxCreated?.Invoke(TextOptions[index]);
+        }
+
+        public void CreateSlider(int index, bool enable)
+        {
+            SliderOptions[index] = new OptionSlider("Option " + index + ": ", "Custom option " + index + " for use in scripts.");
+            SliderOptions[index].IsEnabled = enable;
+            SliderCreated?.Invoke(SliderOptions[index]);
+        }
+
+        public void CreateSlider(int index, string content, bool isName)
+        {
+            if (isName)
+                SliderOptions[index] = new OptionSlider(content, "Custom option " + index + " for use in scripts.");
+            else
+                SliderOptions[index] = new OptionSlider("Option " + index + ": ", content);
+
+            SliderCreated?.Invoke(SliderOptions[index]);
         }
 
         public void LogMessage(string message)

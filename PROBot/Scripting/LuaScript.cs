@@ -307,6 +307,12 @@ namespace PROBot.Scripting
             _lua.Globals["setOptionName"] = new Action<int, string>(SetOptionName);
             _lua.Globals["setOptionDescription"] = new Action<int, string>(SetOptionDescription);
 
+            // Custom text option functions
+            _lua.Globals["setTextOption"] = new Action<int, string>(SetTextOption);
+            _lua.Globals["getTextOption"] = new Func<int, string>(GetTextOption);
+            _lua.Globals["setTextOptionName"] = new Action<int, string>(SetTextOptionName);
+            _lua.Globals["setTextOptionDescription"] = new Action<int, string>(SetTextOptionDescription);
+
             // File editing actions
             _lua.Globals["logToFile"] = new Action<string, DynValue, bool>(LogToFile);
             _lua.Globals["readLinesFromFile"] = new Func<string, string[]>(ReadLinesFromFile);
@@ -2548,53 +2554,101 @@ namespace PROBot.Scripting
             if (!File.Exists(file)) return new string[] { };
             return File.ReadAllLines(file);
         }
-        
+
         // API: Returns the connected server
         private string GetServer()
         {
-            switch(Bot.Game.Server)
-            {
-                case (GameServer.Blue):
-                    return "Blue";
-                case (GameServer.Red):
-                    return "Red";
-                case (GameServer.Yellow):
-                    return "Yellow";
-                default:
-                    return "Unknown";
-            }
-		}
-
-        private void SetOption(int option, bool value)
-        {
-            if (option < 1 || option > Bot.Options.Length)
-                return;
-
-            Bot.Options[option - 1].IsEnabled = value;
+            return Bot.Game != null ? Bot.Game.Server.ToString() : "None";
         }
 
-        private bool GetOption(int option)
+        // API: Sets the option at a particular index, or creates it if it doesn't exist
+        private void SetOption(int index, bool value)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.SliderOptions.ContainsKey(index))
+            {
+                Bot.CreateSlider(index, value);
+                return;
+            }
+
+            Bot.SliderOptions[index].IsEnabled = value;
+        }
+
+        // API: Gets the option at a particular index, or creates it if it doesn't exist
+        private bool GetOption(int index)
+        {
+            if (!Bot.SliderOptions.ContainsKey(index))
                 return false;
 
-            return Bot.Options[option - 1].IsEnabled;
+            return Bot.SliderOptions[index].IsEnabled;
         }
 
-        private void SetOptionName(int option, string content)
+        // API: Sets the name of the option at a particular index, or creates it if it doesn't exist
+        private void SetOptionName(int index, string content)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.SliderOptions.ContainsKey(index))
+            {
+                Bot.CreateSlider(index, content + ": ", true);
                 return;
+            }
 
-            Bot.Options[option - 1].Name = content + ": ";
+            Bot.SliderOptions[index].Name = content + ": ";
         }
 
-        private void SetOptionDescription(int option, string content)
+        // API: Sets the tooltip description of the option at a particular index, or creates it if it doesn't exist
+        private void SetOptionDescription(int index, string content)
         {
-            if (option < 1 || option > Bot.Options.Length)
+            if (!Bot.SliderOptions.ContainsKey(index))
+            {
+                Bot.CreateSlider(index, content, false);
                 return;
+            }
 
-            Bot.Options[option - 1].Description = content;
+            Bot.SliderOptions[index].Description = content;
+        }
+
+        // API: Sets the text of the TextOption at a particular index, or creates it if it doesn't exist
+        private void SetTextOption(int index, string content)
+        {
+            if (!Bot.TextOptions.ContainsKey(index))
+            {
+                Bot.CreateText(index, content);
+                return;
+            }
+
+            Bot.TextOptions[index].Content = content;
+        }
+
+        // API: Returns the text content of the TextOption at a particular index, or an empty string if it doesn't exist
+        private string GetTextOption(int index)
+        {
+            if (!Bot.TextOptions.ContainsKey(index))
+                return "";
+
+            return Bot.TextOptions[index].Content;
+        }
+
+        // API: Sets the name of the TextOption at a particular index, or creates it if it doesn't exist
+        private void SetTextOptionName(int index, string content)
+        {
+            if (!Bot.TextOptions.ContainsKey(index))
+            {
+                Bot.CreateText(index, content + ": ", true);
+                return;
+            }
+
+            Bot.TextOptions[index].Name = content + ": ";
+        }
+
+        // API: Sets the tooltip description of the TextOption at a particular index, or creates it if it doesn't exist
+        private void SetTextOptionDescription(int index, string content)
+        {
+            if (!Bot.TextOptions.ContainsKey(index))
+            {
+                Bot.CreateText(index, content, false);
+                return;
+            }
+
+            Bot.TextOptions[index].Description = content;
         }
     }
 }
