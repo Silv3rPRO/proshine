@@ -67,7 +67,7 @@ namespace PROShine.Views
 
         private void MapCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_bot.Game != null)
+            if (_bot.Game != null && _bot.Game.Map!=null)
             {
                 Tuple<double, double> drawingOffset = GetDrawingOffset();
                 double deltaX = drawingOffset.Item1;
@@ -75,7 +75,7 @@ namespace PROShine.Views
                 int ingameX = (int)((e.GetPosition(this).X / _cellWidth - deltaX));
                 int ingameY = (int)((e.GetPosition(this).Y / _cellWidth) - deltaY);
 
-                if(this._lastDisplayedCell.X!=ingameX || this._lastDisplayedCell.Y != ingameY)
+                if (this._lastDisplayedCell.X != ingameX || this._lastDisplayedCell.Y != ingameY)
                     LogCellInfo(ingameX, ingameY);
 
                 Point currentPos = e.GetPosition(MapCanvas);
@@ -92,45 +92,48 @@ namespace PROShine.Views
 
         private void LogCellInfo(int x, int y)
         {
-            _lastDisplayedCell = new Point(x, y);
-
-            StringBuilder logBuilder = new StringBuilder();
-
-            logBuilder.AppendLine(string.Format("Clicked Cell: ({0},{1})", x, y));
-            if (_bot.Game.Map.HasLink(x, y))
+            lock (_bot)
             {
-                logBuilder.AppendLine("Link:");
-                logBuilder.Append("    destination map: " + _bot.Game.Map.Links[x, y].DestinationMap);
-            }
+                _lastDisplayedCell = new Point(x, y);
 
-            PlayerInfos[] playersOnCell = _bot.Game.Players.Values.Where(player => player.PosX == x && player.PosY == y).ToArray();
-            if (playersOnCell.Length > 0)
-            {
-                logBuilder.AppendLine(string.Format("{0} player(s):", playersOnCell.Length));
-                foreach(PlayerInfos player in playersOnCell)
+                StringBuilder logBuilder = new StringBuilder();
+
+                logBuilder.AppendLine(string.Format("Clicked Cell: ({0},{1})", x, y));
+                if (_bot.Game.Map.HasLink(x, y))
                 {
-                    logBuilder.AppendLine("    " + player.Name);
-                    logBuilder.AppendLine("        in Battle: " + player.IsInBattle.ToString());
-                    logBuilder.AppendLine("        membership: " + player.IsMember.ToString());
-                    logBuilder.AppendLine("        afk: " + player.IsAfk.ToString());
+                    logBuilder.AppendLine("Link:");
+                    logBuilder.Append("    destination map: " + _bot.Game.Map.Links[x, y].DestinationMap);
                 }
-            }
 
-            Npc[] npcsOnCell = _bot.Game.Map.Npcs.Where(npc => npc.PositionX == x && npc.PositionY == y).ToArray();
-            if (npcsOnCell.Length > 0)
-            {
-                logBuilder.AppendLine(string.Format("{0} npc(s):", npcsOnCell.Length));
-                foreach (Npc npc in npcsOnCell)
+                PlayerInfos[] playersOnCell = _bot.Game.Players.Values.Where(player => player.PosX == x && player.PosY == y).ToArray();
+                if (playersOnCell.Length > 0)
                 {
-                    logBuilder.AppendLine("    ID: " + npc.Id);
-                    logBuilder.AppendLine("        name: " + (npc.Name==""?"[unnamed]":npc.Name));
-                    logBuilder.AppendLine("        type: " + npc.TypeDescription);
-                    logBuilder.AppendLine("        battler: " + npc.IsBattler.ToString());
+                    logBuilder.AppendLine(string.Format("{0} player(s):", playersOnCell.Length));
+                    foreach (PlayerInfos player in playersOnCell)
+                    {
+                        logBuilder.AppendLine("    " + player.Name);
+                        logBuilder.AppendLine("        in Battle: " + player.IsInBattle.ToString());
+                        logBuilder.AppendLine("        membership: " + player.IsMember.ToString());
+                        logBuilder.AppendLine("        afk: " + player.IsAfk.ToString());
+                    }
                 }
-            }
 
-            logBuilder.Length -= 2; //remove trailing NewLine
-            tipText.Text = logBuilder.ToString();
+                Npc[] npcsOnCell = _bot.Game.Map.Npcs.Where(npc => npc.PositionX == x && npc.PositionY == y).ToArray();
+                if (npcsOnCell.Length > 0)
+                {
+                    logBuilder.AppendLine(string.Format("{0} npc(s):", npcsOnCell.Length));
+                    foreach (Npc npc in npcsOnCell)
+                    {
+                        logBuilder.AppendLine("    ID: " + npc.Id);
+                        logBuilder.AppendLine("        name: " + (npc.Name == "" ? "[unnamed]" : npc.Name));
+                        logBuilder.AppendLine("        type: " + npc.TypeDescription);
+                        logBuilder.AppendLine("        battler: " + npc.IsBattler.ToString());
+                    }
+                }
+
+                logBuilder.Length -= 2; //remove trailing NewLine
+                tipText.Text = logBuilder.ToString();
+            }
         }
 
         private void MapView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
