@@ -159,6 +159,8 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonRegion"] = new Func<int, string>(GetPokemonRegion);
             _lua.Globals["getPokemonOriginalTrainer"] = new Func<int, string>(GetPokemonOriginalTrainer);
             _lua.Globals["getPokemonGender"] = new Func<int, string>(GetPokemonGender);
+            _lua.Globals["getPokemonType"] = new Func<int, string[]>(GetPokemonType);
+            _lua.Globals["getDamageMultiplier"] = new Func<string, DynValue[], double>(GetDamageMultiplier);
             _lua.Globals["isPokemonUsable"] = new Func<int, bool>(IsPokemonUsable);
             _lua.Globals["getUsablePokemonCount"] = new Func<int>(GetUsablePokemonCount);
             _lua.Globals["hasMove"] = new Func<int, string, bool>(HasMove);
@@ -210,6 +212,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonTotalExperienceFromPC"] = new Func<int, int, int>(GetPokemonTotalExperienceFromPC);
             _lua.Globals["getPokemonRemainingExperienceFromPC"] = new Func<int, int, int>(GetPokemonRemainingExperienceFromPC);
             _lua.Globals["getPokemonStatusFromPC"] = new Func<int, int, string>(GetPokemonStatusFromPC);
+            _lua.Globals["getPokemonTypeFromPC"] = new Func<int, int, string[]>(GetPokemonTypeFromPC);
             _lua.Globals["getPokemonHeldItemFromPC"] = new Func<int, int, string>(GetPokemonHeldItemFromPC);
             _lua.Globals["getPokemonUniqueIdFromPC"] = new Func<int, int, int>(GetPokemonUniqueIdFromPC);
             _lua.Globals["getPokemonRemainingPowerPointsFromPC"] = new Func<int, int, int, int>(GetPokemonRemainingPowerPointsFromPC);
@@ -247,6 +250,7 @@ namespace PROBot.Scripting
             _lua.Globals["getOpponentForm"] = new Func<int>(GetOpponentForm);
             _lua.Globals["isOpponentEffortValue"] = new Func<string, bool>(IsOpponentEffortValue);
             _lua.Globals["getOpponentEffortValue"] = new Func<string, int>(GetOpponentEffortValue);
+            _lua.Globals["getOpponentType"] = new Func<string[]>(GetOpponentType);
 
             // Path actions
             _lua.Globals["moveToCell"] = new Func<int, int, bool>(MoveToCell);
@@ -920,6 +924,81 @@ namespace PROBot.Scripting
             return Bot.Game.Team[index - 1].Gender;
         }
 
+        // API: Returns the type of the specified pokémon in the team as an array of length 2.
+        private string[] GetPokemonType(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonType: tried to retrieve the non-existing pokemon " + index + ".");
+                return null;
+            }
+
+            int id = Bot.Game.Team[index - 1].Id;
+
+            if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
+            {
+                return new string[] { "Unknown", "Unknown" };
+            }
+
+            return new string[] { TypesManager.Instance.Type1[id].ToString(), TypesManager.Instance.Type2[id].ToString() };
+        }
+
+        private string[] _types = { "", "NORMAL", "FIGHTING", "FLYING", "POISON", "GROUND", "ROCK", "BUG", "GHOST", "STEEL", "FIRE", "WATER", "GRASS", "ELECTRIC", "PSYCHIC", "ICE", "DRAGON", "DARK", "FAIRY" };
+
+        // API: Returns the multiplier of the damage type between an attacking type and one or two defending types.
+        private double GetDamageMultiplier(string attacker, params DynValue[] defender)
+        {
+            if (defender[0].Type == DataType.Table)
+            {
+                if (defender[0].Table.Length == 1)
+                {
+                    defender = new DynValue[] { defender[0].Table.Values.ToArray()[0], DynValue.NewString("") };
+                }
+                else
+                {
+                    defender = defender[0].Table.Values.ToArray();
+                }
+            }            
+            else if (defender.Length == 1)
+            {
+                defender = new DynValue[] { defender[0], DynValue.NewString("") };
+            }
+
+            if (attacker.ToUpperInvariant() == "NONE")
+                attacker = "";
+
+            if (defender[0].CastToString().ToUpperInvariant() == "NONE")
+                defender[0] = DynValue.NewString("");
+
+            if (defender[1].CastToString().ToUpperInvariant() == "NONE")
+                defender[1] = DynValue.NewString("");
+
+            if (!Array.Exists(_types, e => e == attacker.ToUpperInvariant()))
+            {
+                Fatal("error: getDamageMultiplier: the damage type '" + attacker + "' does not exist.");
+                return -1;
+            }
+            
+            if (!Array.Exists(_types, e => e == defender[0].CastToString().ToUpperInvariant()))
+            {
+                Fatal("error: getDamageMultiplier: the damage type '" + defender[0].CastToString() + "' does not exist.");
+                return -1;
+            }
+            
+            if (!Array.Exists(_types, e => e == defender[1].CastToString().ToUpperInvariant()))
+            {
+                Fatal("error: getDamageMultiplier: the damage type '" + defender[1].CastToString() + "' does not exist.");
+                return -1;
+            }
+            
+            double power = 1;
+            
+            power *= TypesManager.Instance.GetMultiplier(PokemonTypeExtensions.FromName(attacker), PokemonTypeExtensions.FromName(defender[0].CastToString()));
+            power *= TypesManager.Instance.GetMultiplier(PokemonTypeExtensions.FromName(attacker), PokemonTypeExtensions.FromName(defender[1].CastToString()));
+
+            return power;
+        }
+
         // API: Returns the status of the specified pokémon in the team.
         private string GetPokemonStatus(int index)
         {
@@ -1326,6 +1405,25 @@ namespace PROBot.Scripting
 
             PokemonStats stats = EffortValuesManager.Instance.BattleValues[Bot.Game.ActiveBattle.OpponentId];
             return stats.GetStat(_stats[statType.ToUpperInvariant()]);
+        }
+        
+        // API: Returns the type of the opponent pokémon in the current battle as an array of length 2.
+        private string[] GetOpponentType()
+        {
+            if (!Bot.Game.IsInBattle)
+            {
+                Fatal("error: getOpponentType can only be used in battle.");
+                return null;
+            }
+
+            int id = Bot.Game.ActiveBattle.OpponentId;	    
+
+            if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
+            {
+                return new string[] { "Unknown", "Unknown" };
+            }
+	    
+            return new string[] { TypesManager.Instance.Type1[id].ToString(), TypesManager.Instance.Type2[id].ToString() };
         }
 
         // API: Moves to the specified coordinates.
@@ -2217,6 +2315,24 @@ namespace PROBot.Scripting
             }
             return Bot.Game.CurrentPCBox[boxPokemonId - 1].Status;
         }
+
+	// API: Type of the pokemon of the current box matching the ID as an array of length 2.
+	private string[] GetPokemonTypeFromPC(int boxId, int boxPokemonId)
+	{
+		if (!IsPCAccessValid("getPokemonTypeFromPC", boxId, boxPokemonId))
+		{
+			return null;
+		}
+		
+		int id = Bot.Game.CurrentPCBox[boxPokemonId - 1].Id;
+		
+		if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
+		{
+			return new string[] { "Unknown", "Unknown" };
+		}
+
+		return new string[] { TypesManager.Instance.Type1[id].ToString(), TypesManager.Instance.Type2[id].ToString() };
+	}
 
         // API: Returns the item held by the specified pokemon in the PC, null if empty.
         private string GetPokemonHeldItemFromPC(int boxId, int boxPokemonId)
