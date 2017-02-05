@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Linq;
+using System.Text;
 
 namespace PROShine.Views
 {
@@ -93,43 +94,43 @@ namespace PROShine.Views
         {
             _lastDisplayedCell = new Point(x, y);
 
-            string log = "";
-            log += string.Format("Clicked Cell: ({0},{1})\r\n", x, y);
+            StringBuilder logBuilder = new StringBuilder();
+
+            logBuilder.AppendLine(string.Format("Clicked Cell: ({0},{1})", x, y));
             if (_bot.Game.Map.HasLink(x, y))
             {
-                log += "Link:\r\n";
-                log += "    destination map: " + _bot.Game.Map.Links[x, y].DestinationMap + "\r\n";
+                logBuilder.AppendLine("Link:");
+                logBuilder.Append("    destination map: " + _bot.Game.Map.Links[x, y].DestinationMap);
             }
 
             PlayerInfos[] playersOnCell = _bot.Game.Players.Values.Where(player => player.PosX == x && player.PosY == y).ToArray();
             if (playersOnCell.Length > 0)
             {
-                log += string.Format("{0} player(s): \r\n", playersOnCell.Length);
+                logBuilder.AppendLine(string.Format("{0} player(s):", playersOnCell.Length));
                 foreach(PlayerInfos player in playersOnCell)
                 {
-                    log += "    " + player.Name + "\r\n";
-                    log += "        in Battle: " + player.IsInBattle.ToString() + "\r\n";
-                    log += "        membership: " + player.IsMember.ToString() + "\r\n";
-                    log += "        afk: " + player.IsAfk.ToString() + "\r\n";
+                    logBuilder.AppendLine("    " + player.Name);
+                    logBuilder.AppendLine("        in Battle: " + player.IsInBattle.ToString());
+                    logBuilder.AppendLine("        membership: " + player.IsMember.ToString());
+                    logBuilder.AppendLine("        afk: " + player.IsAfk.ToString());
                 }
             }
 
             Npc[] npcsOnCell = _bot.Game.Map.Npcs.Where(npc => npc.PositionX == x && npc.PositionY == y).ToArray();
             if (npcsOnCell.Length > 0)
             {
-                log += string.Format("{0} npc(s): \r\n", npcsOnCell.Length);
+                logBuilder.AppendLine(string.Format("{0} npc(s):", npcsOnCell.Length));
                 foreach (Npc npc in npcsOnCell)
                 {
-                    log += "    ID: " + npc.Id + "\r\n";
-                    log += "        name: " + (npc.Name==""?"[unnamed]":npc.Name) + "\r\n";
-                    log += "        type: " + npc.TypeDescription + "\r\n";
-                    log += "        battler: " + npc.IsBattler.ToString() + "\r\n";
+                    logBuilder.AppendLine("    ID: " + npc.Id);
+                    logBuilder.AppendLine("        name: " + (npc.Name==""?"[unnamed]":npc.Name));
+                    logBuilder.AppendLine("        type: " + npc.TypeDescription);
+                    logBuilder.AppendLine("        battler: " + npc.IsBattler.ToString());
                 }
             }
 
-            if (log.EndsWith("\r\n"))
-                log = log.Remove(log.LastIndexOf("\r\n"));
-            tipText.Text = log;
+            logBuilder.Length -= 2; //remove trailing NewLine
+            tipText.Text = logBuilder.ToString();
         }
 
         private void MapView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
