@@ -23,6 +23,12 @@
                         <GridViewColumn Header="HP" DisplayMemberBinding="{Binding Health}"/>
                         <GridViewColumn Header="Remaining Exp" DisplayMemberBinding="{Binding Experience.RemainingExperience}"/>
                         <GridViewColumn Header="Item" DisplayMemberBinding="{Binding ItemHeld}"/>
+                        <GridViewColumn Header="Atk EV" DisplayMemberBinding="{Binding AtkEV}"/>
+                        <GridViewColumn Header="Def EV" DisplayMemberBinding="{Binding DefEV}"/>
+                        <GridViewColumn Header="Spd EV" DisplayMemberBinding="{Binding SpdEV}"/>
+                        <GridViewColumn Header="SpAtk EV" DisplayMemberBinding="{Binding SpAtkEV}"/>
+                        <GridViewColumn Header="SpDef EV" DisplayMemberBinding="{Binding SpDefEV}"/>
+                        <GridViewColumn Header="HP EV" DisplayMemberBinding="{Binding HPEV}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
