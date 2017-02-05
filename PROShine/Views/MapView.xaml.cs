@@ -1,4 +1,4 @@
-﻿using PROBot;
+using PROBot;
 using PROProtocol;
 using System;
 using System.Collections.Generic;
@@ -276,19 +276,8 @@ namespace PROShine.Views
                 _player = new Ellipse() { Fill = Brushes.Red, Width = _cellWidth, Height = _cellWidth };
                 MapCanvas.Children.Add(_player);
 
-                _otherPlayers = new Shape[_bot.Game.Players.Count];
-                for(int i = 0; i < _otherPlayers.Length; i++)
-                {
-                    _otherPlayers[i] = new Ellipse() { Fill = Brushes.Green, Width = _cellWidth, Height = _cellWidth };
-                    MapCanvas.Children.Add(_otherPlayers[i]);
-                }
-
-                _npcs = new Shape[_bot.Game.Map.Npcs.Count];
-                for (int i = 0; i < _npcs.Length; i++)
-                {
-                    _npcs[i] = new Ellipse() { Fill = Brushes.DarkOrange, Width = _cellWidth, Height = _cellWidth };
-                    MapCanvas.Children.Add(_npcs[i]);
-                }
+                RefreshPlayers();
+                RefreshNpcs();
 
                 UpdatePlayerPosition();
             }
@@ -320,19 +309,73 @@ namespace PROShine.Views
             Canvas.SetTop(_mapGrid, deltaY * _cellWidth);
             Canvas.SetLeft(_player, (_bot.Game.PlayerX + deltaX) * _cellWidth);
             Canvas.SetTop(_player, (_bot.Game.PlayerY + deltaY) * _cellWidth);
-            
-            PlayerInfos[] players = new PlayerInfos[_bot.Game.Players.Count];
-            _bot.Game.Players.Values.CopyTo(players, 0);
-            for(int i = 0; i<players.Length; i++)
+
+            UpdatePlayerPositions();
+            UpdateNpcPositions();
+        }
+
+        public void RefreshNpcs()
+        {
+            if (_npcs!=null)
+                foreach (Shape npc in _npcs)
+                    MapCanvas.Children.Remove(npc);
+
+            _npcs = new Shape[_bot.Game.Map.Npcs.Count];
+            for (int i = 0; i < _npcs.Length; i++)
             {
-                Canvas.SetLeft(_otherPlayers[i], (players[i].PosX + deltaX) * _cellWidth);
-                Canvas.SetTop(_otherPlayers[i], (players[i].PosY + deltaY) * _cellWidth);
+                _npcs[i] = new Ellipse() { Fill = Brushes.DarkOrange, Width = _cellWidth, Height = _cellWidth };
+                MapCanvas.Children.Add(_npcs[i]);
             }
 
-            for(int i=0; i<_npcs.Length;i++)
+            UpdatePlayerPositions();
+        }
+
+        private void UpdateNpcPositions()
+        {
+            if (_mapGrid == null) //prevent Null Pointer Exception in GetDrawingOffset() when _mapGrid is not initialized
+                RefreshMap();
+
+            Tuple<double, double> drawingOffset = GetDrawingOffset();
+            double deltaX = drawingOffset.Item1;
+            double deltaY = drawingOffset.Item2;
+
+            for (int i = 0; i < _npcs.Length; i++)
             {
                 Canvas.SetLeft(_npcs[i], (_bot.Game.Map.Npcs[i].PositionX + deltaX) * _cellWidth);
                 Canvas.SetTop(_npcs[i], (_bot.Game.Map.Npcs[i].PositionY + deltaY) * _cellWidth);
+            }
+        }
+
+        public void RefreshPlayers()
+        {
+            if (_otherPlayers!=null)
+                foreach (Shape player in _otherPlayers)
+                    MapCanvas.Children.Remove(player);
+
+            _otherPlayers = new Shape[_bot.Game.Players.Count];
+            for (int i = 0; i < _otherPlayers.Length; i++)
+            {
+                _otherPlayers[i] = new Ellipse() { Fill = Brushes.Green, Width = _cellWidth, Height = _cellWidth };
+                MapCanvas.Children.Add(_otherPlayers[i]);
+            }
+            UpdatePlayerPositions();
+        }
+
+        private void UpdatePlayerPositions()
+        {
+            if (_mapGrid == null) //prevent Null Pointer Exception in GetDrawingOffset() when _mapGrid is not initialized
+                RefreshMap();
+
+            Tuple<double, double> drawingOffset = GetDrawingOffset();
+            double deltaX = drawingOffset.Item1;
+            double deltaY = drawingOffset.Item2;
+
+            int playerIndex = 0;
+            foreach (PlayerInfos player in _bot.Game.Players.Values)
+            {
+                Canvas.SetLeft(_otherPlayers[playerIndex], (player.PosX + deltaX) * _cellWidth);
+                Canvas.SetTop(_otherPlayers[playerIndex], (player.PosY + deltaY) * _cellWidth);
+                playerIndex++;
             }
         }
 
@@ -368,7 +411,7 @@ namespace PROShine.Views
         {
             Dispatcher.InvokeAsync(delegate
             {
-                RefreshMap();
+                RefreshPlayers();
             });
         }
 
@@ -376,7 +419,7 @@ namespace PROShine.Views
         {
             Dispatcher.InvokeAsync(delegate
             {
-                RefreshMap();
+                RefreshPlayers();
             });
         }
 
@@ -384,7 +427,7 @@ namespace PROShine.Views
         {
             Dispatcher.InvokeAsync(delegate
             {
-                RefreshMap();
+                RefreshPlayers();
             });
         }
 
