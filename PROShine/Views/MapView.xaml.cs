@@ -339,22 +339,19 @@ namespace PROShine.Views
 
         private void UpdateNpcPositions()
         {
-            lock (_bot)
+            if (_mapGrid == null) //prevent Null Pointer Exception in GetDrawingOffset() when _mapGrid is not initialized
+                RefreshMap();
+
+            if (_mapGrid != null) //RefreshMap() does not initialize _mapGrid if Map is null
             {
-                if (_mapGrid == null) //prevent Null Pointer Exception in GetDrawingOffset() when _mapGrid is not initialized
-                    RefreshMap();
+                Tuple<double, double> drawingOffset = GetDrawingOffset();
+                double deltaX = drawingOffset.Item1;
+                double deltaY = drawingOffset.Item2;
 
-                if (_mapGrid != null) //RefreshMap() does not initialize _mapGrid if Map is null
+                for (int i = 0; i < _npcs.Length; i++)
                 {
-                    Tuple<double, double> drawingOffset = GetDrawingOffset();
-                    double deltaX = drawingOffset.Item1;
-                    double deltaY = drawingOffset.Item2;
-
-                    for (int i = 0; i < _npcs.Length && i < _bot.Game.Map.Npcs.Count; i++)
-                    {
-                        Canvas.SetLeft(_npcs[i], (_bot.Game.Map.Npcs[i].PositionX + deltaX) * _cellWidth);
-                        Canvas.SetTop(_npcs[i], (_bot.Game.Map.Npcs[i].PositionY + deltaY) * _cellWidth);
-                    }
+                    Canvas.SetLeft(_npcs[i], (_bot.Game.Map.Npcs[i].PositionX + deltaX) * _cellWidth);
+                    Canvas.SetTop(_npcs[i], (_bot.Game.Map.Npcs[i].PositionY + deltaY) * _cellWidth);
                 }
             }
         }
@@ -376,27 +373,21 @@ namespace PROShine.Views
 
         private void UpdatePlayerPositions()
         {
-            lock (_bot)
+            if (_mapGrid == null) //prevent Null Pointer Exception in GetDrawingOffset() when _mapGrid is not initialized
+                RefreshMap();
+
+            if (_mapGrid != null)
             {
-                if (_mapGrid == null) //prevent Null Pointer Exception in GetDrawingOffset() when _mapGrid is not initialized
-                    RefreshMap();
+                Tuple<double, double> drawingOffset = GetDrawingOffset();
+                double deltaX = drawingOffset.Item1;
+                double deltaY = drawingOffset.Item2;
 
-                if (_mapGrid != null)
+                int playerIndex = 0;
+                foreach (PlayerInfos player in _bot.Game.Players.Values)
                 {
-                    Tuple<double, double> drawingOffset = GetDrawingOffset();
-                    double deltaX = drawingOffset.Item1;
-                    double deltaY = drawingOffset.Item2;
-
-                    int playerIndex = 0;
-                    foreach (PlayerInfos player in _bot.Game.Players.Values)
-                    {
-                        if (playerIndex < _otherPlayers.Length)
-                        {
-                            Canvas.SetLeft(_otherPlayers[playerIndex], (player.PosX + deltaX) * _cellWidth);
-                            Canvas.SetTop(_otherPlayers[playerIndex], (player.PosY + deltaY) * _cellWidth);
-                            playerIndex++;
-                        }
-                    }
+                    Canvas.SetLeft(_otherPlayers[playerIndex], (player.PosX + deltaX) * _cellWidth);
+                    Canvas.SetTop(_otherPlayers[playerIndex], (player.PosY + deltaY) * _cellWidth);
+                    playerIndex++;
                 }
             }
         }
