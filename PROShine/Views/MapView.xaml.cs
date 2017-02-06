@@ -30,6 +30,7 @@ namespace PROShine.Views
         private Shape[] _otherPlayers;
 
         private Point _lastDisplayedCell = new Point(-1, -1);
+        private Point _playerPosition = new Point();
 
         public MapView(BotClient bot)
         {
@@ -308,6 +309,8 @@ namespace PROShine.Views
 
         private void UpdatePlayerPosition()
         {
+            _playerPosition = new Point(_bot.Game.PlayerX, _bot.Game.PlayerY);
+
             Tuple<double, double> drawingOffset = GetDrawingOffset();
             double deltaX = drawingOffset.Item1;
             double deltaY = drawingOffset.Item2;
@@ -410,8 +413,8 @@ namespace PROShine.Views
             double canFillX = Math.Floor(MapCanvas.ActualWidth / _cellWidth);
             double canFillY = Math.Floor(MapCanvas.ActualHeight / _cellWidth);
 
-            double deltaX = -_bot.Game.PlayerX + canFillX / 2;
-            double deltaY = -_bot.Game.PlayerY + canFillY / 2;
+            double deltaX = -_playerPosition.X + canFillX / 2;
+            double deltaY = -_playerPosition.Y + canFillY / 2;
 
             if (_mapGrid.Columns <= canFillX) deltaX = 0;
             if (_mapGrid.Rows <= canFillY) deltaY = 0;
