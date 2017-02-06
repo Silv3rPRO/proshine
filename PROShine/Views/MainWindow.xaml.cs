@@ -571,6 +571,7 @@ namespace PROShine
                     Bot.Game.PlayerAdded += Map.Client_PlayerEnteredMap;
                     Bot.Game.PlayerRemoved += Map.Client_PlayerLeftMap;
                     Bot.Game.PlayerUpdated += Map.Client_PlayerMoved;
+                    Bot.Game.NpcReceived += Map.Client_NpcReceived;
                 }
             }
             Dispatcher.InvokeAsync(delegate

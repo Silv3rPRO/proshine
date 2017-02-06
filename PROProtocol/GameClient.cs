@@ -66,6 +66,7 @@ namespace PROProtocol
         public event Action<string, int, int> PositionUpdated;
         public event Action<string, int, int> TeleportationOccuring;
         public event Action<string> MapLoaded;
+        public event Action<List<Npc>> NpcReceived;
         public event Action PokemonsUpdated;
         public event Action InventoryUpdated;
         public event Action BattleStarted;
@@ -1258,6 +1259,7 @@ namespace PROProtocol
             }
 
             AreNpcReceived = true;
+            NpcReceived?.Invoke(Map.Npcs);
         }
 
         private void OnTeamUpdate(string[] data)

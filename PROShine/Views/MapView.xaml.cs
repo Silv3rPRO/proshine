@@ -24,10 +24,13 @@ namespace PROShine.Views
         private UniformGrid _mapGrid;
         private bool _isPlayerDirty;
         private Shape _player;
-        private Shape[] _otherPlayers;
+        private bool _areNpcsDirty;
         private Shape[] _npcs;
+        private bool _arePlayersDirty;
+        private Shape[] _otherPlayers;
+
         private Point _lastDisplayedCell = new Point(-1, -1);
-        
+
         public MapView(BotClient bot)
         {
             InitializeComponent();
@@ -53,13 +56,7 @@ namespace PROShine.Views
             MouseDown += MapView_MouseDown;
             SizeChanged += MapView_SizeChanged;
         }
-
-        private void MapCanvas_MouseEnter(object sender, MouseEventArgs e)
-        {
-            if (_bot.Game != null)
-                FloatingTip.IsOpen = true;
-        }
-
+        
         private void MapCanvas_MouseLeave(object sender, MouseEventArgs e)
         {
             FloatingTip.IsOpen = false;
@@ -67,73 +64,75 @@ namespace PROShine.Views
 
         private void MapCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_bot.Game != null && _bot.Game.Map!=null)
+            Tuple<double, double> drawingOffset = GetDrawingOffset();
+            double deltaX = drawingOffset.Item1;
+            double deltaY = drawingOffset.Item2;
+            int ingameX = (int)((e.GetPosition(this).X / _cellWidth - deltaX));
+            int ingameY = (int)((e.GetPosition(this).Y / _cellWidth) - deltaY);
+
+            if (_lastDisplayedCell.X != ingameX || _lastDisplayedCell.Y != ingameY)
             {
-                Tuple<double, double> drawingOffset = GetDrawingOffset();
-                double deltaX = drawingOffset.Item1;
-                double deltaY = drawingOffset.Item2;
-                int ingameX = (int)((e.GetPosition(this).X / _cellWidth - deltaX));
-                int ingameY = (int)((e.GetPosition(this).Y / _cellWidth) - deltaY);
-                
-                if (_lastDisplayedCell.X != ingameX || _lastDisplayedCell.Y != ingameY)
-                    LogCellInfo(ingameX, ingameY);
-
-                Point currentPos = e.GetPosition(MapCanvas);
-
-                FloatingTip.HorizontalOffset = currentPos.X + 20;
-                FloatingTip.VerticalOffset = currentPos.Y;
+                lock (_bot)
+                {
+                    if (_bot.Game != null && _bot.Game.IsMapLoaded)
+                    {
+                        RetrieveCellInfo(ingameX, ingameY);
+                        FloatingTip.IsOpen = true;
+                    }
+                }
             }
-        }   
+
+            Point currentPos = e.GetPosition(MapCanvas);
+            FloatingTip.HorizontalOffset = currentPos.X + 20;
+            FloatingTip.VerticalOffset = currentPos.Y;
+        }
 
         private void MapView_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Keyboard.Focus(this);
         }
 
-        private void LogCellInfo(int x, int y)
+        private void RetrieveCellInfo(int x, int y)
         {
-            lock (_bot)
+            _lastDisplayedCell = new Point(x, y);
+
+            StringBuilder logBuilder = new StringBuilder();
+            logBuilder.AppendLine(string.Format("Cell: ({0},{1})", x, y));
+
+            if (_bot.Game.Map.HasLink(x, y))
             {
-                _lastDisplayedCell = new Point(x, y);
-
-                StringBuilder logBuilder = new StringBuilder();
-
-                logBuilder.AppendLine(string.Format("Cell: ({0},{1})", x, y));
-                if (_bot.Game.Map.HasLink(x, y))
-                {
-                    logBuilder.AppendLine("Link: " + _bot.Game.Map.Links[x, y].DestinationMap);
-                }
-
-                PlayerInfos[] playersOnCell = _bot.Game.Players.Values.Where(player => player.PosX == x && player.PosY == y).ToArray();
-                if (playersOnCell.Length > 0)
-                {
-                    logBuilder.AppendLine(string.Format("{0} player{1}:", playersOnCell.Length, playersOnCell.Length != 1 ? "s" : ""));
-                    foreach (PlayerInfos player in playersOnCell)
-                    {
-                        logBuilder.Append("  " + player.Name);
-                        if (player.IsInBattle) logBuilder.Append(" [in battle]");
-                        if (player.IsMember) logBuilder.Append(" [member]");
-                        if (player.IsAfk) logBuilder.Append(" [afk]");
-                        logBuilder.AppendLine();
-                    }
-                }
-
-                Npc[] npcsOnCell = _bot.Game.Map.Npcs.Where(npc => npc.PositionX == x && npc.PositionY == y).ToArray();
-                if (npcsOnCell.Length > 0)
-                {
-                    logBuilder.AppendLine(string.Format("{0} npc{1}:", npcsOnCell.Length, npcsOnCell.Length != 1 ? "s" : ""));
-                    foreach (Npc npc in npcsOnCell)
-                    {
-                        logBuilder.AppendLine("  ID: " + npc.Id);
-                        if (npc.Name != string.Empty) logBuilder.AppendLine("    name: " + npc.Name);
-                        logBuilder.AppendLine("    type: " + npc.TypeDescription);
-                        logBuilder.AppendLine("    battler: " + npc.IsBattler.ToString());
-                    }
-                }
-
-                logBuilder.Length -= 2; //remove trailing NewLine
-                TipText.Text = logBuilder.ToString();
+                logBuilder.AppendLine("Link: " + _bot.Game.Map.Links[x, y].DestinationMap);
             }
+
+            PlayerInfos[] playersOnCell = _bot.Game.Players.Values.Where(player => player.PosX == x && player.PosY == y).ToArray();
+            if (playersOnCell.Length > 0)
+            {
+                logBuilder.AppendLine(string.Format("{0} player{1}:", playersOnCell.Length, playersOnCell.Length != 1 ? "s" : ""));
+                foreach (PlayerInfos player in playersOnCell)
+                {
+                    logBuilder.Append("  " + player.Name);
+                    if (player.IsInBattle) logBuilder.Append(" [in battle]");
+                    if (player.IsMember) logBuilder.Append(" [member]");
+                    if (player.IsAfk) logBuilder.Append(" [afk]");
+                    logBuilder.AppendLine();
+                }
+            }
+
+            Npc[] npcsOnCell = _bot.Game.Map.Npcs.Where(npc => npc.PositionX == x && npc.PositionY == y).ToArray();
+            if (npcsOnCell.Length > 0)
+            {
+                logBuilder.AppendLine(string.Format("{0} npc{1}:", npcsOnCell.Length, npcsOnCell.Length != 1 ? "s" : ""));
+                foreach (Npc npc in npcsOnCell)
+                {
+                    logBuilder.AppendLine("  ID: " + npc.Id);
+                    if (npc.Name != string.Empty) logBuilder.AppendLine("    name: " + npc.Name);
+                    logBuilder.AppendLine("    type: " + npc.TypeDescription);
+                    logBuilder.AppendLine("    battler: " + npc.IsBattler.ToString());
+                }
+            }
+
+            logBuilder.Length -= Environment.NewLine.Length;
+            TipText.Text = logBuilder.ToString();
         }
 
         private void MapView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -141,14 +140,10 @@ namespace PROShine.Views
             Window parent = Window.GetWindow(this);
             if (IsVisible)
             {
-                if (_isMapDirty)
-                {
-                    RefreshMap();
-                }
-                if (_isPlayerDirty)
-                {
-                    RefreshPlayer();
-                }
+                if (_isMapDirty) RefreshMap();
+                if (_isPlayerDirty) RefreshPlayer(!_areNpcsDirty || !_arePlayersDirty);
+                if (_areNpcsDirty) RefreshNpcs();
+                if (_arePlayersDirty) RefreshOtherPlayers();
                 parent.KeyDown += Parent_KeyDown;
             }
             else
@@ -282,32 +277,37 @@ namespace PROShine.Views
 
                 _player = new Ellipse() { Fill = Brushes.Red, Width = _cellWidth, Height = _cellWidth };
                 MapCanvas.Children.Add(_player);
+                Panel.SetZIndex(_player, 100);
 
-                RefreshPlayers();
+                RefreshPlayer(false);
                 RefreshNpcs();
-
-                UpdatePlayerPosition();
+                RefreshOtherPlayers();
             }
         }
 
-        public void RefreshPlayer()
+        public void RefreshPlayer(bool refreshEntities)
         {
             if (!IsVisible)
             {
                 _isPlayerDirty = true;
+                return;
             }
+            _isPlayerDirty = false;
 
             lock (_bot)
             {
                 if (_bot.Game == null || _bot.Game.Map == null || _player == null) return;
                 UpdatePlayerPosition();
+                if (refreshEntities)
+                {
+                    UpdateNpcPositions();
+                    UpdateOtherPlayerPositions();
+                }
             }
         }
 
         private void UpdatePlayerPosition()
         {
-            _isPlayerDirty = false;
-            
             Tuple<double, double> drawingOffset = GetDrawingOffset();
             double deltaX = drawingOffset.Item1;
             double deltaY = drawingOffset.Item2;
@@ -316,79 +316,92 @@ namespace PROShine.Views
             Canvas.SetTop(_mapGrid, deltaY * _cellWidth);
             Canvas.SetLeft(_player, (_bot.Game.PlayerX + deltaX) * _cellWidth);
             Canvas.SetTop(_player, (_bot.Game.PlayerY + deltaY) * _cellWidth);
-
-            UpdatePlayerPositions();
-            UpdateNpcPositions();
         }
 
         public void RefreshNpcs()
         {
-            if (_npcs!=null)
-                foreach (Shape npc in _npcs)
-                    MapCanvas.Children.Remove(npc);
-
-            _npcs = new Shape[_bot.Game.Map.Npcs.Count];
-            for (int i = 0; i < _npcs.Length; i++)
+            if (!IsVisible)
             {
-                _npcs[i] = new Ellipse() { Fill = Brushes.DarkOrange, Width = _cellWidth, Height = _cellWidth };
-                MapCanvas.Children.Add(_npcs[i]);
+                _areNpcsDirty = true;
+                return;
             }
+            _areNpcsDirty = false;
 
-            UpdateNpcPositions();
+            lock (_bot)
+            {
+                if (_bot.Game == null || _bot.Game.Map == null || _mapGrid == null) return;
+
+                if (_npcs != null)
+                    foreach (Shape npc in _npcs)
+                        MapCanvas.Children.Remove(npc);
+
+                _npcs = new Shape[_bot.Game.Map.Npcs.Count];
+                for (int i = 0; i < _npcs.Length; i++)
+                {
+                    _npcs[i] = new Ellipse() { Fill = Brushes.DarkOrange, Width = _cellWidth, Height = _cellWidth };
+                    MapCanvas.Children.Add(_npcs[i]);
+                }
+
+                UpdateNpcPositions();
+            }
         }
 
         private void UpdateNpcPositions()
         {
-            if (_mapGrid == null) //prevent Null Pointer Exception in GetDrawingOffset() when _mapGrid is not initialized
-                RefreshMap();
+            if (_bot.Game.Map.Npcs.Count != _npcs.Length) return;
 
-            if (_mapGrid != null) //RefreshMap() does not initialize _mapGrid if Map is null
+            Tuple<double, double> drawingOffset = GetDrawingOffset();
+            double deltaX = drawingOffset.Item1;
+            double deltaY = drawingOffset.Item2;
+
+            for (int i = 0; i < _npcs.Length; i++)
             {
-                Tuple<double, double> drawingOffset = GetDrawingOffset();
-                double deltaX = drawingOffset.Item1;
-                double deltaY = drawingOffset.Item2;
-
-                for (int i = 0; i < _npcs.Length; i++)
-                {
-                    Canvas.SetLeft(_npcs[i], (_bot.Game.Map.Npcs[i].PositionX + deltaX) * _cellWidth);
-                    Canvas.SetTop(_npcs[i], (_bot.Game.Map.Npcs[i].PositionY + deltaY) * _cellWidth);
-                }
+                Canvas.SetLeft(_npcs[i], (_bot.Game.Map.Npcs[i].PositionX + deltaX) * _cellWidth);
+                Canvas.SetTop(_npcs[i], (_bot.Game.Map.Npcs[i].PositionY + deltaY) * _cellWidth);
             }
         }
 
-        public void RefreshPlayers()
+        public void RefreshOtherPlayers()
         {
-            if (_otherPlayers!=null)
-                foreach (Shape player in _otherPlayers)
-                    MapCanvas.Children.Remove(player);
-
-            _otherPlayers = new Shape[_bot.Game.Players.Count];
-            for (int i = 0; i < _otherPlayers.Length; i++)
+            if (!IsVisible)
             {
-                _otherPlayers[i] = new Ellipse() { Fill = Brushes.Green, Width = _cellWidth, Height = _cellWidth };
-                MapCanvas.Children.Add(_otherPlayers[i]);
+                _arePlayersDirty = true;
+                return;
             }
-            UpdatePlayerPositions();
+            _arePlayersDirty = false;
+
+            lock (_bot)
+            {
+                if (_bot.Game == null || _bot.Game.Map == null || _mapGrid == null) return;
+
+                if (_otherPlayers != null)
+                    foreach (Shape player in _otherPlayers)
+                        MapCanvas.Children.Remove(player);
+
+                _otherPlayers = new Shape[_bot.Game.Players.Count];
+                for (int i = 0; i < _otherPlayers.Length; i++)
+                {
+                    _otherPlayers[i] = new Ellipse() { Fill = Brushes.Green, Width = _cellWidth, Height = _cellWidth };
+                    MapCanvas.Children.Add(_otherPlayers[i]);
+                }
+                UpdateOtherPlayerPositions();
+            }
         }
 
-        private void UpdatePlayerPositions()
+        private void UpdateOtherPlayerPositions()
         {
-            if (_mapGrid == null) //prevent Null Pointer Exception in GetDrawingOffset() when _mapGrid is not initialized
-                RefreshMap();
+            if (_bot.Game.Players.Count != _otherPlayers.Length) return;
 
-            if (_mapGrid != null)
+            Tuple<double, double> drawingOffset = GetDrawingOffset();
+            double deltaX = drawingOffset.Item1;
+            double deltaY = drawingOffset.Item2;
+
+            int playerIndex = 0;
+            foreach (PlayerInfos player in _bot.Game.Players.Values)
             {
-                Tuple<double, double> drawingOffset = GetDrawingOffset();
-                double deltaX = drawingOffset.Item1;
-                double deltaY = drawingOffset.Item2;
-
-                int playerIndex = 0;
-                foreach (PlayerInfos player in _bot.Game.Players.Values)
-                {
-                    Canvas.SetLeft(_otherPlayers[playerIndex], (player.PosX + deltaX) * _cellWidth);
-                    Canvas.SetTop(_otherPlayers[playerIndex], (player.PosY + deltaY) * _cellWidth);
-                    playerIndex++;
-                }
+                Canvas.SetLeft(_otherPlayers[playerIndex], (player.PosX + deltaX) * _cellWidth);
+                Canvas.SetTop(_otherPlayers[playerIndex], (player.PosY + deltaY) * _cellWidth);
+                playerIndex++;
             }
         }
 
@@ -420,11 +433,27 @@ namespace PROShine.Views
             });
         }
 
+        public void Client_PositionUpdated(string map, int x, int y)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                RefreshPlayer(true);
+            });
+        }
+
+        public void Client_NpcReceived(List<Npc> npcs)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                RefreshNpcs();
+            });
+        }
+
         public void Client_PlayerEnteredMap(PlayerInfos player)
         {
             Dispatcher.InvokeAsync(delegate
             {
-                RefreshPlayers();
+                RefreshOtherPlayers();
             });
         }
 
@@ -432,7 +461,7 @@ namespace PROShine.Views
         {
             Dispatcher.InvokeAsync(delegate
             {
-                RefreshPlayers();
+                RefreshOtherPlayers();
             });
         }
 
@@ -440,15 +469,7 @@ namespace PROShine.Views
         {
             Dispatcher.InvokeAsync(delegate
             {
-                RefreshPlayers();
-            });
-        }
-
-        public void Client_PositionUpdated(string map, int x, int y)
-        {
-            Dispatcher.InvokeAsync(delegate
-            {
-                RefreshPlayer();
+                RefreshOtherPlayers();
             });
         }
     }
