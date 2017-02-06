@@ -17,6 +17,7 @@
                 <ListView.ItemContainerStyle>
                     <Style>
                         <Setter Property="ToolTipService.ShowDuration" Value="60000"/>
+                        <Setter Property="ToolTipService.InitialShowDelay" Value="0"/>
                         <Setter Property="Control.ToolTip">
                             <Setter.Value>
                                 <Canvas Height="300" Width="430" Background="#403F45">
