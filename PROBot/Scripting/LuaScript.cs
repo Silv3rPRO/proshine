@@ -320,6 +320,10 @@ namespace PROBot.Scripting
             // File editing actions
             _lua.Globals["logToFile"] = new Action<string, DynValue, bool>(LogToFile);
             _lua.Globals["readLinesFromFile"] = new Func<string, string[]>(ReadLinesFromFile);
+	    
+            _lua.Globals["login"] = new Action<string, string, string>(Login);
+            _lua.Globals["invoke"] = new Action<DynValue, float, DynValue[]>(Invoke);
+            _lua.Globals["startScript"] = new Func<bool>(StartScript);
 
             foreach (string content in _libsContent)
             {
@@ -2765,6 +2769,88 @@ namespace PROBot.Scripting
             }
 
             Bot.TextOptions[index].Description = content;
+        }
+
+        private void Login(string accountName, string password, string server, int socks = 0, string host = "", int port = 0, string socksUser = "", string socksPass = "")
+        {
+            server = server.ToUpperInvariant();
+
+            if (Bot.Game != null)
+            {
+                Fatal("error: login: tried to login while already logged in");
+                return;
+            }
+
+            if (server != "BLUE" && server != "RED" && server != "YELLOW")
+            {
+                Fatal("error: login: tried to connect to an invalid server: \"" + server + "\"");
+                return;
+            }
+
+            LogMessage("Connecting to the server...");
+            Account account = new Account(accountName);
+            account.Password = password;
+            account.Server = server;
+
+            if (socks == 4 || socks == 5)
+            {
+                account.Socks.Version = (SocksVersion)socks;
+                account.Socks.Host = host;
+                account.Socks.Port = port;
+                account.Socks.Username = socksUser;
+                account.Socks.Password = socksPass;
+            }
+
+            Bot.Login(account);
+        }
+
+        public void Invoke(DynValue function, float time, params DynValue[] args)
+        {
+            if (function.Type != DataType.Function && function.Type != DataType.ClrFunction)
+            {
+                Fatal("error: invoke: tried to call an invalid function");
+                return;
+            }
+
+            if (time == 0)
+            {
+                _lua.Call(function, args);
+                return;
+            }
+
+            Invoker invoker = new Invoker()
+            {
+                Function = function,
+                Time = DateTime.UtcNow.AddSeconds(time),
+                Script = this,
+                Args = args
+            };
+
+            Invokes.Add(invoker);
+        }
+
+        private bool StartScript()
+        {
+            if (Bot.Running == BotClient.State.Stopped && Bot.Game != null)
+            {
+                Bot.Start();
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    public class Invoker
+    {
+        public DynValue Function;
+        public DateTime Time;
+        public LuaScript Script;
+        public DynValue[] Args;
+
+        public void Call()
+        {
+            Script.Invoke(Function, 0, Args);
         }
     }
 }
