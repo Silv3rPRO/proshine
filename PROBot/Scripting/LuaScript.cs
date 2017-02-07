@@ -532,18 +532,21 @@ namespace PROBot.Scripting
             return lNpc;
         }
 
-        // API: Returns an array of all map links on the current map - links limited to one per map for simplicity
+        // API: Returns an array of all map links on the current map
         public List<Dictionary<string, DynValue>> GetMapLinks()
         {
             var links = new List<Dictionary<string, DynValue>>();
 
             foreach (var link in Bot.Game.Map.LinkDestinations)
             {
-                var newLink = new Dictionary<string, DynValue>();
-                newLink["x"] = DynValue.NewNumber(link.Value[0].Item1);
-                newLink["y"] = DynValue.NewNumber(link.Value[0].Item2);
-                newLink["name"] = DynValue.NewString(link.Key);
-                links.Add(newLink);
+                foreach (var coord in link.Value)
+                {
+                    var newLink = new Dictionary<string, DynValue>();
+                    newLink["x"] = DynValue.NewNumber(coord.Item1);
+                    newLink["y"] = DynValue.NewNumber(coord.Item2);
+                    newLink["name"] = DynValue.NewString(link.Key);
+                    links.Add(newLink);
+                }
             }
 
             return links;
