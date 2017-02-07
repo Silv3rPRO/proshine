@@ -170,6 +170,7 @@ namespace PROBot.Scripting
             _lua.Globals["getActiveBerryTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveBerryTrees);
             _lua.Globals["getDiscoverableItems"] = new Func<List<Dictionary<string, int>>>(GetDiscoverableItems);
             _lua.Globals["getNpcData"] = new Func<List<Dictionary<string, DynValue>>>(GetNpcData);
+            _lua.Globals["getMapLinks"] = new Func<List<Dictionary<string, DynValue>>>(GetMapLinks);
 
             _lua.Globals["hasItem"] = new Func<string, bool>(HasItem);
             _lua.Globals["getItemQuantity"] = new Func<string, int>(GetItemQuantity);
@@ -529,6 +530,23 @@ namespace PROBot.Scripting
                 lNpc.Add(npcData);
             }
             return lNpc;
+        }
+
+        // API: Returns an array of all map links on the current map - links limited to one per map for simplicity
+        public List<Dictionary<string, DynValue>> GetMapLinks()
+        {
+            var links = new List<Dictionary<string, DynValue>>();
+
+            foreach (var link in Bot.Game.Map.LinkDestinations)
+            {
+                var newLink = new Dictionary<string, DynValue>();
+                newLink["x"] = DynValue.NewNumber(link.Value[0].Item1);
+                newLink["y"] = DynValue.NewNumber(link.Value[0].Item2);
+                newLink["name"] = DynValue.NewString(link.Key);
+                links.Add(newLink);
+            }
+
+            return links;
         }
 
         // API: Returns true if the string contains the specified part, ignoring the case.
