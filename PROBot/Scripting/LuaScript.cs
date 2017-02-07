@@ -324,7 +324,6 @@ namespace PROBot.Scripting
             _lua.Globals["login"] = new Action<string, string, string, int, string, int, string, string>(Login);
             _lua.Globals["invoke"] = new Action<DynValue, float, DynValue[]>(Invoke);
             _lua.Globals["startScript"] = new Func<bool>(StartScript);
-            _lua.Globals["cancelInvokes"] = new Action(CancelInvokes);
 
             foreach (string content in _libsContent)
             {
@@ -2842,12 +2841,6 @@ namespace PROBot.Scripting
             }
 
             return false;
-        }
-        
-        // API: Cancels all queued Invokes
-        private void CancelInvokes()
-        {
-            Invokes.Clear();
         }
     }
 
