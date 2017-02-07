@@ -2770,7 +2770,8 @@ namespace PROBot.Scripting
 
             Bot.TextOptions[index].Description = content;
         }
-
+        
+	// API: Logs in using specified credentials
         private void Login(string accountName, string password, string server, int socks = 0, string host = "", int port = 0, string socksUser = "", string socksPass = "")
         {
             server = server.ToUpperInvariant();
@@ -2803,7 +2804,8 @@ namespace PROBot.Scripting
 
             Bot.Login(account);
         }
-
+        
+	// API: Calls the specified function after the specified number of seconds
         public void Invoke(DynValue function, float time, params DynValue[] args)
         {
             if (function.Type != DataType.Function && function.Type != DataType.ClrFunction)
@@ -2828,10 +2830,11 @@ namespace PROBot.Scripting
 
             Invokes.Add(invoker);
         }
-
+        
+	// API: Starts the loaded script (usable in the outer scope or with invoke)
         private bool StartScript()
         {
-            if (Bot.Running == BotClient.State.Stopped && Bot.Game != null)
+            if (Bot.Game != null && (Bot.Running == BotClient.State.Stopped || Bot.Running == BotClient.State.Paused))
             {
                 Bot.Start();
                 return true;
