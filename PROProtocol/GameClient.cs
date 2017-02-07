@@ -44,7 +44,6 @@ namespace PROProtocol
         public string ScriptId { get; private set; }
         public int ScriptStatus { get; private set; }
         public string[] DialogContent { get; private set; }
-        public bool IsScriptLoaded = false;
 
         public Battle ActiveBattle { get; private set; }
         public Shop OpenedShop { get; private set; }
@@ -193,6 +192,8 @@ namespace PROProtocol
 
         public void Update()
         {
+            CallInvokes?.Invoke();
+            
             _mapClient.Update();
             _connection.Update();
             if (!IsAuthenticated)
@@ -214,9 +215,6 @@ namespace PROProtocol
             UpdateScript();
             UpdatePlayers();
             UpdatePCBox();
-
-            if (IsScriptLoaded)
-                CallInvokes?.Invoke();
         }
 
         public void CloseChannel(string channelName)
