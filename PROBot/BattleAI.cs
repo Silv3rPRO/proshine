@@ -6,11 +6,11 @@ namespace PROBot
 {
     public class BattleAI
     {
+        private const int FalseSwipe = 1;
         private const int DoubleEdge = 70;
         private const int DragonRage = 74;
         private const int DreamEater = 76;
         private const int Explosion = 87;
-        private const int FalseSwipe = 93;
         private const int NightShade = 193;
         private const int Psywave = 217;
         private const int SeismicToss = 249;
