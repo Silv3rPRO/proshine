@@ -321,7 +321,7 @@ namespace PROBot.Scripting
             _lua.Globals["logToFile"] = new Action<string, DynValue, bool>(LogToFile);
             _lua.Globals["readLinesFromFile"] = new Func<string, string[]>(ReadLinesFromFile);
 	    
-            _lua.Globals["login"] = new Action<string, string, string>(Login);
+            _lua.Globals["login"] = new Action<string, string, string, int, string, int, string, string>(Login);
             _lua.Globals["invoke"] = new Action<DynValue, float, DynValue[]>(Invoke);
             _lua.Globals["startScript"] = new Func<bool>(StartScript);
 
