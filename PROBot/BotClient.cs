@@ -167,8 +167,7 @@ namespace PROBot
 
         public void Update()
         {
-            if (Script != null)
-                CallInvokes();
+            CallInvokes();
             
             AutoReconnector.Update();
 
