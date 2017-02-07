@@ -44,6 +44,7 @@ namespace PROProtocol
         public string ScriptId { get; private set; }
         public int ScriptStatus { get; private set; }
         public string[] DialogContent { get; private set; }
+        public bool IsScriptLoaded = false;
 
         public Battle ActiveBattle { get; private set; }
         public Shop OpenedShop { get; private set; }
@@ -214,7 +215,7 @@ namespace PROProtocol
             UpdatePlayers();
             UpdatePCBox();
 
-            if (IsScriptActive)
+            if (IsScriptLoaded)
                 CallInvokes?.Invoke();
         }
 
