@@ -164,12 +164,12 @@ namespace PROBot.Scripting
             _lua.Globals["isPokemonUsable"] = new Func<int, bool>(IsPokemonUsable);
             _lua.Globals["getUsablePokemonCount"] = new Func<int>(GetUsablePokemonCount);
             _lua.Globals["hasMove"] = new Func<int, string, bool>(HasMove);
-            _lua.Globals["getActiveBattlers"] = new Func<Dictionary<string, Dictionary<string, int>>>(GetActiveBattlers);
+            _lua.Globals["getActiveBattlers"] = new Func<List<Dictionary<string, DynValue>>>(GetActiveBattlers);
             _lua.Globals["getActiveDigSpots"] = new Func<List<Dictionary<string, int>>>(GetActiveDigSpots);
             _lua.Globals["getActiveHeadbuttTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveHeadbuttTrees);
             _lua.Globals["getActiveBerryTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveBerryTrees);
             _lua.Globals["getDiscoverableItems"] = new Func<List<Dictionary<string, int>>>(GetDiscoverableItems);
-            _lua.Globals["getNpcData"] = new Func<List<Dictionary<string, string>>>(GetNpcData);
+            _lua.Globals["getNpcData"] = new Func<List<Dictionary<string, DynValue>>>(GetNpcData);
 
             _lua.Globals["hasItem"] = new Func<string, bool>(HasItem);
             _lua.Globals["getItemQuantity"] = new Func<string, int>(GetItemQuantity);
@@ -440,16 +440,17 @@ namespace PROBot.Scripting
             Bot.Logout(false);
         }
 
-        // API return an array of all NPCs that can be challenged on the current map. format : {"npcName" = {"x" = x, "y" = y}}
-        private Dictionary<string, Dictionary<string, int>> GetActiveBattlers()
+        // API: Returns an array of all NPCs that can be challenged on the current map. format : {index = {"x" = x, "y" = y}}
+        private List<Dictionary<string, DynValue>> GetActiveBattlers()
         {
-            var activeBattlers = new Dictionary<string, Dictionary<string, int>>();
+            var activeBattlers = new List<Dictionary<string, DynValue>>();
             foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.CanBattle))
             {
-                var npcData = new Dictionary<string, int>();
-                npcData["x"] = npc.PositionX;
-                npcData["y"] = npc.PositionY;
-                activeBattlers[npc.Name] = npcData;
+                var npcData = new Dictionary<string, DynValue>();
+                npcData["x"] = DynValue.NewNumber(npc.PositionX);
+                npcData["y"] = DynValue.NewNumber(npc.PositionY);
+                npcData["name"] = DynValue.NewString(npc.Name);
+                activeBattlers.Add(npcData);
             }
             return activeBattlers;
         }
@@ -511,20 +512,20 @@ namespace PROBot.Scripting
             return items;
         }
 
-        // API return npc data on current map, format : { { "x" = x , "y" = y, "type" = type }, {...}, ... }
-        private List<Dictionary<string, string>> GetNpcData()
+        // API: Returns npc data on current map, format : { { "x" = x , "y" = y, "type" = type }, {...}, ... }
+        private List<Dictionary<string, DynValue>> GetNpcData()
         {
-            var lNpc = new List<Dictionary<string, string>>();
+            var lNpc = new List<Dictionary<string, DynValue>>();
             foreach (Npc npc in Bot.Game.Map.Npcs)
             {
-                var npcData = new Dictionary<string, string>();
-                npcData["x"] = npc.PositionX.ToString();
-                npcData["y"] = npc.PositionY.ToString();
-                npcData["type"] = npc.Type.ToString();
-                npcData["name"] = npc.Name;
-                npcData["isBattler"] = npc.IsBattler.ToString();
-                npcData["id"] = npc.Id.ToString();
-                npcData["los"] = npc.LosLength.ToString();
+                var npcData = new Dictionary<string, DynValue>();
+                npcData["x"] = DynValue.NewNumber(npc.PositionX);
+                npcData["y"] = DynValue.NewNumber(npc.PositionY);
+                npcData["type"] = DynValue.NewNumber(npc.Type);
+                npcData["name"] = DynValue.NewString(npc.Name);
+                npcData["isBattler"] = DynValue.NewBoolean(npc.IsBattler);
+                npcData["id"] = DynValue.NewNumber(npc.Id);
+                npcData["los"] = DynValue.NewNumber(npc.LosLength);
                 lNpc.Add(npcData);
             }
             return lNpc;
