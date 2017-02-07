@@ -213,7 +213,9 @@ namespace PROProtocol
             UpdateScript();
             UpdatePlayers();
             UpdatePCBox();
-            CallInvokes?.Invoke();
+
+            if (IsScriptActive)
+                CallInvokes?.Invoke();
         }
 
         public void CloseChannel(string channelName)
