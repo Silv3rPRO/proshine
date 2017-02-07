@@ -2842,6 +2842,13 @@ namespace PROBot.Scripting
 
             return false;
         }
+        
+        // API: Cancels all queued Invokes
+        private void CancelInvokes()
+        {
+            foreach (Invoker invoker in Invokes)
+                invoker.Called = true;
+        }
     }
 
     public class Invoker
@@ -2850,9 +2857,11 @@ namespace PROBot.Scripting
         public DateTime Time;
         public LuaScript Script;
         public DynValue[] Args;
+        public bool Called = false;
 
         public void Call()
         {
+            Called = true;
             Script.Invoke(Function, 0, Args);
         }
     }
