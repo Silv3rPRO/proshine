@@ -65,10 +65,15 @@ namespace PROBot
             {
                 for (int i = Script.Invokes.Count - 1; i >= 0; i--)
                 {
-                    if (Script.Invokes[i].Time < DateTime.UtcNow)
+                    if (!InvokesCanceled)
                     {
-                        Script.Invokes[i].Call();
-                        Script.Invokes.RemoveAt(i);
+                        if (Script.Invokes[i].Time < DateTime.UtcNow)
+                        {
+                            if (Script.Invokes[i].Called)
+                                Script.Invokes.RemoveAt(i);
+                            else
+                                Script.Invokes[i].Call();
+                        }
                     }
                 }
             }
