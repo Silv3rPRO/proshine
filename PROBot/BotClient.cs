@@ -61,12 +61,15 @@ namespace PROBot
         
         public void CallInvokes()
         {
-            for (int i = Script.Invokes.Count - 1; i >= 0; i--)
+            if (Script != null)
             {
-                if (Script.Invokes[i].Time < DateTime.UtcNow)
+                for (int i = Script.Invokes.Count - 1; i >= 0; i--)
                 {
-                    Script.Invokes[i].Call();
-                    Script.Invokes.RemoveAt(i);
+                    if (Script.Invokes[i].Time < DateTime.UtcNow)
+                    {
+                        Script.Invokes[i].Call();
+                        Script.Invokes.RemoveAt(i);
+                    }
                 }
             }
         }
@@ -151,9 +154,6 @@ namespace PROBot
             }
             SetClient(client);
             client.Open();
-
-            if (Script != null)
-                client.IsScriptLoaded = true;
         }
 
         public void Logout(bool allowAutoReconnect)
@@ -261,9 +261,6 @@ namespace PROBot
             {
                 Script.ScriptMessage += Script_ScriptMessage;
                 Script.Initialize();
-                
-                if (Game != null)
-                    Game.IsScriptLoaded = true;
             }
             catch (Exception ex)
             {
