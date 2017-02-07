@@ -91,7 +91,6 @@ namespace PROProtocol
         public event Action<string, string> PokeTimeUpdated;
         public event Action<Shop> ShopOpened;
         public event Action<List<Pokemon>> PCBoxUpdated;
-        public event Action CallInvokes;
 
         private const string Version = "0.961";
 
@@ -192,8 +191,6 @@ namespace PROProtocol
 
         public void Update()
         {
-            CallInvokes?.Invoke();
-            
             _mapClient.Update();
             _connection.Update();
             if (!IsAuthenticated)
