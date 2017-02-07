@@ -151,6 +151,9 @@ namespace PROBot
             }
             SetClient(client);
             client.Open();
+
+            if (Script != null)
+                client.IsScriptLoaded = true;
         }
 
         public void Logout(bool allowAutoReconnect)
@@ -258,6 +261,9 @@ namespace PROBot
             {
                 Script.ScriptMessage += Script_ScriptMessage;
                 Script.Initialize();
+                
+                if (Game != null)
+                    Game.IsScriptLoaded = true;
             }
             catch (Exception ex)
             {
