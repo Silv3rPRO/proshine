@@ -324,6 +324,7 @@ namespace PROBot.Scripting
             _lua.Globals["login"] = new Action<string, string, string, int, string, int, string, string>(Login);
             _lua.Globals["invoke"] = new Action<DynValue, float, DynValue[]>(Invoke);
             _lua.Globals["startScript"] = new Func<bool>(StartScript);
+            _lua.Globals["cancelInvokes"] = new Action(CancelInvokes);
 
             foreach (string content in _libsContent)
             {
@@ -2771,7 +2772,7 @@ namespace PROBot.Scripting
             Bot.TextOptions[index].Description = content;
         }
         
-	// API: Logs in using specified credentials
+        // API: Logs in using specified credentials
         private void Login(string accountName, string password, string server, int socks = 0, string host = "", int port = 0, string socksUser = "", string socksPass = "")
         {
             server = server.ToUpperInvariant();
@@ -2805,7 +2806,7 @@ namespace PROBot.Scripting
             Bot.Login(account);
         }
         
-	// API: Calls the specified function after the specified number of seconds
+        // API: Calls the specified function after the specified number of seconds
         public void Invoke(DynValue function, float time, params DynValue[] args)
         {
             if (function.Type != DataType.Function && function.Type != DataType.ClrFunction)
@@ -2831,7 +2832,7 @@ namespace PROBot.Scripting
             Invokes.Add(invoker);
         }
         
-	// API: Starts the loaded script (usable in the outer scope or with invoke)
+        // API: Starts the loaded script (usable in the outer scope or with invoke)
         private bool StartScript()
         {
             if (Bot.Game != null && (Bot.Running == BotClient.State.Stopped || Bot.Running == BotClient.State.Paused))
@@ -2841,6 +2842,12 @@ namespace PROBot.Scripting
             }
 
             return false;
+        }
+        
+        // API: Cancels all queued Invokes
+        private void CancelInvokes()
+        {
+            Invokes.Clear();
         }
     }
 
