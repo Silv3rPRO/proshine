@@ -104,6 +104,11 @@ namespace PROShine
             TextOptions.ItemsSource = _textOptions = new ObservableCollection<TextOption>();
         }
 
+        private void Client_CallInvokes()
+        {
+            Bot.CallInvokes();
+        }
+
         private void Options_Click(object sender, RoutedEventArgs e)
         {
             if (OptionSliders.Visibility == Visibility.Collapsed)
@@ -403,6 +408,7 @@ namespace PROShine
                         SetTitle(Bot.Account.Name + " - " + Bot.Game.Server);
                         UpdateBotMenu();
                         LogoutMenuItem.IsEnabled = true;
+                        LoginMenuItem.IsEnabled = false;
                         LoginButton.IsEnabled = true;
                         LoginButtonIcon.Icon = FontAwesome.WPF.FontAwesomeIcon.SignOut;
                         LogMessage("Connected, authenticating...");
@@ -572,6 +578,7 @@ namespace PROShine
                     Bot.Game.PlayerRemoved += Map.Client_PlayerLeftMap;
                     Bot.Game.PlayerUpdated += Map.Client_PlayerMoved;
                     Bot.Game.NpcReceived += Map.Client_NpcReceived;
+                    Bot.Game.CallInvokes += Client_CallInvokes;
                 }
             }
             Dispatcher.InvokeAsync(delegate
