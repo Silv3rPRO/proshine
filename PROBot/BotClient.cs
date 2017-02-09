@@ -294,6 +294,7 @@ namespace PROBot
             if (canInteract)
             {
                 Game.TalkToNpc(target.Id);
+                target.CanBattle = false;
                 return true;
             }
             else
