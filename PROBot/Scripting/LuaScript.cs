@@ -322,8 +322,9 @@ namespace PROBot.Scripting
             _lua.Globals["readLinesFromFile"] = new Func<string, string[]>(ReadLinesFromFile);
 	    
             _lua.Globals["login"] = new Action<string, string, string, int, string, int, string, string>(Login);
-            _lua.Globals["invoke"] = new Action<DynValue, float, DynValue[]>(Invoke);
+            _lua.Globals["relog"] = new Action<float, string>(Relog);
             _lua.Globals["startScript"] = new Func<bool>(StartScript);
+            _lua.Globals["invoke"] = new Action<DynValue, float, DynValue[]>(Invoke);
             _lua.Globals["cancelInvokes"] = new Action(CancelInvokes);
 
             foreach (string content in _libsContent)
@@ -2805,31 +2806,30 @@ namespace PROBot.Scripting
 
             Bot.Login(account);
         }
-        
-        // API: Calls the specified function after the specified number of seconds
-        public void Invoke(DynValue function, float time, params DynValue[] args)
+
+        // API: Logs out and logs back in after the specified number of seconds, then starts the script shortly after
+        private void Relog(float seconds, string message)
         {
-            if (function.Type != DataType.Function && function.Type != DataType.ClrFunction)
+            DynValue name = DynValue.NewString(Bot.Account.Name);
+            DynValue password = DynValue.NewString(Bot.Account.Password);
+            DynValue server = DynValue.NewString(Bot.Account.Server);
+
+            if (Bot.Account.Socks.Version != SocksVersion.None)
             {
-                Fatal("error: invoke: tried to call an invalid function");
-                return;
+                DynValue socks = DynValue.NewNumber((int)Bot.Account.Socks.Version);
+                DynValue host = DynValue.NewString(Bot.Account.Socks.Host);
+                DynValue port = DynValue.NewNumber(Bot.Account.Socks.Port);
+                DynValue socksUser = DynValue.NewString(Bot.Account.Socks.Username);
+                DynValue socksPass = DynValue.NewString(Bot.Account.Socks.Password);
+                Invoke(_lua.Globals.Get("login"), seconds, name, password, server, socks, host, port, socksUser, socksPass);
+            }
+            else
+            {
+                Invoke(_lua.Globals.Get("login"), seconds, name, password, server);
             }
 
-            if (time == 0)
-            {
-                _lua.Call(function, args);
-                return;
-            }
-
-            Invoker invoker = new Invoker()
-            {
-                Function = function,
-                Time = DateTime.UtcNow.AddSeconds(time),
-                Script = this,
-                Args = args
-            };
-
-            Invokes.Add(invoker);
+            Invoke(_lua.Globals.Get("startScript"), seconds + 10);
+            Logout(message);
         }
         
         // API: Starts the loaded script (usable in the outer scope or with invoke)
@@ -2842,6 +2842,32 @@ namespace PROBot.Scripting
             }
 
             return false;
+        }
+        
+        // API: Calls the specified function after the specified number of seconds
+        public void Invoke(DynValue function, float seconds, params DynValue[] args)
+        {
+            if (function.Type != DataType.Function && function.Type != DataType.ClrFunction)
+            {
+                Fatal("error: invoke: tried to call an invalid function");
+                return;
+            }
+
+            if (seconds == 0)
+            {
+                _lua.Call(function, args);
+                return;
+            }
+
+            Invoker invoker = new Invoker()
+            {
+                Function = function,
+                Time = DateTime.UtcNow.AddSeconds(seconds),
+                Script = this,
+                Args = args
+            };
+
+            Invokes.Add(invoker);
         }
         
         // API: Cancels all queued Invokes
