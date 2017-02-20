@@ -171,6 +171,8 @@ namespace PROBot.Scripting
             _lua.Globals["getDiscoverableItems"] = new Func<List<Dictionary<string, int>>>(GetDiscoverableItems);
             _lua.Globals["getNpcData"] = new Func<List<Dictionary<string, DynValue>>>(GetNpcData);
             _lua.Globals["getMapLinks"] = new Func<List<Dictionary<string, DynValue>>>(GetMapLinks);
+            _lua.Globals["getMapSize"] = new Func<Dictionary<string, int>>(GetMapSize);
+            _lua.Globals["getCellType"] = new Func<int, int, string>(GetCellType);
 
             _lua.Globals["hasItem"] = new Func<string, bool>(HasItem);
             _lua.Globals["getItemQuantity"] = new Func<string, int>(GetItemQuantity);
@@ -550,6 +552,30 @@ namespace PROBot.Scripting
             }
 
             return links;
+        }
+        
+        // API: Returns the dimensions of the current map.
+        private Dictionary<string, int> GetMapSize()
+        {
+            var mapSize = new Dictionary<string, int>();
+            mapSize["x"] = Bot.Game.Map.Width;
+            mapSize["y"] = Bot.Game.Map.Height;
+            return mapSize;
+        }
+
+        // API: Returns the cell type of the specified cell on the current map.
+        private string GetCellType(int x, int y)
+        {
+            Map map = Bot.Game.Map;
+
+            if (map.IsGrass(x, y)) return "Grass";
+            if (map.IsWater(x, y)) return "Water";
+            if (map.IsNormalGround(x, y)) return "Normal Ground";
+            if (map.IsIce(x, y)) return "Ice";
+            if (map.IsPC(x, y)) return "PC";
+            if (map.HasLink(x, y)) return "Link";
+
+            return "Collider";
         }
 
         // API: Returns true if the string contains the specified part, ignoring the case.
