@@ -90,6 +90,9 @@ namespace PROShine.Views
 
         private void MapView_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (_bot.Running != BotClient.State.Started)
+                _bot.MoveToCell((int)_lastDisplayedCell.X, (int)_lastDisplayedCell.Y);
+                
             Keyboard.Focus(this);
         }
 
