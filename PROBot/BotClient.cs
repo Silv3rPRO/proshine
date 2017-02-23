@@ -152,6 +152,9 @@ namespace PROBot
 
         public void Update()
         {
+            if (Script != null)
+                Script.Update();
+            
             AutoReconnector.Update();
 
             if (_loginRequested)
