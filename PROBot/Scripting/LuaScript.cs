@@ -65,6 +65,11 @@ namespace PROBot.Scripting
             CallFunctionSafe("onResume");
         }
 
+        public override void Update()
+        {
+            CallFunctionSafe("onUpdate");
+        }
+
         public override void OnDialogMessage(string message)
         {
             CallFunctionSafe("onDialogMessage", message);
