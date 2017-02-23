@@ -15,6 +15,7 @@ namespace PROBot.Scripting
         public virtual void Stop() { }
         public virtual void Pause() { }
         public virtual void Resume() { }
+        public virtual void Update() { }
 
         public virtual void OnDialogMessage(string message) { }
         public virtual void OnBattleMessage(string message) { }
