@@ -90,8 +90,18 @@ namespace PROShine.Views
 
         private void MapView_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            int x = (int)_lastDisplayedCell.X;
+            int y = (int)_lastDisplayedCell.Y;
+
+            Npc target = _bot.Game.Map.Npcs.FirstOrDefault(npc => npc.PositionX == x && npc.PositionY == y);
+
             if (_bot.Running != BotClient.State.Started)
-                _bot.MoveToCell((int)_lastDisplayedCell.X, (int)_lastDisplayedCell.Y);
+            {
+                if (target == null)
+                    _bot.MoveToCell(x, y);
+                else
+                    _bot.TalkToNpc(target);
+            }
                 
             Keyboard.Focus(this);
         }
