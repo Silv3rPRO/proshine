@@ -153,6 +153,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonMoveStatus"] = new Func<int, int, bool>(GetPokemonMoveStatus);
             _lua.Globals["getPokemonNature"] = new Func<int, string>(GetPokemonNature);
             _lua.Globals["getPokemonAbility"] = new Func<int, string>(GetPokemonAbility);
+            _lua.Globals["getPokemonStat"] = new Func<int, string, int>(GetPokemonStat);
             _lua.Globals["getPokemonEffortValue"] = new Func<int, string, int>(GetPokemonEffortValue);
             _lua.Globals["getPokemonIndividualValue"] = new Func<int, string, int>(GetPokemonIndividualValue);
             _lua.Globals["getPokemonHappiness"] = new Func<int, int>(GetPokemonHappiness);
@@ -226,6 +227,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonMoveStatusFromPC"] = new Func<int, int, int, bool>(GetPokemonMoveStatusFromPC);
             _lua.Globals["getPokemonNatureFromPC"] = new Func<int, int, string>(GetPokemonNatureFromPC);
             _lua.Globals["getPokemonAbilityFromPC"] = new Func<int, int, string>(GetPokemonAbilityFromPC);
+            _lua.Globals["getPokemonStatFromPC"] = new Func<int, int, string, int>(GetPokemonStatFromPC);
             _lua.Globals["getPokemonEffortValueFromPC"] = new Func<int, int, string, int>(GetPokemonEffortValueFromPC);
             _lua.Globals["getPokemonIndividualValueFromPC"] = new Func<int, int, string, int>(GetPokemonIndividualValueFromPC);
             _lua.Globals["getPokemonHappinessFromPC"] = new Func<int, int, int>(GetPokemonHappinessFromPC);
@@ -1080,6 +1082,24 @@ namespace PROBot.Scripting
             }
 
             return move.CurrentPoints;
+        }
+
+        // API: Returns the value for the specified stat of the specified pokémon in the team.
+        private int GetPokemonStat(int pokemonIndex, string statType)
+        {
+            if (pokemonIndex < 1 || pokemonIndex > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonStat: tried to retrieve the non-existing pokémon " + pokemonIndex + ".");
+                return 0;
+            }
+
+            if (!_stats.ContainsKey(statType.ToUpperInvariant()))
+            {
+                Fatal("error: getPokemonStat: the stat '" + statType + "' does not exist.");
+                return 0;
+            }
+
+            return Bot.Game.Team[pokemonIndex - 1].Stats.GetStat(_stats[statType.ToUpperInvariant()]);
         }
 
         // API: Returns the effort value for the specified stat of the specified pokémon in the team.
@@ -2222,7 +2242,24 @@ namespace PROBot.Scripting
             return Bot.Game.CurrentPCBox[boxPokemonId - 1].Ability.Name;
         }
 
-        // API: Returns the effort value for the specified stat of the specified pokémon in the team.
+        // API: Returns the value for the specified stat of the specified pokémon in the PC.
+        private int GetPokemonStatFromPC(int boxId, int boxPokemonId, string statType)
+        {
+            if (!IsPCAccessValid("getPokemonStatFromPC", boxId, boxPokemonId))
+            {
+                return -1;
+            }
+
+            if (!_stats.ContainsKey(statType.ToUpperInvariant()))
+            {
+                Fatal("error: getPokemonStatFromPC: the stat '" + statType + "' does not exist.");
+                return 0;
+            }
+
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Stats.GetStat(_stats[statType.ToUpperInvariant()]);
+        }
+
+        // API: Returns the effort value for the specified stat of the specified pokémon in the PC.
         private int GetPokemonEffortValueFromPC(int boxId, int boxPokemonId, string statType)
         {
             if (!IsPCAccessValid("getPokemonEffortValueFromPC", boxId, boxPokemonId))
