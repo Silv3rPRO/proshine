@@ -16,7 +16,7 @@ namespace PROProtocol
             switch (server)
             {
                 case GameServer.Red:
-                    return "46.28.203.224";
+                    return "95.183.48.67";
                 case GameServer.Blue:
                     return "46.28.207.53";
                 case GameServer.Yellow:
