@@ -32,7 +32,9 @@ namespace PROBot
         public event Action ConnectionOpened;
         public event Action ConnectionClosed;
         public event Action<OptionSlider> SliderCreated;
+        public event Action<OptionSlider> SliderRemoved;
         public event Action<TextOption> TextboxCreated;
+        public event Action<TextOption> TextboxRemoved;
 
         public PokemonEvolver PokemonEvolver { get; private set; }
         public MoveTeacher MoveTeacher { get; private set; }
@@ -57,6 +59,18 @@ namespace PROBot
             Rand = new Random();
             SliderOptions = new Dictionary<int, OptionSlider>();
             TextOptions = new Dictionary<int, TextOption>();
+        }
+
+        public void RemoveText(int index)
+        {
+            TextboxRemoved?.Invoke(TextOptions[index]);
+            TextOptions.Remove(index);
+        }
+
+        public void RemoveSlider(int index)
+        {
+            SliderRemoved?.Invoke(SliderOptions[index]);
+            SliderOptions.Remove(index);
         }
 
         public void CreateText(int index, string content)

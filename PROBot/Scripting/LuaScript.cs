@@ -313,12 +313,14 @@ namespace PROBot.Scripting
             _lua.Globals["getOption"] = new Func<int, bool>(GetOption);
             _lua.Globals["setOptionName"] = new Action<int, string>(SetOptionName);
             _lua.Globals["setOptionDescription"] = new Action<int, string>(SetOptionDescription);
+            _lua.Globals["removeOption"] = new Action<int>(RemoveOption);
 
             // Custom text option functions
             _lua.Globals["setTextOption"] = new Action<int, string>(SetTextOption);
             _lua.Globals["getTextOption"] = new Func<int, string>(GetTextOption);
             _lua.Globals["setTextOptionName"] = new Action<int, string>(SetTextOptionName);
             _lua.Globals["setTextOptionDescription"] = new Action<int, string>(SetTextOptionDescription);
+            _lua.Globals["removeTextOption"] = new Action<int>(RemoveTextOption);
 
             // File editing actions
             _lua.Globals["logToFile"] = new Action<string, DynValue, bool>(LogToFile);
@@ -2766,6 +2768,13 @@ namespace PROBot.Scripting
             Bot.SliderOptions[index].Description = content;
         }
 
+        // API: Removes the slider option at the specified index
+        private void RemoveOption(int index)
+        {
+            if (Bot.SliderOptions.ContainsKey(index))
+                Bot.RemoveSlider(index);
+        }
+
         // API: Sets the text of the TextOption at a particular index, or creates it if it doesn't exist
         private void SetTextOption(int index, string content)
         {
@@ -2809,6 +2818,13 @@ namespace PROBot.Scripting
             }
 
             Bot.TextOptions[index].Description = content;
+        }
+
+        // API: Removes the text option at the specified index
+        private void RemoveTextOption(int index)
+        {
+            if (Bot.TextOptions.ContainsKey(index))
+                Bot.RemoveText(index);
         }
     }
 }
