@@ -129,6 +129,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokedexSeen"] = new Func<int>(GetPokedexSeen);
             _lua.Globals["getPokedexEvolved"] = new Func<int>(GetPokedexEvolved);
             _lua.Globals["getTeamSize"] = new Func<int>(GetTeamSize);
+            _lua.Globals["isAccountMember"] = new Func<bool>(IsAccountMember);
 
             _lua.Globals["getPokemonId"] = new Func<int, int>(GetPokemonId);
             _lua.Globals["getPokemonName"] = new Func<int, string>(GetPokemonName);
@@ -609,6 +610,12 @@ namespace PROBot.Scripting
         private int GetTeamSize()
         {
             return Bot.Game.Team.Count;
+        }
+
+        // API: Returns current account's membership status.
+        private bool IsAccountMember()
+        {
+            return Bot.Game.IsMember;
         }
 
         // API: Returns the ID of the specified pokémon in the team.
