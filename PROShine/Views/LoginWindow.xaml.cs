@@ -1,6 +1,8 @@
 ﻿using PROBot;
+using PROProtocol;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -24,6 +26,11 @@ namespace PROShine
         public string Server
         {
             get { return ServerComboBox.Text.Trim().ToUpperInvariant().Split(' ')[0]; }
+        }
+
+        public string MacAddress
+        {
+            get { return !MacRandomCheckBox.IsChecked.Value ? MacAddressTextBox.Text.Trim() : null; }
         }
 
         public bool HasProxy
@@ -62,9 +69,12 @@ namespace PROShine
             get { return ProxyPasswordTextBox.Password; }
         }
 
+        private Regex macAddressRegex = new Regex("^[0-9A-F]{12}([0-9A-F]{12})?$");
+
         public LoginWindow(BotClient bot)
         {
             InitializeComponent();
+            MacUseRandom_Checked(null, null);
             ProxyCheckBox_Checked(null, null);
 
             _bot = bot;
@@ -106,6 +116,14 @@ namespace PROShine
                 PasswordTextBox.Focus();
                 return;
             }
+
+            string macAddress = MacAddress;
+            if (macAddress != null && macAddress != HardwareHash.Empty && !macAddressRegex.IsMatch(macAddress))
+            {
+                MacAddressTextBox.Focus();
+                return;
+            }
+
             if (HasProxy)
             {
                 int port;
@@ -119,6 +137,31 @@ namespace PROShine
             {
                 DialogResult = true;
             }
+        }
+
+        private void MacUseRandom_Checked(object sender, RoutedEventArgs e)
+        {
+            if (MacRandomCheckBox == null || MacAddressLabel == null || MacAddressTextBox == null || MacAddressPanel == null) return;
+
+            Visibility macVisibility = MacRandomCheckBox.IsChecked.Value ? Visibility.Collapsed : Visibility.Visible;
+            MacAddressLabel.Visibility = macVisibility;
+            MacAddressTextBox.Visibility = macVisibility;
+            MacAddressPanel.Visibility = macVisibility;
+        }
+
+        private void MacRandomButton_Click(object sender, RoutedEventArgs e)
+        {
+            MacAddressTextBox.Text = HardwareHash.GenerateRandom();
+        }
+
+        private void MacRealButton_Click(object sender, RoutedEventArgs e)
+        {
+            MacAddressTextBox.Text = HardwareHash.RetrieveMAC();
+        }
+
+        private void MacEmptyButton_Click(object sender, RoutedEventArgs e)
+        {
+            MacAddressTextBox.Text = HardwareHash.Empty;
         }
 
         private void ProxyCheckBox_Checked(object sender, RoutedEventArgs e)
@@ -223,6 +266,15 @@ namespace PROShine
                     {
                         ServerComboBox.SelectedIndex = 0;
                     }
+                    if (account.MacAddress != null)
+                    {
+                        MacRandomCheckBox.IsChecked = false;
+                        MacAddressTextBox.Text = account.MacAddress;
+                    }
+                    else
+                    {
+                        MacRandomCheckBox.IsChecked = true;
+                    }
                     if (account.Socks.Version != SocksVersion.None || account.Socks.Username != null || account.Socks.Password != null
                         || account.Socks.Host != null || account.Socks.Port != -1)
                     {
@@ -286,6 +338,10 @@ namespace PROShine
 
         private void SaveAccountButton_Click(object sender, RoutedEventArgs e)
         {
+            if (!ShowAccounts)
+            {
+                ShowAccounts_Click(null, null);
+            }
             if (UsernameTextBox.Text == null || UsernameTextBox.Text.Trim() == "")
             {
                 return;
@@ -296,6 +352,8 @@ namespace PROShine
             {
                 account.Password = PasswordTextBox.Password;
             }
+            account.MacAddress = MacAddress;
+
             account.Server = Server;
             if (HasProxy)
             {

@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PROShine"
         mc:Ignorable="d" Background="#FFCDD5E2" Foreground="#FF101020" WindowStartupLocation="CenterOwner" Icon="../logo.ico" Title="Connection" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
     <Grid Margin="2">
         <Grid.ColumnDefinitions>
@@ -27,34 +26,49 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                     <RowDefinition Height="30" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                
                 <Label Grid.Row="0" Grid.Column="0" Content="Username:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
                 <TextBox Name="UsernameTextBox" Width="256" Grid.Row="0" Grid.Column="1" Margin="2"></TextBox>
                 <Label Grid.Row="1" Grid.Column="0" Content="Password:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
                 <PasswordBox Name="PasswordTextBox" Grid.Row="1" Grid.Column="1" Margin="2"></PasswordBox>
                 <Label Grid.Row="2" Grid.Column="0" Content="Server:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
                 <ComboBox Name="ServerComboBox" Grid.Row="2" Grid.Column="1" Margin="2" />
-                <CheckBox Name="ProxyCheckBox" Grid.Row="3" Grid.Column="1" Margin="2" Checked="ProxyCheckBox_Checked" Unchecked="ProxyCheckBox_Checked">Connect through a proxy server</CheckBox>
-                <StackPanel Name="ProxyTypePanel" Grid.Row="4" Grid.Column="1" Margin="2" Orientation="Horizontal">
+                
+                <CheckBox Name="MacRandomCheckBox" Grid.Row="3" Grid.Column="1" Margin="2" Checked="MacUseRandom_Checked" Unchecked="MacUseRandom_Checked" IsChecked="True">Use a random MAC address</CheckBox>
+                <Label Name="MacAddressLabel" Grid.Row="4" Grid.Column="0" Content="MAC:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
+                <TextBox Name="MacAddressTextBox" Width="256" Grid.Row="4" Grid.Column="1" Margin="2"></TextBox>
+                <StackPanel Name="MacAddressPanel" Grid.Row="5" Grid.Column="1" Margin="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button Background="#FFCDD5E2" Foreground="#FF101020" Margin="2" Click="MacRandomButton_Click">Randomize</Button>
+                    <Button Background="#FFCDD5E2" Foreground="#FF101020" Margin="2" Click="MacRealButton_Click">Get real</Button>
+                    <Button Background="#FFCDD5E2" Foreground="#FF101020" Margin="2" Click="MacEmptyButton_Click">Set to empty</Button>
+                </StackPanel>
+                
+                <CheckBox Name="ProxyCheckBox" Grid.Row="6" Grid.Column="1" Margin="2" Checked="ProxyCheckBox_Checked" Unchecked="ProxyCheckBox_Checked">Connect through a proxy server</CheckBox>
+                <StackPanel Name="ProxyTypePanel" Grid.Row="7" Grid.Column="1" Margin="2" Orientation="Horizontal">
                     <RadioButton Name="Socks4RadioButton" Checked="ProxyCheckBox_Checked" Unchecked="ProxyCheckBox_Checked" Margin="0,0,10,0">SOCKS4</RadioButton>
                     <RadioButton Name="Socks5RadioButton" Checked="ProxyCheckBox_Checked" Unchecked="ProxyCheckBox_Checked" IsChecked="True">SOCKS5</RadioButton>
                 </StackPanel>
-                <Label Name="ProxyHostLabel" Grid.Row="5" Grid.Column="0" Content="Host:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
-                <TextBox Name="ProxyHostTextBox" Width="256" Grid.Row="5" Grid.Column="1" Margin="2"></TextBox>
-                <Label Name="ProxyPortLabel" Grid.Row="6" Grid.Column="0" Content="Port:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
-                <TextBox Name="ProxyPortTextBox" Width="256" Grid.Row="6" Grid.Column="1" Margin="2"></TextBox>
-                <CheckBox Name="AnonymousCheckBox" Grid.Row="7" Grid.Column="1" Margin="2" Checked="ProxyCheckBox_Checked" Unchecked="ProxyCheckBox_Checked" IsChecked="True">Use anonymous authentication</CheckBox>
-                <Label Name="ProxyUsernameLabel" Grid.Row="8" Grid.Column="0" Content="Username:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
-                <TextBox Name="ProxyUsernameTextBox" Width="256" Grid.Row="8" Grid.Column="1" Margin="2"></TextBox>
-                <Label Name="ProxyPasswordLabel" Grid.Row="9" Grid.Column="0" Content="Password:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
-                <PasswordBox Name="ProxyPasswordTextBox" Grid.Row="9" Grid.Column="1" Margin="2"></PasswordBox>
-                <Button Grid.Row="10" Grid.Column="0" IsCancel="True" Content="Cancel" Background="#FFCDD5E2" Foreground="#FF101020" Margin="1"></Button>
-                <Grid Grid.Row="10" Grid.Column="1">
+                <Label Name="ProxyHostLabel" Grid.Row="8" Grid.Column="0" Content="Host:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
+                <TextBox Name="ProxyHostTextBox" Width="256" Grid.Row="8" Grid.Column="1" Margin="2"></TextBox>
+                <Label Name="ProxyPortLabel" Grid.Row="9" Grid.Column="0" Content="Port:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
+                <TextBox Name="ProxyPortTextBox" Width="256" Grid.Row="9" Grid.Column="1" Margin="2"></TextBox>
+                <CheckBox Name="AnonymousCheckBox" Grid.Row="10" Grid.Column="1" Margin="2" Checked="ProxyCheckBox_Checked" Unchecked="ProxyCheckBox_Checked" IsChecked="True">Use anonymous authentication</CheckBox>
+                <Label Name="ProxyUsernameLabel" Grid.Row="11" Grid.Column="0" Content="Username:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
+                <TextBox Name="ProxyUsernameTextBox" Width="256" Grid.Row="11" Grid.Column="1" Margin="2"></TextBox>
+                <Label Name="ProxyPasswordLabel" Grid.Row="12" Grid.Column="0" Content="Password:" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1" />
+                <PasswordBox Name="ProxyPasswordTextBox" Grid.Row="12" Grid.Column="1" Margin="2"></PasswordBox>
+                
+                <Button Grid.Row="13" Grid.Column="0" IsCancel="True" Content="Cancel" Background="#FFCDD5E2" Foreground="#FF101020" Margin="1"></Button>
+                <Grid Grid.Row="13" Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="*" />
@@ -64,7 +78,7 @@
                 </Grid>
             </Grid>
             <Grid Margin="2" Grid.Column="1">
-                <Button Name="ShowAccountsButton" Content="&gt;" HorizontalAlignment="Stretch" Click="ShowAccounts_Click" />
+                <Button Background="#FFCDD5E2" Foreground="#FF101020" Name="ShowAccountsButton" Content="&gt;" HorizontalAlignment="Stretch" Click="ShowAccounts_Click" />
             </Grid>
         </Grid>
         <Grid Name="AccountList"  Margin="2" Grid.Column="1" Visibility="Hidden" Width="0">

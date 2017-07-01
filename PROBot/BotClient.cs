@@ -363,7 +363,7 @@ namespace PROBot
         private void Client_ConnectionOpened()
         {
             ConnectionOpened?.Invoke();
-            Game.SendAuthentication(Account.Name, Account.Password, HardwareHash.Empty);
+            Game.SendAuthentication(Account.Name, Account.Password, Account.MacAddress ?? HardwareHash.GenerateRandom());
         }
 
         private void Client_ConnectionClosed(Exception ex)
