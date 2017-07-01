@@ -404,6 +404,7 @@ namespace PROShine
                         SetTitle(Bot.Account.Name + " - " + Bot.Game.Server);
                         UpdateBotMenu();
                         LogoutMenuItem.IsEnabled = true;
+                        LoginMenuItem.IsEnabled = false;
                         LoginButton.IsEnabled = true;
                         LoginButtonIcon.Icon = FontAwesome.WPF.FontAwesomeIcon.SignOut;
                         LogMessage("Connected, authenticating...");

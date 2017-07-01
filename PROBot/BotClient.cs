@@ -58,6 +58,23 @@ namespace PROBot
             SliderOptions = new Dictionary<int, OptionSlider>();
             TextOptions = new Dictionary<int, TextOption>();
         }
+        
+        public void CallInvokes()
+        {
+            if (Script != null)
+            {
+                for (int i = Script.Invokes.Count - 1; i >= 0; i--)
+                {
+                    if (Script.Invokes[i].Time < DateTime.UtcNow)
+                    {
+                        if (Script.Invokes[i].Called)
+                            Script.Invokes.RemoveAt(i);
+                        else
+                            Script.Invokes[i].Call();
+                    }
+                }
+            }
+        }
 
         public void CreateText(int index, string content)
         {
@@ -152,6 +169,8 @@ namespace PROBot
 
         public void Update()
         {
+            CallInvokes();
+            
             AutoReconnector.Update();
 
             if (_loginRequested)
