@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROProtocol", "PROProtocol\PROProtocol.csproj", "{C9A1AFC8-2228-4542-B2C7-B6ECA1461C84}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROShine", "PROShine\PROShine.csproj", "{415564DC-9BF8-442F-B3A0-E9CB0B8056E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrightNetwork", "BrightNetwork\BrightNetwork.csproj", "{F6F45690-9361-4DA4-8A8A-18D782E29752}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputDialog", "InputDialog\InputDialog.csproj", "{B9B185E2-9DD5-45D5-A8FF-4D0F49BF0B43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F6F45690-9361-4DA4-8A8A-18D782E29752}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6F45690-9361-4DA4-8A8A-18D782E29752}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6F45690-9361-4DA4-8A8A-18D782E29752}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9B185E2-9DD5-45D5-A8FF-4D0F49BF0B43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9B185E2-9DD5-45D5-A8FF-4D0F49BF0B43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9B185E2-9DD5-45D5-A8FF-4D0F49BF0B43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9B185E2-9DD5-45D5-A8FF-4D0F49BF0B43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
