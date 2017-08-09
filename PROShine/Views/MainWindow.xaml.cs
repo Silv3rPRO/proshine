@@ -352,9 +352,7 @@ namespace PROShine
         {
             lock (Bot)
             {
-                Bot.Stop();
-                if (Bot.Script != null)
-                    Bot.Script.Invokes.Clear();
+                Bot.Stop();                
             }
         }
 
@@ -826,6 +824,7 @@ namespace PROShine
             lock (Bot)
             {
                 Bot.Stop();
+                Bot.CancelInvokes();
             }
         }
 
