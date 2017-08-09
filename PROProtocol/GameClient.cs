@@ -33,6 +33,7 @@ namespace PROProtocol
 
         public int Money { get; private set; }
         public int Coins { get; private set; }
+        public bool IsMember { get; private set; }
         public List<Pokemon> Team { get; private set; }
         public List<Pokemon> CurrentPCBox { get; private set; }
         public List<InventoryItem> Items { get; private set; }
@@ -92,7 +93,7 @@ namespace PROProtocol
         public event Action<Shop> ShopOpened;
         public event Action<List<Pokemon>> PCBoxUpdated;
 
-        private const string Version = "0.961";
+        private const string Version = "0.974";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -1207,6 +1208,7 @@ namespace PROProtocol
             PokedexOwned = Convert.ToInt32(playerData[4]);
             PokedexSeen = Convert.ToInt32(playerData[5]);
             PokedexEvolved = Convert.ToInt32(playerData[6]);
+            IsMember = playerData[10] == "1";
         }
 
         private void OnUpdateTime(string[] data)

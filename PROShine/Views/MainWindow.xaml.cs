@@ -68,7 +68,9 @@ namespace PROShine
             Bot.ConnectionClosed += Bot_ConnectionClosed;
             Bot.MessageLogged += Bot_LogMessage;
             Bot.SliderCreated += Bot_SliderCreated;
+            Bot.SliderRemoved += Bot_SliderRemoved;
             Bot.TextboxCreated += Bot_TextboxCreated;
+            Bot.TextboxRemoved += Bot_TextboxRemoved;
             
             InitializeComponent();
             AutoReconnectSwitch.IsChecked = Bot.AutoReconnector.IsEnabled;
@@ -102,6 +104,40 @@ namespace PROShine
 
             OptionSliders.ItemsSource = _sliderOptions = new ObservableCollection<OptionSlider>();
             TextOptions.ItemsSource = _textOptions = new ObservableCollection<TextOption>();
+        }
+
+        public void Bot_SliderRemoved(OptionSlider option)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                if (_sliderOptions.Count == 1 && _textOptions.Count == 0)
+                {
+                    OptionsButton.Content = "Show Options";
+                    OptionsButton.Visibility = Visibility.Collapsed;
+                    OptionSliders.Visibility = Visibility.Collapsed;
+                    TextOptions.Visibility = Visibility.Collapsed;
+                }
+
+                _sliderOptions.Remove(option);
+                OptionSliders.Items.Refresh();
+            });
+        }
+
+        public void Bot_TextboxRemoved(TextOption option)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                if (_textOptions.Count == 1 && _sliderOptions.Count == 0)
+                {
+                    OptionsButton.Content = "Show Options";
+                    OptionsButton.Visibility = Visibility.Collapsed;
+                    OptionSliders.Visibility = Visibility.Collapsed;
+                    TextOptions.Visibility = Visibility.Collapsed;
+                }
+
+                _textOptions.Remove(option);
+                TextOptions.Items.Refresh();
+            });
         }
 
         private void Options_Click(object sender, RoutedEventArgs e)
@@ -261,6 +297,7 @@ namespace PROShine
             {
                 account.Password = login.Password;
                 account.Server = login.Server;
+                account.MacAddress = login.MacAddress;
                 if (login.HasProxy)
                 {
                     account.Socks.Version = (SocksVersion)login.ProxyVersion;

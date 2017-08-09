@@ -129,6 +129,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokedexSeen"] = new Func<int>(GetPokedexSeen);
             _lua.Globals["getPokedexEvolved"] = new Func<int>(GetPokedexEvolved);
             _lua.Globals["getTeamSize"] = new Func<int>(GetTeamSize);
+            _lua.Globals["isAccountMember"] = new Func<bool>(IsAccountMember);
 
             _lua.Globals["getPokemonId"] = new Func<int, int>(GetPokemonId);
             _lua.Globals["getPokemonName"] = new Func<int, string>(GetPokemonName);
@@ -153,6 +154,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonMoveStatus"] = new Func<int, int, bool>(GetPokemonMoveStatus);
             _lua.Globals["getPokemonNature"] = new Func<int, string>(GetPokemonNature);
             _lua.Globals["getPokemonAbility"] = new Func<int, string>(GetPokemonAbility);
+            _lua.Globals["getPokemonStat"] = new Func<int, string, int>(GetPokemonStat);
             _lua.Globals["getPokemonEffortValue"] = new Func<int, string, int>(GetPokemonEffortValue);
             _lua.Globals["getPokemonIndividualValue"] = new Func<int, string, int>(GetPokemonIndividualValue);
             _lua.Globals["getPokemonHappiness"] = new Func<int, int>(GetPokemonHappiness);
@@ -226,6 +228,7 @@ namespace PROBot.Scripting
             _lua.Globals["getPokemonMoveStatusFromPC"] = new Func<int, int, int, bool>(GetPokemonMoveStatusFromPC);
             _lua.Globals["getPokemonNatureFromPC"] = new Func<int, int, string>(GetPokemonNatureFromPC);
             _lua.Globals["getPokemonAbilityFromPC"] = new Func<int, int, string>(GetPokemonAbilityFromPC);
+            _lua.Globals["getPokemonStatFromPC"] = new Func<int, int, string, int>(GetPokemonStatFromPC);
             _lua.Globals["getPokemonEffortValueFromPC"] = new Func<int, int, string, int>(GetPokemonEffortValueFromPC);
             _lua.Globals["getPokemonIndividualValueFromPC"] = new Func<int, int, string, int>(GetPokemonIndividualValueFromPC);
             _lua.Globals["getPokemonHappinessFromPC"] = new Func<int, int, int>(GetPokemonHappinessFromPC);
@@ -310,12 +313,14 @@ namespace PROBot.Scripting
             _lua.Globals["getOption"] = new Func<int, bool>(GetOption);
             _lua.Globals["setOptionName"] = new Action<int, string>(SetOptionName);
             _lua.Globals["setOptionDescription"] = new Action<int, string>(SetOptionDescription);
+            _lua.Globals["removeOption"] = new Action<int>(RemoveOption);
 
             // Custom text option functions
             _lua.Globals["setTextOption"] = new Action<int, string>(SetTextOption);
             _lua.Globals["getTextOption"] = new Func<int, string>(GetTextOption);
             _lua.Globals["setTextOptionName"] = new Action<int, string>(SetTextOptionName);
             _lua.Globals["setTextOptionDescription"] = new Action<int, string>(SetTextOptionDescription);
+            _lua.Globals["removeTextOption"] = new Action<int>(RemoveTextOption);
 
             // File editing actions
             _lua.Globals["logToFile"] = new Action<string, DynValue, bool>(LogToFile);
@@ -609,6 +614,12 @@ namespace PROBot.Scripting
         private int GetTeamSize()
         {
             return Bot.Game.Team.Count;
+        }
+
+        // API: Returns current account's membership status.
+        private bool IsAccountMember()
+        {
+            return Bot.Game.IsMember;
         }
 
         // API: Returns the ID of the specified pokémon in the team.
@@ -1080,6 +1091,24 @@ namespace PROBot.Scripting
             }
 
             return move.CurrentPoints;
+        }
+
+        // API: Returns the value for the specified stat of the specified pokémon in the team.
+        private int GetPokemonStat(int pokemonIndex, string statType)
+        {
+            if (pokemonIndex < 1 || pokemonIndex > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonStat: tried to retrieve the non-existing pokémon " + pokemonIndex + ".");
+                return 0;
+            }
+
+            if (!_stats.ContainsKey(statType.ToUpperInvariant()))
+            {
+                Fatal("error: getPokemonStat: the stat '" + statType + "' does not exist.");
+                return 0;
+            }
+
+            return Bot.Game.Team[pokemonIndex - 1].Stats.GetStat(_stats[statType.ToUpperInvariant()]);
         }
 
         // API: Returns the effort value for the specified stat of the specified pokémon in the team.
@@ -2222,7 +2251,24 @@ namespace PROBot.Scripting
             return Bot.Game.CurrentPCBox[boxPokemonId - 1].Ability.Name;
         }
 
-        // API: Returns the effort value for the specified stat of the specified pokémon in the team.
+        // API: Returns the value for the specified stat of the specified pokémon in the PC.
+        private int GetPokemonStatFromPC(int boxId, int boxPokemonId, string statType)
+        {
+            if (!IsPCAccessValid("getPokemonStatFromPC", boxId, boxPokemonId))
+            {
+                return -1;
+            }
+
+            if (!_stats.ContainsKey(statType.ToUpperInvariant()))
+            {
+                Fatal("error: getPokemonStatFromPC: the stat '" + statType + "' does not exist.");
+                return 0;
+            }
+
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].Stats.GetStat(_stats[statType.ToUpperInvariant()]);
+        }
+
+        // API: Returns the effort value for the specified stat of the specified pokémon in the PC.
         private int GetPokemonEffortValueFromPC(int boxId, int boxPokemonId, string statType)
         {
             if (!IsPCAccessValid("getPokemonEffortValueFromPC", boxId, boxPokemonId))
@@ -2722,6 +2768,13 @@ namespace PROBot.Scripting
             Bot.SliderOptions[index].Description = content;
         }
 
+        // API: Removes the slider option at the specified index
+        private void RemoveOption(int index)
+        {
+            if (Bot.SliderOptions.ContainsKey(index))
+                Bot.RemoveSlider(index);
+        }
+
         // API: Sets the text of the TextOption at a particular index, or creates it if it doesn't exist
         private void SetTextOption(int index, string content)
         {
@@ -2765,6 +2818,13 @@ namespace PROBot.Scripting
             }
 
             Bot.TextOptions[index].Description = content;
+        }
+
+        // API: Removes the text option at the specified index
+        private void RemoveTextOption(int index)
+        {
+            if (Bot.TextOptions.ContainsKey(index))
+                Bot.RemoveText(index);
         }
     }
 }
