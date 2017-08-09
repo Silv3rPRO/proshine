@@ -2873,8 +2873,7 @@ namespace PROBot.Scripting
         // API: Cancels all queued Invokes
         private void CancelInvokes()
         {
-            foreach (Invoker invoker in Invokes)
-                invoker.Called = true;
+		Bot.CancelInvokes();
         }
     }
 
