@@ -57,7 +57,37 @@ namespace PROShine.Views
             MouseDown += MapView_MouseDown;
             SizeChanged += MapView_SizeChanged;
         }
-        
+
+        private void MapCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Tuple<double, double> drawingOffset = GetDrawingOffset();
+            double deltaX = drawingOffset.Item1;
+            double deltaY = drawingOffset.Item2;
+            int ingameX = (int)((e.GetPosition(this).X / _cellWidth - deltaX));
+            int ingameY = (int)((e.GetPosition(this).Y / _cellWidth) - deltaY);
+
+            lock (_bot)
+            {
+                if (_bot.Game != null &&
+                    _bot.Game.IsMapLoaded &&
+                    _bot.Game.AreNpcReceived &&
+                    _bot.Game.IsInactive &&
+                    !_bot.Game.IsInBattle &&
+                    _bot.Running != BotClient.State.Started)
+                {
+                    Npc npcOnCell = _bot.Game.Map.Npcs.FirstOrDefault(npc => npc.PositionX == ingameX && npc.PositionY == ingameY);
+                    if (npcOnCell == null)
+                    {
+                        _bot.MoveToCell(ingameX, ingameY);
+                    }
+                    else
+                    {
+                        _bot.TalkToNpc(npcOnCell);
+                    }
+                }
+            }
+        }
+
         private void MapCanvas_MouseLeave(object sender, MouseEventArgs e)
         {
             FloatingTip.IsOpen = false;

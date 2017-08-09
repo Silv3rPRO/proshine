@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Canvas Name="MapCanvas" ClipToBounds="True" MouseMove="MapCanvas_MouseMove" MouseLeave="MapCanvas_MouseLeave">
+        <Canvas Name="MapCanvas" ClipToBounds="True" MouseLeftButtonDown="MapCanvas_MouseLeftButtonDown" MouseMove="MapCanvas_MouseMove" MouseLeave="MapCanvas_MouseLeave">
             <Popup Name="FloatingTip" Placement="Relative" PlacementTarget="{Binding ElementName=MapCanvas}" IsOpen="True">
                 <Border BorderBrush="Black" BorderThickness="1">
                     <TextBlock Name="TipText" Background="#FFCDD5E2" Padding="2"></TextBlock>
