@@ -58,6 +58,13 @@ namespace PROBot
             SliderOptions = new Dictionary<int, OptionSlider>();
             TextOptions = new Dictionary<int, TextOption>();
         }
+
+        public void CancelInvokes()
+        {
+            if (Script != null)
+                foreach (Invoker invoker in Script.Invokes)
+                    invoker.Called = true;
+        }
         
         public void CallInvokes()
         {
