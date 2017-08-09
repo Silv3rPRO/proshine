@@ -353,6 +353,8 @@ namespace PROShine
             lock (Bot)
             {
                 Bot.Stop();
+                if (Bot.Script != null)
+                    Bot.Script.Invokes.Clear();
             }
         }
 
