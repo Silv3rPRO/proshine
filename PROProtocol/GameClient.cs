@@ -115,6 +115,11 @@ namespace PROProtocol
 
         private MapClient _mapClient;
 
+        public void ClearPath()
+        {
+            _movements.Clear();
+        }
+
         public bool IsInactive
         {
             get
