@@ -436,6 +436,7 @@ namespace PROBot.Scripting
         {
             LogMessage(message);
             Bot.Stop();
+            Bot.CancelInvokes();
         }
 
         // API: Displays the specified message to the message log and logs out.
