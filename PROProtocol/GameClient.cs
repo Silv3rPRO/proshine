@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace PROProtocol
@@ -304,8 +305,102 @@ namespace PROProtocol
             }
         }
 
+
+
+
+        private Dictionary<Point, Npc> guardedFields = null;
+        private Dictionary<Point, Npc> getGuardedFields()
+        {
+            //if initiated, then return it
+            if (guardedFields != null && IsMapLoaded)
+                return guardedFields;
+
+            //initiate guardedFields
+            guardedFields = new Dictionary<Point, Npc>();
+
+            //iterating all battlers
+            foreach (Npc battler in Map.Npcs.Where(npc => npc.CanBattle))
+
+                //iterate all points those battlers have in vision
+                foreach (Point guardedField in getGuardedFields(battler))
+
+                    //fill dictionary
+                    guardedFields.Add(guardedField, battler);
+
+            return guardedFields;
+        }
+
+        private List<Point> getGuardedFields(Npc battler)
+        {
+            int visionRange = battler.LosLength;
+            List<Point> guardedFields = new List<Point>();
+
+            //npc has no vision direction at the moment, so watching all 4 cardinal directions
+            Direction[] visionLines = (Direction[])Enum.GetValues(typeof(Direction));
+
+            foreach (Direction visionLine in visionLines)
+                guardedFields.AddRange(_getGuardedFieldsInDirection(battler, visionLine, visionRange));
+
+            return guardedFields;
+        }
+
+        private HashSet<Map.MoveResult> validMovementResults = null;
+        private List<Point> _getGuardedFieldsInDirection(Npc battler, Direction direction, int visionRange)
+        {
+            //init on first usage
+            if (validMovementResults == null)
+            {
+                validMovementResults = new HashSet<Map.MoveResult>();
+                validMovementResults.Add(Map.MoveResult.Success);   //standard behaviour, free vision
+                validMovementResults.Add(Map.MoveResult.Sliding);   //when sliding on ice, you can still be stopped for battle
+            }
+
+            //the list of guarded fields in one direction
+            List<Point> guardedFields = new List<Point>();
+
+            //making copy, because reference would modify battlers position
+            //all elements in list would probably point to same Point obj at that time
+            Point battlerPos = new Point(battler.PositionX, battler.PositionY);
+            Point checkingPos = new Point(battler.PositionX, battler.PositionY);
+
+            bool isOnGround = IsOnGround;
+            bool isSurfing = IsSurfing;
+
+            Map.MoveResult result = Map.MoveResult.Fail;
+            bool isBlocked = true;
+            bool isInViewRange = false;
+
+            while (true)
+            {
+                //move into direction
+                checkingPos = direction.ApplyToCoordinates(checkingPos);
+
+                //calculate move results
+                result = Map.CanMove(direction, checkingPos.X, checkingPos.Y, isOnGround, isSurfing, CanUseCut, CanUseSmashRock);
+                isBlocked = !validMovementResults.Contains(result);
+                isInViewRange = getManhattanDistance(battlerPos, checkingPos) <= visionRange;
+
+                //adding to guarded fields, if conditions are set
+                if (!isBlocked && isInViewRange)
+                    guardedFields.Add(checkingPos);
+
+                //leave loop otherwise
+                else
+                    break;
+            }
+
+            return guardedFields;
+        }
+
+        //couldn't find any available libs for this standard function 
+        private static int getManhattanDistance(Point p1, Point p2)
+        {
+            return Math.Abs(p1.X - p2.X) + Math.Abs(p1.Y - p2.Y);
+        }
+
         private bool ApplyMovement(Direction direction)
         {
+            //init vars
             int destinationX = PlayerX;
             int destinationY = PlayerY;
             bool isOnGround = IsOnGround;
@@ -313,6 +408,30 @@ namespace PROProtocol
 
             direction.ApplyToCoordinates(ref destinationX, ref destinationY);
 
+            Point playerPos = new Point(PlayerX, PlayerY);
+
+            //analyze current position
+            if (getGuardedFields().TryGetValue(playerPos, out Npc battler))
+            {
+                //stop bot movement
+                _movements.Clear();
+
+                //TODO: do battler movement
+
+                //start battle
+                TalkToNpc(battler.Id);
+
+                //while sending, remove listed guarding fields
+                //ATTENTION: don't know how to handle interrupts here
+                foreach (Point guarded in getGuardedFields(battler))
+                    getGuardedFields().Remove(guarded);
+
+                //no further movement therefore return
+                return false;
+            }
+
+
+            //analyze next movement
             Map.MoveResult result = Map.CanMove(direction, destinationX, destinationY, isOnGround, isSurfing, CanUseCut, CanUseSmashRock);
             if (Map.ApplyMovement(direction, result, ref destinationX, ref destinationY, ref isOnGround, ref isSurfing))
             {
@@ -1201,7 +1320,7 @@ namespace PROProtocol
             PositionUpdated?.Invoke(MapName, PlayerX, playerY);
         }
 
-         private void OnPlayerInfos(string[] data)
+        private void OnPlayerInfos(string[] data)
         {
             string[] playerData = data[1].Split('|');
             PlayerName = playerData[0];
@@ -1227,7 +1346,7 @@ namespace PROProtocol
         {
             if (!IsMapLoaded) return;
 
-            IEnumerable<int> defeatedBattlers = data[1].Split(new [] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(id => int.Parse(id));
+            IEnumerable<int> defeatedBattlers = data[1].Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(id => int.Parse(id));
 
             Map.Npcs.Clear();
             foreach (Npc npc in Map.OriginalNpcs)
