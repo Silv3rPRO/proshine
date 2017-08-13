@@ -1,4 +1,5 @@
-﻿using System;
+﻿//#define DEBUG_TRAINER_BATTLES
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -321,7 +322,7 @@ namespace PROProtocol
 		private Dictionary<Point, Npc> _guardedFields = null;
         private Dictionary<Point, Npc> getGuardedFields()
         {
-#if DEBUG
+#if DEBUG && DEBUG_TRAINER_BATTLES
             Console.WriteLine("Trainer Battles | guarded fields | access");
 #endif
 
@@ -331,7 +332,7 @@ namespace PROProtocol
                 return _guardedFields;
             }
 
-#if DEBUG
+#if DEBUG && DEBUG_TRAINER_BATTLES
             Console.WriteLine("Trainer Battles | guarded fields | init");
             Console.WriteLine("Trainer Battles | map ncp | count: " + Map.Npcs.Count);
 #endif
@@ -343,10 +344,13 @@ namespace PROProtocol
             foreach (Npc battler in Map.Npcs.Where(npc => npc.CanBattle))
             {
 
+#if DEBUG && DEBUG_TRAINER_BATTLES
+                Console.WriteLine("Trainer Battles | map ncp | "+battler.Id+" ("+battler.Name+") | guarded field count: " + getGuardedFields(battler).Count);
+#endif
                 //iterate all points those battlers have in vision
                 foreach (Point guardedField in getGuardedFields(battler))
                 {
-#if DEBUG
+#if DEBUG && DEBUG_TRAINER_BATTLES
                     if (_guardedFields.ContainsKey(guardedField))
                         Console.WriteLine("Trainer Battles | guarded fields | conflict: " + guardedField.ToString());
 #endif
@@ -445,7 +449,7 @@ namespace PROProtocol
 
             Point playerPos = new Point(PlayerX, PlayerY);
 
-#if DEBUG
+#if DEBUG && DEBUG_TRAINER_BATTLES
             Console.WriteLine("Trainer Battles | IsTrainerBattlesActive | " + IsTrainerBattlesActive);
             Console.WriteLine("Trainer Battles | guarded fields | count: " + getGuardedFields().Count);
             Console.WriteLine("Trainer Battles | guarded fields | contains playerpos: " + getGuardedFields().ContainsKey(playerPos));
@@ -2035,7 +2039,7 @@ namespace PROProtocol
             Players.Clear();
             //when new map is requested, reset guarded fields from npc traineres
             _guardedFields = null;
-#if DEBUG
+#if DEBUG && DEBUG_TRAINER_BATTLES
             Console.WriteLine("Trainer Battles | guarded fields | reset");
 #endif
         }
