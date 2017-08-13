@@ -116,8 +116,11 @@ namespace PROProtocol
                         int x = reader.ReadInt16();
                         int y = reader.ReadInt16();
 
-                        int direction = reader.ReadByte();
+                        //view direction and length
+                        int directionValue = reader.ReadByte();
+                        Direction viewDirection = DirectionExtensions.FromInt(directionValue);
                         int losLength = reader.ReadByte();
+
                         int type = reader.ReadInt16();
 
                         ReadString(reader);
@@ -148,7 +151,7 @@ namespace PROProtocol
 
                         if (npcName != "TileScript")
                         {
-                            OriginalNpcs.Add(new Npc(npcId, npcName, isBattler, type, x, y, losLength, path));
+                            OriginalNpcs.Add(new Npc(npcId, npcName, isBattler, type, x, y, viewDirection, losLength, path));
                         }
 
                         reader.ReadInt16();
