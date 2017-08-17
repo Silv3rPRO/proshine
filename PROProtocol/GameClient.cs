@@ -93,7 +93,7 @@ namespace PROProtocol
         public event Action<Shop> ShopOpened;
         public event Action<List<Pokemon>> PCBoxUpdated;
 
-        private const string Version = "Piplup";
+        private const string Version = "Sinnoh";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -960,7 +960,7 @@ namespace PROProtocol
             OpenedShop = null;
             IsPCOpen = false;
             // DSSock.sendMove
-            SendPacket("#|.|" + direction);
+            SendPacket("/|.|" + direction);
         }
 
         private void SendAttack(string number)
