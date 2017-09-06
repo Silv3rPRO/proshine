@@ -546,7 +546,7 @@ namespace PROBot.Scripting
                     var newLink = new Dictionary<string, DynValue>();
                     newLink["x"] = DynValue.NewNumber(coord.Item1);
                     newLink["y"] = DynValue.NewNumber(coord.Item2);
-                    newLink["name"] = DynValue.NewString(link.Key);
+                    newLink["name"] = DynValue.NewString(Bot.Game.Map.Links[coord.Item1, coord.Item2].DestinationMap);
                     links.Add(newLink);
                 }
             }
