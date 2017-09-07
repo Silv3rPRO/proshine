@@ -1336,7 +1336,7 @@ namespace PROBot.Scripting
         {
             if (!Bot.Game.IsInBattle)
             {
-                Fatal("error: getOpponentMaximumHealth can only be used in battle.");
+                Fatal("error: getOpponentMaxHealth can only be used in battle.");
                 return 0;
             }
             return Bot.Game.ActiveBattle.OpponentHealth;
