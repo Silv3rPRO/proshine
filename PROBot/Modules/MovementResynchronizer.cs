@@ -2,11 +2,11 @@
 {
     public class MovementResynchronizer
     {
-        private BotClient _bot;
-        private int _lastMovementSourceX;
-        private int _lastMovementSourceY;
+        private readonly BotClient _bot;
         private int _lastMovementDestinationX;
         private int _lastMovementDestinationY;
+        private int _lastMovementSourceX;
+        private int _lastMovementSourceY;
         private bool _requestedResync;
 
         public MovementResynchronizer(BotClient bot)
@@ -19,9 +19,7 @@
         private void Bot_StateChanged(BotClient.State state)
         {
             if (state == BotClient.State.Started)
-            {
                 Reset();
-            }
         }
 
         private void Bot_ClientChanged()

@@ -1,0 +1,8 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Derex\Downloads\proshine-IVO-Night\proshine-IVO-Night\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Derex\Downloads\proshine-IVO-Night\proshine-IVO-Night\packages\FontAwesome.WPF.4.5.0.8\lib\net40\FontAwesome.WPF.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Derex\Downloads\proshine-IVO-Night\proshine-IVO-Night\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Derex\Downloads\proshine-IVO-Night\proshine-IVO-Night\packages\MahApps.Metro.IconPacks.1.9.0\lib\net45\MahApps.Metro.IconPacks.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String>
+	<s:Int64 x:Key="/Default/Environment/SearchAndNavigation/DefaultOccurrencesGroupingIndex/@EntryValue">0</s:Int64></wpf:ResourceDictionary>

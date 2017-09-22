@@ -8,31 +8,17 @@ namespace BrightNetwork
 {
     public class SimpleTextClient
     {
-        public event Action Connected;
-        public event Action<Exception> Disconnected;
-        public event Action<string> PacketReceived;
-
-        protected string PacketDelimiter = "\n";
-        protected Encoding TextEncoding = Encoding.UTF8;
-
         private readonly BrightClient _client;
+        private Exception _closingException;
+        private readonly Queue<string> _pendingPackets = new Queue<string>();
 
         private string _receiveBuffer = string.Empty;
-        private Queue<string> _pendingPackets = new Queue<string>();
 
         private bool _wasConnected;
         private bool _wasDisconnected;
-        private Exception _closingException;
 
-        public bool IsConnected
-        {
-            get { return _client.IsConnected; }
-        }
-
-        public IPAddress RemoteIPAddress
-        {
-            get { return _client.RemoteIPAddress; }
-        }
+        protected string PacketDelimiter = "\n";
+        protected Encoding TextEncoding = Encoding.UTF8;
 
         public SimpleTextClient(BrightClient client)
         {
@@ -42,6 +28,14 @@ namespace BrightNetwork
             client.Disconnected += Client_Disconnected;
             client.DataReceived += Client_DataReceived;
         }
+
+        public bool IsConnected => _client.IsConnected;
+
+        public IPAddress RemoteIpAddress => _client.RemoteIpAddress;
+
+        public event Action Connected;
+        public event Action<Exception> Disconnected;
+        public event Action<string> PacketReceived;
 
         public void Connect(IPAddress address, int port)
         {
@@ -71,7 +65,7 @@ namespace BrightNetwork
         public void Send(string packet)
         {
             packet = ProcessPacketBeforeSending(packet);
-            byte[] data = TextEncoding.GetBytes(ProcessDataBeforeSending(packet + PacketDelimiter));
+            var data = TextEncoding.GetBytes(ProcessDataBeforeSending(packet + PacketDelimiter));
             _client.BeginSend(data);
         }
 
@@ -109,9 +103,7 @@ namespace BrightNetwork
                 lock (_pendingPackets)
                 {
                     if (_pendingPackets.Count > 0)
-                    {
                         packet = _pendingPackets.Dequeue();
-                    }
                 }
                 hasReceived = false;
                 if (packet != null)
@@ -119,8 +111,7 @@ namespace BrightNetwork
                     hasReceived = true;
                     PacketReceived?.Invoke(packet);
                 }
-            }
-            while (hasReceived);
+            } while (hasReceived);
         }
 
         private void Client_Connected()
@@ -136,7 +127,7 @@ namespace BrightNetwork
 
         private void Client_DataReceived(byte[] data)
         {
-            string text = ProcessDataBeforeReceiving(TextEncoding.GetString(data));
+            var text = ProcessDataBeforeReceiving(TextEncoding.GetString(data));
             _receiveBuffer += text;
             ExtractPackets();
         }
@@ -147,16 +138,15 @@ namespace BrightNetwork
             do
             {
                 hasExtracted = ExtractPendingPacket();
-            }
-            while (hasExtracted);
+            } while (hasExtracted);
         }
-        
+
         private bool ExtractPendingPacket()
         {
-            int pos = _receiveBuffer.IndexOf(PacketDelimiter);
+            var pos = _receiveBuffer.IndexOf(PacketDelimiter);
             if (pos >= 0)
             {
-                string packet = _receiveBuffer.Substring(0, pos);
+                var packet = _receiveBuffer.Substring(0, pos);
                 _receiveBuffer = _receiveBuffer.Substring(pos + PacketDelimiter.Length);
                 lock (_pendingPackets)
                 {

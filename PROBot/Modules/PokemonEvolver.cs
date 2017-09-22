@@ -1,16 +1,27 @@
-﻿using PROProtocol;
-using System;
+﻿using System;
+using PROProtocol;
 
 namespace PROBot.Modules
 {
     public class PokemonEvolver
     {
-        public event Action<bool> StateChanged;
+        private readonly BotClient _bot;
+
+        private readonly Timeout _evolutionTimeout = new Timeout();
 
         private bool _isEnabled = true;
+        public int EvolvingItem;
+        public int EvolvingPokemonUid;
+
+        public PokemonEvolver(BotClient bot)
+        {
+            _bot = bot;
+            _bot.ClientChanged += Bot_ClientChanged;
+        }
+
         public bool IsEnabled
         {
-            get { return _isEnabled; }
+            get => _isEnabled;
             set
             {
                 if (_isEnabled != value)
@@ -21,30 +32,16 @@ namespace PROBot.Modules
             }
         }
 
-        private readonly BotClient _bot;
-
-        private Timeout _evolutionTimeout = new Timeout();
-        public int _evolvingPokemonUid;
-        public int _evolvingItem;
-
-        public PokemonEvolver(BotClient bot)
-        {
-            _bot = bot;
-            _bot.ClientChanged += Bot_ClientChanged;
-        }
+        public event Action<bool> StateChanged;
 
         public bool Update()
         {
             if (_evolutionTimeout.IsActive && !_evolutionTimeout.Update())
             {
                 if (IsEnabled)
-                {
-                    _bot.Game.SendAcceptEvolution(_evolvingPokemonUid, _evolvingItem);
-                }
+                    _bot.Game.SendAcceptEvolution(EvolvingPokemonUid, EvolvingItem);
                 else
-                {
-                    _bot.Game.SendCancelEvolution(_evolvingPokemonUid, _evolvingItem);
-                }
+                    _bot.Game.SendCancelEvolution(EvolvingPokemonUid, EvolvingItem);
                 return true;
             }
             return _evolutionTimeout.IsActive;
@@ -53,15 +50,13 @@ namespace PROBot.Modules
         private void Bot_ClientChanged()
         {
             if (_bot.Game != null)
-            {
                 _bot.Game.Evolving += Game_Evolving;
-            }
         }
 
         private void Game_Evolving(int evolvingPokemonUid, int evolvingItem)
         {
-            _evolvingPokemonUid = evolvingPokemonUid;
-            _evolvingItem = evolvingItem;
+            EvolvingPokemonUid = evolvingPokemonUid;
+            EvolvingItem = evolvingItem;
             _evolutionTimeout.Set(_bot.Rand.Next(2000, 3000));
         }
     }

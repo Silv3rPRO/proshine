@@ -1,16 +1,23 @@
-﻿using PROProtocol;
-using System;
+﻿using System;
+using PROProtocol;
 
 namespace PROBot.Modules
 {
     public class StaffAvoider
     {
-        public event Action<bool> StateChanged;
+        private readonly BotClient _bot;
 
-        private bool _isEnabled = false;
+        private bool _isEnabled;
+
+        public StaffAvoider(BotClient bot)
+        {
+            _bot = bot;
+            _bot.ClientChanged += Bot_ClientChanged;
+        }
+
         public bool IsEnabled
         {
-            get { return _isEnabled; }
+            get => _isEnabled;
             set
             {
                 if (_isEnabled != value)
@@ -21,13 +28,7 @@ namespace PROBot.Modules
             }
         }
 
-        private BotClient _bot;
-
-        public StaffAvoider(BotClient bot)
-        {
-            _bot = bot;
-            _bot.ClientChanged += Bot_ClientChanged;
-        }
+        public event Action<bool> StateChanged;
 
         private void Bot_ClientChanged()
         {
@@ -42,8 +43,8 @@ namespace PROBot.Modules
         {
             if (player.Name.Contains("["))
             {
-                int distance = _bot.Game.DistanceTo(player.PosX, player.PosY);
-                string message = player.Name + " appears on the map at " + distance + " cells from you";
+                var distance = _bot.Game.DistanceTo(player.PosX, player.PosY);
+                var message = player.Name + " appears on the map at " + distance + " cells from you";
                 if (player.IsAfk)
                 {
                     message += ", but is AFK";
@@ -61,10 +62,11 @@ namespace PROBot.Modules
         {
             if (player.Name.Contains("["))
             {
-                int distance = _bot.Game.DistanceTo(player.PosX, player.PosY);
+                var distance = _bot.Game.DistanceTo(player.PosX, player.PosY);
                 if (!player.IsAfk && IsEnabled)
                 {
-                    _bot.LogMessage(player.Name + " is at " + distance + " cells from you and is not AFK, disconnecting.");
+                    _bot.LogMessage(player.Name + " is at " + distance +
+                                    " cells from you and is not AFK, disconnecting.");
                     _bot.Logout(false);
                 }
             }
