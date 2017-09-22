@@ -4,30 +4,7 @@ namespace PROProtocol
 {
     public class PokemonMove
     {
-        public int Position { get; private set; }
-        public int Id { get; private set; }
-        public int MaxPoints { get; private set; }
-        public int CurrentPoints { get; set; }
-
-        private TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
-
-        public MovesManager.MoveData Data
-        {
-            get { return MovesManager.Instance.GetMoveData(Id); }
-        }
-
-        public string Name
-        {
-            get { return Data?.Name != null ? ti.ToTitleCase(Data?.Name) : Data?.Name; }
-        }
-
-        public string PP
-        {
-            get
-            {
-                return Name != null ? CurrentPoints + " / " + MaxPoints : "";
-            }
-        }
+        private readonly TextInfo _ti = CultureInfo.CurrentCulture.TextInfo;
 
         public PokemonMove(int position, int id, int maxPoints, int currentPoints)
         {
@@ -36,5 +13,16 @@ namespace PROProtocol
             MaxPoints = maxPoints;
             CurrentPoints = currentPoints;
         }
+
+        public int Position { get; }
+        public int Id { get; }
+        public int MaxPoints { get; }
+        public int CurrentPoints { get; set; }
+
+        public MovesManager.MoveData Data => MovesManager.Instance.GetMoveData(Id);
+
+        public string Name => Data?.Name != null ? _ti.ToTitleCase(Data?.Name) : Data?.Name;
+
+        public string Pp => Name != null ? CurrentPoints + " / " + MaxPoints : "";
     }
 }

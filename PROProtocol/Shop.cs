@@ -5,26 +5,25 @@ namespace PROProtocol
 {
     public class Shop
     {
-        public int Id { get; private set; }
-
-        private List<ShopItem> _items = new List<ShopItem>();
-        public ReadOnlyCollection<ShopItem> Items { get { return _items.AsReadOnly(); } }
+        private readonly List<ShopItem> _items = new List<ShopItem>();
 
         public Shop(string content)
         {
-            string[] data = content.Split(',');
+            var data = content.Split(',');
             if (data.Length >= 31)
             {
-                for (int i = 0; i < 10; ++i)
+                for (var i = 0; i < 10; ++i)
                 {
-                    ShopItem item = new ShopItem(data, i * 3);
+                    var item = new ShopItem(data, i * 3);
                     if (item.Id > 0)
-                    {
                         _items.Add(item);
-                    }
                 }
                 Id = int.Parse(data[30]);
             }
         }
+
+        public int Id { get; }
+
+        public ReadOnlyCollection<ShopItem> Items => _items.AsReadOnly();
     }
 }

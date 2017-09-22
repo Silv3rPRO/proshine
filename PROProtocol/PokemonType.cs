@@ -1,4 +1,6 @@
-﻿namespace PROProtocol
+﻿using System;
+
+namespace PROProtocol
 {
     public enum PokemonType
     {
@@ -22,6 +24,7 @@
         Fairy,
         None
     }
+
     public static class PokemonTypeExtensions
     {
         public static PokemonType FromName(string typeName)
@@ -67,7 +70,7 @@
                 case "fairy":
                     return PokemonType.Fairy;
                 default:
-                    throw new System.Exception("The pokemon type " + typeName + " does not exist");
+                    throw new Exception("The pokemon type " + typeName + " does not exist");
             }
         }
     }

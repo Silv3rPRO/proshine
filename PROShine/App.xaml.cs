@@ -13,12 +13,15 @@ namespace PROShine
 
         public static void InitializeVersion()
         {
-            Assembly assembly = typeof(App).Assembly;
-            AssemblyName assemblyName = assembly.GetName();
+            var assembly = typeof(App).Assembly;
+            var assemblyName = assembly.GetName();
             Name = assemblyName.Name;
             Version = assemblyName.Version.ToString();
-            Author = ((AssemblyCompanyAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyCompanyAttribute), false)).Company;
-            Description = ((AssemblyDescriptionAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyDescriptionAttribute), false)).Description;
+            Author = ((AssemblyCompanyAttribute) Attribute.GetCustomAttribute(assembly,
+                typeof(AssemblyCompanyAttribute), false)).Company;
+            Description =
+            ((AssemblyDescriptionAttribute) Attribute.GetCustomAttribute(assembly,
+                typeof(AssemblyDescriptionAttribute), false)).Description;
         }
     }
 }

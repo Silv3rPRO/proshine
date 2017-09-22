@@ -2,25 +2,8 @@
 {
     public class PokemonNature
     {
-        public int Id { get; private set; }
-        public string Name
+        public static readonly string[] Natures =
         {
-            get
-            {
-                if (Id < 0 || Id >= Natures.Length)
-                {
-                    return null;
-                }
-                return Natures[Id];
-            }
-        }
-
-        public PokemonNature(int id)
-        {
-            Id = id;
-        }
-
-        public static readonly string[] Natures = {
             "Hardy",
             "Lonely",
             "Brave",
@@ -47,5 +30,22 @@
             "Careful",
             "Quirky"
         };
+
+        public PokemonNature(int id)
+        {
+            Id = id;
+        }
+
+        public int Id { get; }
+
+        public string Name
+        {
+            get
+            {
+                if (Id < 0 || Id >= Natures.Length)
+                    return null;
+                return Natures[Id];
+            }
+        }
     }
 }

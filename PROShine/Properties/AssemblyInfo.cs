@@ -6,11 +6,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PRONight")]
-[assembly: AssemblyDescription("Find the Stable version at https://proshine-bot.com/")]
+[assembly: AssemblyTitle("PROShine")]
+[assembly: AssemblyDescription("The Unsupported Build By IVO.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Silv3r")]
-[assembly: AssemblyProduct("PRONight")]
+[assembly: AssemblyProduct("PROShine")]
 [assembly: AssemblyCopyright("Copyright © Silv3r, 2016-2032")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -32,11 +32,11 @@ using System.Windows;
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //where theme specific resource dictionaries are located
-                                     //(used if a resource is not found in the page, 
-                                     // or application resource dictionaries)
+    //(used if a resource is not found in the page, 
+    // or application resource dictionaries)
     ResourceDictionaryLocation.SourceAssembly //where the generic resource dictionary is located
-                                              //(used if a resource is not found in the page, 
-                                              // app, or any theme specific resource dictionaries)
+    //(used if a resource is not found in the page, 
+    // app, or any theme specific resource dictionaries)
 )]
 
 
@@ -50,7 +50,6 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.6.2.5 -- IVO-Colab")]
-[assembly: AssemblyFileVersion("2.6.2.5 -- IVO-Colab")]
+[assembly: AssemblyVersion("2.6.2.06")]
+[assembly: AssemblyFileVersion("2.6.2.06")]
 [assembly: NeutralResourcesLanguage("en")]
-

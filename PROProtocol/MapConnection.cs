@@ -1,7 +1,6 @@
-﻿using BrightNetwork;
-using System;
+﻿using System;
 using System.Net;
-using System.Net.Sockets;
+using BrightNetwork;
 
 namespace PROProtocol
 {
@@ -11,13 +10,13 @@ namespace PROProtocol
 
         private const string ServerAddress = "95.183.48.126";
         private const int ServerPort = 803;
+        private readonly string _socksHost;
+        private readonly string _socksPass;
+        private readonly int _socksPort;
+        private readonly string _socksUser;
+        private readonly int _socksVersion;
 
-        private bool _useSocks;
-        private int _socksVersion;
-        private string _socksHost;
-        private int _socksPort;
-        private string _socksUser;
-        private string _socksPass;
+        private readonly bool _useSocks;
 
         public MapConnection()
             : base(new BrightClient())
@@ -41,21 +40,18 @@ namespace PROProtocol
         public async void Connect()
         {
             if (!_useSocks)
-            {
                 Connect(IPAddress.Parse(ServerAddress), ServerPort);
-            }
             else
-            {
                 try
                 {
-                    Socket socket = await SocksConnection.OpenConnection(_socksVersion, ServerAddress, ServerPort, _socksHost, _socksPort, _socksUser, _socksPass);
+                    var socket = await SocksConnection.OpenConnection(_socksVersion, ServerAddress, ServerPort,
+                        _socksHost, _socksPort, _socksUser, _socksPass);
                     Initialize(socket);
                 }
                 catch (Exception ex)
                 {
                     Close(ex);
                 }
-            }
         }
     }
 }

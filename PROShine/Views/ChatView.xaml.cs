@@ -1,7 +1,4 @@
-﻿using PROBot;
-using PROProtocol;
-using PROShine.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,16 +8,20 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
+using PROBot;
+using PROProtocol;
+using PROShine.Controls;
+using PROShine.Utils;
 
-namespace PROShine
+namespace PROShine.Views
 {
     public partial class ChatView : UserControl
     {
-        private Dictionary<string, ButtonTab> _channelTabs;
-        private Dictionary<string, ButtonTab> _pmTabs;
-        private Dictionary<string, ButtonTab> _channelPmTabs; // fuck that
-        private TabItem _localChatTab;
-        private BotClient _bot;
+        private readonly BotClient _bot;
+        private readonly Dictionary<string, ButtonTab> _channelPmTabs; // fuck that
+        private readonly Dictionary<string, ButtonTab> _channelTabs;
+        private readonly TabItem _localChatTab;
+        private readonly Dictionary<string, ButtonTab> _pmTabs;
 
         public ChatView(BotClient bot)
         {
@@ -34,7 +35,6 @@ namespace PROShine
             AddChannelTab("All");
             AddChannelTab("Trade");
             AddChannelTab("Battle");
-            AddChannelTab("Other");
             AddChannelTab("Help");
             _pmTabs = new Dictionary<string, ButtonTab>();
             _channelPmTabs = new Dictionary<string, ButtonTab>();
@@ -49,20 +49,12 @@ namespace PROShine
                 {
                     channelList = _bot.Game.Channels.ToArray();
                 }
-                foreach (ChatChannel channel in channelList)
-                {
+                foreach (var channel in channelList)
                     if (!_channelTabs.ContainsKey(channel.Name))
-                    {
                         AddChannelTab(channel.Name);
-                    }
-                }
-                foreach (string key in _channelTabs.Keys.ToArray())
-                {
-                    if (!(channelList.Any(e => e.Name == key)))
-                    {
+                foreach (var key in _channelTabs.Keys.ToArray())
+                    if (!channelList.Any(e => e.Name == key))
                         RemoveChannelTab(key);
-                    }
-                }
             });
         }
 
@@ -71,43 +63,29 @@ namespace PROShine
             Dispatcher.InvokeAsync(delegate
             {
                 if (leaver == _bot.Game.PlayerName)
-                {
                     return;
-                }
                 AddPrivateSystemMessage(conversation, mode, leaver, "has closed the PM window");
             });
         }
 
         public void Client_ChatMessage(string mode, string author, string message)
         {
-            Dispatcher.InvokeAsync(delegate
-            {
-                AddChatMessage(mode, author, message);
-            });
+            Dispatcher.InvokeAsync(delegate { AddChatMessage(mode, author, message); });
         }
 
         public void Client_ChannelMessage(string channelName, string mod, string author, string message)
         {
-            Dispatcher.InvokeAsync(delegate
-            {
-                AddChannelMessage(channelName, mod, author, message);
-            });
+            Dispatcher.InvokeAsync(delegate { AddChannelMessage(channelName, mod, author, message); });
         }
 
         public void Client_ChannelSystemMessage(string channelName, string message)
         {
-            Dispatcher.InvokeAsync(delegate
-            {
-                AddChannelSystemMessage(channelName, message);
-            });
+            Dispatcher.InvokeAsync(delegate { AddChannelSystemMessage(channelName, message); });
         }
 
         public void Client_ChannelPrivateMessage(string conversation, string mode, string author, string message)
         {
-            Dispatcher.InvokeAsync(delegate
-            {
-                AddChannelPrivateMessage(conversation, mode, author, message);
-            });
+            Dispatcher.InvokeAsync(delegate { AddChannelPrivateMessage(conversation, mode, author, message); });
         }
 
         public void Client_PrivateMessage(string conversation, string mode, string author, string message)
@@ -121,15 +99,12 @@ namespace PROShine
 
         public void Client_EmoteMessage(string mode, string author, int emoteId)
         {
-            Dispatcher.InvokeAsync(delegate
-            {
-                AddEmoteMessage(mode, author, emoteId);
-            });
+            Dispatcher.InvokeAsync(delegate { AddEmoteMessage(mode, author, emoteId); });
         }
 
         private void AddChannelTab(string tabName)
         {
-            ButtonTab tab = new ButtonTab();
+            var tab = new ButtonTab();
             (tab.Header as ButtonTabHeader).TabName.Content = '#' + tabName;
             (tab.Header as ButtonTabHeader).CloseButton += () => CloseChannelTab(tabName);
             tab.Tag = tabName;
@@ -141,17 +116,12 @@ namespace PROShine
         private void CloseChannelTab(string channelName)
         {
             if (!_channelTabs.ContainsKey(channelName))
-            {
                 return;
-            }
-            if (_bot.Game != null && _bot.Game != null && _bot.Game.IsMapLoaded && _bot.Game.Channels.Any(e => e.Name == channelName))
-            {
+            if (_bot.Game != null && _bot.Game != null && _bot.Game.IsMapLoaded &&
+                _bot.Game.Channels.Any(e => e.Name == channelName))
                 _bot.Game.CloseChannel(channelName);
-            }
             else
-            {
                 RemoveChannelTab(channelName);
-            }
         }
 
         private void RemoveChannelTab(string tabName)
@@ -162,7 +132,7 @@ namespace PROShine
 
         private void AddChannelPmTab(string tabName)
         {
-            ButtonTab tab = new ButtonTab();
+            var tab = new ButtonTab();
             (tab.Header as ButtonTabHeader).TabName.Content = "*" + tabName;
             (tab.Header as ButtonTabHeader).CloseButton += () => CloseChannelPmTab(tabName);
             tab.Tag = tabName;
@@ -174,9 +144,7 @@ namespace PROShine
         private void CloseChannelPmTab(string channelName)
         {
             if (!_channelPmTabs.ContainsKey(channelName))
-            {
                 return;
-            }
             RemoveChannelPmTab(channelName);
         }
 
@@ -185,9 +153,10 @@ namespace PROShine
             TabControl.Items.Remove(_channelPmTabs[tabName]);
             _channelPmTabs.Remove(tabName);
         }
+
         private void AddPmTab(string tabName)
         {
-            ButtonTab tab = new ButtonTab();
+            var tab = new ButtonTab();
             (tab.Header as ButtonTabHeader).TabName.Content = tabName;
             (tab.Header as ButtonTabHeader).CloseButton += () => ClosePmTab(tabName);
 
@@ -200,13 +169,10 @@ namespace PROShine
         private void ClosePmTab(string pmName)
         {
             if (!_pmTabs.ContainsKey(pmName))
-            {
                 return;
-            }
-            if (_bot.Game != null && _bot.Game != null && _bot.Game.IsMapLoaded && _bot.Game.Conversations.Contains(pmName))
-            {
+            if (_bot.Game != null && _bot.Game != null && _bot.Game.IsMapLoaded &&
+                _bot.Game.Conversations.Contains(pmName))
                 _bot.Game.CloseConversation(pmName);
-            }
             RemovePmTab(pmName);
         }
 
@@ -220,13 +186,10 @@ namespace PROShine
         {
             message = Regex.Replace(message, @"\[.+?\]", "");
             if (mode != null)
-            {
                 author = "[" + mode + "]" + author;
-            }
             if (!_channelTabs.ContainsKey(channelName))
-            {
                 AddChannelTab(channelName);
-            }
+
             MainWindow.AppendLineToTextBox((_channelTabs[channelName].Content as ChatPanel).ChatBox,
                 "[" + DateTime.Now.ToLongTimeString() + "] " + author + ": " + message);
         }
@@ -235,9 +198,7 @@ namespace PROShine
         {
             message = Regex.Replace(message, @"\[.+?\]", "");
             if (!_channelTabs.ContainsKey(channelName))
-            {
                 AddChannelTab(channelName);
-            }
             MainWindow.AppendLineToTextBox((_channelTabs[channelName].Content as ChatPanel).ChatBox,
                 "[" + DateTime.Now.ToLongTimeString() + "] SYSTEM: " + message);
         }
@@ -246,13 +207,9 @@ namespace PROShine
         {
             message = Regex.Replace(message, @"\[.+?\]", "");
             if (mode != null)
-            {
                 author = "[" + mode + "]" + author;
-            }
             if (!_channelPmTabs.ContainsKey(conversation))
-            {
                 AddChannelPmTab(conversation);
-            }
             MainWindow.AppendLineToTextBox((_channelPmTabs[conversation].Content as ChatPanel).ChatBox,
                 "[" + DateTime.Now.ToLongTimeString() + "] " + author + ": " + message);
         }
@@ -261,9 +218,7 @@ namespace PROShine
         {
             message = Regex.Replace(message, @"\[.+?\]", "");
             if (mode != null)
-            {
                 author = "[" + mode + "]" + author;
-            }
             MainWindow.AppendLineToTextBox((_localChatTab.Content as ChatPanel).ChatBox,
                 "[" + DateTime.Now.ToLongTimeString() + "] " + author + ": " + message);
         }
@@ -271,9 +226,7 @@ namespace PROShine
         private void AddEmoteMessage(string mode, string author, int emoteId)
         {
             if (mode != null)
-            {
                 author = "[" + mode + "]" + author;
-            }
             MainWindow.AppendLineToTextBox((_localChatTab.Content as ChatPanel).ChatBox,
                 "[" + DateTime.Now.ToLongTimeString() + "] " + author + " is " + ChatEmotes.GetDescription(emoteId));
         }
@@ -282,13 +235,9 @@ namespace PROShine
         {
             message = Regex.Replace(message, @"\[.+?\]", "");
             if (mode != null)
-            {
                 author = "[" + mode + "]" + author;
-            }
             if (!_pmTabs.ContainsKey(conversation))
-            {
                 AddPmTab(conversation);
-            }
             MainWindow.AppendLineToTextBox((_pmTabs[conversation].Content as ChatPanel).ChatBox,
                 "[" + DateTime.Now.ToLongTimeString() + "] " + author + ": " + message);
         }
@@ -297,13 +246,9 @@ namespace PROShine
         {
             message = Regex.Replace(message, @"\[.+?\]", "");
             if (mode != null)
-            {
                 author = "[" + mode + "]" + author;
-            }
             if (!_pmTabs.ContainsKey(conversation))
-            {
                 AddPmTab(conversation);
-            }
             MainWindow.AppendLineToTextBox((_pmTabs[conversation].Content as ChatPanel).ChatBox,
                 "[" + DateTime.Now.ToLongTimeString() + "] " + author + " " + message);
         }
@@ -320,16 +265,12 @@ namespace PROShine
         private void SendChatInput(string text)
         {
             if (text == "" || text.Replace(" ", "") == "")
-            {
                 return;
-            }
             lock (_bot)
             {
                 if (_bot.Game == null)
-                {
                     return;
-                }
-                TabItem tab = TabControl.SelectedItem as TabItem;
+                var tab = TabControl.SelectedItem as TabItem;
                 text = Regex.Replace(text, @"\[(-|.{6})\]", "");
                 if (text.Length == 0) return;
                 if (_localChatTab == tab)
@@ -345,18 +286,16 @@ namespace PROShine
                         _bot.Game.SendMessage(text);
                         return;
                     }
-                    string channelName = (string)tab.Tag;
-                    ChatChannel channel = _bot.Game.Channels.FirstOrDefault(e => e.Name == channelName);
+                    var channelName = (string) tab.Tag;
+                    var channel = _bot.Game.Channels.FirstOrDefault(e => e.Name == channelName);
                     if (channel == null)
-                    {
                         return;
-                    }
                     _bot.Game.SendMessage("/" + channel.Id + " " + text);
                 }
                 else if (_pmTabs.ContainsValue(tab as ButtonTab))
                 {
                     text = text.Replace("|.|", "");
-                    _bot.Game.SendPrivateMessage((string)tab.Tag, text);
+                    _bot.Game.SendPrivateMessage((string) tab.Tag, text);
                 }
                 else if (_channelPmTabs.ContainsValue(tab as ButtonTab))
                 {
@@ -366,7 +305,7 @@ namespace PROShine
                         _bot.Game.SendMessage(text);
                         return;
                     }
-                    string conversation = (string)tab.Tag;
+                    var conversation = (string) tab.Tag;
                     _bot.Game.SendMessage("/send " + conversation + ", " + text);
                 }
             }
@@ -374,19 +313,17 @@ namespace PROShine
 
         private void PlayNotification()
         {
-            Window window = Window.GetWindow(this);
+            var window = Window.GetWindow(this);
             if (!window.IsActive || !IsVisible)
             {
-                IntPtr handle = new WindowInteropHelper(window).Handle;
+                var handle = new WindowInteropHelper(window).Handle;
                 FlashWindowHelper.Flash(handle);
 
                 if (File.Exists("Assets/message.wav"))
-                {
-                    using (SoundPlayer player = new SoundPlayer("Assets/message.wav"))
+                    using (var player = new SoundPlayer("Assets/message.wav"))
                     {
                         player.Play();
                     }
-                }
             }
         }
     }

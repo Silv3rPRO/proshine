@@ -5,13 +5,6 @@ namespace PROProtocol
 {
     public class PokemonStats
     {
-        public int Health { get; set; }
-        public int Attack { get; set; }
-        public int Defence { get; set; }
-        public int SpAttack { get; set; }
-        public int SpDefence { get; set; }
-        public int Speed { get; set; }
-
         public PokemonStats()
         {
         }
@@ -24,14 +17,17 @@ namespace PROProtocol
             SpAttack = Convert.ToInt32(data[index++]);
             SpDefence = Convert.ToInt32(data[index++]);
             if (health == -1)
-            {
                 Health = Convert.ToInt32(data[index]);
-            }
             else
-            {
                 Health = health;
-            }
         }
+
+        public int Health { get; set; }
+        public int Attack { get; set; }
+        public int Defence { get; set; }
+        public int SpAttack { get; set; }
+        public int SpDefence { get; set; }
+        public int Speed { get; set; }
 
         public int GetStat(StatType stat)
         {
@@ -55,29 +51,25 @@ namespace PROProtocol
 
         public bool HasOnly(HashSet<StatType> types)
         {
-            if ((!types.Contains(StatType.Health) && Health > 0)
-                || (!types.Contains(StatType.Attack) && Attack > 0)
-                || (!types.Contains(StatType.Defence) && Defence > 0)
-                || (!types.Contains(StatType.SpAttack) && SpAttack > 0)
-                || (!types.Contains(StatType.SpDefence) && SpDefence > 0)
-                || (!types.Contains(StatType.Speed) && Speed > 0))
-            {
+            if (!types.Contains(StatType.Health) && Health > 0
+                || !types.Contains(StatType.Attack) && Attack > 0
+                || !types.Contains(StatType.Defence) && Defence > 0
+                || !types.Contains(StatType.SpAttack) && SpAttack > 0
+                || !types.Contains(StatType.SpDefence) && SpDefence > 0
+                || !types.Contains(StatType.Speed) && Speed > 0)
                 return false;
-            }
             return true;
         }
 
         public bool HasOnly(StatType type)
         {
-            if ((type != StatType.Health && Health > 0)
-                || (type != StatType.Attack && Attack > 0)
-                || (type != StatType.Defence && Defence > 0)
-                || (type != StatType.SpAttack && SpAttack > 0)
-                || (type != StatType.SpDefence && SpDefence > 0)
-                || (type != StatType.Speed && Speed > 0))
-            {
+            if (type != StatType.Health && Health > 0
+                || type != StatType.Attack && Attack > 0
+                || type != StatType.Defence && Defence > 0
+                || type != StatType.SpAttack && SpAttack > 0
+                || type != StatType.SpDefence && SpDefence > 0
+                || type != StatType.Speed && Speed > 0)
                 return false;
-            }
             return true;
         }
     }

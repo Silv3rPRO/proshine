@@ -5,27 +5,7 @@ namespace PROProtocol
 {
     public class Battle
     {
-        public int OpponentId { get; private set; }
-        public int OpponentHealth { get; private set; }
-        public int CurrentHealth { get; private set; }
-        public int OpponentLevel { get; private set; }
-        public int SelectedPokemonIndex { get; private set; }
-        public string BattleText { get; private set; }
-        public bool IsShiny { get; private set; }
-        public bool IsWild { get; private set; }
-        public string TrainerName { get; private set; }
-        public bool IsPvp { get; private set; }
-        public int PokemonCount { get; private set; }
-        public string OpponentGender { get; private set; }
-        public string OpponentStatus { get; private set; }
-        public bool AlreadyCaught { get; private set; }
-        public int AlternateForm { get; private set; }
-
-        public bool IsFinished { get; private set; }
-
-        public bool RepeatAttack { get; set; }
-
-        private string _playerName;
+        private readonly string _playerName;
 
         public Battle(string playerName, string[] data)
         {
@@ -37,20 +17,38 @@ namespace PROProtocol
             OpponentLevel = Convert.ToInt32(data[2]);
             SelectedPokemonIndex = Convert.ToInt32(data[3]) - 1;
             BattleText = data[4];
-            IsShiny = (data[5] != "0");
+            IsShiny = data[5] != "0";
             IsWild = data[6] == string.Empty && data[8] == string.Empty;
             TrainerName = data[6];
             IsPvp = data[7] == string.Empty;
             PokemonCount = 1;
             if (data[8] != string.Empty)
-            {
                 PokemonCount = Convert.ToInt32(data[8]);
-            }
             OpponentGender = data[9];
             OpponentStatus = data[10];
-            AlreadyCaught = (data[11] == "1");
+            AlreadyCaught = data[11] == "1";
             AlternateForm = int.Parse(data[12]);
         }
+
+        public int OpponentId { get; private set; }
+        public int OpponentHealth { get; private set; }
+        public int CurrentHealth { get; private set; }
+        public int OpponentLevel { get; private set; }
+        public int SelectedPokemonIndex { get; private set; }
+        public string BattleText { get; }
+        public bool IsShiny { get; private set; }
+        public bool IsWild { get; }
+        public string TrainerName { get; }
+        public bool IsPvp { get; }
+        public int PokemonCount { get; }
+        public string OpponentGender { get; private set; }
+        public string OpponentStatus { get; private set; }
+        public bool AlreadyCaught { get; private set; }
+        public int AlternateForm { get; private set; }
+
+        public bool IsFinished { get; private set; }
+
+        public bool RepeatAttack { get; set; }
 
         public bool ProcessMessage(List<Pokemon> team, string message)
         {
@@ -63,13 +61,13 @@ namespace PROProtocol
                 return true;
             }
 
-            string[] data = message.Split(':');
+            var data = message.Split(':');
 
             if (message.StartsWith("D:"))
             {
-                int currentHealth = Convert.ToInt32(data[2]);
-                int maxHealth = Convert.ToInt32(data[3]);
-                string status = data[6];
+                var currentHealth = Convert.ToInt32(data[2]);
+                var maxHealth = Convert.ToInt32(data[3]);
+                var status = data[6];
 
                 if (data[1] == _playerName)
                 {
@@ -88,13 +86,9 @@ namespace PROProtocol
             if (message.StartsWith("S:"))
             {
                 if (data[1] == _playerName)
-                {
                     team[SelectedPokemonIndex].Status = data[2];
-                }
                 else
-                {
                     OpponentStatus = data[2];
-                }
                 return true;
             }
 
@@ -102,27 +96,25 @@ namespace PROProtocol
             {
                 if (data[1] == _playerName)
                 {
-                    int index = Convert.ToInt32(data[2]) - 1;
-                    for (int i = 0; i < 4; ++i)
-                    {
+                    var index = Convert.ToInt32(data[2]) - 1;
+                    for (var i = 0; i < 4; ++i)
                         team[index].Moves[i].CurrentPoints = Convert.ToInt32(data[i + 3]);
-                    }
                 }
                 return true;
             }
 
             if (message.StartsWith("C:"))
             {
-                int pokemonId = Convert.ToInt32(data[2]);
-                int level = Convert.ToInt32(data[3]);
-                bool isShiny = data[4] == "1";
-                int maxHealth = Convert.ToInt32(data[5]);
-                int currentHealth = Convert.ToInt32(data[6]);
-                int index = Convert.ToInt32(data[7]) - 1;
-                string status = data[8];
-                string gender = data[9];
-                bool alreadyCaught = (data[10] == "1");
-                string alternateForm = data[11];
+                var pokemonId = Convert.ToInt32(data[2]);
+                var level = Convert.ToInt32(data[3]);
+                var isShiny = data[4] == "1";
+                var maxHealth = Convert.ToInt32(data[5]);
+                var currentHealth = Convert.ToInt32(data[6]);
+                var index = Convert.ToInt32(data[7]) - 1;
+                var status = data[8];
+                var gender = data[9];
+                var alreadyCaught = data[10] == "1";
+                var alternateForm = data[11];
 
                 if (data[1] == _playerName)
                 {
@@ -146,36 +138,31 @@ namespace PROProtocol
             if (message.StartsWith("F:"))
             {
                 // Fainted
-                string player = data[1];
+                var player = data[1];
                 return true;
             }
 
             if (message.StartsWith("R:"))
             {
-                string player = data[1];
+                var player = data[1];
                 if (player == _playerName)
-                {
                     RepeatAttack = true;
-                }
                 return true;
             }
 
             if (message.StartsWith("X:"))
             {
                 // Hazard
-                string player = data[1];
-                int spikes = Convert.ToInt32(data[2]);
-                int toxicSpikes = Convert.ToInt32(data[3]);
-                int stealthRock = Convert.ToInt32(data[4]);
-                int stickyWeb = Convert.ToInt32(data[5]);
+                var player = data[1];
+                var spikes = Convert.ToInt32(data[2]);
+                var toxicSpikes = Convert.ToInt32(data[3]);
+                var stealthRock = Convert.ToInt32(data[4]);
+                var stickyWeb = Convert.ToInt32(data[5]);
                 return true;
             }
-            
+
             if (message.StartsWith("CP") && message.Length == 3)
-            {
-                // Capture animation (2 = fail, 3 = success).
                 return true;
-            }
 
             return false;
         }

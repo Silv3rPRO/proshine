@@ -19,39 +19,22 @@ namespace PROProtocol
             Icing
         }
 
-        public int[,] Colliders { get; private set; }
-        public MapLink[,] Links { get; private set; }
-        public int[,] Tiles1 { get; private set; }
-        public int[,] Tiles2 { get; private set; }
-        public int[,] Tiles3 { get; private set; }
-        public int[,] Tiles4 { get; private set; }
-        public int DimensionX { get; private set; }
-        public int DimensionY { get; private set; }
-        public int Width { get; private set; }
-        public int Height { get; private set; }
-        public string MapWeather { get; private set; }
-        public bool IsOutside { get; private set; }
-        public string Region { get; private set; }
-        public List<Npc> Npcs { get; private set; }
-        public List<Npc> OriginalNpcs { get; private set; }
-        public Dictionary<string, List<Tuple<int, int>>> LinkDestinations { get; private set; }
-
-        private Dictionary<int, int> SliderValues = new Dictionary<int, int>
-            {
-                { 6662, 1 },
-                { 6663, 2 },
-                { 6670, 3 },
-                { 6671, 4 },
-                { 6719, 0 },
-                { 6718, 0 },
-                { 6686, 0 }
-            };
+        private readonly Dictionary<int, int> _sliderValues = new Dictionary<int, int>
+        {
+            {6662, 1},
+            {6663, 2},
+            {6670, 3},
+            {6671, 4},
+            {6719, 0},
+            {6718, 0},
+            {6686, 0}
+        };
 
         public Map(byte[] content)
         {
-            using (MemoryStream stream = new MemoryStream(content))
+            using (var stream = new MemoryStream(content))
             {
-                using (BinaryReader reader = new BinaryReader(stream))
+                using (var reader = new BinaryReader(stream))
                 {
                     Colliders = ReadTiles(reader);
                     DimensionX = Colliders.GetUpperBound(0) + 1;
@@ -71,7 +54,7 @@ namespace PROProtocol
                     Region = ReadString(reader);
                     reader.ReadInt16();
 
-                    int count = reader.ReadInt16() - 1;
+                    var count = reader.ReadInt16() - 1;
                     reader.ReadInt16();
                     reader.ReadInt16();
                     reader.ReadInt16();
@@ -83,9 +66,9 @@ namespace PROProtocol
 
                     Links = new MapLink[DimensionX, DimensionY];
                     LinkDestinations = new Dictionary<string, List<Tuple<int, int>>>();
-                    for (int i = 0; i < count; ++i)
+                    for (var i = 0; i < count; ++i)
                     {
-                        string destination = ReadString(reader);
+                        var destination = ReadString(reader);
                         int x = reader.ReadInt16();
                         int y = reader.ReadInt16();
                         int toX = reader.ReadInt16();
@@ -95,33 +78,33 @@ namespace PROProtocol
 
                         destination = destination.ToUpperInvariant();
                         if (!LinkDestinations.ContainsKey(destination))
-                        {
                             LinkDestinations.Add(destination, new List<Tuple<int, int>>());
-                        }
                         LinkDestinations[destination].Add(new Tuple<int, int>(x, y));
                     }
 
                     int k = reader.ReadInt16();
-                    int npcCount = reader.ReadInt16() - 1;
-                    for (int i = 0; i < 45; ++i)
+                    var npcCount = reader.ReadInt16() - 1;
+                    for (var i = 0; i < 45; ++i)
                     {
                         int b = reader.ReadInt16();
                     }
 
                     Npcs = new List<Npc>();
                     OriginalNpcs = new List<Npc>();
-                    for (int i = 0; i < npcCount; ++i)
+                    for (var i = 0; i < npcCount; ++i)
                     {
-                        string npcName = ReadString(reader);
+                        var npcName = ReadString(reader);
                         int x = reader.ReadInt16();
                         int y = reader.ReadInt16();
 
-                        int direction = reader.ReadByte();
+                        //view direction and length
+                        int directionValue = reader.ReadByte();
+                        var viewDirection = DirectionExtensions.FromInt(directionValue);
                         int losLength = reader.ReadByte();
                         int type = reader.ReadInt16();
 
                         ReadString(reader);
-                        string path = ReadString(reader);
+                        var path = ReadString(reader);
 
                         reader.ReadInt16();
                         reader.ReadInt16();
@@ -138,7 +121,7 @@ namespace PROProtocol
                         reader.ReadInt16();
                         reader.ReadInt16();
 
-                        bool isBattler = reader.ReadInt16() != 0;
+                        var isBattler = reader.ReadInt16() != 0;
 
                         reader.ReadInt16();
                         reader.ReadSingle();
@@ -147,9 +130,8 @@ namespace PROProtocol
                         int npcId = reader.ReadInt16();
 
                         if (npcName != "TileScript")
-                        {
-                            OriginalNpcs.Add(new Npc(npcId, npcName, isBattler, type, x, y, losLength, path));
-                        }
+                            OriginalNpcs.Add(new Npc(npcId, npcName, isBattler, type, x, y, viewDirection, losLength,
+                                path));
 
                         reader.ReadInt16();
                         reader.ReadInt16();
@@ -169,6 +151,23 @@ namespace PROProtocol
                 }
             }
         }
+
+        public int[,] Colliders { get; }
+        public MapLink[,] Links { get; }
+        public int[,] Tiles1 { get; }
+        public int[,] Tiles2 { get; }
+        public int[,] Tiles3 { get; }
+        public int[,] Tiles4 { get; }
+        public int DimensionX { get; }
+        public int DimensionY { get; }
+        public int Width { get; }
+        public int Height { get; }
+        public string MapWeather { get; }
+        public bool IsOutside { get; }
+        public string Region { get; }
+        public List<Npc> Npcs { get; }
+        public List<Npc> OriginalNpcs { get; }
+        public Dictionary<string, List<Tuple<int, int>>> LinkDestinations { get; }
 
         public static bool Exists(string name)
         {
@@ -178,39 +177,29 @@ namespace PROProtocol
         private int[,] ReadTiles(BinaryReader reader)
         {
             if (reader.ReadInt16() != 2)
-            {
                 return null;
-            }
-            int height = reader.ReadInt32();
+            var height = reader.ReadInt32();
             reader.ReadInt32();
-            int width = reader.ReadInt32();
+            var width = reader.ReadInt32();
             reader.ReadInt32();
-            int[,] tiles = new int[width, height];
-            for (int y = 0; y < height; ++y)
-            {
-                for (int x = 0; x < width; ++x)
-                {
-                    tiles[x, y] = reader.ReadUInt16();
-                }
-            }
+            var tiles = new int[width, height];
+            for (var y = 0; y < height; ++y)
+            for (var x = 0; x < width; ++x)
+                tiles[x, y] = reader.ReadUInt16();
             return tiles;
         }
 
         public int GetCollider(int x, int y)
         {
             if (x >= 0 && x < DimensionX && y >= 0 && y < DimensionY)
-            {
                 return Colliders[x, y];
-            }
             return -1;
         }
 
         public bool HasLink(int x, int y)
         {
             if (x >= 0 && x < DimensionX && y >= 0 && y < DimensionY)
-            {
                 return Links[x, y] != null;
-            }
             return false;
         }
 
@@ -222,93 +211,65 @@ namespace PROProtocol
 
         public bool CanSurf(int positionX, int positionY, bool isOnGround)
         {
-            int currentCollider = GetCollider(positionX, positionY);
-            int collider = GetCollider(positionX, positionY - 1);
+            var currentCollider = GetCollider(positionX, positionY);
+            var collider = GetCollider(positionX, positionY - 1);
             if ((collider == 5 || collider == 12) && isOnGround && currentCollider != 14)
-            {
                 return true;
-            }
 
             collider = GetCollider(positionX, positionY + 1);
             if ((collider == 5 || collider == 12) && isOnGround)
-            {
                 return true;
-            }
 
             collider = GetCollider(positionX - 1, positionY);
             if ((collider == 5 || collider == 12) && isOnGround)
-            {
                 return true;
-            }
 
             collider = GetCollider(positionX + 1, positionY);
             if ((collider == 5 || collider == 12) && isOnGround)
-            {
                 return true;
-            }
 
             return false;
         }
 
-        public MoveResult CanMove(Direction direction, int destinationX, int destinationY, bool isOnGround, bool isSurfing, bool canUseCut, bool canUseSmashRock)
+        public MoveResult CanMove(Direction direction, int destinationX, int destinationY, bool isOnGround,
+            bool isSurfing, bool canUseCut, bool canUseSmashRock)
         {
             if (destinationX < 0 || destinationX >= DimensionX
                 || destinationY < 0 || destinationY >= DimensionY)
-            {
                 return MoveResult.Fail;
-            }
-            foreach (Npc npc in Npcs)
-            {
-                if (npc.PositionX == destinationX && npc.PositionY == destinationY && npc.LosLength < 100 && !npc.IsMoving)
-                {
+            foreach (var npc in Npcs)
+                if (npc.PositionX == destinationX && npc.PositionY == destinationY && npc.LosLength < 100 &&
+                    !npc.IsMoving)
                     return MoveResult.Fail;
-                }
-            }
 
             if (direction == Direction.Up && GetCollider(destinationX, destinationY + 1) == 14)
-            {
                 return MoveResult.Fail;
-            }
 
-            int collider = GetCollider(destinationX, destinationY);
+            var collider = GetCollider(destinationX, destinationY);
 
             if (!IsMovementValid(direction, collider, isOnGround, isSurfing, canUseCut, canUseSmashRock))
-            {
                 return MoveResult.Fail;
-            }
             if (collider >= 2 && collider <= 4)
-            {
                 return MoveResult.Jump;
-            }
             if (isOnGround && collider == 7)
-            {
                 return MoveResult.NoLongerOnGround;
-            }
             if (!isOnGround && collider == 8)
-            {
                 return MoveResult.OnGround;
-            }
             if (isSurfing && collider != 5 && collider != 12)
-            {
                 return MoveResult.NoLongerSurfing;
-            }
             if (IsIce(destinationX, destinationY))
-            {
                 return MoveResult.Icing;
-            }
             if (GetSlider(destinationX, destinationY) != -1)
-            {
                 return MoveResult.Sliding;
-            }
             return MoveResult.Success;
         }
 
         public bool CanInteract(int playerX, int playerY, int npcX, int npcY)
         {
-            int distance = GameClient.DistanceBetween(playerX, playerY, npcX, npcY);
+            var distance = GameClient.DistanceBetween(playerX, playerY, npcX, npcY);
             if (distance != 1) return false;
-            int playerCollider = GetCollider(playerX, playerY);
-            int npcCollider = GetCollider(npcX, npcY);
+            var playerCollider = GetCollider(playerX, playerY);
+            var npcCollider = GetCollider(npcX, npcY);
             if (playerCollider == 14 && npcCollider == 14 && playerY == npcY) return true;
             if (playerCollider == 14 || npcCollider == 14) return false;
             return true;
@@ -318,9 +279,12 @@ namespace PROProtocol
         {
             if (x >= 0 && x < Width && y >= 0 && y < Height)
             {
-                int num = Tiles2[x, y];
-                int num2 = Tiles3[x, y];
-                return (num == 6 || num == 14 || num == 55 || num == 15 || num == 248 || num == 249 || num == 250 || num2 == 6 || num2 == 14 || num2 == 55 || num2 == 15 || num2 == 248 || num2 == 249 || num2 == 250);
+                var num = Tiles2[x, y];
+                var num2 = Tiles3[x, y];
+                var hasLink = HasLink(x, y);
+                return num == 6 || num == 14 || num == 55 || num == 15 || num == 248 || num == 249 || num == 250 ||
+                       num2 == 6 || num2 == 14 || num2 == 55 || num2 == 15 || num2 == 248 || num2 == 249 ||
+                       num2 == 250;
             }
             return false;
         }
@@ -329,8 +293,8 @@ namespace PROProtocol
         {
             if (x >= 0 && x < Width && y >= 0 && y < Height)
             {
-                int collider = Colliders[x, y];
-                return (collider == 5 || collider == 12);
+                var collider = Colliders[x, y];
+                return collider == 5 || collider == 12;
             }
             return false;
         }
@@ -339,8 +303,8 @@ namespace PROProtocol
         {
             if (x >= 0 && x < Width && y >= 0 && y < Height)
             {
-                int collider = Colliders[x, y];
-                bool hasLink = HasLink(x, y);
+                var collider = Colliders[x, y];
+                var hasLink = HasLink(x, y);
                 return (collider == 0 || collider == 6 || collider == 7 || collider == 8 || collider == 9) && !hasLink;
             }
             return false;
@@ -349,61 +313,42 @@ namespace PROProtocol
         public bool IsIce(int x, int y)
         {
             if (x >= 0 && x < Width && y >= 0 && y < Height)
-            {
                 if (Tiles1[x, y] == 17577 || Tiles1[x, y] == 17580 ||
                     Tiles2[x, y] == 17577 || Tiles2[x, y] == 17580 ||
                     Tiles3[x, y] == 17577 || Tiles3[x, y] == 17580)
-                {
                     return true;
-                }
-            }
             return false;
         }
 
-        public bool IsPC(int x, int y)
+        public bool IsPc(int x, int y)
         {
             if (x >= 0 && x < Width && y >= 0 && y < Height)
-            {
                 return Tiles2[x, y] == 5437 || Tiles3[x, y] == 5437;
-            }
             return false;
         }
 
         // we lazily assume there can be only one PC and it is always accessible
-        public Tuple<int, int> GetPC()
+        public Tuple<int, int> GetPc()
         {
-            for (int y = 0; y < Height; ++y)
-            {
-                for (int x = 0; x < Width; ++x)
-                {
-                    if (IsPC(x, y))
-                    {
-                        return new Tuple<int, int>(x, y);
-                    }
-                }
-            }
+            for (var y = 0; y < Height; ++y)
+            for (var x = 0; x < Width; ++x)
+                if (IsPc(x, y))
+                    return new Tuple<int, int>(x, y);
             return null;
         }
 
 
-
         public int GetSlider(int x, int y)
         {
-            int tile = Tiles1[x, y];
-            if (SliderValues.ContainsKey(tile))
-            {
-                return SliderValues[tile];
-            }
+            var tile = Tiles1[x, y];
+            if (_sliderValues.ContainsKey(tile))
+                return _sliderValues[tile];
             tile = Tiles2[x, y];
-            if (SliderValues.ContainsKey(tile))
-            {
-                return SliderValues[tile];
-            }
+            if (_sliderValues.ContainsKey(tile))
+                return _sliderValues[tile];
             tile = Tiles3[x, y];
-            if (SliderValues.ContainsKey(tile))
-            {
-                return SliderValues[tile];
-            }
+            if (_sliderValues.ContainsKey(tile))
+                return _sliderValues[tile];
             return -1;
         }
 
@@ -427,33 +372,29 @@ namespace PROProtocol
         public IEnumerable<Tuple<int, int>> GetNearestLinks(string linkName, int x, int y)
         {
             if (LinkDestinations.ContainsKey(linkName))
-            {
-                return LinkDestinations[linkName].OrderBy(link => GameClient.DistanceBetween(x, y, link.Item1, link.Item2));
-            }
+                return LinkDestinations[linkName]
+                    .OrderBy(link => GameClient.DistanceBetween(x, y, link.Item1, link.Item2));
             return null;
         }
 
-        private bool IsMovementValid(Direction direction, int collider, bool isOnGround, bool isSurfing, bool canUseCut, bool canUseSmashRock)
+        private bool IsMovementValid(Direction direction, int collider, bool isOnGround, bool isSurfing, bool canUseCut,
+            bool canUseSmashRock)
         {
             if (collider == -1)
-            {
                 return false;
-            }
             switch (direction)
             {
                 case Direction.Up:
                     if (isOnGround)
                     {
-                        if (collider == 14 || collider == 0 || collider == 6 || collider == 7 || collider == 8 || collider == 9)
-                        {
+                        if (collider == 14 || collider == 0 || collider == 6 || collider == 7 || collider == 8 ||
+                            collider == 9)
                             return true;
-                        }
                         if (isSurfing && (collider == 5 || collider == 12))
-                        {
                             return true;
-                        }
                     }
-                    else if (collider == 14 || collider == 7 || collider == 8 || collider == 9 || collider == 10 || collider == 12)
+                    else if (collider == 14 || collider == 7 || collider == 8 || collider == 9 || collider == 10 ||
+                             collider == 12)
                     {
                         return true;
                     }
@@ -461,14 +402,11 @@ namespace PROProtocol
                 case Direction.Down:
                     if (isOnGround)
                     {
-                        if (collider == 0 || collider == 6 || collider == 7 || collider == 8 || collider == 9 || collider == 2)
-                        {
+                        if (collider == 0 || collider == 6 || collider == 7 || collider == 8 || collider == 9 ||
+                            collider == 2)
                             return true;
-                        }
                         if (isSurfing && (collider == 5 || collider == 12))
-                        {
                             return true;
-                        }
                     }
                     else if (collider == 7 || collider == 8 || collider == 9 || collider == 10 || collider == 12)
                     {
@@ -478,16 +416,14 @@ namespace PROProtocol
                 case Direction.Left:
                     if (isOnGround)
                     {
-                        if (collider == 14 || collider == 0 || collider == 6 || collider == 7 || collider == 8 || collider == 9 || collider == 4)
-                        {
+                        if (collider == 14 || collider == 0 || collider == 6 || collider == 7 || collider == 8 ||
+                            collider == 9 || collider == 4)
                             return true;
-                        }
                         if (isSurfing && (collider == 5 || collider == 12))
-                        {
                             return true;
-                        }
                     }
-                    else if (collider == 14 || collider == 7 || collider == 8 || collider == 9 || collider == 10 || collider == 12)
+                    else if (collider == 14 || collider == 7 || collider == 8 || collider == 9 || collider == 10 ||
+                             collider == 12)
                     {
                         return true;
                     }
@@ -495,32 +431,29 @@ namespace PROProtocol
                 case Direction.Right:
                     if (isOnGround)
                     {
-                        if (collider == 14 || collider == 0 || collider == 6 || collider == 7 || collider == 8 || collider == 9 || collider == 3)
-                        {
+                        if (collider == 14 || collider == 0 || collider == 6 || collider == 7 || collider == 8 ||
+                            collider == 9 || collider == 3)
                             return true;
-                        }
                         if (isSurfing && (collider == 5 || collider == 12))
-                        {
                             return true;
-                        }
                     }
-                    else if (collider == 14 || collider == 7 || collider == 8 || collider == 9 || collider == 10 || collider == 12)
+                    else if (collider == 14 || collider == 7 || collider == 8 || collider == 9 || collider == 10 ||
+                             collider == 12)
                     {
                         return true;
                     }
                     break;
             }
-            if ((collider == 11 && canUseCut) ||
-                (collider == 13 && canUseSmashRock))
-            {
+            if (collider == 11 && canUseCut ||
+                collider == 13 && canUseSmashRock)
                 return true;
-            }
             return false;
         }
 
-        public bool ApplyMovement(Direction direction, MoveResult result, ref int destinationX, ref int destinationY, ref bool isOnGround, ref bool isSurfing)
+        public bool ApplyMovement(Direction direction, MoveResult result, ref int destinationX, ref int destinationY,
+            ref bool isOnGround, ref bool isSurfing)
         {
-            bool success = false;
+            var success = false;
             switch (result)
             {
                 case MoveResult.Success:
@@ -568,20 +501,20 @@ namespace PROProtocol
             MoveResult result;
             do
             {
-                int destinationX = x;
-                int destinationY = y;
-                bool destinationGround = isOnGround;
-                bool isSurfing = false;
+                var destinationX = x;
+                var destinationY = y;
+                var destinationGround = isOnGround;
+                var isSurfing = false;
                 direction.ApplyToCoordinates(ref destinationX, ref destinationY);
                 result = CanMove(direction, destinationX, destinationY, destinationGround, false, false, false);
-                if (ApplyMovement(direction, result, ref destinationX, ref destinationY, ref destinationGround, ref isSurfing))
+                if (ApplyMovement(direction, result, ref destinationX, ref destinationY, ref destinationGround,
+                    ref isSurfing))
                 {
                     x = destinationX;
                     y = destinationY;
                     isOnGround = destinationGround;
                 }
-            }
-            while (result == MoveResult.Icing);
+            } while (result == MoveResult.Icing);
         }
 
         public void ApplyCompleteSliderMovement(ref int x, ref int y, ref bool isOnGround)
@@ -590,32 +523,29 @@ namespace PROProtocol
             MoveResult result;
             do
             {
-                int destinationX = x;
-                int destinationY = y;
-                bool destinationGround = isOnGround;
-                bool isSurfing = false;
+                var destinationX = x;
+                var destinationY = y;
+                var destinationGround = isOnGround;
+                var isSurfing = false;
 
-                int slider = GetSlider(destinationX, destinationY);
+                var slider = GetSlider(destinationX, destinationY);
                 if (slider != -1)
-                {
                     slidingDirection = SliderToDirection(slider);
-                }
 
                 if (slidingDirection == null)
-                {
                     break;
-                }
 
                 slidingDirection.Value.ApplyToCoordinates(ref destinationX, ref destinationY);
-                result = CanMove(slidingDirection.Value, destinationX, destinationY, destinationGround, false, false, false);
-                if (ApplyMovement(slidingDirection.Value, result, ref destinationX, ref destinationY, ref destinationGround, ref isSurfing))
+                result = CanMove(slidingDirection.Value, destinationX, destinationY, destinationGround, false, false,
+                    false);
+                if (ApplyMovement(slidingDirection.Value, result, ref destinationX, ref destinationY,
+                    ref destinationGround, ref isSurfing))
                 {
                     x = destinationX;
                     y = destinationY;
                     isOnGround = destinationGround;
                 }
-            }
-            while (slidingDirection != null && result != MoveResult.Fail);
+            } while (slidingDirection != null && result != MoveResult.Fail);
         }
     }
 }

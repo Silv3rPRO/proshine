@@ -1,9 +1,6 @@
-﻿using Microsoft.Win32;
-using PROBot;
-using PROProtocol;
-using PROShine.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -13,42 +10,35 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Media;
 using System.Windows.Input;
-using System.Collections.ObjectModel;
+using System.Windows.Media;
+using MahApps.Metro.Controls;
+using MahApps.Metro.IconPacks;
+using Microsoft.Win32;
+using PROBot;
 using PROBot.Modules;
+using PROProtocol;
 
-namespace PROShine
+namespace PROShine.Views
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
-        public BotClient Bot { get; private set; }
+        private int? _lastQueueBreakPoint;
+        private DateTime _lastQueueBreakPointTime;
 
-        public TeamView Team { get; private set; }
-        public InventoryView Inventory { get; private set; }
-        public ChatView Chat { get; private set; }
-        public PlayersView Players { get; private set; }
-        public MapView Map { get; private set; }
+        private double _oldHeight;
 
-        private struct TabView
-        {
-            public UserControl View;
-            public ContentControl Content;
-            public ToggleButton Button;
-        }
-        private List<TabView> _views = new List<TabView>();
-
-        public FileLogger FileLog { get; private set; }
-
-        DateTime _refreshPlayers;
-        int _refreshPlayersDelay;
-        DateTime _lastQueueBreakPointTime;
-        int? _lastQueueBreakPoint;
+        private double _oldWidth;
 
         private int _queuePosition;
 
-        private ObservableCollection<OptionSlider> _sliderOptions;
-        private ObservableCollection<TextOption> _textOptions;
+        private DateTime _refreshPlayers;
+        private int _refreshPlayersDelay;
+
+        private readonly ObservableCollection<OptionSlider> _sliderOptions;
+        private readonly ObservableCollection<TextOption> _textOptions;
+
+        private readonly List<TabView> _views = new List<TabView>();
 
         public MainWindow()
         {
@@ -71,7 +61,7 @@ namespace PROShine
             Bot.SliderRemoved += Bot_SliderRemoved;
             Bot.TextboxCreated += Bot_TextboxCreated;
             Bot.TextboxRemoved += Bot_TextboxRemoved;
-            
+
             InitializeComponent();
             AutoReconnectSwitch.IsChecked = Bot.AutoReconnector.IsEnabled;
             AvoidStaffSwitch.IsChecked = Bot.StaffAvoider.IsEnabled;
@@ -84,6 +74,7 @@ namespace PROShine
             Chat = new ChatView(Bot);
             Players = new PlayersView(Bot);
             Map = new MapView(Bot);
+            Trade = new TradeView(Bot);
 
             FileLog = new FileLogger();
 
@@ -95,6 +86,7 @@ namespace PROShine
             AddView(Chat, ChatContent, ChatButton);
             AddView(Players, PlayersContent, PlayersButton);
             AddView(Map, MapContent, MapButton);
+            AddView(Trade, TradeContent, TradeButton);
 
             SetTitle(null);
 
@@ -105,6 +97,17 @@ namespace PROShine
             OptionSliders.ItemsSource = _sliderOptions = new ObservableCollection<OptionSlider>();
             TextOptions.ItemsSource = _textOptions = new ObservableCollection<TextOption>();
         }
+
+        public BotClient Bot { get; }
+
+        public TeamView Team { get; }
+        public InventoryView Inventory { get; }
+        public ChatView Chat { get; }
+        public PlayersView Players { get; }
+        public MapView Map { get; }
+        public TradeView Trade { get; }
+
+        public FileLogger FileLog { get; }
 
         public void Bot_SliderRemoved(OptionSlider option)
         {
@@ -161,7 +164,7 @@ namespace PROShine
             // On pressing enter, take focus from the textbox and give it to the selected button in _views
             // This is necessary to update the content of the TextOption
             if (e.Key == Key.Enter || e.Key == Key.Return)
-                foreach (TabView view in _views)
+                foreach (var view in _views)
                     if (view.Button.IsChecked.Value)
                         Keyboard.Focus(view.Button);
         }
@@ -209,8 +212,7 @@ namespace PROShine
 
         private void ViewButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (TabView view in _views)
-            {
+            foreach (var view in _views)
                 if (view.Button == sender)
                 {
                     view.Content.Visibility = Visibility.Visible;
@@ -222,7 +224,6 @@ namespace PROShine
                     view.Content.Visibility = Visibility.Collapsed;
                     view.Button.IsChecked = false;
                 }
-            }
         }
 
         private void SetTitle(string username)
@@ -249,12 +250,12 @@ namespace PROShine
             try
             {
                 if (ex != null)
-                {
                     File.WriteAllText("crash_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".txt",
                         App.Name + " " + App.Version + " crash report: " + Environment.NewLine + ex);
-                }
-                MessageBox.Show(App.Name + " encountered a fatal error. The application will now terminate." + Environment.NewLine +
-                    "An error file has been created next to the application.", App.Name + " - Fatal error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(App.Name + " encountered a fatal error. The application will now terminate." +
+                                Environment.NewLine +
+                                "An error file has been created next to the application.", App.Name + " - Fatal error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
                 Environment.Exit(0);
             }
             catch
@@ -267,12 +268,10 @@ namespace PROShine
             lock (Bot)
             {
                 if (Bot.Game != null)
-                {
                     Bot.Game.Update();
-                }
                 Bot.Update();
             }
-            Task.Delay(1).ContinueWith((previous) => UpdateClients());
+            Task.Delay(1).ContinueWith(previous => UpdateClients());
         }
 
         private void LoginMenuItem_Click(object sender, RoutedEventArgs e)
@@ -282,17 +281,15 @@ namespace PROShine
 
         private void OpenLoginWindow()
         {
-            LoginWindow login = new LoginWindow(Bot) { Owner = this };
-            bool? result = login.ShowDialog();
+            var login = new LoginWindow(Bot) {Owner = this};
+            var result = login.ShowDialog();
             if (result != true)
-            {
                 return;
-            }
 
             LogMessage("Connecting to the server...");
             LoginButton.IsEnabled = false;
             LoginMenuItem.IsEnabled = false;
-            Account account = new Account(login.Username);
+            var account = new Account(login.Username);
             lock (Bot)
             {
                 account.Password = login.Password;
@@ -300,7 +297,7 @@ namespace PROShine
                 account.MacAddress = login.MacAddress;
                 if (login.HasProxy)
                 {
-                    account.Socks.Version = (SocksVersion)login.ProxyVersion;
+                    account.Socks.Version = (SocksVersion) login.ProxyVersion;
                     account.Socks.Host = login.ProxyHost;
                     account.Socks.Port = login.ProxyPort;
                     account.Socks.Username = login.ProxyUsername;
@@ -331,15 +328,14 @@ namespace PROShine
 
         private void LoadScript()
         {
-            OpenFileDialog openDialog = new OpenFileDialog
+            var openDialog = new OpenFileDialog
             {
                 Filter = App.Name + " Scripts|*.lua;*.txt|All Files|*.*"
             };
 
-            bool? result = openDialog.ShowDialog();
+            var result = openDialog.ShowDialog();
 
             if (result.HasValue && result.Value)
-            {
                 try
                 {
                     lock (Bot)
@@ -354,27 +350,25 @@ namespace PROShine
                         OptionsButton.Visibility = Visibility.Collapsed;
                         OptionSliders.Visibility = Visibility.Collapsed;
                         TextOptions.Visibility = Visibility.Collapsed;
-                        
+
                         Bot.LoadScript(openDialog.FileName);
-                        MenuPathScript.Header = "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine + openDialog.FileName;
+                        MenuPathScript.Header = "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine +
+                                                openDialog.FileName;
                         LogMessage("Script \"{0}\" by \"{1}\" successfully loaded", Bot.Script.Name, Bot.Script.Author);
                         if (!string.IsNullOrEmpty(Bot.Script.Description))
-                        {
                             LogMessage(Bot.Script.Description);
-                        }
                         UpdateBotMenu();
                     }
                 }
                 catch (Exception ex)
                 {
-                    string filename = Path.GetFileName(openDialog.FileName);
+                    var filename = Path.GetFileName(openDialog.FileName);
 #if DEBUG
                     LogMessage("Could not load script {0}: " + Environment.NewLine + "{1}", filename, ex);
 #else
                     LogMessage("Could not load script {0}: " + Environment.NewLine + "{1}", filename, ex.Message);
 #endif
                 }
-            }
         }
 
         private void BotStartMenuItem_Click(object sender, RoutedEventArgs e)
@@ -397,10 +391,7 @@ namespace PROShine
         {
             if (_refreshPlayers < DateTime.UtcNow)
             {
-                Dispatcher.InvokeAsync(delegate
-                {
-                    Players.RefreshView();
-                });
+                Dispatcher.InvokeAsync(delegate { Players.RefreshView(); });
                 _refreshPlayers = DateTime.UtcNow.AddMilliseconds(_refreshPlayersDelay);
             }
         }
@@ -409,10 +400,7 @@ namespace PROShine
         {
             if (_refreshPlayers < DateTime.UtcNow)
             {
-                Dispatcher.InvokeAsync(delegate
-                {
-                    Players.RefreshView();
-                });
+                Dispatcher.InvokeAsync(delegate { Players.RefreshView(); });
                 _refreshPlayers = DateTime.UtcNow.AddMilliseconds(_refreshPlayersDelay);
             }
         }
@@ -421,10 +409,7 @@ namespace PROShine
         {
             if (_refreshPlayers < DateTime.UtcNow)
             {
-                Dispatcher.InvokeAsync(delegate
-                {
-                    Players.RefreshView();
-                });
+                Dispatcher.InvokeAsync(delegate { Players.RefreshView(); });
                 _refreshPlayers = DateTime.UtcNow.AddMilliseconds(_refreshPlayersDelay);
             }
         }
@@ -440,8 +425,9 @@ namespace PROShine
                         SetTitle(Bot.Account.Name + " - " + Bot.Game.Server);
                         UpdateBotMenu();
                         LogoutMenuItem.IsEnabled = true;
+                        LoginMenuItem.IsEnabled = false;
                         LoginButton.IsEnabled = true;
-                        LoginButtonIcon.Icon = FontAwesome.WPF.FontAwesomeIcon.SignOut;
+                        LoginButtonIcon.Kind = PackIconMaterialKind.GoogleCirclesGroup;
                         LogMessage("Connected, authenticating...");
                     }
                 }
@@ -456,7 +442,7 @@ namespace PROShine
                 LoginMenuItem.IsEnabled = true;
                 LogoutMenuItem.IsEnabled = false;
                 LoginButton.IsEnabled = true;
-                LoginButtonIcon.Icon = FontAwesome.WPF.FontAwesomeIcon.SignIn;
+                LoginButtonIcon.Kind = PackIconMaterialKind.GoogleCirclesGroup;
                 UpdateBotMenu();
                 StatusText.Text = "Offline";
                 StatusText.Foreground = Brushes.DarkRed;
@@ -479,7 +465,7 @@ namespace PROShine
         {
             Dispatcher.InvokeAsync(delegate
             {
-                string message = "";
+                var message = "";
                 switch (reason)
                 {
                     case AuthenticationResult.AlreadyLogged:
@@ -521,17 +507,17 @@ namespace PROShine
                 if (BotClient.State.Started == state)
                 {
                     stateText = "started";
-                    StartScriptButtonIcon.Icon = FontAwesome.WPF.FontAwesomeIcon.Pause;
+                    StartScriptButtonIcon.Kind = PackIconFontAwesomeKind.Pause;
                 }
                 else if (BotClient.State.Paused == state)
                 {
                     stateText = "paused";
-                    StartScriptButtonIcon.Icon = FontAwesome.WPF.FontAwesomeIcon.Play;
+                    StartScriptButtonIcon.Kind = PackIconFontAwesomeKind.Play;
                 }
                 else
                 {
                     stateText = "stopped";
-                    StartScriptButtonIcon.Icon = FontAwesome.WPF.FontAwesomeIcon.Play;
+                    StartScriptButtonIcon.Kind = PackIconFontAwesomeKind.Play;
                 }
                 LogMessage("Bot " + stateText);
             });
@@ -539,10 +525,7 @@ namespace PROShine
 
         private void Bot_LogMessage(string message)
         {
-            Dispatcher.InvokeAsync(delegate
-            {
-                LogMessage(message);
-            });
+            Dispatcher.InvokeAsync(delegate { LogMessage(message); });
         }
 
         private void Bot_AutoReconnectorStateChanged(bool value)
@@ -588,6 +571,9 @@ namespace PROShine
                     Bot.Game.BattleMessage += Client_BattleMessage;
                     Bot.Game.BattleEnded += Client_BattleEnded;
                     Bot.Game.DialogOpened += Client_DialogOpened;
+                    Bot.Game.SpawnListUpdated += Client_RefreshSpawnList;
+                    Bot.Game.PokedexDataUpdated += Client_RefreshPokedexList;
+                    //chat
                     Bot.Game.ChatMessage += Chat.Client_ChatMessage;
                     Bot.Game.ChannelMessage += Chat.Client_ChannelMessage;
                     Bot.Game.EmoteMessage += Chat.Client_EmoteMessage;
@@ -596,6 +582,7 @@ namespace PROShine
                     Bot.Game.PrivateMessage += Chat.Client_PrivateMessage;
                     Bot.Game.LeavePrivateMessage += Chat.Client_LeavePrivateMessage;
                     Bot.Game.RefreshChannelList += Chat.Client_RefreshChannelList;
+                    //
                     Bot.Game.SystemMessage += Client_SystemMessage;
                     Bot.Game.PlayerAdded += Client_PlayerAdded;
                     Bot.Game.PlayerUpdated += Client_PlayerUpdated;
@@ -603,6 +590,15 @@ namespace PROShine
                     Bot.Game.InvalidPacket += Client_InvalidPacket;
                     Bot.Game.PokeTimeUpdated += Client_PokeTimeUpdated;
                     Bot.Game.ShopOpened += Client_ShopOpened;
+                    //trade
+                    Bot.Game.TradeRequested += Trade.TradeRequest;
+                    Bot.Game.TradeCanceled += Trade.Reset;
+                    Bot.Game.TradeMoneyUpdated += Trade.UpdateMoney;
+                    Bot.Game.TradePokemonUpdated += Trade_PokemonsUpdated;
+                    Bot.Game.TradeStatusUpdated += Trade.StatusChanged;
+                    Bot.Game.TradeStatusReset += Trade.StatusReset;
+                    Bot.Game.TradeAccepted += Trade.ChangeToFinalView;
+                    //map
                     Bot.Game.MapLoaded += Map.Client_MapLoaded;
                     Bot.Game.PositionUpdated += Map.Client_PositionUpdated;
                     Bot.Game.PlayerAdded += Map.Client_PlayerEnteredMap;
@@ -614,13 +610,9 @@ namespace PROShine
             Dispatcher.InvokeAsync(delegate
             {
                 if (Bot.Game != null)
-                {
                     FileLog.OpenFile(Bot.Account.Name, Bot.Game.Server.ToString());
-                }
                 else
-                {
                     FileLog.CloseFile();
-                }
             });
         }
 
@@ -633,22 +625,16 @@ namespace PROShine
                     _queuePosition = position;
                     TimeSpan? queueTimeLeft = null;
                     if (_lastQueueBreakPoint != null && position < _lastQueueBreakPoint)
-                    {
-                        queueTimeLeft = TimeSpan.FromTicks((DateTime.UtcNow - _lastQueueBreakPointTime).Ticks / (_lastQueueBreakPoint.Value - position) * position);
-                    }
+                        queueTimeLeft = TimeSpan.FromTicks((DateTime.UtcNow - _lastQueueBreakPointTime).Ticks /
+                                                           (_lastQueueBreakPoint.Value - position) * position);
                     StatusText.Text = "In Queue" + " (" + position + ")";
                     if (queueTimeLeft != null)
                     {
                         StatusText.Text += " ";
                         if (queueTimeLeft.Value.Hours > 0)
-                        {
                             StatusText.Text += queueTimeLeft.Value.ToString(@"hh\:mm\:ss");
-                        }
                         else
-                        {
                             StatusText.Text += queueTimeLeft.Value.ToString(@"mm\:ss");
-
-                        }
                         StatusText.Text += " left";
                     }
                     StatusText.Foreground = Brushes.DarkBlue;
@@ -670,6 +656,91 @@ namespace PROShine
             });
         }
 
+        private void Client_RefreshSpawnList(List<PokemonSpawn> pkmns)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                SpawnList.Children.Clear(); // Clearing the spawn list before adding new one.
+
+                pkmns.ForEach(delegate(PokemonSpawn pkmn)
+                {
+                    /* Captured : check | Not : times
+                     * MSOnly : Certificate
+                     * SURF : Anchor | GROUND : Globe
+                     * MAY HOLD AN ITEM : percent
+                    */
+
+                    var d = new DockPanel();
+                    var c = new PackIconMaterial();
+                    var m = new PackIconMaterial();
+                    var s = new PackIconMaterial();
+                    var i = new PackIconMaterial();
+
+                    if (pkmn.Captured)
+                    {
+                        c.Kind = PackIconMaterialKind.Check;
+                        d.Children.Add(c);
+                    }
+                    if (pkmn.Msonly)
+                    {
+                        m.Kind = PackIconMaterialKind.Certificate;
+                        d.Children.Add(m);
+                    }
+                    if (pkmn.Surf)
+                    {
+                        s.Kind = PackIconMaterialKind.Anchor;
+                        d.Children.Add(s);
+                    }
+                    else
+                    {
+                        s.Kind = PackIconMaterialKind.Map;
+                        d.Children.Add(s);
+                    }
+                    if (pkmn.Hitem)
+                    {
+                        i.Kind = PackIconMaterialKind.Percent;
+                        d.Children.Add(i);
+                    }
+                    var name = new TextBlock();
+                    name.Text = pkmn.Name;
+                    d.Children.Add(name);
+                    SpawnList.Children.Add(d);
+                });
+                if (pkmns.Count <= 0)
+                {
+                    var nospawn = new TextBlock();
+                    nospawn.Foreground = Brushes.OrangeRed;
+                    nospawn.Text = "No Pokemon Spawn.";
+                    SpawnList.Children.Add(nospawn);
+                }
+            });
+        }
+        private void Client_RefreshPokedexList()
+        {
+            lock (Bot)
+            {
+                Dispatcher.Invoke(() =>
+                {
+
+                List<Pokedex> items = new List<Pokedex>();
+                if (Bot.Game.GetAreaName.Count > 0 && Bot.Game.IsMs.Count > 0 && Bot.Game.TimeZone.Count > 0)
+                {
+                    for (int i = 0; i < Bot.Game.GetAreaName.Count; i++)
+                    {
+                        //PokedexList.Items.Add(Bot.Game.getAreaName[i]);
+                        items.Add(new Pokedex() { AreaName = Bot.Game.GetAreaName[i], TimeZone = Bot.Game.TimeZone[i], IsMs = Bot.Game.IsMs[i] });
+                    }
+                }
+                PokedexList.ItemsSource = items;
+
+                if(FlayoutDex.IsOpen == false)
+                {
+                    FlayoutDex.IsOpen = true;
+                }
+                });
+            }
+        }
+
         private void Client_PokemonsUpdated()
         {
             Dispatcher.InvokeAsync(delegate
@@ -681,6 +752,24 @@ namespace PROShine
                 }
                 Team.PokemonsListView.ItemsSource = team;
                 Team.PokemonsListView.Items.Refresh();
+            });
+        }
+
+        private void Trade_PokemonsUpdated()
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                IList<TradePokemon> firstItems;
+                IList<TradePokemon> secondItems;
+                lock (Bot)
+                {
+                    firstItems = Bot.Game.FirstTrade.ToArray();
+                    secondItems = Bot.Game.SecondTrade.ToArray();
+                }
+                Trade.FirstList.ItemsSource = firstItems;
+                Trade.SecondList.ItemsSource = secondItems;
+                Trade.FirstList.Items.Refresh();
+                Trade.SecondList.Items.Refresh();
             });
         }
 
@@ -730,43 +819,31 @@ namespace PROShine
 
         private void Client_DialogOpened(string message)
         {
-            Dispatcher.InvokeAsync(delegate
-            {
-                LogMessage(message);
-            });
+            Dispatcher.InvokeAsync(delegate { LogMessage(message); });
         }
 
         private void Client_SystemMessage(string message)
         {
-            Dispatcher.InvokeAsync(delegate
-            {
-                AddSystemMessage(message);
-            });
+            Dispatcher.InvokeAsync(delegate { AddSystemMessage(message); });
         }
 
         private void Client_InvalidPacket(string packet, string error)
         {
-            Dispatcher.InvokeAsync(delegate
-            {
-                LogMessage("Received Invalid Packet: " + error + ": " + packet);
-            });
+            Dispatcher.InvokeAsync(delegate { LogMessage("Received Invalid Packet: " + error + ": " + packet); });
         }
 
         private void Client_PokeTimeUpdated(string pokeTime, string weather)
         {
-            Dispatcher.InvokeAsync(delegate
-            {
-                PokeTimeText.Text = pokeTime;
-            });
+            Dispatcher.InvokeAsync(delegate { PokeTimeText.Text = pokeTime; });
         }
-        
+
         private void Client_ShopOpened(Shop shop)
         {
             Dispatcher.InvokeAsync(delegate
             {
-                StringBuilder content = new StringBuilder();
+                var content = new StringBuilder();
                 content.Append("Shop opened:");
-                foreach (ShopItem item in shop.Items)
+                foreach (var item in shop.Items)
                 {
                     content.AppendLine();
                     content.Append(item.Name);
@@ -780,11 +857,13 @@ namespace PROShine
         {
             lock (Bot)
             {
-                BotStartMenuItem.IsEnabled = Bot.Game != null && Bot.Game.IsConnected && Bot.Script != null && Bot.Running == BotClient.State.Stopped;
-                BotStopMenuItem.IsEnabled = Bot.Game != null && Bot.Game.IsConnected && Bot.Running != BotClient.State.Stopped;
+                BotStartMenuItem.IsEnabled = Bot.Game != null && Bot.Game.IsConnected && Bot.Script != null &&
+                                             Bot.Running == BotClient.State.Stopped;
+                BotStopMenuItem.IsEnabled =
+                    Bot.Game != null && Bot.Game.IsConnected && Bot.Running != BotClient.State.Stopped;
             }
         }
-        
+
         private void LogMessage(string message)
         {
             message = "[" + DateTime.Now.ToLongTimeString() + "] " + message;
@@ -802,18 +881,34 @@ namespace PROShine
             LogMessage("System: " + message);
         }
 
+        private void Collapse_Click(object sender, RoutedEventArgs e)
+        {
+            if (CollapseIcon.Kind.Equals(PackIconMaterialKind.WindowMinimize))
+            {
+                _oldHeight = Height;
+                _oldWidth = Width;
+                MaxHeight = 68.0;
+                MaxWidth = 700.0;
+                CollapseIcon.Kind = PackIconMaterialKind.WindowMaximize;
+                return;
+            }
+            MaxHeight = 2147483647.0;
+            Height = _oldHeight;
+            MaxWidth = 2147483647.0;
+            Width = _oldWidth;
+            CollapseIcon.Kind = PackIconMaterialKind.WindowMinimize;
+        }
+
         public static void AppendLineToTextBox(TextBox textBox, string message)
         {
             textBox.AppendText(message + Environment.NewLine);
             if (textBox.Text.Length > 12000)
             {
-                string text = textBox.Text;
+                var text = textBox.Text;
                 text = text.Substring(text.Length - 10000, 10000);
-                int index = text.IndexOf(Environment.NewLine);
+                var index = text.IndexOf(Environment.NewLine);
                 if (index != -1)
-                {
                     text = text.Substring(index + Environment.NewLine.Length);
-                }
                 textBox.Text = text;
             }
             textBox.CaretIndex = textBox.Text.Length;
@@ -822,7 +917,9 @@ namespace PROShine
 
         private void MenuAbout_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(App.Name + " version " + App.Version + ", by " + App.Author + "." + Environment.NewLine + App.Description, App.Name + " - About");
+            MessageBox.Show(
+                App.Name + " version " + App.Version + ", by " + App.Author + "." + Environment.NewLine +
+                App.Description, App.Name + " - About");
         }
 
         private void MenuForum_Click(object sender, RoutedEventArgs e)
@@ -840,18 +937,28 @@ namespace PROShine
             Process.Start("https://www.patreon.com/proshine");
         }
 
+        private void HideLogView_Click(object sender, RoutedEventArgs e)
+        {
+            if (HideLogView.Header.Equals("Show Log"))
+            {
+                Row1.Height = new GridLength(1, GridUnitType.Star);
+                HideLogView.Header = "Hide Log";
+            }
+            else
+            {
+                Row1.Height = new GridLength(0);
+                HideLogView.Header = "Show Log";
+            }
+        }
+
         private void StartScriptButton_Click(object sender, RoutedEventArgs e)
         {
             lock (Bot)
             {
                 if (Bot.Running == BotClient.State.Stopped)
-                {
                     Bot.Start();
-                }
                 else if (Bot.Running == BotClient.State.Started || Bot.Running == BotClient.State.Paused)
-                {
                     Bot.Pause();
-                }
             }
         }
 
@@ -860,6 +967,7 @@ namespace PROShine
             lock (Bot)
             {
                 Bot.Stop();
+                Bot.CancelInvokes();
             }
         }
 
@@ -918,22 +1026,83 @@ namespace PROShine
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            bool shouldLogin = false;
+            var shouldLogin = false;
             lock (Bot)
             {
                 if (Bot.Game == null || !Bot.Game.IsConnected)
-                {
                     shouldLogin = true;
+                else
+                    Logout();
+            }
+            if (shouldLogin)
+                OpenLoginWindow();
+        }
+
+        private void IsTrainerBattlesActiveSwitch_Checked(object sender, RoutedEventArgs e)
+        {
+            lock (Bot)
+            {
+                if (Bot.Running == BotClient.State.Stopped)
+                    Bot.IsTrainerBattlesActive.IsEnabled = true;
+            }
+        }
+
+        private void IsTrainerBattlesActiveSwitch_Unchecked(object sender, RoutedEventArgs e)
+        {
+            lock (Bot)
+            {
+                if (Bot.Running == BotClient.State.Stopped)
+                    Bot.IsTrainerBattlesActive.IsEnabled = false;
+            }
+        }
+
+        private void PokedexData_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (Bot.Game != null)
+            {
+                if (Bot.Game.IsAlreadyCaught(PokedexData.Text) || Bot.Game.HasSeen(PokedexData.Text))
+                {
+                    Bot.Game.PokedexList.ForEach(delegate (PokedexPokemon pkmn)
+                    {
+                        if (pkmn.ToString() == PokedexData.Text)
+                        {
+                            Bot.Game.SendPacket("p|.|a|" + pkmn.Pokeid2);
+                        }
+                    });
                 }
                 else
                 {
-                    Logout();
+                    var bc = new BrushConverter();
+                    LogMessage("Data didn't receive, may be you haven't seen the pokemon.", (Brush)bc.ConvertFrom("#FF99AAB5"));
                 }
             }
-            if (shouldLogin)
+
+            FlayoutDex.IsOpen = true;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            FlayoutDex.IsOpen = false;
+            var items = new List<Pokedex>();
+            if (Bot.Game != null)
             {
-                OpenLoginWindow();
+                items.Add(new Pokedex {AreaName = null, TimeZone = null, IsMs = null});
+                Bot.Game.GetAreaName.Clear();
+                Bot.Game.TimeZone.Clear();
+                Bot.Game.IsMs.Clear();
+                PokedexList.ItemsSource = items;
             }
+        }
+
+        private struct TabView
+        {
+            public UserControl View;
+            public ContentControl Content;
+            public ToggleButton Button;
         }
     }
 }

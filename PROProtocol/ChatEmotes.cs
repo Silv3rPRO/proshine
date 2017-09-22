@@ -2,7 +2,8 @@
 {
     public static class ChatEmotes
     {
-        private static string[] Emotes = {
+        private static readonly string[] _emotes =
+        {
             "surprised",
             "confused",
             "in love",
@@ -36,11 +37,9 @@
 
         public static string GetDescription(int emoteId)
         {
-            if (emoteId <= 0 || emoteId > Emotes.Length)
-            {
+            if (emoteId <= 0 || emoteId > _emotes.Length)
                 return "EMOTE(" + emoteId + ")";
-            }
-            return Emotes[emoteId - 1];
+            return _emotes[emoteId - 1];
         }
     }
 }

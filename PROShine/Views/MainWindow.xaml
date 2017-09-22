@@ -1,18 +1,63 @@
-﻿<Window x:Class="PROShine.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:fa="http://schemas.fontawesome.io/icons/"
-        xmlns:local="clr-namespace:PROShine"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800" Background="#FFCDD5E2" Foreground="#FF101020" Icon="../logo.ico" FontSize="13.333">
+﻿<controls:MetroWindow x:Class="PROShine.Views.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:local="clr-namespace:PROShine"
+                      mc:Ignorable="d"
+                      Title="MainWindow" Height="600" Width="800" Background="#FF23272a" Foreground="#FF99aab5"
+                      Icon="../logo.ico"
+                      FontSize="13.333">
+    <controls:MetroWindow.LeftWindowCommands>
+        <controls:WindowCommands>
+            <TextBlock Name="StatusIcon" Foreground="#FF7289da" FontSize="15" Margin="8,2,2,2"
+                       VerticalAlignment="Center">
+                <iconPacks:PackIconModern Kind="Alien" VerticalAlignment="Center" />
+            </TextBlock>
+            <TextBlock Name="StatusText" Text="Offline" Foreground="Red" Margin="2,2,2,2"
+                       VerticalAlignment="Center" />
+        </controls:WindowCommands>
+    </controls:MetroWindow.LeftWindowCommands>
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <TextBlock Name="PokeTimeIcon" Foreground="#FF7289da" FontSize="15" Margin="8,2,2,2"
+                       VerticalAlignment="Center">
+                <iconPacks:PackIconMaterial Name="PokeTimeIconName" Kind="Clock" Foreground="#99aab5"
+                                            VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </TextBlock>
+            <TextBlock Name="PokeTimeText" Text="??:??" Margin="2,2,2,2" VerticalAlignment="Center" />
+                <TextBlock Name="MapNameIcon" Foreground="#FF7289da" FontSize="15" Margin="8,2,2,2"
+                           VerticalAlignment="Center">
+                    <iconPacks:PackIconMaterial Kind="HomeMapMarker" VerticalAlignment="Center"
+                                                HorizontalAlignment="Center" />
+                </TextBlock>
+                <TextBlock Name="MapNameText" Text="Not Loaded" Margin="2,2,2,2" VerticalAlignment="Center">
+                    <TextBlock.ToolTip>
+                        <StackPanel Name="SpawnList" />
+                    </TextBlock.ToolTip>
+                </TextBlock>
+                <TextBlock Name="PlayerPositionIcon" Foreground="#FF7289da" FontSize="15" Margin="8,2,2,2"
+                           VerticalAlignment="Center">
+                    <iconPacks:PackIconMaterial Kind="MapMarkerRadius" VerticalAlignment="Center"
+                                                HorizontalAlignment="Center" />
+                </TextBlock>
+                <TextBlock Name="PlayerPositionText" Text="(?,?)" Margin="2,2,2,2" VerticalAlignment="Center" />
+                <TextBlock Name="MoneyIcon" Foreground="#FF7289da" FontSize="13" Margin="8,4,2,2"
+                           VerticalAlignment="Center">
+                    <iconPacks:PackIconMaterial Kind="CurrencyBtc" VerticalAlignment="Center"
+                                                HorizontalAlignment="Center" />
+                </TextBlock>
+                <TextBlock Name="MoneyText" Text="?" Margin="2,2,2,2" VerticalAlignment="Center" />
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
     <Window.Resources>
         <LinearGradientBrush x:Key="CheckedBlue" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#FFb5c3da" Offset="0" />
-            <GradientStop Color="#FFC3CFE1" Offset="1" />
+            <GradientStop Color="#FF7289da" Offset="0" />
+            <GradientStop Color="#FF2c2f33" Offset="1" />
         </LinearGradientBrush>
-        <SolidColorBrush x:Key="CheckedBlueBorder" Color="#FF909CAE" />
+        <SolidColorBrush x:Key="CheckedBlueBorder" Color="#FF7289da" />
         <Style x:Key="SwitchStyle" TargetType="{x:Type CheckBox}">
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
             <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
@@ -21,24 +66,31 @@
                     <ControlTemplate TargetType="{x:Type CheckBox}">
                         <ControlTemplate.Resources>
                             <Storyboard x:Key="OnChecking">
-                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="slider" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="slider"
+                                                               Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
                                     <SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="30" />
                                 </DoubleAnimationUsingKeyFrames>
                             </Storyboard>
                             <Storyboard x:Key="OnUnchecking">
-                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="slider" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="slider"
+                                                               Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
                                     <SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="0" />
                                 </DoubleAnimationUsingKeyFrames>
                             </Storyboard>
                         </ControlTemplate.Resources>
                         <DockPanel x:Name="dockPanel">
-                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" ContentTemplate="{TemplateBinding ContentTemplate}" RecognizesAccessKey="True" VerticalAlignment="Center" />
+                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              RecognizesAccessKey="True" VerticalAlignment="Center" />
                             <Grid>
-                                <Border x:Name="BackgroundBorder" BorderBrush="#FF939393" BorderThickness="1" CornerRadius="3" Height="25" Width="60">
+                                <Border x:Name="BackgroundBorder" BorderBrush="#FF7289da" BorderThickness="1"
+                                        CornerRadius="9" Height="20" Width="60">
                                     <Border.Background>
                                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                            <GradientStop Color="#FFB5B5B5" Offset="0" />
-                                            <GradientStop Color="#FFFEFEFE" Offset="1" />
+                                            <GradientStop Color="#FF23272a" Offset="0" />
+                                            <GradientStop Color="#FF23272a" Offset="1" />
                                         </LinearGradientBrush>
                                     </Border.Background>
                                     <Grid>
@@ -46,11 +98,15 @@
                                             <ColumnDefinition />
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Name="On" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="ON" />
-                                        <TextBlock Name="Off" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="OFF" />
+                                        <TextBlock Name="On" Grid.Column="0" HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" Text="ON" />
+                                        <TextBlock Name="Off" Grid.Column="1" HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" Text="Off" />
                                     </Grid>
                                 </Border>
-                                <Border BorderBrush="#FF939393" HorizontalAlignment="Left" x:Name="slider" Width="30" Height="25" BorderThickness="1" CornerRadius="3" RenderTransformOrigin="0.5,0.5" Margin="0">
+                                <Border BorderBrush="#FF23272a" HorizontalAlignment="Left" x:Name="slider" Width="25"
+                                        Height="25" BorderThickness="1" CornerRadius="90"
+                                        RenderTransformOrigin="0.5,0.5" Margin="0">
                                     <Border.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform ScaleX="1" ScaleY="1" />
@@ -61,9 +117,9 @@
                                     </Border.RenderTransform>
                                     <Border.Background>
                                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                                            <GradientStop Color="#FFF0F0F0" Offset="0" />
-                                            <GradientStop Color="#FFCDCDCD" Offset="0.1" />
-                                            <GradientStop Color="#FFFBFBFB" Offset="1" />
+                                            <GradientStop Color="#FF7289da" Offset="0" />
+                                            <GradientStop Color="#FF2c2f33" Offset="0.1" />
+                                            <GradientStop Color="#FF7289da" Offset="1" />
                                         </LinearGradientBrush>
                                     </Border.Background>
                                 </Border>
@@ -72,13 +128,17 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
                                 <Trigger.ExitActions>
-                                    <BeginStoryboard Storyboard="{StaticResource OnUnchecking}" x:Name="OnUnchecking_BeginStoryboard" />
+                                    <BeginStoryboard Storyboard="{StaticResource OnUnchecking}"
+                                                     x:Name="OnUnchecking_BeginStoryboard" />
                                 </Trigger.ExitActions>
                                 <Trigger.EnterActions>
-                                    <BeginStoryboard Storyboard="{StaticResource OnChecking}" x:Name="OnChecking_BeginStoryboard" />
+                                    <BeginStoryboard Storyboard="{StaticResource OnChecking}"
+                                                     x:Name="OnChecking_BeginStoryboard" />
                                 </Trigger.EnterActions>
-                                <Setter TargetName="BackgroundBorder" Property="Background" Value="{StaticResource CheckedBlue}" />
-                                <Setter TargetName="BackgroundBorder" Property="BorderBrush" Value="{StaticResource CheckedBlueBorder}" />
+                                <Setter TargetName="BackgroundBorder" Property="Background"
+                                        Value="{StaticResource CheckedBlue}" />
+                                <Setter TargetName="BackgroundBorder" Property="BorderBrush"
+                                        Value="{StaticResource CheckedBlueBorder}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -88,109 +148,157 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="2*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" Name="Row1" />
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" Background="#FFB5C3DA" HorizontalAlignment="Stretch">
-            <Menu IsMainMenu="True" Background="#FFB5C3DA" Foreground="#FF101020" FontSize="13.333">
-                <MenuItem Header="Connection">
+        <DockPanel Grid.Row="0" Background="#FF23272a" HorizontalAlignment="Stretch">
+            <Menu IsMainMenu="True" Background="#FF23272a" Foreground="#FF99aab5" FontSize="12.333">
+                <Button x:Name="LoginButton" Style="{DynamicResource MetroCircleButtonStyle}" Background="#FF23272a"
+                        Foreground="#FF99aab5" BorderThickness="0" Click="LoginButton_Click">
+                    <Button.Content>
+                        <iconPacks:PackIconMaterial Name="LoginButtonIcon" Kind="GoogleCirclesGroup"
+                                                    Foreground="#FF7289da" FontSize="14" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <TextBlock>Login.</TextBlock>
+                    </Button.ToolTip>
+                </Button>
+                <Button x:Name="StartScriptButton" Style="{DynamicResource MetroCircleButtonStyle}"
+                        Background="#FF23272a" Foreground="#FF99aab5" BorderThickness="0"
+                        Click="StartScriptButton_Click">
+                    <Button.Content>
+                        <iconPacks:PackIconFontAwesome Name="StartScriptButtonIcon" Kind="Play" Foreground="#FF7289da"
+                                                       FontSize="14" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <TextBlock>Start Script.</TextBlock>
+                    </Button.ToolTip>
+                </Button>
+                <Button x:Name="StopScriptButton" Style="{DynamicResource MetroCircleButtonStyle}"
+                        Background="#FF23272a" Foreground="#FF99aab5" BorderThickness="0"
+                        Click="StopScriptButton_Click">
+                    <Button.Content>
+                        <iconPacks:PackIconFontAwesome Name="StopScriptButtonIcon" Kind="StopCircle"
+                                                       Foreground="#FF7289da" FontSize="14" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <TextBlock>Stop Script.</TextBlock>
+                    </Button.ToolTip>
+                </Button>
+                <Button x:Name="LoadScriptButton" Style="{DynamicResource MetroCircleButtonStyle}"
+                        Background="#FF23272a" Foreground="#FF99aab5" BorderThickness="0"
+                        Click="LoadScriptButton_Click">
+                    <Button.Content>
+                        <iconPacks:PackIconMaterial Name="LoadScriptButtonIcon" Kind="Script" Foreground="#FF7289da"
+                                                    FontSize="14" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <TextBlock>Load Script.</TextBlock>
+                    </Button.ToolTip>
+                </Button>
+                <MenuItem Header="Login" Visibility="Collapsed">
                     <MenuItem Name="LoginMenuItem" Header="Login" Click="LoginMenuItem_Click" />
                     <MenuItem Name="LogoutMenuItem" Header="Logout" Click="LogoutMenuItem_Click" IsEnabled="False" />
                 </MenuItem>
-                <MenuItem Header="Bot">
+                <MenuItem Header="Script" Visibility="Collapsed">
                     <MenuItem Name="BotStartMenuItem" Header="Start" IsEnabled="False" Click="BotStartMenuItem_Click" />
                     <MenuItem Name="BotStopMenuItem" Header="Stop" IsEnabled="False" Click="BotStopMenuItem_Click" />
                     <Separator />
                     <MenuItem Name="MenuPathScript" Header="Script: None" Click="MenuPathScript_Click" />
                 </MenuItem>
-                <MenuItem Header="Help">
-                    <MenuItem Header="Community (Forum)" Click="MenuForum_Click" />
-                    <MenuItem Header="Source code (GitHub)" Click="MenuGitHub_Click" />
-                    <MenuItem Header="Donate (Patreon)" Click="MenuDonate_Click" />
+                <MenuItem Header="Help" Foreground="#FF99aab5">
+                    <MenuItem Header="Show Log" Background="#FF23272a" Foreground="#FF99aab5" Name="HideLogView"
+                              Click="HideLogView_Click" />
+                    <MenuItem Header="Community (Forum)" Background="#FF23272a" Foreground="#FF99aab5"
+                              Click="MenuForum_Click" />
+                    <MenuItem Header="Source code (GitHub)" Background="#FF23272a" Foreground="#FF99aab5"
+                              Click="MenuGitHub_Click" />
+                    <MenuItem Header="Donate (Patreon)" Background="#FF23272a" Foreground="#FF99aab5"
+                              Click="MenuDonate_Click" />
                     <Separator />
-                    <MenuItem Header="About" Click="MenuAbout_Click" />
+                    <MenuItem Header="About" Background="#FF23272a" Foreground="#FF99aab5" Click="MenuAbout_Click" />
                 </MenuItem>
             </Menu>
-            <DockPanel Background="#FFB5C3DA" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="8,2">
-                <TextBlock Name="StatusIcon" Foreground="#FF101020" FontSize="15" Margin="8,2,2,2" VerticalAlignment="Center">
-                    <fa:FontAwesome Icon="LightbulbOutline" VerticalAlignment="Center" />
-                </TextBlock>
-                <TextBlock Name="StatusText" Text="Offline" Foreground="DarkRed" Margin="2,2,2,2" VerticalAlignment="Center"/>
-                <TextBlock Name="PokeTimeIcon" Foreground="#FF101020" FontSize="15" Margin="8,2,2,2" VerticalAlignment="Center">
-                    <fa:FontAwesome Icon="ClockOutline" VerticalAlignment="Center" />
-                </TextBlock>
-                <TextBlock Name="PokeTimeText" Text="??:??" Margin="2,2,2,2" VerticalAlignment="Center"/>
-                <TextBlock Name="MapNameIcon" Foreground="#FF101020" FontSize="15" Margin="8,2,2,2" VerticalAlignment="Center">
-                    <fa:FontAwesome Icon="MapOutline" VerticalAlignment="Center"/>
-                </TextBlock>
-                <TextBlock Name="MapNameText" Text="Not Loaded" Margin="2,2,2,2" VerticalAlignment="Center"/>
-                <TextBlock Name="PlayerPositionIcon" Foreground="#FF101020" FontSize="15" Margin="8,2,2,2" VerticalAlignment="Center">
-                    <fa:FontAwesome Icon="Compass" VerticalAlignment="Center" />
-                </TextBlock>
-                <TextBlock Name="PlayerPositionText" Text="(?,?)" Margin="2,2,2,2" VerticalAlignment="Center"/>
-                <TextBlock Name="MoneyIcon" Foreground="#FF101020" FontSize="15" Margin="8,4,2,2" VerticalAlignment="Center">
-                    <fa:FontAwesome Icon="Rub" VerticalAlignment="Center"/>
-                </TextBlock>
-                <TextBlock Name="MoneyText" Text="?" Margin="2,2,2,2" VerticalAlignment="Center"/>
+            <DockPanel HorizontalAlignment="Right">
+                <TextBox TextWrapping="Wrap" Width="Auto" Text="Pokemon Name" BorderBrush="#FF7289da"
+                         VerticalAlignment="Center" Name="PokedexData" Background="#FF23272a" Foreground="#99aab5" />
+                <Button BorderBrush="#FF7289da" Name="PokedexDataButton" Content="Get" Width="Auto"
+                        VerticalAlignment="Center" Background="#FF1F2225" Foreground="#99aab5"
+                        Click="PokedexData_Button_Click" />
+                <Button BorderBrush="#FF7289da" Content="Clear" VerticalAlignment="Center" Background="#FF1F2225"
+                        Foreground="#99aab5" Click="Button_Click_2" />
+                <Separator Width="15" Background="#FF23272a" Foreground="#FF23272A" BorderBrush="#FF23272a" />
+                <Button x:Name="CollapseButton" Style="{DynamicResource MetroCircleButtonStyle}" Background="#FF23272a"
+                        Foreground="#FF7289da" BorderThickness="2" Click="Collapse_Click">
+                    <Button.Content>
+                        <iconPacks:PackIconMaterial Name="CollapseIcon" Kind="WindowMinimize" Foreground="#FF7289da"
+                                                    FontSize="10" RenderTransformOrigin="0.875,0.542" />
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <TextBlock>Minumize Windows.</TextBlock>
+                    </Button.ToolTip>
+                </Button>
+                <Separator Width="10" Background="#FF23272a" Foreground="#FF23272A" BorderBrush="#FF23272a" />
             </DockPanel>
         </DockPanel>
-        <WrapPanel Grid.Row="1" Background="#dae1ec" VerticalAlignment="Center" Margin="4, 2, 4, 2">
-            <Button x:Name="LoginButton" Margin="2,1,2,1" Background="#FFCDD5E2" Foreground="#FF101020" Click="LoginButton_Click">
-                <Button.Content>
-                    <fa:FontAwesome Name="LoginButtonIcon"  Foreground="#FF101020" Icon="SignIn" Padding="2, 2, 2, 2" FontSize="16"/>
-                </Button.Content>
-            </Button>
-            <Button x:Name="StartScriptButton" Margin="2,1,2,1" Background="#FFCDD5E2" Foreground="#FF101020" Click="StartScriptButton_Click">
-                <Button.Content>
-                    <fa:FontAwesome Name="StartScriptButtonIcon"  Foreground="#FF101020" Icon="Play" Padding="2, 2, 2, 2" FontSize="16"/>
-                </Button.Content>
-            </Button>
-            <Button x:Name="StopScriptButton" Margin="2,1,2,1" Background="#FFCDD5E2" Foreground="#FF101020" Click="StopScriptButton_Click">
-                <Button.Content>
-                    <fa:FontAwesome Name="StopScriptButtonIcon" Foreground="#FF101020" Icon="Stop" Padding="2, 2, 2, 2" FontSize="16"/>
-                </Button.Content>
-            </Button>
-            <Button x:Name="LoadScriptButton" Margin="2,1,2,1" Background="#FFCDD5E2" Foreground="#FF101020" Click="LoadScriptButton_Click">
-                <Button.Content>
-                    <fa:FontAwesome Name="LoadScriptButtonIcon" Foreground="#FF101020" Icon="Folder" Padding="2, 2, 2, 2" FontSize="16"/>
-                </Button.Content>
-            </Button>
-            <CheckBox x:Name="AutoEvolveSwitch" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1" Content="Auto-evolve: " Checked="AutoEvolveSwitch_Checked" Unchecked="AutoEvolveSwitch_Unchecked">
+        <WrapPanel Grid.Row="1" Background="#FF2c2f33" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                   Margin="10,2,4,2">
+            <CheckBox x:Name="IsTrainerBattlesActiveSwitch" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1"
+                      Foreground="#FF99aab5" Content="Bully'd: " Checked="IsTrainerBattlesActiveSwitch_Checked"
+                      Unchecked="IsTrainerBattlesActiveSwitch_Unchecked">
                 <CheckBox.ToolTip>
-                    <TextBlock>Always evolve a pokemon.</TextBlock>
+                    <TextBlock>NPCs fight Trainer</TextBlock>
                 </CheckBox.ToolTip>
             </CheckBox>
-            <CheckBox x:Name="AvoidStaffSwitch" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1" Content="Staff evader: " Checked="AvoidStaffSwitch_Checked" Unchecked="AvoidStaffSwitch_Unchecked">
+            <CheckBox x:Name="AutoEvolveSwitch" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1"
+                      Foreground="#FF99aab5" Content="Auto-evolve: " Checked="AutoEvolveSwitch_Checked"
+                      Unchecked="AutoEvolveSwitch_Unchecked">
                 <CheckBox.ToolTip>
-                    <TextBlock>Disconnect when a staff member appears on the map. Disable the Auto-reconnect (only works if the admin is not invisible).</TextBlock>
+                    <TextBlock>
+                        <Run Text="Evolve Pokemon." />
+                    </TextBlock>
                 </CheckBox.ToolTip>
             </CheckBox>
-            <CheckBox x:Name="AutoReconnectSwitch" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1" Content="Auto-reconnect: " Checked="AutoReconnectSwitch_Checked" Unchecked="AutoReconnectSwitch_Unchecked">
+            <CheckBox x:Name="AvoidStaffSwitch" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1"
+                      Foreground="#FF99aab5" Content="Anti-Ban: " Checked="AvoidStaffSwitch_Checked"
+                      Unchecked="AvoidStaffSwitch_Unchecked">
                 <CheckBox.ToolTip>
-                    <TextBlock>Reconnect after a few minutes and start the last script.</TextBlock>
+                    <TextBlock>Anti-Ban. Also disables Reconnect.</TextBlock>
                 </CheckBox.ToolTip>
             </CheckBox>
-            <Button
-                Width="96"
+            <CheckBox x:Name="AutoReconnectSwitch" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1"
+                      Foreground="#FF99aab5" Content="Reconnect: " Checked="AutoReconnectSwitch_Checked"
+                      Unchecked="AutoReconnectSwitch_Unchecked">
+                <CheckBox.ToolTip>
+                    <TextBlock>Relogs if logged out.</TextBlock>
+                </CheckBox.ToolTip>
+            </CheckBox>
+
+            <ToggleButton
+                Width="50"
                 Height="26"
-                Content="Show Options"
+                Content="Config"
+                Background="#FF23272a"
+                Foreground="#FF99aab5"
+                BorderBrush="#FF7289da"
                 Name="OptionsButton"
                 Visibility="Collapsed"
                 Click="Options_Click"
-                Margin="10,1,2,1"/>
+                Margin="10,1,2,1" />
             <ItemsControl Name="OptionSliders" Visibility="Collapsed">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel/>
+                        <WrapPanel />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <CheckBox HorizontalAlignment="Left" Style="{StaticResource SwitchStyle}" Margin="2,1,2,1" Content="{Binding Name}" IsChecked="{Binding IsEnabled}">
+                        <CheckBox HorizontalAlignment="Left" Style="{StaticResource MetroCheckBox}" Margin="2,1,2,1"
+                                  Content="{Binding Name}" IsChecked="{Binding IsEnabled}">
                             <CheckBox.ToolTip>
-                                <TextBlock Text="{Binding Description}"/>
+                                <TextBlock Text="{Binding Description}" />
                             </CheckBox.ToolTip>
                         </CheckBox>
                     </DataTemplate>
@@ -199,18 +307,20 @@
             <ItemsControl Name="TextOptions" Visibility="Collapsed">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel/>
+                        <WrapPanel />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid ToolTip="{Binding Description}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{Binding Name}"/>
-                            <TextBox Grid.Column="1" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" KeyDown="TextBox_KeyDown" MinWidth="50"/>
+                            <Label Grid.Column="0" Content="{Binding Name}" />
+                            <TextBox Grid.Column="1"
+                                     Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                     KeyDown="TextBox_KeyDown" MinWidth="50" />
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -229,67 +339,114 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <ToggleButton Name="TeamButton" Grid.Row="0" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020">
+                    <ToggleButton Name="TeamButton" Grid.Row="0" Margin="1" Background="#FF23272a"
+                                  Foreground="#FF99aab5">
                         <ToggleButton.Content>
                             <StackPanel>
-                                <fa:FontAwesome Icon="Paw" Foreground="#FF101020" FontSize="15" Margin="4,1,4,1" />
+                                <iconPacks:PackIconMaterial Kind="Pokeball" Foreground="#FF7289da" FontSize="15"
+                                                            Margin="4,1,4,1" VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center" />
                                 <TextBlock Text="Team" Margin="4,1,4,1" />
                             </StackPanel>
                         </ToggleButton.Content>
                     </ToggleButton>
-                    <ToggleButton Name="InventoryButton" Grid.Row="1" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020">
+                    <ToggleButton Name="InventoryButton" Grid.Row="1" Margin="1" Background="#FF23272a"
+                                  Foreground="#FF99aab5">
                         <ToggleButton.Content>
                             <StackPanel>
-                                <fa:FontAwesome Icon="Suitcase" Foreground="#FF101020" FontSize="15" Margin="4,1,4,1" />
+                                <iconPacks:PackIconMaterial Kind="Briefcase" Foreground="#FF7289da" FontSize="15"
+                                                            Margin="4,1,4,1" VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center" />
                                 <TextBlock Text="Inventory" Margin="4,1,4,1" />
                             </StackPanel>
                         </ToggleButton.Content>
                     </ToggleButton>
-                    <ToggleButton Name="ChatButton" Grid.Row="2" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020">
+                    <ToggleButton Name="ChatButton" Grid.Row="2" Margin="1" Background="#FF23272a"
+                                  Foreground="#FF99aab5">
                         <ToggleButton.Content>
                             <StackPanel>
-                                <fa:FontAwesome Icon="Comment" Foreground="#FF101020" FontSize="15" Margin="4,1,4,1" />
+                                <iconPacks:PackIconMaterial Kind="MessageText" Foreground="#FF7289da" FontSize="15"
+                                                            Margin="4,1,4,1" VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center" />
                                 <TextBlock Text="Chat" Margin="4,1,4,1" />
                             </StackPanel>
                         </ToggleButton.Content>
                     </ToggleButton>
-                    <ToggleButton Name="PlayersButton" Grid.Row="3" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020">
+                    <ToggleButton Name="PlayersButton" Grid.Row="3" Margin="1" Background="#FF23272a"
+                                  Foreground="#FF99aab5">
                         <ToggleButton.Content>
                             <StackPanel>
-                                <fa:FontAwesome Icon="Users" Foreground="#FF101020" FontSize="15" Margin="4,1,4,1" />
+                                <iconPacks:PackIconMaterial Kind="AccountLocation" Foreground="#FF7289da" FontSize="15"
+                                                            Margin="4,1,4,1" VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center" />
                                 <TextBlock Text="Players" Margin="4,1,4,1" />
                             </StackPanel>
                         </ToggleButton.Content>
                     </ToggleButton>
-                    <ToggleButton Name="MapButton" Grid.Row="4" Margin="1" Background="#FFCDD5E2" Foreground="#FF101020">
+                    <ToggleButton Name="MapButton" Grid.Row="4" Margin="1" Background="#FF23272a"
+                                  Foreground="#FF99aab5">
                         <ToggleButton.Content>
                             <StackPanel>
-                                <fa:FontAwesome Icon="Cube"  Foreground="#FF101020" FontSize="15" Margin="4,1,4,1" />
+                                <iconPacks:PackIconFontAwesome Kind="Globe" Foreground="#FF7289da" FontSize="15"
+                                                               Margin="4,1,4,1" VerticalAlignment="Center"
+                                                               HorizontalAlignment="Center" />
                                 <TextBlock Text="Map" Margin="4,1,4,1" />
+                            </StackPanel>
+                        </ToggleButton.Content>
+                    </ToggleButton>
+                    <ToggleButton Name="TradeButton" Grid.Row="5" Margin="1" Background="#FF23272a"
+                                  Foreground="#FF99aab5">
+                        <ToggleButton.Content>
+                            <StackPanel>
+                                <iconPacks:PackIconMaterial Kind="Repeat" Foreground="#FF7289da" FontSize="15"
+                                                            Margin="4,1,4,1" VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center" />
+                                <TextBlock Text="Trade" Margin="4,1,4,1" />
                             </StackPanel>
                         </ToggleButton.Content>
                     </ToggleButton>
                 </Grid>
             </Grid>
-            <Grid Grid.Column="1" Margin="0,4,4,4">
+            <Grid Grid.Column="1" Margin="0,4,4,4" Background="#FF2c2f33">
                 <ContentControl Name="TeamContent" />
                 <ContentControl Name="InventoryContent" />
                 <ContentControl Name="ChatContent" />
                 <ContentControl Name="PlayersContent" />
                 <ContentControl Name="MapContent" />
+                <ContentControl Name="TradeContent" />
             </Grid>
         </Grid>
-        <GridSplitter ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="4" Grid.Row="3" Background="Transparent"/>
-        <Grid Grid.Row="3" Margin="4">
+        <GridSplitter ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="4"
+                      Grid.Row="3" Background="#FF99aab5" />
+        <Grid Name="LogView" Grid.Row="3" Margin="4">
             <TextBox Name="MessageTextBox"
-                     Background="#FFCDD5E2"
+                     Background="#FF2c2f33"
+                     Foreground="#FF99aab5"
+                     BorderBrush="#FF23272a"
                      IsReadOnly="True"
                      IsReadOnlyCaretVisible="True"
                      AcceptsReturn="True"
                      TextWrapping="Wrap"
-                     ScrollViewer.VerticalScrollBarVisibility="Auto">
-            </TextBox>
+                     ScrollViewer.VerticalScrollBarVisibility="Auto" />
         </Grid>
+        <controls:Flyout BorderBrush="#FF2c2f33" Name="FlayoutDex" Header="Pokedex" Position="Right" Width="342"
+                         Margin="0,2.6,-0.4,-0.6" Grid.Row="2" Background="#FF23272a" Foreground="#99aab5"
+                         Grid.RowSpan="2">
+            <ListView BorderBrush="#FF2c2f33" Name="PokedexList" Height="Auto" Margin="0,0,-0.4,0" Width="Auto"
+                      Background="#FF23272a" Foreground="#99aab5">
+                <ListView.View>
+                    <GridView x:Name="MainGrid">
+                        <GridViewColumn x:Name="Area" Width="Auto" Header="#Map"
+                                        DisplayMemberBinding="{Binding AreaName}" />
+                        <GridViewColumn x:Name="TimeZone" Width="Auto" Header="#DayTimeAndArea"
+                                        DisplayMemberBinding="{Binding TimeZone}" />
+                        <GridViewColumn x:Name="IsMs" Width="Auto" Header="#MS" DisplayMemberBinding="{Binding IsMs}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <!-- Your custom content here -->
+        </controls:Flyout>
     </Grid>
-</Window>
+</controls:MetroWindow>
