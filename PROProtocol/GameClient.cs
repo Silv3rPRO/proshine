@@ -17,7 +17,6 @@ namespace PROProtocol
         private readonly Timeout _dialogTimeout = new Timeout();
         private readonly Timeout _fishingTimeout = new Timeout();
 
-
         /// <summary>
         ///     A dictionary containing a point as key and it's guarding battler as
         ///     value. Building the dictionary like that is a little less readable
@@ -194,42 +193,77 @@ namespace PROProtocol
         public bool AreNpcReceived { get; private set; }
 
         public event Action ConnectionOpened;
+
         public event Action<Exception> ConnectionFailed;
+
         public event Action<Exception> ConnectionClosed;
+
         public event Action LoggedIn;
+
         public event Action<AuthenticationResult> AuthenticationFailed;
+
         public event Action<int> QueueUpdated;
 
         public event Action<string, int, int> PositionUpdated;
+
         public event Action<string, int, int> TeleportationOccuring;
+
         public event Action<string> MapLoaded;
+
         public event Action<List<Npc>> NpcReceived;
+
         public event Action PokemonsUpdated;
+
         public event Action InventoryUpdated;
+
         public event Action<List<PokemonSpawn>> SpawnListUpdated;
+
         public event Action BattleStarted;
+
         public event Action<string> BattleMessage;
+
         public event Action BattleEnded;
+
         public event Action<string> DialogOpened;
+
         public event Action<string, string, int> EmoteMessage;
+
         public event Action<string, string, string> ChatMessage;
+
         public event Action RefreshChannelList;
+
         public event Action<string, string, string, string> ChannelMessage;
+
         public event Action<string, string> ChannelSystemMessage;
+
         public event Action<string, string, string, string> ChannelPrivateMessage;
+
         public event Action<string> SystemMessage;
+
         public event Action<string, string, string, string> PrivateMessage;
+
         public event Action<string, string, string> LeavePrivateMessage;
+
         public event Action<PlayerInfos> PlayerUpdated;
+
         public event Action<PlayerInfos> PlayerAdded;
+
         public event Action<PlayerInfos> PlayerRemoved;
+
         public event Action<string, string> InvalidPacket;
+
         public event Action<int, string, int> LearningMove;
+
         public event Action<int, int> Evolving;
+
         public event Action<string, string> PokeTimeUpdated;
+
         public event Action<Shop> ShopOpened;
+
         public event Action<List<Pokemon>> PcBoxUpdated;
+
         public event Action CreatingCharacterAction;
+
         public event Action PokedexDataUpdated;
 
         public void ClearPath()
@@ -464,7 +498,6 @@ namespace PROProtocol
             return Math.Abs(p1.X - p2.X) + Math.Abs(p1.Y - p2.Y);
         }
 
-
         private bool ApplyMovement(Direction direction)
         {
             //init vars
@@ -500,7 +533,6 @@ namespace PROProtocol
                 //no further movement therefore return
                 return false;
             }
-
 
             //--------analyze next movement
             var result = Map.CanMove(direction, destinationX, destinationY, isOnGround, isSurfing, CanUseCut,
@@ -565,10 +597,10 @@ namespace PROProtocol
             {
                 var response = _dialogResponses.Dequeue();
                 if (response is int)
-                    return (int) response;
+                    return (int)response;
                 if (response is string)
                 {
-                    var text = ((string) response).ToUpperInvariant();
+                    var text = ((string)response).ToUpperInvariant();
                     for (var i = 1; i < DialogContent.Length; ++i)
                         if (DialogContent[i].ToUpperInvariant().Equals(text))
                             return i;
@@ -1172,102 +1204,131 @@ namespace PROProtocol
             if (packet.Substring(0, 1) == "U")
                 packet = "U|.|" + packet.Substring(1);
 
-            var data = packet.Split(new[] {"|.|"}, StringSplitOptions.None);
+            var data = packet.Split(new[] { "|.|" }, StringSplitOptions.None);
             var type = data[0].ToLowerInvariant();
             switch (type)
             {
                 case "5":
                     OnLoggedIn(data);
                     break;
+
                 case "6":
                     OnAuthenticationResult(data);
                     break;
+
                 case ")":
                     OnQueueUpdated(data);
                     break;
+
                 case "q":
                     OnPlayerPosition(data);
                     break;
+
                 case "s":
                     OnPlayerSync(data);
                     break;
+
                 case "i":
                     OnPlayerInfos(data);
                     break;
+
                 case "(":
                     // CDs ?
                     break;
+
                 case "e":
                     OnUpdateTime(data);
                     break;
+
                 case "@":
                     OnNpcBattlers(data);
                     break;
+
                 case "*":
                     OnNpcDestroy(data);
                     break;
+
                 case "#":
                     OnTeamUpdate(data);
                     break;
+
                 case "d":
                     OnInventoryUpdate(data);
                     break;
+
                 case "&":
                     OnItemsUpdate(data);
                     break;
+
                 case "!":
                     OnBattleJoin(packet);
                     break;
+
                 case "a":
                     OnBattleMessage(data);
                     break;
+
                 case "r":
                     OnScript(data);
                     break;
+
                 case "$":
                     OnBikingUpdate(data);
                     break;
+
                 case "%":
                     OnSurfingUpdate(data);
                     break;
+
                 case "^":
                     OnLearningMove(data);
                     break;
+
                 case "h":
                     OnEvolving(data);
                     break;
+
                 case "u":
                     OnUpdatePlayer(data);
                     break;
+
                 case "c":
                     OnChannels(data);
                     break;
+
                 case "w":
                     OnChatMessage(data);
                     break;
+
                 case "o":
                     // Shop content
                     break;
+
                 case "pm":
                     OnPrivateMessage(data);
                     break;
+
                 case ".":
                     // DSSock.ProcessCommands
                     SendPacket("_");
                     break;
+
                 case "'":
                     // DSSock.ProcessCommands
                     SendPacket("'");
                     break;
+
                 case "m":
                     OnPcBox(data);
                     break;
+
                 case "k":
                     IsSpawnListThingStarted = false;
                     if (!IsCrrentMap && IsRequestingForSpawnCheck && !IsRequestingForCurrentSpawnCheck)
                         AnotherMapLoadPokemons(data);
                     LoadSpawnMenu(data);
                     break;
+
                 case "p":
                     HandlePokedexMsg(data);
                     break;
@@ -1278,24 +1339,29 @@ namespace PROProtocol
                     // Actions : Trades requests, Friends requests..
                     HandleActions(data);
                     break;
+
                 case "t":
                     // Trade Start
                     HandleTrade(data);
                     break;
+
                 case "tu":
                     OnTradeUpdate(data);
                     break;
+
                 case "ta":
                     UselessTradeFeature(); // Send a "change to final screen" order to client. Useless.
                     break;
+
                 case "tb":
                     OnTradeStatusChange(data);
                     break;
+
                 case "tc":
                     OnTradeStatusReset();
                     break;
 
-                #endregion
+                #endregion Trade actions
 
                 default:
 #if DEBUG
@@ -1340,7 +1406,7 @@ namespace PROProtocol
 
         private void OnAuthenticationResult(string[] data)
         {
-            var result = (AuthenticationResult) Convert.ToInt32(data[1]);
+            var result = (AuthenticationResult)Convert.ToInt32(data[1]);
 
             if (result != AuthenticationResult.ServerFull)
             {
@@ -1359,7 +1425,7 @@ namespace PROProtocol
 
         private void OnPlayerPosition(string[] data)
         {
-            var mapData = data[1].Split(new[] {"|"}, StringSplitOptions.None);
+            var mapData = data[1].Split(new[] { "|" }, StringSplitOptions.None);
             var map = mapData[0];
             var playerX = Convert.ToInt32(mapData[1]);
             var playerY = Convert.ToInt32(mapData[2]);
@@ -1387,7 +1453,7 @@ namespace PROProtocol
 
         private void OnPlayerSync(string[] data)
         {
-            var mapData = data[1].Split(new[] {"|"}, StringSplitOptions.None);
+            var mapData = data[1].Split(new[] { "|" }, StringSplitOptions.None);
 
             if (mapData.Length < 2)
                 return;
@@ -1432,7 +1498,7 @@ namespace PROProtocol
         {
             if (!IsMapLoaded) return;
 
-            var defeatedBattlers = data[1].Split(new[] {"|"}, StringSplitOptions.RemoveEmptyEntries)
+            var defeatedBattlers = data[1].Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(id => int.Parse(id));
 
             Map.Npcs.Clear();
@@ -1468,7 +1534,7 @@ namespace PROProtocol
 
         private void OnTeamUpdate(string[] data)
         {
-            var teamData = data[1].Split(new[] {"\r\n"}, StringSplitOptions.None);
+            var teamData = data[1].Split(new[] { "\r\n" }, StringSplitOptions.None);
 
             Team.Clear();
             foreach (var pokemon in teamData)
@@ -1508,12 +1574,12 @@ namespace PROProtocol
         {
             Items.Clear();
 
-            var itemsData = content.Split(new[] {"\r\n"}, StringSplitOptions.None);
+            var itemsData = content.Split(new[] { "\r\n" }, StringSplitOptions.None);
             foreach (var item in itemsData)
             {
                 if (item == string.Empty)
                     continue;
-                var itemData = item.Split(new[] {"|"}, StringSplitOptions.None);
+                var itemData = item.Split(new[] { "|" }, StringSplitOptions.None);
                 Items.Add(new InventoryItem(itemData[0], Convert.ToInt32(itemData[1]), Convert.ToInt32(itemData[2]),
                     Convert.ToInt32(itemData[3])));
             }
@@ -1540,7 +1606,7 @@ namespace PROProtocol
 
             BattleStarted?.Invoke();
 
-            var battleMessages = ActiveBattle.BattleText.Split(new[] {"\r\n"}, StringSplitOptions.None);
+            var battleMessages = ActiveBattle.BattleText.Split(new[] { "\r\n" }, StringSplitOptions.None);
 
             foreach (var message in battleMessages)
                 if (!ActiveBattle.ProcessMessage(Team, message))
@@ -1554,8 +1620,8 @@ namespace PROProtocol
             SendCurrentMapSpawnPacket();
             AskForPokedex();
 
-            var battleData = data[1].Split(new[] {"|"}, StringSplitOptions.None);
-            var battleMessages = battleData[4].Split(new[] {"\r\n"}, StringSplitOptions.None);
+            var battleData = data[1].Split(new[] { "|" }, StringSplitOptions.None);
+            var battleMessages = battleData[4].Split(new[] { "\r\n" }, StringSplitOptions.None);
 
             foreach (var message in battleMessages)
                 if (!ActiveBattle.ProcessMessage(Team, message))
@@ -1582,10 +1648,10 @@ namespace PROProtocol
             var status = Convert.ToInt32(data[1]);
             var script = data[3];
 
-            DialogContent = script.Split(new[] {"-#-"}, StringSplitOptions.None);
+            DialogContent = script.Split(new[] { "-#-" }, StringSplitOptions.None);
             if (script.Contains("-#-") && status > 1)
                 script = DialogContent[0];
-            var messages = script.Split(new[] {"-=-"}, StringSplitOptions.RemoveEmptyEntries);
+            var messages = script.Split(new[] { "-=-" }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var message in messages)
             {
                 if (message.StartsWith("emote") || message.StartsWith("playsound") || message.StartsWith("playmusic") ||
@@ -1651,7 +1717,6 @@ namespace PROProtocol
         {
             var evolvingPokemonUid = Convert.ToInt32(data[1]);
             var evolvingItem = Convert.ToInt32(data[3]);
-
 
             Evolving.Invoke(evolvingPokemonUid, evolvingItem);
         }
@@ -1897,7 +1962,7 @@ namespace PROProtocol
                 var packet = string.Join("|.|", data);
                 InvalidPacket?.Invoke(packet, "PM with no parameter");
             }
-            var nicknames = data[1].Split(new[] {"-=-"}, StringSplitOptions.None);
+            var nicknames = data[1].Split(new[] { "-=-" }, StringSplitOptions.None);
             if (nicknames.Length < 2)
             {
                 var packet = string.Join("|.|", data);
@@ -1977,7 +2042,7 @@ namespace PROProtocol
                 InvalidPacket?.Invoke(data[0] + "|.|" + data[1], "Received an invalid PC Box size");
                 return;
             }
-            var pokemonListDatas = body[2].Split(new[] {"\r\n"}, StringSplitOptions.None);
+            var pokemonListDatas = body[2].Split(new[] { "\r\n" }, StringSplitOptions.None);
             if (body.Length < 1)
             {
                 InvalidPacket?.Invoke(data[0] + "|.|" + data[1], "Received an empty box");
@@ -2090,12 +2155,12 @@ namespace PROProtocol
                     sdata[i] = sdata[i].Replace("x", string.Empty);
                 //Adding to pokemon Spawn class each pokemon's each data
                 var pokeaadd = new PokemonSpawn(Convert.ToInt32(sdata[i]), captured, surf, fish, hitem, msonly);
-                //Adding to the list 
+                //Adding to the list
                 SpawnList.Add(pokeaadd);
             }
-            /*This LoadPokemons is used only if the player map is the same map as the data map 
+            /*This LoadPokemons is used only if the player map is the same map as the data map
              *I mean these information are used for the same map as the player map so if these information aren't of the same map of the player
-             * we not going to add to our bot spawn list I mean if we hover the map that spawn list. 
+             * we not going to add to our bot spawn list I mean if we hover the map that spawn list.
              */
             if (sdata[0].Contains(MapName) || IsRequestingForCurrentSpawnCheck)
                 SpawnListUpdated?.Invoke(SpawnList.ToList());
@@ -2107,7 +2172,7 @@ namespace PROProtocol
         private void AnotherMapLoadPokemons(string[] data)
         {
             /* This is used for if the data isn't contains the map of the player current map
-            * This is only used for the "isAllCaughtOn(map name)" 
+            * This is only used for the "isAllCaughtOn(map name)"
             */
             AnotherMapSpawnList.Clear();
             var sdata = data[1].Split(',');
@@ -2165,9 +2230,10 @@ namespace PROProtocol
                 IsAllcaughtOn(AnotherMapSpawnList.ToList());
         }
 
-/*
- * This is the main guy or function who going to check is all pokemon caught on a map
- */
+        /*
+         * This is the main guy or function who going to check is all pokemon caught on a map
+         */
+
         public void IsAllcaughtOn(List<PokemonSpawn> pkmns)
         {
             lock (pkmns)
@@ -2205,9 +2271,10 @@ namespace PROProtocol
             }
         }
 
-/*
- * This Function help us to check is all pokemon caught on a map
- */
+        /*
+         * This Function help us to check is all pokemon caught on a map
+         */
+
         public bool IsAllPokemonCaughtOn(string map)
         {
             if (IsRequestingForSpawnCheck)
@@ -2233,16 +2300,23 @@ namespace PROProtocol
         #region Trading Variables
 
         public event Action<string> TradeRequested;
+
         public event Action TradeCanceled;
+
         public event Action TradeAccepted;
+
         public event Action<string[]> TradeMoneyUpdated;
+
         public event Action TradePokemonUpdated;
+
         public event Action<string[]> TradeStatusUpdated;
+
         public event Action TradeStatusReset;
+
         public List<TradePokemon> FirstTrade;
         public List<TradePokemon> SecondTrade;
 
-        #endregion
+        #endregion Trading Variables
 
         #region Pokedex
 
@@ -2384,7 +2458,7 @@ namespace PROProtocol
                 PokedexDataUpdated?.Invoke();
                 // Pokedex Informations, not done bcoz i'm lazy.
                 /* If you wanna do it :
-                 * [0] : ID 
+                 * [0] : ID
                  * [1] : Animal type
                  * [2] : Unknown (not important), maybe gender percentage
                  * [3] : Height
@@ -2394,7 +2468,7 @@ namespace PROProtocol
                  * [7] : Base stats, format : HP|ATK|DEF|SPD|SP. DEF|SP. ATK
                  * [8] : Abilities , Format : Same as list above, LVL>Name
                  * [9] : Places where the pokémon can be caught, Format IDName<IDName
-                     Some ids : 
+                     Some ids :
                        41 : Land, Day, Morning.
                        01 : Land, Day, Morning, Night.
                        14 : Land, Day, MS.
@@ -2412,10 +2486,10 @@ namespace PROProtocol
                        22 : Day, Water.
                        13 : Land, Water, Day, Night, Morning.
                        31 : Land, Night.
-                       33 : 
-                       37 : 
+                       33 :
+                       37 :
                 */
-            }           
+            }
         }
 
         public bool HasSeen(string pokeName)
@@ -2423,7 +2497,7 @@ namespace PROProtocol
             var seen = false;
             if (PokedexList != null)
             {
-                PokedexList.ForEach(delegate(PokedexPokemon pkmn)
+                PokedexList.ForEach(delegate (PokedexPokemon pkmn)
                 {
                     if (pkmn.ToString() == pokeName && pkmn.IsSeen())
                         seen = true;
@@ -2438,7 +2512,7 @@ namespace PROProtocol
             var caught = false;
             if (PokedexList != null)
             {
-                PokedexList.ForEach(delegate(PokedexPokemon pkmn)
+                PokedexList.ForEach(delegate (PokedexPokemon pkmn)
                 {
                     if (pkmn.ToString() == pokeName && pkmn.IsCaught())
                         caught = true;
@@ -2475,7 +2549,7 @@ namespace PROProtocol
             return string.Empty;
         }
 
-        #endregion
+        #endregion Pokedex
 
         #region Trade functions
 
@@ -2550,6 +2624,6 @@ namespace PROProtocol
             TradeStatusReset?.Invoke();
         }
 
-        #endregion
+        #endregion Trade functions
     }
 }

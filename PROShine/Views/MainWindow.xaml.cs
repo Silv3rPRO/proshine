@@ -1,4 +1,10 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using MahApps.Metro.IconPacks;
+using Microsoft.Win32;
+using PROBot;
+using PROBot.Modules;
+using PROProtocol;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -12,12 +18,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using MahApps.Metro.Controls;
-using MahApps.Metro.IconPacks;
-using Microsoft.Win32;
-using PROBot;
-using PROBot.Modules;
-using PROProtocol;
 
 namespace PROShine.Views
 {
@@ -281,7 +281,7 @@ namespace PROShine.Views
 
         private void OpenLoginWindow()
         {
-            var login = new LoginWindow(Bot) {Owner = this};
+            var login = new LoginWindow(Bot) { Owner = this };
             var result = login.ShowDialog();
             if (result != true)
                 return;
@@ -297,7 +297,7 @@ namespace PROShine.Views
                 account.MacAddress = login.MacAddress;
                 if (login.HasProxy)
                 {
-                    account.Socks.Version = (SocksVersion) login.ProxyVersion;
+                    account.Socks.Version = (SocksVersion)login.ProxyVersion;
                     account.Socks.Host = login.ProxyHost;
                     account.Socks.Port = login.ProxyPort;
                     account.Socks.Username = login.ProxyUsername;
@@ -471,25 +471,32 @@ namespace PROShine.Views
                     case AuthenticationResult.AlreadyLogged:
                         message = "Already logged in";
                         break;
+
                     case AuthenticationResult.Banned:
                         message = "You are banned from PRO";
                         break;
+
                     case AuthenticationResult.EmailNotActivated:
                         message = "Email not activated";
                         break;
+
                     case AuthenticationResult.InvalidPassword:
                         message = "Invalid password";
                         break;
+
                     case AuthenticationResult.InvalidUser:
                         message = "Invalid username";
                         break;
+
                     case AuthenticationResult.InvalidVersion:
                         message = "Outdated client, please wait for an update";
                         break;
+
                     case AuthenticationResult.Locked:
                     case AuthenticationResult.Locked2:
                         message = "Server locked for maintenance";
                         break;
+
                     case AuthenticationResult.OtherServer:
                         message = "Already logged in on another server";
                         break;
@@ -662,7 +669,7 @@ namespace PROShine.Views
             {
                 SpawnList.Children.Clear(); // Clearing the spawn list before adding new one.
 
-                pkmns.ForEach(delegate(PokemonSpawn pkmn)
+                pkmns.ForEach(delegate (PokemonSpawn pkmn)
                 {
                     /* Captured : check | Not : times
                      * MSOnly : Certificate
@@ -715,28 +722,28 @@ namespace PROShine.Views
                 }
             });
         }
+
         private void Client_RefreshPokedexList()
         {
             lock (Bot)
             {
                 Dispatcher.Invoke(() =>
                 {
-
-                List<Pokedex> items = new List<Pokedex>();
-                if (Bot.Game.GetAreaName.Count > 0 && Bot.Game.IsMs.Count > 0 && Bot.Game.TimeZone.Count > 0)
-                {
-                    for (int i = 0; i < Bot.Game.GetAreaName.Count; i++)
+                    List<Pokedex> items = new List<Pokedex>();
+                    if (Bot.Game.GetAreaName.Count > 0 && Bot.Game.IsMs.Count > 0 && Bot.Game.TimeZone.Count > 0)
                     {
-                        //PokedexList.Items.Add(Bot.Game.getAreaName[i]);
-                        items.Add(new Pokedex() { AreaName = Bot.Game.GetAreaName[i], TimeZone = Bot.Game.TimeZone[i], IsMs = Bot.Game.IsMs[i] });
+                        for (int i = 0; i < Bot.Game.GetAreaName.Count; i++)
+                        {
+                            //PokedexList.Items.Add(Bot.Game.getAreaName[i]);
+                            items.Add(new Pokedex() { AreaName = Bot.Game.GetAreaName[i], TimeZone = Bot.Game.TimeZone[i], IsMs = Bot.Game.IsMs[i] });
+                        }
                     }
-                }
-                PokedexList.ItemsSource = items;
+                    PokedexList.ItemsSource = items;
 
-                if(FlayoutDex.IsOpen == false)
-                {
-                    FlayoutDex.IsOpen = true;
-                }
+                    if (FlayoutDex.IsOpen == false)
+                    {
+                        FlayoutDex.IsOpen = true;
+                    }
                 });
             }
         }
@@ -1095,7 +1102,7 @@ namespace PROShine.Views
             var items = new List<Pokedex>();
             if (Bot.Game != null)
             {
-                items.Add(new Pokedex {AreaName = null, TimeZone = null, IsMs = null});
+                items.Add(new Pokedex { AreaName = null, TimeZone = null, IsMs = null });
                 Bot.Game.GetAreaName.Clear();
                 Bot.Game.TimeZone.Clear();
                 Bot.Game.IsMs.Clear();
