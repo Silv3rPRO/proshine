@@ -17,10 +17,10 @@ namespace PROShine
             var assemblyName = assembly.GetName();
             Name = assemblyName.Name;
             Version = assemblyName.Version.ToString();
-            Author = ((AssemblyCompanyAttribute) Attribute.GetCustomAttribute(assembly,
+            Author = ((AssemblyCompanyAttribute)Attribute.GetCustomAttribute(assembly,
                 typeof(AssemblyCompanyAttribute), false)).Company;
             Description =
-            ((AssemblyDescriptionAttribute) Attribute.GetCustomAttribute(assembly,
+            ((AssemblyDescriptionAttribute)Attribute.GetCustomAttribute(assembly,
                 typeof(AssemblyDescriptionAttribute), false)).Description;
         }
     }

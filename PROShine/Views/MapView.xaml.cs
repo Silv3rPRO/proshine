@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PROBot;
+using PROProtocol;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +10,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using PROBot;
-using PROProtocol;
 
 namespace PROShine.Views
 {
@@ -65,8 +65,8 @@ namespace PROShine.Views
             var drawingOffset = GetDrawingOffset();
             var deltaX = drawingOffset.Item1;
             var deltaY = drawingOffset.Item2;
-            var ingameX = (int) (e.GetPosition(this).X / _cellWidth - deltaX);
-            var ingameY = (int) (e.GetPosition(this).Y / _cellWidth - deltaY);
+            var ingameX = (int)(e.GetPosition(this).X / _cellWidth - deltaX);
+            var ingameY = (int)(e.GetPosition(this).Y / _cellWidth - deltaY);
 
             lock (_bot)
             {
@@ -97,8 +97,8 @@ namespace PROShine.Views
             var drawingOffset = GetDrawingOffset();
             var deltaX = drawingOffset.Item1;
             var deltaY = drawingOffset.Item2;
-            var ingameX = (int) (e.GetPosition(this).X / _cellWidth - deltaX);
-            var ingameY = (int) (e.GetPosition(this).Y / _cellWidth - deltaY);
+            var ingameX = (int)(e.GetPosition(this).X / _cellWidth - deltaX);
+            var ingameY = (int)(e.GetPosition(this).Y / _cellWidth - deltaY);
 
             if (_lastDisplayedCell.X != ingameX || _lastDisplayedCell.Y != ingameY)
                 lock (_bot)
@@ -263,34 +263,34 @@ namespace PROShine.Views
                 grid.Height = grid.Rows * _cellWidth;
 
                 for (var y = 0; y < grid.Rows; ++y)
-                for (var x = 0; x < grid.Columns; ++x)
-                {
-                    var rect = new Rectangle();
-                    var collider = _bot.Game.Map.GetCollider(x, y);
-                    if (_bot.Game.Map.HasLink(x, y))
-                        rect.Fill = Brushes.Silver;
-                    else if (_colliderColors.ContainsKey(collider))
-                        rect.Fill = _colliderColors[collider];
-                    else
-                        rect.Fill = Brushes.Black;
-                    if (collider == 2)
-                        rect.Height = _cellWidth / 4;
-                    if (collider == 3 || collider == 4)
-                        rect.Width = _cellWidth / 4;
-                    if (collider == 14)
+                    for (var x = 0; x < grid.Columns; ++x)
                     {
-                        rect.Height = _cellWidth / 4;
-                        rect.VerticalAlignment = VerticalAlignment.Top;
+                        var rect = new Rectangle();
+                        var collider = _bot.Game.Map.GetCollider(x, y);
+                        if (_bot.Game.Map.HasLink(x, y))
+                            rect.Fill = Brushes.Silver;
+                        else if (_colliderColors.ContainsKey(collider))
+                            rect.Fill = _colliderColors[collider];
+                        else
+                            rect.Fill = Brushes.Black;
+                        if (collider == 2)
+                            rect.Height = _cellWidth / 4;
+                        if (collider == 3 || collider == 4)
+                            rect.Width = _cellWidth / 4;
+                        if (collider == 14)
+                        {
+                            rect.Height = _cellWidth / 4;
+                            rect.VerticalAlignment = VerticalAlignment.Top;
+                        }
+                        if (_bot.Game.Map.IsPc(x, y))
+                            rect.Fill = Brushes.DarkSlateBlue;
+                        grid.Children.Add(rect);
                     }
-                    if (_bot.Game.Map.IsPc(x, y))
-                        rect.Fill = Brushes.DarkSlateBlue;
-                    grid.Children.Add(rect);
-                }
 
                 _mapGrid = grid;
                 MapCanvas.Children.Add(grid);
 
-                _player = new Ellipse {Fill = Brushes.CadetBlue, Width = _cellWidth, Height = _cellWidth};
+                _player = new Ellipse { Fill = Brushes.CadetBlue, Width = _cellWidth, Height = _cellWidth };
                 MapCanvas.Children.Add(_player);
                 Panel.SetZIndex(_player, 100);
 
@@ -355,7 +355,7 @@ namespace PROShine.Views
                 _npcs = new Shape[_bot.Game.Map.Npcs.Count];
                 for (var i = 0; i < _npcs.Length; i++)
                 {
-                    _npcs[i] = new Ellipse {Fill = Brushes.DarkOrange, Width = _cellWidth, Height = _cellWidth};
+                    _npcs[i] = new Ellipse { Fill = Brushes.DarkOrange, Width = _cellWidth, Height = _cellWidth };
                     MapCanvas.Children.Add(_npcs[i]);
                 }
 
@@ -398,7 +398,7 @@ namespace PROShine.Views
                 _otherPlayers = new Shape[_bot.Game.Players.Count];
                 for (var i = 0; i < _otherPlayers.Length; i++)
                 {
-                    _otherPlayers[i] = new Ellipse {Fill = Brushes.DarkRed, Width = _cellWidth, Height = _cellWidth};
+                    _otherPlayers[i] = new Ellipse { Fill = Brushes.DarkRed, Width = _cellWidth, Height = _cellWidth };
                     MapCanvas.Children.Add(_otherPlayers[i]);
                 }
                 UpdateOtherPlayerPositions();

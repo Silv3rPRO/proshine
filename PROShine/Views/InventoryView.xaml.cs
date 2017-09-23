@@ -23,7 +23,7 @@ namespace PROShine.Views
                 direction = ListSortDirection.Descending;
 
             ItemsListView.Items.SortDescriptions.Clear();
-            ItemsListView.Items.SortDescriptions.Add(new SortDescription((string) column.Content, direction));
+            ItemsListView.Items.SortDescriptions.Add(new SortDescription((string)column.Content, direction));
 
             _lastColumn = column;
             _lastDirection = direction;

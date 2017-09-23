@@ -1,11 +1,11 @@
-﻿using System;
+﻿using PROBot;
+using PROProtocol;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using PROBot;
-using PROProtocol;
 
 namespace PROShine.Views
 {
@@ -68,7 +68,7 @@ namespace PROShine.Views
                 direction = ListSortDirection.Descending;
 
             PlayerListView.Items.SortDescriptions.Clear();
-            PlayerListView.Items.SortDescriptions.Add(new SortDescription((string) column.Content, direction));
+            PlayerListView.Items.SortDescriptions.Add(new SortDescription((string)column.Content, direction));
 
             _lastColumn = column;
             _lastDirection = direction;

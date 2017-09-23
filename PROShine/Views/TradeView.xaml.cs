@@ -1,10 +1,10 @@
-﻿using System;
+﻿using PROBot;
+using PROProtocol;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using PROBot;
-using PROProtocol;
 
 namespace PROShine.Views
 {
@@ -90,7 +90,7 @@ namespace PROShine.Views
         public void InitTeam()
         {
             var team = _bot.Game.Team;
-            team.ForEach(delegate(Pokemon pkmn)
+            team.ForEach(delegate (Pokemon pkmn)
             {
                 var b = new ToggleButton();
                 b.Margin = new Thickness(5, 0, 5, 0);
@@ -110,7 +110,7 @@ namespace PROShine.Views
         {
             var pokemonsToTrade = "";
             for (var i = 0; i < TeamToTrade.Children.Count; i++)
-                pokemonsToTrade += (((ToggleButton) TeamToTrade.Children[i]).IsChecked == true
+                pokemonsToTrade += (((ToggleButton)TeamToTrade.Children[i]).IsChecked == true
                                        ? Convert.ToString(i + 1)
                                        : "0") + ",";
             _bot.Game.SendMessage("ftradeadd,0," + Money.Text + "," + pokemonsToTrade);
@@ -122,7 +122,6 @@ namespace PROShine.Views
             if (FinalView.Visibility == Visibility.Visible)
                 Reset();
         }
-
 
         public void StatusChanged(string[] data)
         {

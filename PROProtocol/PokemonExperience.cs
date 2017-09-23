@@ -24,8 +24,8 @@ namespace PROProtocol
                 if (CurrentLevel == 100)
                     return 0;
                 var num = Math.Pow(210.0 / (105.0 - CurrentLevel), 4.0);
-                double num2 = (int) ((num + Math.Pow(CurrentLevel, 3.0)) * (BaseLevelExperience / 20.0));
-                return (int) (num2 - TotalLevelExperience);
+                double num2 = (int)((num + Math.Pow(CurrentLevel, 3.0)) * (BaseLevelExperience / 20.0));
+                return (int)(num2 - TotalLevelExperience);
             }
         }
 

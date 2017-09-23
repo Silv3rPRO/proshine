@@ -1,7 +1,7 @@
-﻿using System;
+﻿using BrightNetwork;
+using System;
 using System.Net;
 using System.Text;
-using BrightNetwork;
 
 namespace PROProtocol
 {

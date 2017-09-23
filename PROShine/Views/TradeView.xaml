@@ -466,7 +466,6 @@
                         <Button Grid.Column="1" Content="Cancel" Click="Cancel_Click" Margin="5,0,0,0" />
                     </Grid>
                 </StackPanel>
-
             </StackPanel>
         </Border>
     </Grid>

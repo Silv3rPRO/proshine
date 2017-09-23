@@ -184,8 +184,8 @@ namespace PROProtocol
             reader.ReadInt32();
             var tiles = new int[width, height];
             for (var y = 0; y < height; ++y)
-            for (var x = 0; x < width; ++x)
-                tiles[x, y] = reader.ReadUInt16();
+                for (var x = 0; x < width; ++x)
+                    tiles[x, y] = reader.ReadUInt16();
             return tiles;
         }
 
@@ -331,12 +331,11 @@ namespace PROProtocol
         public Tuple<int, int> GetPc()
         {
             for (var y = 0; y < Height; ++y)
-            for (var x = 0; x < Width; ++x)
-                if (IsPc(x, y))
-                    return new Tuple<int, int>(x, y);
+                for (var x = 0; x < Width; ++x)
+                    if (IsPc(x, y))
+                        return new Tuple<int, int>(x, y);
             return null;
         }
-
 
         public int GetSlider(int x, int y)
         {
@@ -358,12 +357,16 @@ namespace PROProtocol
             {
                 case 1:
                     return Direction.Up;
+
                 case 2:
                     return Direction.Down;
+
                 case 3:
                     return Direction.Left;
+
                 case 4:
                     return Direction.Right;
+
                 default:
                     return null;
             }
@@ -399,6 +402,7 @@ namespace PROProtocol
                         return true;
                     }
                     break;
+
                 case Direction.Down:
                     if (isOnGround)
                     {
@@ -413,6 +417,7 @@ namespace PROProtocol
                         return true;
                     }
                     break;
+
                 case Direction.Left:
                     if (isOnGround)
                     {
@@ -428,6 +433,7 @@ namespace PROProtocol
                         return true;
                     }
                     break;
+
                 case Direction.Right:
                     if (isOnGround)
                     {
@@ -459,6 +465,7 @@ namespace PROProtocol
                 case MoveResult.Success:
                     success = true;
                     break;
+
                 case MoveResult.Jump:
                     success = true;
                     switch (direction)
@@ -466,28 +473,35 @@ namespace PROProtocol
                         case Direction.Down:
                             destinationY++;
                             break;
+
                         case Direction.Left:
                             destinationX--;
                             break;
+
                         case Direction.Right:
                             destinationX++;
                             break;
                     }
                     break;
+
                 case MoveResult.Sliding:
                     success = true;
                     break;
+
                 case MoveResult.Icing:
                     success = true;
                     break;
+
                 case MoveResult.OnGround:
                     success = true;
                     isOnGround = true;
                     break;
+
                 case MoveResult.NoLongerOnGround:
                     success = true;
                     isOnGround = false;
                     break;
+
                 case MoveResult.NoLongerSurfing:
                     success = true;
                     isSurfing = false;

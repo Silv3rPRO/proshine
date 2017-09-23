@@ -1,10 +1,10 @@
-﻿using System;
+﻿using PROBot;
+using PROProtocol;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using PROBot;
-using PROProtocol;
 
 namespace PROShine.Views
 {
@@ -37,12 +37,12 @@ namespace PROShine.Views
                 // Get the dragged ListViewItem
                 var listView = sender as ListView;
                 var listViewItem =
-                    FindAnchestor<ListViewItem>((DependencyObject) e.OriginalSource);
+                    FindAnchestor<ListViewItem>((DependencyObject)e.OriginalSource);
 
                 if (listViewItem != null)
                 {
                     // Find the data behind the ListViewItem
-                    var pokemon = (Pokemon) listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
+                    var pokemon = (Pokemon)listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
 
                     // Initialize the drag & drop operation
                     var dragData = new DataObject("PROShinePokemon", pokemon);
@@ -56,7 +56,7 @@ namespace PROShine.Views
             do
             {
                 if (current is T)
-                    return (T) current;
+                    return (T)current;
                 current = VisualTreeHelper.GetParent(current);
             } while (current != null);
             return null;
@@ -71,13 +71,13 @@ namespace PROShine.Views
                 // Get the dragged ListViewItem
                 var listView = sender as ListView;
                 var listViewItem =
-                    FindAnchestor<ListViewItem>((DependencyObject) e.OriginalSource);
+                    FindAnchestor<ListViewItem>((DependencyObject)e.OriginalSource);
 
                 if (listViewItem != null)
                 {
                     // Find the data behind the ListViewItem
                     var destinationPokemon =
-                        (Pokemon) listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
+                        (Pokemon)listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
 
                     lock (_bot)
                     {

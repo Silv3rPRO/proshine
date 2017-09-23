@@ -1,13 +1,13 @@
-﻿using System;
+﻿using MoonSharp.Interpreter;
+using PROBot.Utils;
+using PROProtocol;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Media;
 using System.Text;
 using System.Windows.Forms;
-using MoonSharp.Interpreter;
-using PROBot.Utils;
-using PROProtocol;
 
 namespace PROBot.Scripting
 {
@@ -115,7 +115,7 @@ namespace PROBot.Scripting
             _hookedFunctions = new Dictionary<string, IList<DynValue>>();
 
             _lua = new Script(CoreModules.Preset_SoftSandbox | CoreModules.LoadMethods);
-            _lua.Options.ScriptLoader = new CustomScriptLoader(_path) {ModulePaths = new[] {"?.lua"}};
+            _lua.Options.ScriptLoader = new CustomScriptLoader(_path) { ModulePaths = new[] { "?.lua" } };
             _lua.Options.CheckThreadAccess = false;
             _lua.Globals["log"] = new Action<string>(Log);
             _lua.Globals["fatal"] = new Action<string>(Fatal);
@@ -497,6 +497,7 @@ namespace PROBot.Scripting
 *                      "fish" = boolean fish,
 *                      "hitem = boolean hitem}}
 */
+
         private List<Dictionary<string, object>> GetSpawnList()
         {
             var spawnList = new List<Dictionary<string, object>>();
@@ -531,7 +532,7 @@ namespace PROBot.Scripting
         // API return an array of all harvestable berry trees on the currrent map. format : {index = {"x" = x, "y" = y}}
         private List<Dictionary<string, int>> GetActiveBerryTrees()
         {
-            int[] berries = {42, 43, 44, 45, 49, 50, 51, 52, 55, 56, 57, 58, 59, 60, 61, 62};
+            int[] berries = { 42, 43, 44, 45, 49, 50, 51, 52, 55, 56, 57, 58, 59, 60, 61, 62 };
             var trees = new List<Dictionary<string, int>>();
             foreach (var npc in Bot.Game.Map.Npcs.Where(npc => Array.Exists(berries, e => e == npc.Type)))
             {
@@ -696,11 +697,11 @@ namespace PROBot.Scripting
             // The odds of having twice the same pokemon unique ID being
             // 1 against 887,503,680
             var uniqueId = iv.Attack - 1;
-            uniqueId += (iv.Defence - 1) * (int) Math.Pow(31, 1);
-            uniqueId += (iv.Speed - 1) * (int) Math.Pow(31, 2);
-            uniqueId += (iv.SpAttack - 1) * (int) Math.Pow(31, 3);
-            uniqueId += (iv.SpDefence - 1) * (int) Math.Pow(31, 4);
-            uniqueId += (iv.Health - 1) * (int) Math.Pow(31, 5);
+            uniqueId += (iv.Defence - 1) * (int)Math.Pow(31, 1);
+            uniqueId += (iv.Speed - 1) * (int)Math.Pow(31, 2);
+            uniqueId += (iv.SpAttack - 1) * (int)Math.Pow(31, 3);
+            uniqueId += (iv.SpDefence - 1) * (int)Math.Pow(31, 4);
+            uniqueId += (iv.Health - 1) * (int)Math.Pow(31, 5);
             return uniqueId;
         }
 
@@ -985,7 +986,7 @@ namespace PROBot.Scripting
             var id = Bot.Game.Team[index - 1].Id;
 
             if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
-                return new[] {"Unknown", "Unknown"};
+                return new[] { "Unknown", "Unknown" };
 
             return new[]
                 {TypesManager.Instance.Type1[id].ToString(), TypesManager.Instance.Type2[id].ToString()};
@@ -1002,11 +1003,11 @@ namespace PROBot.Scripting
         {
             if (defender[0].Type == DataType.Table)
                 if (defender[0].Table.Length == 1)
-                    defender = new[] {defender[0].Table.Values.ToArray()[0], DynValue.NewString("")};
+                    defender = new[] { defender[0].Table.Values.ToArray()[0], DynValue.NewString("") };
                 else
                     defender = defender[0].Table.Values.ToArray();
             else if (defender.Length == 1)
-                defender = new[] {defender[0], DynValue.NewString("")};
+                defender = new[] { defender[0], DynValue.NewString("") };
 
             if (attacker.ToUpperInvariant() == "NONE")
                 attacker = "";
@@ -1497,7 +1498,7 @@ namespace PROBot.Scripting
             var id = Bot.Game.ActiveBattle.OpponentId;
 
             if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
-                return new[] {"Unknown", "Unknown"};
+                return new[] { "Unknown", "Unknown" };
 
             return new[]
                 {TypesManager.Instance.Type1[id].ToString(), TypesManager.Instance.Type2[id].ToString()};
@@ -1533,8 +1534,8 @@ namespace PROBot.Scripting
             }
             if (values.Length == 1)
                 values = values[0].Table.Values.ToArray();
-            return MoveToRectangle((int) values[0].Number, (int) values[1].Number, (int) values[2].Number,
-                (int) values[3].Number);
+            return MoveToRectangle((int)values[0].Number, (int)values[1].Number, (int)values[2].Number,
+                (int)values[3].Number);
         }
 
         // API: Moves to a random accessible cell of the specified rectangle.
@@ -1592,12 +1593,12 @@ namespace PROBot.Scripting
             var cells = new List<Tuple<int, int, int>>();
 
             for (var x = 0; x < Bot.Game.Map.Width; ++x)
-            for (var y = 0; y < Bot.Game.Map.Height; ++y)
-                if (cellTypePredicate(x, y) && (x != Bot.Game.PlayerX || y != Bot.Game.PlayerY))
-                {
-                    var distance = Bot.Game.DistanceTo(x, y);
-                    cells.Add(new Tuple<int, int, int>(x, y, distance));
-                }
+                for (var y = 0; y < Bot.Game.Map.Height; ++y)
+                    if (cellTypePredicate(x, y) && (x != Bot.Game.PlayerX || y != Bot.Game.PlayerY))
+                    {
+                        var distance = Bot.Game.DistanceTo(x, y);
+                        cells.Add(new Tuple<int, int, int>(x, y, distance));
+                    }
 
             var trash = new List<Tuple<int, int, int>>();
             if (alreadyInCell)
@@ -1815,7 +1816,7 @@ namespace PROBot.Scripting
             return !Bot.PokemonEvolver.IsEnabled;
         }
 
-        //API: Activates npc trainers battling on sight, which is the default. 
+        //API: Activates npc trainers battling on sight, which is the default.
         private bool EnableTrainerBattles()
         {
             Bot.Game.IsTrainerBattlesActive = true;
@@ -2046,11 +2047,11 @@ namespace PROBot.Scripting
             // The odds of having twice the same pokemon unique ID being
             // 1 against 887,503,680
             var uniqueId = iv.Attack - 1;
-            uniqueId += (iv.Defence - 1) * (int) Math.Pow(31, 1);
-            uniqueId += (iv.Speed - 1) * (int) Math.Pow(31, 2);
-            uniqueId += (iv.SpAttack - 1) * (int) Math.Pow(31, 3);
-            uniqueId += (iv.SpDefence - 1) * (int) Math.Pow(31, 4);
-            uniqueId += (iv.Health - 1) * (int) Math.Pow(31, 5);
+            uniqueId += (iv.Defence - 1) * (int)Math.Pow(31, 1);
+            uniqueId += (iv.Speed - 1) * (int)Math.Pow(31, 2);
+            uniqueId += (iv.SpAttack - 1) * (int)Math.Pow(31, 3);
+            uniqueId += (iv.SpDefence - 1) * (int)Math.Pow(31, 4);
+            uniqueId += (iv.Health - 1) * (int)Math.Pow(31, 5);
             return uniqueId;
         }
 
@@ -2333,7 +2334,7 @@ namespace PROBot.Scripting
             var id = Bot.Game.CurrentPcBox[boxPokemonId - 1].Id;
 
             if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
-                return new[] {"Unknown", "Unknown"};
+                return new[] { "Unknown", "Unknown" };
 
             return new[]
                 {TypesManager.Instance.Type1[id].ToString(), TypesManager.Instance.Type2[id].ToString()};
@@ -2451,15 +2452,15 @@ namespace PROBot.Scripting
             if (answerValue.Type == DataType.String)
                 Bot.Game.PushDialogAnswer(answerValue.CastToString());
             else if (answerValue.Type == DataType.Number)
-                Bot.Game.PushDialogAnswer((int) answerValue.CastToNumber());
+                Bot.Game.PushDialogAnswer((int)answerValue.CastToNumber());
             else
                 Fatal("error: pushDialogAnswer: the argument must be a number (index) or a string (search text).");
         }
 
-        private static readonly HashSet<int> _outOfCombatItemScopes = new HashSet<int> {8, 10, 15};
-        private static readonly HashSet<int> _inCombatItemScopes = new HashSet<int> {5};
-        private static readonly HashSet<int> _outOfCombatOnPokemonItemScopes = new HashSet<int> {2, 3, 9, 13, 14};
-        private static readonly HashSet<int> _inCombatOnPokemonItemScopes = new HashSet<int> {2};
+        private static readonly HashSet<int> _outOfCombatItemScopes = new HashSet<int> { 8, 10, 15 };
+        private static readonly HashSet<int> _inCombatItemScopes = new HashSet<int> { 5 };
+        private static readonly HashSet<int> _outOfCombatOnPokemonItemScopes = new HashSet<int> { 2, 3, 9, 13, 14 };
+        private static readonly HashSet<int> _inCombatOnPokemonItemScopes = new HashSet<int> { 2 };
 
         // API: Uses the specified item.
         private bool UseItem(string itemName)
@@ -2827,7 +2828,7 @@ namespace PROBot.Scripting
 
             if (socks == 4 || socks == 5)
             {
-                account.Socks.Version = (SocksVersion) socks;
+                account.Socks.Version = (SocksVersion)socks;
                 account.Socks.Host = host;
                 account.Socks.Port = port;
                 account.Socks.Username = socksUser;
@@ -2846,7 +2847,7 @@ namespace PROBot.Scripting
 
             if (Bot.Account.Socks.Version != SocksVersion.None)
             {
-                var socks = DynValue.NewNumber((int) Bot.Account.Socks.Version);
+                var socks = DynValue.NewNumber((int)Bot.Account.Socks.Version);
                 var host = DynValue.NewString(Bot.Account.Socks.Host);
                 var port = DynValue.NewNumber(Bot.Account.Socks.Port);
                 var socksUser = DynValue.NewString(Bot.Account.Socks.Username);

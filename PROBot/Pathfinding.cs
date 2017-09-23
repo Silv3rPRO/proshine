@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using PROProtocol;
+﻿using PROProtocol;
+using System.Collections.Generic;
 
 namespace PROBot
 {
@@ -205,7 +205,7 @@ namespace PROBot
                 FromDirection = direction;
             }
 
-            public uint Hash => (uint) X * 0x7FFFU + (uint) Y + (IsSurfing ? 0x80000000U : 0U) +
+            public uint Hash => (uint)X * 0x7FFFU + (uint)Y + (IsSurfing ? 0x80000000U : 0U) +
                                 (IsOnGround ? 0x40000000U : 0U);
         }
     }

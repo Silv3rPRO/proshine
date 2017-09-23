@@ -34,7 +34,9 @@ namespace BrightNetwork
         public IPAddress RemoteIpAddress => _client.RemoteIpAddress;
 
         public event Action Connected;
+
         public event Action<Exception> Disconnected;
+
         public event Action<string> PacketReceived;
 
         public void Connect(IPAddress address, int port)

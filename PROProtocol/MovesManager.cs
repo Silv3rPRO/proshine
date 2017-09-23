@@ -3267,7 +3267,6 @@ namespace PROProtocol
             Moves[535].DamageType = DamageType.Special;
         }
 
-
         private void LoadMoveNames()
         {
             MoveNames[0] = string.Empty;

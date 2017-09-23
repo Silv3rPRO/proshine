@@ -32,7 +32,7 @@ namespace PROProtocol
             Gender = data[22];
 
             OriginalTrainer = data[29];
-            Region = (Region) Convert.ToInt32(data[47]);
+            Region = (Region)Convert.ToInt32(data[47]);
             Form = Convert.ToInt32(data[48]);
 
             Nature = new PokemonNature(Convert.ToInt32(data[36]));

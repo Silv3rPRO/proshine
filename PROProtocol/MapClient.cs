@@ -25,8 +25,11 @@ namespace PROProtocol
         public bool IsConnected { get; private set; }
 
         public event Action ConnectionOpened;
+
         public event Action<Exception> ConnectionFailed;
+
         public event Action<Exception> ConnectionClosed;
+
         public event Action<string, Map> MapLoaded;
 
         public void Open()
@@ -68,7 +71,7 @@ namespace PROProtocol
             {
                 using (var writer = new BinaryWriter(stream))
                 {
-                    writer.Write((byte) 0x72);
+                    writer.Write((byte)0x72);
                     writer.Write(Encoding.ASCII.GetBytes(mapName));
                 }
                 _connection.Send(stream.ToArray());
@@ -77,14 +80,14 @@ namespace PROProtocol
 
         private void OnPacketReceived(BinaryReader reader)
         {
-            var type = (char) reader.ReadByte();
+            var type = (char)reader.ReadByte();
 
             if (type == 'm')
             {
                 int mapNameSize = reader.ReadByte();
                 var name = Encoding.ASCII.GetString(reader.ReadBytes(mapNameSize));
 
-                var mapLength = (int) (reader.BaseStream.Length - reader.BaseStream.Position);
+                var mapLength = (int)(reader.BaseStream.Length - reader.BaseStream.Position);
                 var content = reader.ReadBytes(mapLength);
 
                 content = DecompressContent(content);

@@ -211,10 +211,12 @@
                 <MenuItem Header="Help" Foreground="#FF99aab5">
                     <MenuItem Header="Show Log" Background="#FF23272a" Foreground="#FF99aab5" Name="HideLogView"
                               Click="HideLogView_Click" />
-                    <MenuItem Header="Community (Forum)" Background="#FF23272a" Foreground="#FF99aab5"
+                    <MenuItem Header="Community Forums" Background="#FF23272a" Foreground="#FF99aab5"
                               Click="MenuForum_Click" />
-                    <MenuItem Header="Source code (GitHub)" Background="#FF23272a" Foreground="#FF99aab5"
+                    <MenuItem Header="The Official (GitHub)" Background="#FF23272a" Foreground="#FF99aab5"
                               Click="MenuGitHub_Click" />
+                    <MenuItem Header="ScrPits (GitHub)" Background="#FF23272a" Foreground="#FF99aab5"
+                              Click="MenuGitHub2_Click" />
                     <MenuItem Header="Donate (Patreon)" Background="#FF23272a" Foreground="#FF99aab5"
                               Click="MenuDonate_Click" />
                     <Separator />

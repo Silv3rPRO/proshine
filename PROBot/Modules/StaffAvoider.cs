@@ -1,5 +1,5 @@
-﻿using System;
-using PROProtocol;
+﻿using PROProtocol;
+using System;
 
 namespace PROBot.Modules
 {

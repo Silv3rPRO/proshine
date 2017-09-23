@@ -1,5 +1,5 @@
-﻿using System;
-using MoonSharp.Interpreter;
+﻿using MoonSharp.Interpreter;
+using System;
 
 namespace PROBot.Scripting
 {

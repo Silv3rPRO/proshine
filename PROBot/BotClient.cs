@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using PROBot.Modules;
+﻿using PROBot.Modules;
 using PROBot.Scripting;
 using PROProtocol;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace PROBot
 {
@@ -53,15 +53,22 @@ namespace PROBot
         public Dictionary<int, OptionSlider> SliderOptions { get; set; }
         public Dictionary<int, TextOption> TextOptions { get; set; }
 
-
         public event Action<State> StateChanged;
+
         public event Action<string> MessageLogged;
+
         public event Action ClientChanged;
+
         public event Action ConnectionOpened;
+
         public event Action ConnectionClosed;
+
         public event Action<OptionSlider> SliderCreated;
+
         public event Action<OptionSlider> SliderRemoved;
+
         public event Action<TextOption> TextboxCreated;
+
         public event Action<TextOption> TextboxRemoved;
 
         public void CancelInvokes()
@@ -81,7 +88,6 @@ namespace PROBot
                         else
                             Script.Invokes[i].Call();
         }
-
 
         public void RemoveText(int index)
         {
@@ -168,9 +174,9 @@ namespace PROBot
             var server = GameServerExtensions.FromName(Account.Server);
             if (Account.Socks.Version != SocksVersion.None)
                 client = new GameClient(
-                    new GameConnection(server, (int) Account.Socks.Version, Account.Socks.Host, Account.Socks.Port,
+                    new GameConnection(server, (int)Account.Socks.Version, Account.Socks.Host, Account.Socks.Port,
                         Account.Socks.Username, Account.Socks.Password),
-                    new MapConnection((int) Account.Socks.Version, Account.Socks.Host, Account.Socks.Port,
+                    new MapConnection((int)Account.Socks.Version, Account.Socks.Host, Account.Socks.Port,
                         Account.Socks.Username, Account.Socks.Password));
             else
                 client = new GameClient(new GameConnection(server), new MapConnection());

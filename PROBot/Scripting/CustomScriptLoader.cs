@@ -1,9 +1,9 @@
-﻿using System;
+﻿using MoonSharp.Interpreter;
+using MoonSharp.Interpreter.Loaders;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using MoonSharp.Interpreter;
-using MoonSharp.Interpreter.Loaders;
 
 namespace PROBot.Scripting
 {
@@ -57,7 +57,7 @@ namespace PROBot.Scripting
             //return path, only if a single match exists:
             //base directories are unique, but constructed directories could reference multiple files e.g.:
             //1. opening ...workspace\ultrascript.lua makes rel_path = "ultrascript.lua"
-            //2. lua_path = "C:\" 
+            //2. lua_path = "C:\"
             //==> reference could either point to workspace\ultrascript.lua or C:\ultrascript.lua
             try
             {

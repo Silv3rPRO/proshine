@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using PROBot;
+using PROProtocol;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using PROBot;
-using PROProtocol;
 
 namespace PROShine.Views
 {
@@ -25,7 +25,7 @@ namespace PROShine.Views
             Title = App.Name + " - " + Title;
             UsernameTextBox.Focus();
 
-            ServerComboBox.ItemsSource = new List<string> {"Red Server", "Blue Server", "Yellow Server"};
+            ServerComboBox.ItemsSource = new List<string> { "Red Server", "Blue Server", "Yellow Server" };
             ServerComboBox.SelectedIndex = 0;
             RefreshAccountList();
         }

@@ -19,10 +19,13 @@ namespace PROProtocol
             {
                 case Direction.Up:
                     return "u";
+
                 case Direction.Down:
                     return "d";
+
                 case Direction.Left:
                     return "l";
+
                 case Direction.Right:
                     return "r";
             }
@@ -35,10 +38,13 @@ namespace PROProtocol
             {
                 case Direction.Up:
                     return Direction.Down;
+
                 case Direction.Down:
                     return Direction.Up;
+
                 case Direction.Left:
                     return Direction.Right;
+
                 case Direction.Right:
                 default:
                     return Direction.Left;
@@ -52,12 +58,15 @@ namespace PROProtocol
                 case Direction.Up:
                     y--;
                     break;
+
                 case Direction.Down:
                     y++;
                     break;
+
                 case Direction.Left:
                     x--;
                     break;
+
                 case Direction.Right:
                     x++;
                     break;
@@ -81,12 +90,15 @@ namespace PROProtocol
                 case Direction.Up:
                     y--;
                     break;
+
                 case Direction.Down:
                     y++;
                     break;
+
                 case Direction.Left:
                     x--;
                     break;
+
                 case Direction.Right:
                     x++;
                     break;
@@ -95,17 +107,19 @@ namespace PROProtocol
             return new Point(x, y);
         }
 
-
         public static Direction FromChar(char c)
         {
             switch (c)
             {
                 case 'u':
                     return Direction.Up;
+
                 case 'd':
                     return Direction.Down;
+
                 case 'l':
                     return Direction.Left;
+
                 case 'r':
                     return Direction.Right;
             }
@@ -128,10 +142,13 @@ namespace PROProtocol
             {
                 case 0:
                     return Direction.Up;
+
                 case 1:
                     return Direction.Right;
+
                 case 2:
                     return Direction.Down;
+
                 case 3:
                     return Direction.Left;
             }

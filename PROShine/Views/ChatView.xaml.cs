@@ -1,4 +1,8 @@
-﻿using System;
+﻿using PROBot;
+using PROProtocol;
+using PROShine.Controls;
+using PROShine.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,10 +12,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
-using PROBot;
-using PROProtocol;
-using PROShine.Controls;
-using PROShine.Utils;
 
 namespace PROShine.Views
 {
@@ -286,7 +286,7 @@ namespace PROShine.Views
                         _bot.Game.SendMessage(text);
                         return;
                     }
-                    var channelName = (string) tab.Tag;
+                    var channelName = (string)tab.Tag;
                     var channel = _bot.Game.Channels.FirstOrDefault(e => e.Name == channelName);
                     if (channel == null)
                         return;
@@ -295,7 +295,7 @@ namespace PROShine.Views
                 else if (_pmTabs.ContainsValue(tab as ButtonTab))
                 {
                     text = text.Replace("|.|", "");
-                    _bot.Game.SendPrivateMessage((string) tab.Tag, text);
+                    _bot.Game.SendPrivateMessage((string)tab.Tag, text);
                 }
                 else if (_channelPmTabs.ContainsValue(tab as ButtonTab))
                 {
@@ -305,7 +305,7 @@ namespace PROShine.Views
                         _bot.Game.SendMessage(text);
                         return;
                     }
-                    var conversation = (string) tab.Tag;
+                    var conversation = (string)tab.Tag;
                     _bot.Game.SendMessage("/send " + conversation + ", " + text);
                 }
             }

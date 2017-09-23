@@ -932,6 +932,11 @@ namespace PROShine.Views
             Process.Start("https://github.com/Silv3rPRO/proshine");
         }
 
+        private void MenuGitHub2_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://github.com/ScrPits/PROShine/tree/Metro-Build_BugFix");
+        }
+
         private void MenuDonate_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("https://www.patreon.com/proshine");

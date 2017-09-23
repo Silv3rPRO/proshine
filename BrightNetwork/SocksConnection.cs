@@ -71,7 +71,6 @@ namespace BrightNetwork
                 await SendAsync(socket, buffer, 0, 3);
             }
 
-
             await ReceiveAsync(socket, buffer, 0, 2);
 
             if (buffer[0] != 0x05)
@@ -85,11 +84,11 @@ namespace BrightNetwork
                 var i = 0;
                 buffer[i++] = 0x01;
 
-                buffer[i++] = (byte) username.Length;
+                buffer[i++] = (byte)username.Length;
                 Array.Copy(usernameArray, 0, buffer, i, username.Length);
                 i += username.Length;
 
-                buffer[i++] = (byte) password.Length;
+                buffer[i++] = (byte)password.Length;
                 Array.Copy(passwordArray, 0, buffer, i, password.Length);
                 i += password.Length;
 
@@ -108,7 +107,7 @@ namespace BrightNetwork
             }
 
             var address = IPAddress.Parse(serverAddress).GetAddressBytes();
-            var port = BitConverter.GetBytes((ushort) serverPort);
+            var port = BitConverter.GetBytes((ushort)serverPort);
             Array.Reverse(port);
 
             buffer[0] = 0x05;
@@ -133,7 +132,7 @@ namespace BrightNetwork
             var buffer = new byte[1024];
 
             var address = IPAddress.Parse(serverAddress).GetAddressBytes();
-            var port = BitConverter.GetBytes((ushort) serverPort);
+            var port = BitConverter.GetBytes((ushort)serverPort);
             Array.Reverse(port);
 
             buffer[0] = 0x04;

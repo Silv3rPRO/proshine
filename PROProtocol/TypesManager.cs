@@ -16,7 +16,7 @@ namespace PROProtocol
         {
             LoadTypes();
 
-            var allTypes = (PokemonType[]) Enum.GetValues(typeof(PokemonType));
+            var allTypes = (PokemonType[])Enum.GetValues(typeof(PokemonType));
 
             _typeChart = new Dictionary<PokemonType, Dictionary<PokemonType, double>>();
             foreach (var attacker in allTypes)

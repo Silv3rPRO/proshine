@@ -37,7 +37,9 @@ namespace BrightNetwork
         public IPAddress RemoteIpAddress => _client.RemoteIpAddress;
 
         public event Action Connected;
+
         public event Action<Exception> Disconnected;
+
         public event Action<BinaryReader> PacketReceived;
 
         public void Connect(IPAddress address, int port)
@@ -75,7 +77,7 @@ namespace BrightNetwork
 
             byte[] header;
             if (HeaderSize == 2)
-                header = BitConverter.GetBytes((ushort) packetLength);
+                header = BitConverter.GetBytes((ushort)packetLength);
             else if (HeaderSize == 4)
                 header = BitConverter.GetBytes(packetLength);
             else

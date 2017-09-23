@@ -28,12 +28,14 @@ namespace BrightNetwork
         public IPAddress RemoteIpAddress => _endPoint.Address;
 
         public event Action Connected;
+
         public event Action<Exception> Disconnected;
+
         public event Action<byte[]> DataReceived;
 
         public void Initialize(Socket socket)
         {
-            _endPoint = (IPEndPoint) socket.RemoteEndPoint;
+            _endPoint = (IPEndPoint)socket.RemoteEndPoint;
             _socket = socket;
             IsConnected = true;
             Connected?.Invoke();
@@ -120,7 +122,7 @@ namespace BrightNetwork
             try
             {
                 var bytesSent = _socket.EndSend(result);
-                if (bytesSent != (int) result.AsyncState)
+                if (bytesSent != (int)result.AsyncState)
                     Close();
             }
             catch (Exception ex)
