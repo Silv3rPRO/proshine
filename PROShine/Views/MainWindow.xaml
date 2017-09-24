@@ -154,11 +154,11 @@
             <RowDefinition Height="Auto" Name="Row1" />
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Background="#FF23272a" HorizontalAlignment="Stretch">
-            <Menu IsMainMenu="True" Background="#FF23272a" Foreground="#FF99aab5" FontSize="12.333">
-                <Button x:Name="LoginButton" Style="{DynamicResource MetroCircleButtonStyle}" Background="#FF23272a"
+            <Menu IsMainMenu="True" Background="Transparent" Foreground="#FF99aab5" FontSize="12.333">
+                <Button x:Name="LoginButton" Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent"
                         Foreground="#FF99aab5" BorderThickness="0" Click="LoginButton_Click">
                     <Button.Content>
-                        <iconPacks:PackIconMaterial Name="LoginButtonIcon" Kind="GoogleCirclesGroup"
+                        <iconPacks:PackIconMaterial Name="LoginButtonIcon" Kind="Login"
                                                     Foreground="#FF7289da" FontSize="14" />
                     </Button.Content>
                     <Button.ToolTip>
@@ -166,10 +166,10 @@
                     </Button.ToolTip>
                 </Button>
                 <Button x:Name="StartScriptButton" Style="{DynamicResource MetroCircleButtonStyle}"
-                        Background="#FF23272a" Foreground="#FF99aab5" BorderThickness="0"
+                        Background="Transparent" Foreground="#FF99aab5" BorderThickness="0"
                         Click="StartScriptButton_Click">
                     <Button.Content>
-                        <iconPacks:PackIconFontAwesome Name="StartScriptButtonIcon" Kind="Play" Foreground="#FF7289da"
+                        <iconPacks:PackIconFontAwesome Name="StartScriptButtonIcon" Kind="PlayCircle" Foreground="#FF7289da"
                                                        FontSize="14" />
                     </Button.Content>
                     <Button.ToolTip>
@@ -177,7 +177,7 @@
                     </Button.ToolTip>
                 </Button>
                 <Button x:Name="StopScriptButton" Style="{DynamicResource MetroCircleButtonStyle}"
-                        Background="#FF23272a" Foreground="#FF99aab5" BorderThickness="0"
+                        Background="Transparent" Foreground="#FF99aab5" BorderThickness="0"
                         Click="StopScriptButton_Click">
                     <Button.Content>
                         <iconPacks:PackIconFontAwesome Name="StopScriptButtonIcon" Kind="StopCircle"
@@ -188,14 +188,14 @@
                     </Button.ToolTip>
                 </Button>
                 <Button x:Name="LoadScriptButton" Style="{DynamicResource MetroCircleButtonStyle}"
-                        Background="#FF23272a" Foreground="#FF99aab5" BorderThickness="0"
+                        Background="Transparent" Foreground="#FF99aab5" BorderThickness="0"
                         Click="LoadScriptButton_Click">
                     <Button.Content>
-                        <iconPacks:PackIconMaterial Name="LoadScriptButtonIcon" Kind="Script" Foreground="#FF7289da"
+                        <iconPacks:PackIconMaterial Name="LoadScriptButtonIcon" Kind="Receipt" Foreground="#FF7289da"
                                                     FontSize="14" />
                     </Button.Content>
                     <Button.ToolTip>
-                        <TextBlock>Load Script.</TextBlock>
+                        <TextBlock Name="MenuPathScript" Text="Script: None" Margin="2,2,2,2" VerticalAlignment="Center" />
                     </Button.ToolTip>
                 </Button>
                 <MenuItem Header="Login" Visibility="Collapsed">
@@ -206,7 +206,6 @@
                     <MenuItem Name="BotStartMenuItem" Header="Start" IsEnabled="False" Click="BotStartMenuItem_Click" />
                     <MenuItem Name="BotStopMenuItem" Header="Stop" IsEnabled="False" Click="BotStopMenuItem_Click" />
                     <Separator />
-                    <MenuItem Name="MenuPathScript" Header="Script: None" Click="MenuPathScript_Click" />
                 </MenuItem>
                 <MenuItem Header="Help" Foreground="#FF99aab5">
                     <MenuItem Header="Show Log" Background="#FF23272a" Foreground="#FF99aab5" Name="HideLogView"
@@ -232,10 +231,10 @@
                 <Button BorderBrush="#FF7289da" Content="Clear" VerticalAlignment="Center" Background="#FF1F2225"
                         Foreground="#99aab5" Click="Button_Click_2" />
                 <Separator Width="15" Background="#FF23272a" Foreground="#FF23272A" BorderBrush="#FF23272a" />
-                <Button x:Name="CollapseButton" Style="{DynamicResource MetroCircleButtonStyle}" Background="#FF23272a"
-                        Foreground="#FF7289da" BorderThickness="2" Click="Collapse_Click">
+                <Button x:Name="CollapseButton" Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent"
+                        Foreground="#FF7289da" BorderThickness="0" Click="Collapse_Click">
                     <Button.Content>
-                        <iconPacks:PackIconMaterial Name="CollapseIcon" Kind="WindowMinimize" Foreground="#FF7289da"
+                        <iconPacks:PackIconMaterial Name="CollapseIcon" Kind="VectorArrangeBelow" Foreground="#FF7289da"
                                                     FontSize="10" RenderTransformOrigin="0.875,0.542" />
                     </Button.Content>
                     <Button.ToolTip>
@@ -289,6 +288,7 @@
                 Visibility="Collapsed"
                 Click="Options_Click"
                 Margin="10,1,2,1" />
+
             <ItemsControl Name="OptionSliders" Visibility="Collapsed">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

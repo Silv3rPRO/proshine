@@ -352,7 +352,7 @@ namespace PROShine.Views
                         TextOptions.Visibility = Visibility.Collapsed;
 
                         Bot.LoadScript(openDialog.FileName);
-                        MenuPathScript.Header = "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine +
+                        MenuPathScript.Text = "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine +
                                                 openDialog.FileName;
                         LogMessage("Script \"{0}\" by \"{1}\" successfully loaded", Bot.Script.Name, Bot.Script.Author);
                         if (!string.IsNullOrEmpty(Bot.Script.Description))
