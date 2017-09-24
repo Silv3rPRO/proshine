@@ -21,8 +21,7 @@ namespace PROBot.Modules
             {
                 if (_isEnabled != value)
                 {
-                    _isEnabled = value;
-                    _bot.Game.IsTrainerBattlesActive = value;
+                    _isEnabled = value;   
                     StateChanged?.Invoke(value);
                 }
             }
@@ -32,7 +31,9 @@ namespace PROBot.Modules
 
         private void Bot_ClientChanged()
         {
-            var game = _bot.Game;
+            GameClient game = _bot.Game;
+            if(_bot.Game != null)
+               _bot.Game.IsTrainerBattlesActive = _isEnabled;          
         }
     }
 }
