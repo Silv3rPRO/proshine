@@ -6,6 +6,9 @@ namespace PROProtocol
 {
     public class GameClient
     {
+        public InventoryItem GroundMount;
+        public InventoryItem WaterMount;
+        
         public Random Rand { get; private set; }
         public Language I18n { get; private set; }
 
@@ -92,7 +95,8 @@ namespace PROProtocol
         public event Action<string, string> PokeTimeUpdated;
         public event Action<Shop> ShopOpened;
         public event Action<List<Pokemon>> PCBoxUpdated;
-
+        public event Action<string> LogMessage;
+        
         private const string Version = "Sinnoh";
 
         private GameConnection _connection;
@@ -248,6 +252,13 @@ namespace PROProtocol
 
             if (!_movementTimeout.IsActive && _movements.Count > 0)
             {
+                if (GroundMount != null && !IsBiking && !IsSurfing && Map.IsOutside)
+                {
+                    LogMessage?.Invoke($"Mounting [{GroundMount.Name}]");
+                    UseItem(GroundMount.Id);
+                    return;
+                }
+                
                 Direction direction = _movements[0];
                 _movements.RemoveAt(0);
 
@@ -823,10 +834,19 @@ namespace PROProtocol
 
         public void UseSurf()
         {
-            SendMessage("/surf");
+            if (WaterMount == null)
+            {
+                SendMessage("/surf");
+            }
+            else
+            {
+                LogMessage?.Invoke($"Mounting [{WaterMount.Name}]");
+                UseItem(WaterMount.Id);
+            }
+            
             _mountingTimeout.Set();
         }
-
+        
         public void UseSurfAfterMovement()
         {
             _surfAfterMovement = true;
