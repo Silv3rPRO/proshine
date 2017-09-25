@@ -2829,7 +2829,7 @@ namespace PROBot.Scripting
                 Bot.RemoveText(index);
         }
 	
-	// API: Sets the item that will be used to mount the player
+        // API: Sets the item that will be used to mount the player
         private bool SetMount(string mount)
         {
             if (string.IsNullOrEmpty(mount))
@@ -2847,7 +2847,7 @@ namespace PROBot.Scripting
             return true;
         }
 
-	// API: Sets the item that will be used when the player begins surfing
+        // API: Sets the item that will be used when the player begins surfing
         private bool SetWaterMount(string mount)
         {
             if (string.IsNullOrEmpty(mount))
