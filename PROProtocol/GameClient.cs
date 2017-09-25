@@ -252,7 +252,7 @@ namespace PROProtocol
 
             if (!_movementTimeout.IsActive && _movements.Count > 0)
             {
-                if (GroundMount != null && !IsBiking && !IsSurfing && Map.IsOutside)
+                if (GroundMount != null && !_itemUseTimeout.IsActive && !IsBiking && !IsSurfing && Map.IsOutside)
                 {
                     LogMessage?.Invoke($"Mounting [{GroundMount.Name}]");
                     UseItem(GroundMount.Id);
