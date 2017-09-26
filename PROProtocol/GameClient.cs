@@ -758,12 +758,11 @@ namespace PROProtocol
 
         public bool HasSurfAbility()
         {
-            return (HasMove("Surf") &&
+            return (HasMove("Surf") || WaterMount != null) &&
                 (Map.Region == "1" && HasItemName("Soul Badge") ||
                 Map.Region == "2" && HasItemName("Fog Badge") ||
                 Map.Region == "3" && HasItemName("Balance Badge") ||
-                Map.Region == "4" && HasItemName("Relic Badge"))) ||
-                WaterMount != null;
+                Map.Region == "4" && HasItemName("Relic Badge"));
         }
 
         public bool HasCutAbility()
