@@ -751,7 +751,7 @@ namespace PROProtocol
                 (Map.Region == "1" && HasItemName("Soul Badge") ||
                 Map.Region == "2" && HasItemName("Fog Badge") ||
                 Map.Region == "3" && HasItemName("Balance Badge") ||
-                Map.Region == "4" && HasItemName("Relic Badge"));
+                Map.Region == "4" && HasItemName("Coal Badge"));
         }
 
         public bool HasCutAbility()
