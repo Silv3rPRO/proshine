@@ -274,6 +274,8 @@ namespace PROBot.Scripting
             _lua.Globals["moveToCell"] = new Func<int, int, bool>(MoveToCell);
             _lua.Globals["moveToMap"] = new Func<string, bool>(MoveToMap);
             _lua.Globals["moveToRectangle"] = new Func<DynValue[], bool>(MoveToRectangle);
+            _lua.Globals["setMount"] = new Func<string, bool>(SetMount);
+            _lua.Globals["setWaterMount"] = new Func<string, bool>(SetWaterMount);
 
             _lua.Globals["moveToNormalGround"] = new Func<bool>(MoveToNormalGround);
             _lua.Globals["moveToGrass"] = new Func<bool>(MoveToGrass);
@@ -2906,6 +2908,40 @@ namespace PROBot.Scripting
         private void CancelInvokes()
         {
             Bot.CancelInvokes();
+        }
+        private bool SetMount(string mount)
+        {
+            if (string.IsNullOrEmpty(mount))
+            {
+                Bot.Game.GroundMount = null;
+                return true;
+            }
+
+            InventoryItem item = Bot.Game.GetItemFromName(mount);
+
+            if (item == null)
+                return false;
+
+            Bot.Game.GroundMount = item;
+            return true;
+        }
+
+        // API: Sets the item that will be used when the player begins surfing
+        private bool SetWaterMount(string mount)
+        {
+            if (string.IsNullOrEmpty(mount))
+            {
+                Bot.Game.WaterMount = null;
+                return true;
+            }
+
+            InventoryItem item = Bot.Game.GetItemFromName(mount);
+
+            if (item == null)
+                return false;
+
+            Bot.Game.WaterMount = item;
+            return true;
         }
     }
 }
