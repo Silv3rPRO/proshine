@@ -9,6 +9,8 @@ namespace PROProtocol
 {
     public class GameClient
     {
+        public InventoryItem GroundMount;
+        public InventoryItem WaterMount;
         private const string Version = "Sinnoh";
         private readonly Timeout _battleTimeout = new Timeout();
 
@@ -265,6 +267,8 @@ namespace PROProtocol
         public event Action CreatingCharacterAction;
 
         public event Action PokedexDataUpdated;
+        
+        public event Action<string> LogMessage;
 
         public void ClearPath()
         {
@@ -337,6 +341,12 @@ namespace PROProtocol
 
             if (!_movementTimeout.IsActive && _movements.Count > 0)
             {
+                if (GroundMount != null && !_itemUseTimeout.IsActive && !IsBiking && !IsSurfing && Map.IsOutside)
+                {
+                    LogMessage?.Invoke($"Mounting [{GroundMount.Name}]");
+                    UseItem(GroundMount.Id);
+                    return;
+                }
                 var direction = _movements[0];
                 _movements.RemoveAt(0);
 
@@ -936,7 +946,8 @@ namespace PROProtocol
                    (Map.Region == "1" && HasItemName("Soul Badge") ||
                     Map.Region == "2" && HasItemName("Fog Badge") ||
                     Map.Region == "3" && HasItemName("Balance Badge") ||
-                    Map.Region == "4" && HasItemName("Relic Badge"));
+                    Map.Region == "4" && HasItemName("Relic Badge") ||
+                    WaterMount != null);
         }
 
         public bool HasCutAbility()
@@ -1016,7 +1027,15 @@ namespace PROProtocol
 
         public void UseSurf()
         {
-            SendMessage("/surf");
+            if (WaterMount == null)
+            {
+                SendMessage("/surf");
+            }
+            else
+            {
+                LogMessage?.Invoke($"Mounting [{WaterMount.Name}]");
+                UseItem(WaterMount.Id);
+            }
             _mountingTimeout.Set();
         }
 
