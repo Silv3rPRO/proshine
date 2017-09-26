@@ -158,6 +158,7 @@ namespace PROBot
                 client.SystemMessage += Client_SystemMessage;
                 client.DialogOpened += Client_DialogOpened;
                 client.TeleportationOccuring += Client_TeleportationOccuring;
+                client.LogMessage += LogMessage;
             }
             ClientChanged?.Invoke();
         }
