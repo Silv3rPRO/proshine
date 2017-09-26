@@ -945,7 +945,7 @@ namespace PROProtocol
                    (Map.Region == "1" && HasItemName("Cascade Badge") ||
                     Map.Region == "2" && HasItemName("Hive Badge") ||
                     Map.Region == "3" && HasItemName("Stone Badge") ||
-                    Map.Region == "4" && HasItemName("Forest Badge"));
+                    Map.Region == "4" && HasItemName("Coal Badge"));
         }
 
         public bool HasRockSmashAbility()
@@ -2467,7 +2467,7 @@ namespace PROProtocol
                  * [6] : Type
                  * [7] : Base stats, format : HP|ATK|DEF|SPD|SP. DEF|SP. ATK
                  * [8] : Abilities , Format : Same as list above, LVL>Name
-                 * [9] : Places where the pokémon can be caught, Format IDName<IDName
+                 * [9] : Places where the pokÃ©mon can be caught, Format IDName<IDName
                      Some ids :
                        41 : Land, Day, Morning.
                        01 : Land, Day, Morning, Night.
