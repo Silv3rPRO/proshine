@@ -4,19 +4,19 @@ namespace PROBot.Modules
 {
     public class MoveTeacher
     {
-        public bool IsLearning { get; private set; }
-        public int PokemonUid { get; private set; }
-        public int MoveToForget { get; set; }
-
         private readonly BotClient _bot;
 
-        private Timeout _learningTimeout = new Timeout();
+        private readonly Timeout _learningTimeout = new Timeout();
 
         public MoveTeacher(BotClient bot)
         {
             _bot = bot;
             _bot.ClientChanged += Bot_ClientChanged;
         }
+
+        public bool IsLearning { get; private set; }
+        public int PokemonUid { get; private set; }
+        public int MoveToForget { get; set; }
 
         public bool Update()
         {
@@ -32,9 +32,7 @@ namespace PROBot.Modules
         private void Bot_ClientChanged()
         {
             if (_bot.Game != null)
-            {
                 _bot.Game.LearningMove += Game_LearningMove;
-            }
         }
 
         private void Game_LearningMove(int moveId, string moveName, int pokemonUid)

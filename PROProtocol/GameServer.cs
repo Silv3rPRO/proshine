@@ -17,8 +17,10 @@ namespace PROProtocol
             {
                 case GameServer.Red:
                     return "95.183.48.67";
+
                 case GameServer.Blue:
                     return "46.28.207.53";
+
                 case GameServer.Yellow:
                     return "46.28.205.63";
             }
@@ -31,8 +33,10 @@ namespace PROProtocol
             {
                 case "RED":
                     return GameServer.Red;
+
                 case "BLUE":
                     return GameServer.Blue;
+
                 case "YELLOW":
                     return GameServer.Yellow;
             }

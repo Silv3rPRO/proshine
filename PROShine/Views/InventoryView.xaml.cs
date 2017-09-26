@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace PROShine
+namespace PROShine.Views
 {
     public partial class InventoryView : UserControl
     {
@@ -16,13 +16,11 @@ namespace PROShine
 
         private void ItemsListViewHeader_Click(object sender, RoutedEventArgs e)
         {
-            GridViewColumnHeader column = (sender as GridViewColumnHeader);
+            var column = sender as GridViewColumnHeader;
 
-            ListSortDirection direction = ListSortDirection.Ascending;
+            var direction = ListSortDirection.Ascending;
             if (column == _lastColumn && direction == _lastDirection)
-            {
                 direction = ListSortDirection.Descending;
-            }
 
             ItemsListView.Items.SortDescriptions.Clear();
             ItemsListView.Items.SortDescriptions.Add(new SortDescription((string)column.Content, direction));

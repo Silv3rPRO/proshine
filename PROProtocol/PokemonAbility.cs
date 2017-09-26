@@ -2,25 +2,8 @@
 {
     public class PokemonAbility
     {
-        public int Id { get; private set; }
-        public string Name
+        public static readonly string[] Abilities =
         {
-            get
-            {
-                if (Id < 0 || Id >= Abilities.Length)
-                {
-                    return null;
-                }
-                return Abilities[Id];
-            }
-        }
-
-        public PokemonAbility(int id)
-        {
-            Id = id;
-        }
-
-        public static readonly string[] Abilities = {
             "None",
             "Stench",
             "Drizzle",
@@ -214,5 +197,22 @@
             "Desolate Land",
             "Delta Stream"
         };
+
+        public PokemonAbility(int id)
+        {
+            Id = id;
+        }
+
+        public int Id { get; }
+
+        public string Name
+        {
+            get
+            {
+                if (Id < 0 || Id >= Abilities.Length)
+                    return null;
+                return Abilities[Id];
+            }
+        }
     }
 }

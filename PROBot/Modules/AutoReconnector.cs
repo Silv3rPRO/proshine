@@ -5,15 +5,24 @@ namespace PROBot.Modules
 {
     public class AutoReconnector
     {
-        public const int MinDelay = 180;
-        public const int MaxDelay = 420;
+        public const int MinDelay = 15;
+        public const int MaxDelay = 101;
+        private DateTime _autoReconnectTimeout;
 
-        public event Action<bool> StateChanged;
+        private readonly BotClient _bot;
 
-        private bool _isEnabled = false;
+        private bool _isEnabled;
+        private bool _reconnecting;
+
+        public AutoReconnector(BotClient bot)
+        {
+            _bot = bot;
+            _bot.ClientChanged += Bot_ClientChanged;
+        }
+
         public bool IsEnabled
         {
-            get { return _isEnabled; }
+            get => _isEnabled;
             set
             {
                 if (_isEnabled != value)
@@ -24,15 +33,7 @@ namespace PROBot.Modules
             }
         }
 
-        private BotClient _bot;
-        private bool _reconnecting;
-        private DateTime _autoReconnectTimeout;
-
-        public AutoReconnector(BotClient bot)
-        {
-            _bot = bot;
-            _bot.ClientChanged += Bot_ClientChanged;
-        }
+        public event Action<bool> StateChanged;
 
         private void Bot_ClientChanged()
         {
@@ -47,15 +48,13 @@ namespace PROBot.Modules
 
         public void Update()
         {
-            if (IsEnabled == true && _reconnecting && (_bot.Game == null || !_bot.Game.IsConnected))
-            {
+            if (IsEnabled && _reconnecting && (_bot.Game == null || !_bot.Game.IsConnected))
                 if (_autoReconnectTimeout < DateTime.UtcNow)
                 {
                     _bot.LogMessage("Reconnecting...");
                     _bot.Login(_bot.Account);
                     _autoReconnectTimeout = DateTime.UtcNow.AddSeconds(_bot.Rand.Next(MinDelay, MaxDelay + 1));
                 }
-            }
         }
 
         private void Client_ConnectionClosed(Exception ex)
@@ -63,7 +62,7 @@ namespace PROBot.Modules
             if (IsEnabled)
             {
                 _reconnecting = true;
-                int seconds = _bot.Rand.Next(MinDelay, MaxDelay + 1);
+                var seconds = _bot.Rand.Next(MinDelay, MaxDelay + 1);
                 _autoReconnectTimeout = DateTime.UtcNow.AddSeconds(seconds);
                 _bot.LogMessage("Reconnecting in " + seconds + " seconds.");
             }

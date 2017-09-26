@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
@@ -47,23 +48,31 @@
     <Compile Include="Modules\AutoReconnector.cs" />
     <Compile Include="BattleAI.cs" />
     <Compile Include="BotClient.cs" />
+    <Compile Include="Modules\IsTrainerBattlesActive.cs" />
     <Compile Include="Modules\MovementResynchronizer.cs" />
     <Compile Include="Modules\MoveTeacher.cs" />
-    <Compile Include="Modules\CustomOptions.cs" />
+    <Compile Include="Modules\OptionSlider.cs" />
     <Compile Include="Modules\PokemonEvolver.cs" />
+    <Compile Include="Modules\TextOption.cs" />
     <Compile Include="Pathfinding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripting\BaseScript.cs" />
     <Compile Include="Scripting\CustomScriptLoader.cs" />
+    <Compile Include="Scripting\Invoker.cs" />
     <Compile Include="Scripting\LuaScript.cs" />
     <Compile Include="Socks.cs" />
     <Compile Include="Modules\StaffAvoider.cs" />
+    <Compile Include="SocksVersion.cs" />
     <Compile Include="Utils\TaskUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BrightNetwork\BrightNetwork.csproj">
       <Project>{f6f45690-9361-4da4-8a8a-18d782e29752}</Project>
       <Name>BrightNetwork</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InputDialog\InputDialog.csproj">
+      <Project>{b9b185e2-9dd5-45d5-a8ff-4d0f49bf0b43}</Project>
+      <Name>InputDialog</Name>
     </ProjectReference>
     <ProjectReference Include="..\PROProtocol\PROProtocol.csproj">
       <Project>{c9a1afc8-2228-4542-b2c7-b6eca1461c84}</Project>

@@ -8,13 +8,13 @@ namespace PROBot.Utils
     {
         internal static void CallActionWithTimeout(Action action, Action error, int timeout)
         {
-            CancellationTokenSource cancelToken = new CancellationTokenSource();
-            CancellationToken token = cancelToken.Token;
-            Task<Exception> task = Task.Run(delegate
+            var cancelToken = new CancellationTokenSource();
+            var token = cancelToken.Token;
+            var task = Task.Run(delegate
             {
                 try
                 {
-                    Thread thread = Thread.CurrentThread;
+                    var thread = Thread.CurrentThread;
                     using (token.Register(thread.Abort))
                     {
                         action();
@@ -26,7 +26,7 @@ namespace PROBot.Utils
                     return ex;
                 }
             }, token);
-            int index = Task.WaitAny(task, Task.Delay(timeout));
+            var index = Task.WaitAny(task, Task.Delay(timeout));
             if (index != 0)
             {
                 cancelToken.Cancel();

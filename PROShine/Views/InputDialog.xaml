@@ -1,0 +1,10 @@
+﻿<Window x:Class="InputDialog.InputDialog"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	Title="Form1">
+	<Grid Height="111" Width="343">
+		<Button Name="button1" Height="23" Width="75" TabIndex="2" Click="button1_Click" Margin="246,61,22,27" HorizontalAlignment="Right" VerticalAlignment="Bottom" >OK</Button>
+		<Label Name="label1" Height="22" Width="44" FontSize="11" FontFamily="Microsoft Sans Serif" TabIndex="1" Margin="13,-2,286,91" HorizontalAlignment="Right" VerticalAlignment="Bottom" >label1</Label>
+		<ComboBox Name="comboBox1" Height="21" Width="319" TabIndex="0" Margin="2,27,22,63" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+	</Grid>
+</Window>

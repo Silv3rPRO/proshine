@@ -6,21 +6,11 @@ namespace BrightNetwork
 {
     public class BrightClient
     {
-        public event Action Connected;
-        public event Action<Exception> Disconnected;
-        public event Action<byte[]> DataReceived;
-
-        public bool IsConnected { get; private set; }
-
-        public IPAddress RemoteIPAddress
-        {
-            get { return _endPoint.Address; }
-        }
-
-        private Socket _socket;
         private IPEndPoint _endPoint;
         private bool _isClosed;
-        private byte[] _receiveBuffer;
+        private readonly byte[] _receiveBuffer;
+
+        private Socket _socket;
 
         public BrightClient()
         {
@@ -32,6 +22,16 @@ namespace BrightNetwork
             _receiveBuffer = new byte[4096];
             Initialize(socket);
         }
+
+        public bool IsConnected { get; private set; }
+
+        public IPAddress RemoteIpAddress => _endPoint.Address;
+
+        public event Action Connected;
+
+        public event Action<Exception> Disconnected;
+
+        public event Action<byte[]> DataReceived;
 
         public void Initialize(Socket socket)
         {
@@ -51,7 +51,7 @@ namespace BrightNetwork
                 {
                     _endPoint = new IPEndPoint(address, port);
                     _socket = new Socket(_endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                    _socket.BeginConnect(_endPoint, new AsyncCallback(ConnectCallback), null);
+                    _socket.BeginConnect(_endPoint, ConnectCallback, null);
                 }
                 catch (Exception ex)
                 {
@@ -80,9 +80,7 @@ namespace BrightNetwork
                 try
                 {
                     if (_socket != null)
-                    {
                         _socket.Close();
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -123,11 +121,9 @@ namespace BrightNetwork
         {
             try
             {
-                int bytesSent = _socket.EndSend(result);
+                var bytesSent = _socket.EndSend(result);
                 if (bytesSent != (int)result.AsyncState)
-                {
                     Close();
-                }
             }
             catch (Exception ex)
             {
@@ -152,7 +148,7 @@ namespace BrightNetwork
                 Close();
                 return;
             }
-            byte[] data = new byte[bytesRead];
+            var data = new byte[bytesRead];
             Array.Copy(_receiveBuffer, data, bytesRead);
             DataReceived?.Invoke(data);
             BeginReceive();

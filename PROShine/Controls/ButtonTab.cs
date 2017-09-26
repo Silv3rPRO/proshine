@@ -2,11 +2,11 @@
 
 namespace PROShine.Controls
 {
-    class ButtonTab : TabItem
+    internal class ButtonTab : TabItem
     {
         public ButtonTab()
         {
-            this.Header = new ButtonTabHeader();
+            Header = new ButtonTabHeader();
         }
     }
 }

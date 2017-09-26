@@ -4,8 +4,14 @@ namespace PROProtocol
 {
     public class PlayerInfos
     {
+        public PlayerInfos(DateTime expiration)
+        {
+            Expiration = expiration;
+            Added = DateTime.UtcNow;
+        }
+
         public DateTime Expiration { get; set; }
-        public DateTime Added { get; private set; }
+        public DateTime Added { get; }
         public DateTime Updated { get; set; }
 
         public string Name { get; set; }
@@ -21,12 +27,6 @@ namespace PROProtocol
         public bool IsOnground { get; set; }
         public int GuildId { get; set; }
         public int PetForm { get; set; } // ???
-
-        public PlayerInfos(DateTime expiration)
-        {
-            Expiration = expiration;
-            Added = DateTime.UtcNow;
-        }
 
         public bool IsExpired()
         {

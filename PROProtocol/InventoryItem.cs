@@ -2,11 +2,6 @@
 {
     public class InventoryItem
     {
-        public string Name { get; private set; }
-        public int Id { get; private set; }
-        public int Quantity { get; private set; }
-        public int Scope { get; private set; }
-
         public InventoryItem(string name, int id, int quantity, int scope)
         {
             Name = name;
@@ -14,5 +9,10 @@
             Quantity = quantity;
             Scope = scope;
         }
+
+        public string Name { get; }
+        public int Id { get; }
+        public int Quantity { get; }
+        public int Scope { get; }
     }
 }

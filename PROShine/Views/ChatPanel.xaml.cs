@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace PROShine
+namespace PROShine.Views
 {
     public partial class ChatPanel : UserControl
     {

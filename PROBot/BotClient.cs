@@ -14,39 +14,11 @@ namespace PROBot
             Stopped,
             Started,
             Paused
-        };
+        }
 
-        public GameClient Game { get; private set; }
-        public BattleAI AI { get; private set; }
-        public BaseScript Script { get; private set; }
-        public AccountManager AccountManager { get; private set; }
-        public Random Rand { get; private set; }
-        public Account Account { get; set; }
+        private readonly Timeout _actionTimeout = new Timeout();
 
-        public State Running { get; private set; }
-        public bool IsPaused { get; private set; }
-
-        public event Action<State> StateChanged;
-        public event Action<string> MessageLogged;
-        public event Action ClientChanged;
-        public event Action ConnectionOpened;
-        public event Action ConnectionClosed;
-        public event Action<OptionSlider> SliderCreated;
-        public event Action<OptionSlider> SliderRemoved;
-        public event Action<TextOption> TextboxCreated;
-        public event Action<TextOption> TextboxRemoved;
-
-        public PokemonEvolver PokemonEvolver { get; private set; }
-        public MoveTeacher MoveTeacher { get; private set; }
-        public StaffAvoider StaffAvoider { get; private set; }
-        public AutoReconnector AutoReconnector { get; private set; }
-        public MovementResynchronizer MovementResynchronizer { get; private set; }
-        public Dictionary<int, OptionSlider> SliderOptions { get; set; }
-        public Dictionary<int, TextOption> TextOptions { get; set; }
-        
         private bool _loginRequested;
-
-        private Timeout _actionTimeout = new Timeout();
 
         public BotClient()
         {
@@ -55,10 +27,66 @@ namespace PROBot
             MoveTeacher = new MoveTeacher(this);
             StaffAvoider = new StaffAvoider(this);
             AutoReconnector = new AutoReconnector(this);
+            IsTrainerBattlesActive = new IsTrainerBattlesActive(this);
             MovementResynchronizer = new MovementResynchronizer(this);
             Rand = new Random();
             SliderOptions = new Dictionary<int, OptionSlider>();
             TextOptions = new Dictionary<int, TextOption>();
+        }
+
+        public GameClient Game { get; private set; }
+        public BattleAi Ai { get; private set; }
+        public BaseScript Script { get; private set; }
+        public AccountManager AccountManager { get; }
+        public Random Rand { get; }
+        public Account Account { get; set; }
+
+        public State Running { get; private set; }
+        public bool IsPaused { get; private set; }
+
+        public PokemonEvolver PokemonEvolver { get; }
+        public MoveTeacher MoveTeacher { get; }
+        public StaffAvoider StaffAvoider { get; }
+        public AutoReconnector AutoReconnector { get; }
+        public IsTrainerBattlesActive IsTrainerBattlesActive { get; }
+        public MovementResynchronizer MovementResynchronizer { get; }
+        public Dictionary<int, OptionSlider> SliderOptions { get; set; }
+        public Dictionary<int, TextOption> TextOptions { get; set; }
+
+        public event Action<State> StateChanged;
+
+        public event Action<string> MessageLogged;
+
+        public event Action ClientChanged;
+
+        public event Action ConnectionOpened;
+
+        public event Action ConnectionClosed;
+
+        public event Action<OptionSlider> SliderCreated;
+
+        public event Action<OptionSlider> SliderRemoved;
+
+        public event Action<TextOption> TextboxCreated;
+
+        public event Action<TextOption> TextboxRemoved;
+
+        public void CancelInvokes()
+        {
+            if (Script != null)
+                foreach (var invoker in Script.Invokes)
+                    invoker.Called = true;
+        }
+
+        public void CallInvokes()
+        {
+            if (Script != null)
+                for (var i = Script.Invokes.Count - 1; i >= 0; i--)
+                    if (Script.Invokes[i].Time < DateTime.UtcNow)
+                        if (Script.Invokes[i].Called)
+                            Script.Invokes.RemoveAt(i);
+                        else
+                            Script.Invokes[i].Call();
         }
 
         public void RemoveText(int index)
@@ -75,14 +103,16 @@ namespace PROBot
 
         public void CreateText(int index, string content)
         {
-            TextOptions[index] = new TextOption("Text " + index + ": ", "Custom text option " + index + " for use in scripts.", content);
+            TextOptions[index] = new TextOption("Text " + index + ": ",
+                "Custom text option " + index + " for use in scripts.", content);
             TextboxCreated?.Invoke(TextOptions[index]);
         }
 
         public void CreateText(int index, string content, bool isName)
         {
             if (isName)
-                TextOptions[index] = new TextOption(content, "Custom text option " + index + " for use in scripts.", "");
+                TextOptions[index] =
+                    new TextOption(content, "Custom text option " + index + " for use in scripts.", "");
             else
                 TextOptions[index] = new TextOption("Text " + index + ": ", content, "");
 
@@ -91,7 +121,8 @@ namespace PROBot
 
         public void CreateSlider(int index, bool enable)
         {
-            SliderOptions[index] = new OptionSlider("Option " + index + ": ", "Custom option " + index + " for use in scripts.");
+            SliderOptions[index] =
+                new OptionSlider("Option " + index + ": ", "Custom option " + index + " for use in scripts.");
             SliderOptions[index].IsEnabled = enable;
             SliderCreated?.Invoke(SliderOptions[index]);
         }
@@ -114,12 +145,12 @@ namespace PROBot
         public void SetClient(GameClient client)
         {
             Game = client;
-            AI = null;
+            Ai = null;
             Stop();
 
             if (client != null)
             {
-                AI = new BattleAI(client);
+                Ai = new BattleAi(client);
                 client.ConnectionOpened += Client_ConnectionOpened;
                 client.ConnectionFailed += Client_ConnectionFailed;
                 client.ConnectionClosed += Client_ConnectionClosed;
@@ -140,17 +171,15 @@ namespace PROBot
         private void LoginUpdate()
         {
             GameClient client;
-            GameServer server = GameServerExtensions.FromName(Account.Server);
+            var server = GameServerExtensions.FromName(Account.Server);
             if (Account.Socks.Version != SocksVersion.None)
-            {
-                // TODO: Clean this code.
-                client = new GameClient(new GameConnection(server, (int)Account.Socks.Version, Account.Socks.Host, Account.Socks.Port, Account.Socks.Username, Account.Socks.Password),
-                    new MapConnection((int)Account.Socks.Version, Account.Socks.Host, Account.Socks.Port, Account.Socks.Username, Account.Socks.Password));
-            }
+                client = new GameClient(
+                    new GameConnection(server, (int)Account.Socks.Version, Account.Socks.Host, Account.Socks.Port,
+                        Account.Socks.Username, Account.Socks.Password),
+                    new MapConnection((int)Account.Socks.Version, Account.Socks.Host, Account.Socks.Port,
+                        Account.Socks.Username, Account.Socks.Password));
             else
-            {
                 client = new GameClient(new GameConnection(server), new MapConnection());
-            }
             SetClient(client);
             client.Open();
         }
@@ -158,16 +187,16 @@ namespace PROBot
         public void Logout(bool allowAutoReconnect)
         {
             if (!allowAutoReconnect)
-            {
-                AutoReconnector.IsEnabled = false;
-            }
+                AutoReconnector.IsEnabled = true;
             Game.Close();
         }
 
         public void Update()
         {
+            if (Script != null)
+                Script.Update();
+            CallInvokes();
             AutoReconnector.Update();
-
             if (_loginRequested)
             {
                 LoginUpdate();
@@ -176,17 +205,12 @@ namespace PROBot
             }
 
             if (Running != State.Started)
-            {
                 return;
-            }
-            
             if (PokemonEvolver.Update()) return;
             if (MoveTeacher.Update()) return;
 
             if (Game.IsMapLoaded && Game.AreNpcReceived && Game.IsInactive)
-            {
                 ExecuteNextAction();
-            }
         }
 
         public void Start()
@@ -203,7 +227,6 @@ namespace PROBot
         public void Pause()
         {
             if (Game != null && Script != null && Running != State.Stopped)
-            {
                 if (Running == State.Started)
                 {
                     Running = State.Paused;
@@ -216,37 +239,33 @@ namespace PROBot
                     StateChanged?.Invoke(Running);
                     Script.Resume();
                 }
-            }
         }
 
         public void Stop()
         {
+            if (Game != null)
+                Game.ClearPath();
+
             if (Running != State.Stopped)
             {
                 Running = State.Stopped;
                 StateChanged?.Invoke(Running);
                 if (Script != null)
-                {
                     Script.Stop();
-                }
             }
         }
 
         public void LoadScript(string filename)
         {
-            string input = File.ReadAllText(filename);
+            var input = File.ReadAllText(filename);
 
-            List<string> libs = new List<string>();
+            var libs = new List<string>();
             if (Directory.Exists("Libs"))
             {
-                string[] files = Directory.GetFiles("Libs");
-                foreach (string file in files)
-                {
+                var files = Directory.GetFiles("Libs");
+                foreach (var file in files)
                     if (file.ToUpperInvariant().EndsWith(".LUA"))
-                    {
                         libs.Add(File.ReadAllText(file));
-                    }
-                }
             }
 
             BaseScript script = new LuaScript(this, Path.GetFullPath(filename), input, libs);
@@ -267,14 +286,10 @@ namespace PROBot
 
         public bool MoveToLink(string destinationMap)
         {
-            IEnumerable<Tuple<int, int>> nearest = Game.Map.GetNearestLinks(destinationMap, Game.PlayerX, Game.PlayerY);
+            var nearest = Game.Map.GetNearestLinks(destinationMap, Game.PlayerX, Game.PlayerY);
             if (nearest != null)
-            {
-                foreach (Tuple<int, int> link in nearest)
-                {
+                foreach (var link in nearest)
                     if (MoveToCell(link.Item1, link.Item2)) return true;
-                }
-            }
             return false;
         }
 
@@ -282,68 +297,48 @@ namespace PROBot
         {
             MovementResynchronizer.CheckMovement(x, y);
 
-            Pathfinding path = new Pathfinding(Game);
+            var path = new Pathfinding(Game);
             bool result;
 
             if (Game.PlayerX == x && Game.PlayerY == y)
-            {
                 result = path.MoveToSameCell();
-            }
             else
-            {
                 result = path.MoveTo(x, y, requiredDistance);
-            }
 
             if (result)
-            {
                 MovementResynchronizer.ApplyMovement(x, y);
-            }
 
             return result;
         }
 
         public bool TalkToNpc(Npc target)
         {
-            bool canInteract = Game.Map.CanInteract(Game.PlayerX, Game.PlayerY, target.PositionX, target.PositionY);
+            var canInteract = Game.Map.CanInteract(Game.PlayerX, Game.PlayerY, target.PositionX, target.PositionY);
             if (canInteract)
             {
                 Game.TalkToNpc(target.Id);
                 return true;
             }
-            else
-            {
-                return MoveToCell(target.PositionX, target.PositionY, 1);
-            }
+            return MoveToCell(target.PositionX, target.PositionY, 1);
         }
 
-        public bool OpenPC()
+        public bool OpenPc()
         {
-            Tuple<int, int> pcPosition = Game.Map.GetPC();
-            if (pcPosition == null || Game.IsPCOpen)
-            {
+            var pcPosition = Game.Map.GetPc();
+            if (pcPosition == null || Game.IsPcOpen)
                 return false;
-            }
-            int distance = Game.DistanceTo(pcPosition.Item1, pcPosition.Item2);
+            var distance = Game.DistanceTo(pcPosition.Item1, pcPosition.Item2);
             if (distance == 1)
-            {
-                return Game.OpenPC();
-            }
-            else
-            {
-                return MoveToCell(pcPosition.Item1, pcPosition.Item2 + 1);
-            }
+                return Game.OpenPc();
+            return MoveToCell(pcPosition.Item1, pcPosition.Item2 + 1);
         }
 
-        public bool RefreshPCBox(int boxId)
+        public bool RefreshPcBox(int boxId)
         {
-            if (!Game.IsPCOpen)
-            {
+            if (!Game.IsPcOpen)
                 return false;
-            }
-            if (!Game.RefreshPCBox(boxId))
-            {
+            if (!Game.RefreshPcBox(boxId))
                 return false;
-            }
             _actionTimeout.Set();
             return true;
         }
@@ -352,7 +347,7 @@ namespace PROBot
         {
             try
             {
-                bool executed = Script.ExecuteNextAction();
+                var executed = Script.ExecuteNextAction();
                 if (!executed && Running != State.Stopped && !_actionTimeout.Update())
                 {
                     LogMessage("No action executed: stopping the bot.");
@@ -373,11 +368,12 @@ namespace PROBot
                 Stop();
             }
         }
-        
+
         private void Client_ConnectionOpened()
         {
             ConnectionOpened?.Invoke();
-            Game.SendAuthentication(Account.Name, Account.Password, Account.MacAddress ?? HardwareHash.GenerateRandom());
+            Game.SendAuthentication(Account.Name, Account.Password,
+                Account.MacAddress ?? HardwareHash.GenerateRandom());
         }
 
         private void Client_ConnectionClosed(Exception ex)
@@ -419,30 +415,24 @@ namespace PROBot
         private void Client_DialogOpened(string message)
         {
             if (Running == State.Started)
-            {
                 Script.OnDialogMessage(message);
-            }
         }
 
         private void Client_SystemMessage(string message)
         {
             if (Running == State.Started)
-            {
                 Script.OnSystemMessage(message);
-            }
         }
 
         private void Client_BattleMessage(string message)
         {
             if (Running == State.Started)
-            {
                 Script.OnBattleMessage(message);
-            }
         }
 
         private void Client_TeleportationOccuring(string map, int x, int y)
         {
-            string message = "Position updated: " + map + " (" + x + ", " + y + ")";
+            var message = "Position updated: " + map + " (" + x + ", " + y + ")";
             if (Game.Map == null || Game.IsTeleporting)
             {
                 message += " [OK]";
@@ -453,15 +443,11 @@ namespace PROBot
             }
             else
             {
-                int distance = GameClient.DistanceBetween(x, y, Game.PlayerX, Game.PlayerY);
+                var distance = GameClient.DistanceBetween(x, y, Game.PlayerX, Game.PlayerY);
                 if (distance < 8)
-                {
                     message += " [OK, lag, distance=" + distance + "]";
-                }
                 else
-                {
                     message += " [WARNING, distance=" + distance + "] /!\\";
-                }
             }
             LogMessage(message);
         }

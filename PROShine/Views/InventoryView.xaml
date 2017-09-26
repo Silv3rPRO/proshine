@@ -1,34 +1,47 @@
-﻿<UserControl x:Class="PROShine.InventoryView"
+﻿<UserControl x:Class="PROShine.Views.InventoryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:PROShine"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Border BorderThickness="1,0,1,1" BorderBrush="#FFB5C3DA">
-            <ListView Name="ItemsListView" BorderThickness="0" FontSize="13.333" Background="#FFDFE4EE" Foreground="#FF101020">
+        <Border BorderThickness="1,0,1,1" BorderBrush="#FF2c2f33">
+            <ListView Name="ItemsListView" BorderThickness="0" FontSize="13.333" Background="#FF23272a"
+                      Foreground="#FF99aab5">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Id}">
                             <GridViewColumn.Header>
-                                <GridViewColumnHeader Click="ItemsListViewHeader_Click">Id</GridViewColumnHeader>
+                                <GridViewColumnHeader Background="#FF2c2f33" Foreground="#FF99aab5"
+                                                      Click="ItemsListViewHeader_Click">
+                                    Id
+                                </GridViewColumnHeader>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Name}">
                             <GridViewColumn.Header>
-                                <GridViewColumnHeader Click="ItemsListViewHeader_Click">Name</GridViewColumnHeader>
+                                <GridViewColumnHeader Background="#FF2c2f33" Foreground="#FF99aab5"
+                                                      Click="ItemsListViewHeader_Click">
+                                    Name
+                                </GridViewColumnHeader>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Quantity}">
                             <GridViewColumn.Header>
-                                <GridViewColumnHeader Click="ItemsListViewHeader_Click">Quantity</GridViewColumnHeader>
+                                <GridViewColumnHeader Background="#FF2c2f33" Foreground="#FF99aab5"
+                                                      Click="ItemsListViewHeader_Click">
+                                    Quantity
+                                </GridViewColumnHeader>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Scope}">
                             <GridViewColumn.Header>
-                                <GridViewColumnHeader Click="ItemsListViewHeader_Click">Scope</GridViewColumnHeader>
+                                <GridViewColumnHeader Background="#FF2c2f33" Foreground="#FF99aab5"
+                                                      Click="ItemsListViewHeader_Click">
+                                    Scope
+                                </GridViewColumnHeader>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                     </GridView>

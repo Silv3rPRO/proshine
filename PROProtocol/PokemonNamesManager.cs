@@ -4,15 +4,6 @@
     {
         private static PokemonNamesManager _instance;
 
-        public static PokemonNamesManager Instance
-        {
-            get
-            {
-                return _instance ?? (_instance = new PokemonNamesManager());
-            }
-        }
-        public string[] Names { get; private set; }
-
         public PokemonNamesManager()
         {
             Names = new string[776];
@@ -793,5 +784,9 @@
             Names[774] = "Crystal Onix";
             Names[775] = "XD001";
         }
+
+        public static PokemonNamesManager Instance => _instance ?? (_instance = new PokemonNamesManager());
+
+        public string[] Names { get; }
     }
 }

@@ -7,18 +7,10 @@ namespace PROProtocol
     {
         private static TypesManager _instance;
 
-        public static TypesManager Instance
-        {
-            get
-            {
-                return _instance ?? (_instance = new TypesManager());
-            }
-        }
+        private readonly Dictionary<PokemonType, Dictionary<PokemonType, double>> _typeChart;
 
         public PokemonType[] Type1 = new PokemonType[776];
         public PokemonType[] Type2 = new PokemonType[776];
-
-        private Dictionary<PokemonType, Dictionary<PokemonType, double>> _typeChart;
 
         private TypesManager()
         {
@@ -27,13 +19,11 @@ namespace PROProtocol
             var allTypes = (PokemonType[])Enum.GetValues(typeof(PokemonType));
 
             _typeChart = new Dictionary<PokemonType, Dictionary<PokemonType, double>>();
-            foreach (PokemonType attacker in allTypes)
+            foreach (var attacker in allTypes)
             {
                 _typeChart[attacker] = new Dictionary<PokemonType, double>();
-                foreach (PokemonType defender in allTypes)
-                {
+                foreach (var defender in allTypes)
                     _typeChart[attacker][defender] = 1.0;
-                }
             }
 
             _typeChart[PokemonType.Normal][PokemonType.Rock] = 0.5;
@@ -175,12 +165,12 @@ namespace PROProtocol
             _typeChart[PokemonType.Fairy][PokemonType.Dark] = 2.0;
         }
 
+        public static TypesManager Instance => _instance ?? (_instance = new TypesManager());
+
         public double GetMultiplier(PokemonType attacker, PokemonType defender)
         {
             if (attacker == PokemonType.None || defender == PokemonType.None)
-            {
                 return 1.0;
-            }
             return _typeChart[attacker][defender];
         }
 

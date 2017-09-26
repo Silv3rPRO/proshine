@@ -6,18 +6,9 @@ namespace PROProtocol
 {
     public class Language
     {
-        private class DescendingLengthComparer : IComparer<string>
-        {
-            public int Compare(string x, string y)
-            {
-                int result = y.Length.CompareTo(x.Length);
-                return result != 0 ? result : x.CompareTo(y);
-            }
-        }
-
         private const string FileName = "Resources/Lang.xml";
 
-        private SortedDictionary<string, string> _texts;
+        private readonly SortedDictionary<string, string> _texts;
 
         public Language()
         {
@@ -25,7 +16,7 @@ namespace PROProtocol
 
             if (File.Exists(FileName))
             {
-                XmlDocument xml = new XmlDocument();
+                var xml = new XmlDocument();
                 xml.Load(FileName);
                 LoadXmlDocument(xml);
             }
@@ -33,14 +24,10 @@ namespace PROProtocol
 
         private void LoadXmlDocument(XmlDocument xml)
         {
-            XmlNode languageNode = xml.DocumentElement.GetElementsByTagName("English")[0];
+            var languageNode = xml.DocumentElement.GetElementsByTagName("English")[0];
             if (languageNode != null)
-            {
                 foreach (XmlElement textNode in languageNode)
-                {
                     _texts.Add(textNode.GetAttribute("name"), textNode.InnerText);
-                }
-            }
         }
 
         public string GetText(string name)
@@ -51,13 +38,18 @@ namespace PROProtocol
         public string Replace(string originalText)
         {
             if (originalText.IndexOf('$') != -1)
-            {
                 foreach (var text in _texts)
-                {
                     originalText = originalText.Replace("$" + text.Key, text.Value);
-                }
-            }
             return originalText;
+        }
+
+        private class DescendingLengthComparer : IComparer<string>
+        {
+            public int Compare(string x, string y)
+            {
+                var result = y.Length.CompareTo(x.Length);
+                return result != 0 ? result : x.CompareTo(y);
+            }
         }
     }
 }

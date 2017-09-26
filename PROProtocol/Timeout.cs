@@ -4,15 +4,13 @@ namespace PROProtocol
 {
     public class Timeout
     {
-        public bool IsActive { get; private set; }
         private DateTime _expirationTime;
+        public bool IsActive { get; private set; }
 
         public bool Update()
         {
             if (IsActive && DateTime.UtcNow >= _expirationTime)
-            {
                 IsActive = false;
-            }
             return IsActive;
         }
 

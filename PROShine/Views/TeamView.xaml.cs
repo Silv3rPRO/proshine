@@ -6,11 +6,11 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace PROShine
+namespace PROShine.Views
 {
     public partial class TeamView : UserControl
     {
-        private BotClient _bot;
+        private readonly BotClient _bot;
         private Point _startPoint;
 
         public TeamView(BotClient bot)
@@ -27,25 +27,25 @@ namespace PROShine
         private void List_MouseMove(object sender, MouseEventArgs e)
         {
             // Get the current mouse position
-            Point mousePos = e.GetPosition(null);
-            Vector diff = _startPoint - mousePos;
+            var mousePos = e.GetPosition(null);
+            var diff = _startPoint - mousePos;
 
             if (e.LeftButton == MouseButtonState.Pressed &&
                 (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
-                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+                 Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
             {
                 // Get the dragged ListViewItem
-                ListView listView = sender as ListView;
-                ListViewItem listViewItem =
+                var listView = sender as ListView;
+                var listViewItem =
                     FindAnchestor<ListViewItem>((DependencyObject)e.OriginalSource);
 
                 if (listViewItem != null)
                 {
                     // Find the data behind the ListViewItem
-                    Pokemon pokemon = (Pokemon)listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
+                    var pokemon = (Pokemon)listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
 
                     // Initialize the drag & drop operation
-                    DataObject dragData = new DataObject("PROShinePokemon", pokemon);
+                    var dragData = new DataObject("PROShinePokemon", pokemon);
                     DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
                 }
             }
@@ -56,12 +56,9 @@ namespace PROShine
             do
             {
                 if (current is T)
-                {
                     return (T)current;
-                }
                 current = VisualTreeHelper.GetParent(current);
-            }
-            while (current != null);
+            } while (current != null);
             return null;
         }
 
@@ -69,24 +66,23 @@ namespace PROShine
         {
             if (e.Data.GetDataPresent("PROShinePokemon"))
             {
-                Pokemon sourcePokemon = e.Data.GetData("PROShinePokemon") as Pokemon;
+                var sourcePokemon = e.Data.GetData("PROShinePokemon") as Pokemon;
 
                 // Get the dragged ListViewItem
-                ListView listView = sender as ListView;
-                ListViewItem listViewItem =
+                var listView = sender as ListView;
+                var listViewItem =
                     FindAnchestor<ListViewItem>((DependencyObject)e.OriginalSource);
 
                 if (listViewItem != null)
                 {
                     // Find the data behind the ListViewItem
-                    Pokemon destinationPokemon = (Pokemon)listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
+                    var destinationPokemon =
+                        (Pokemon)listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
 
                     lock (_bot)
                     {
                         if (_bot.Game != null)
-                        {
                             _bot.Game.SwapPokemon(sourcePokemon.Uid, destinationPokemon.Uid);
-                        }
                     }
                 }
             }
@@ -95,9 +91,7 @@ namespace PROShine
         private void List_DragEnter(object sender, DragEventArgs e)
         {
             if (!e.Data.GetDataPresent("PROShinePokemon") || sender == e.Source)
-            {
                 e.Effects = DragDropEffects.None;
-            }
         }
     }
 }

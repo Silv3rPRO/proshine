@@ -1,7 +1,6 @@
 ﻿using BrightNetwork;
 using System;
 using System.Net;
-using System.Net.Sockets;
 using System.Text;
 
 namespace PROProtocol
@@ -9,15 +8,15 @@ namespace PROProtocol
     public class GameConnection : SimpleTextClient
     {
         private const int ServerPort = 800;
+        private readonly string _socksHost;
+        private readonly string _socksPass;
+        private readonly int _socksPort;
+        private readonly string _socksUser;
+        private readonly int _socksVersion;
+
+        private readonly bool _useSocks;
 
         public GameServer Server;
-
-        private bool _useSocks;
-        private int _socksVersion;
-        private string _socksHost;
-        private int _socksPort;
-        private string _socksUser;
-        private string _socksPass;
 
         public GameConnection(GameServer server)
             : base(new BrightClient())
@@ -28,7 +27,8 @@ namespace PROProtocol
             Server = server;
         }
 
-        public GameConnection(GameServer server, int socksVersion, string socksHost, int socksPort, string socksUser, string socksPass)
+        public GameConnection(GameServer server, int socksVersion, string socksHost, int socksPort, string socksUser,
+            string socksPass)
             : this(server)
         {
             _useSocks = true;
@@ -41,24 +41,21 @@ namespace PROProtocol
 
         public async void Connect()
         {
-            string host = Server.GetAddress();
-            
+            var host = Server.GetAddress();
+
             if (!_useSocks)
-            {
                 Connect(IPAddress.Parse(host), ServerPort);
-            }
             else
-            {
                 try
                 {
-                    Socket socket = await SocksConnection.OpenConnection(_socksVersion, host, ServerPort, _socksHost, _socksPort, _socksUser, _socksPass);
+                    var socket = await SocksConnection.OpenConnection(_socksVersion, host, ServerPort, _socksHost,
+                        _socksPort, _socksUser, _socksPass);
                     Initialize(socket);
                 }
                 catch (Exception ex)
                 {
                     Close(ex);
                 }
-            }
         }
 
         protected override string ProcessDataBeforeSending(string data)

@@ -2,15 +2,15 @@
 {
     public class ShopItem
     {
-        public int Id { get; private set; }
-        public string Name { get; private set; }
-        public int Price { get; private set; }
-
         public ShopItem(string[] data, int index)
         {
             Id = int.Parse(data[index]);
             Name = data[index + 1];
             Price = int.Parse(data[index + 2]);
         }
+
+        public int Id { get; }
+        public string Name { get; }
+        public int Price { get; }
     }
 }

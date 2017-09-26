@@ -4,77 +4,51 @@ namespace PROProtocol
 {
     public class MovesManager
     {
-        public class MoveData
-        {
-            public string Name;
-            public int Power;
-            public int Accuracy;
-            public string Type;
-            public bool Status;
-            public DamageType DamageType;
-        }
-
         public enum DamageType
         {
             Physical,
             Special
         }
 
-        private static MovesManager _instance;
-
-        public static MovesManager Instance
-        {
-            get
-            {
-                return _instance ?? (_instance = new MovesManager());
-            }
-        }
-
         public const int MovesCount = 537;
 
-        public MoveData[] Moves = new MoveData[MovesCount];
+        private static MovesManager _instance;
+        private readonly MoveData[] _idsToMoves = new MoveData[MovesCount];
+        private readonly Dictionary<string, MoveData> _namesToMoves;
         public string[] MoveNames = new string[MovesCount];
-        private Dictionary<string, MoveData> _namesToMoves;
-        private MoveData[] _idsToMoves = new MoveData[MovesCount];
+
+        public MoveData[] Moves = new MoveData[MovesCount];
 
         private MovesManager()
         {
             LoadMoves();
 
             _namesToMoves = new Dictionary<string, MoveData>();
-            for (int i = 0; i < MovesCount; i++)
-            {
+            for (var i = 0; i < MovesCount; i++)
                 if (Moves[i].Name != null && !_namesToMoves.ContainsKey(Moves[i].Name))
-                {
                     _namesToMoves.Add(Moves[i].Name, Moves[i]);
-                }
-            }
-            for (int i = 0; i < MovesCount; i++)
+            for (var i = 0; i < MovesCount; i++)
             {
-                string lowerName = MoveNames[i].ToLowerInvariant();
+                var lowerName = MoveNames[i].ToLowerInvariant();
                 if (_namesToMoves.ContainsKey(lowerName))
-                {
                     _idsToMoves[i] = _namesToMoves[lowerName];
-                }
             }
         }
+
+        public static MovesManager Instance => _instance ?? (_instance = new MovesManager());
 
         public MoveData GetMoveData(int moveId)
         {
             if (moveId > 0 && moveId < MovesCount)
-            {
                 return _idsToMoves[moveId];
-            }
             return null;
         }
 
         private void LoadMoves()
         {
             LoadMoveNames();
-            for (int i = 0; i < MovesCount; i++)
-            {
+            for (var i = 0; i < MovesCount; i++)
                 Moves[i] = new MoveData();
-            }
             Moves[0].Name = "acid";
             Moves[0].Power = 40;
             Moves[0].Accuracy = 100;
@@ -3293,7 +3267,6 @@ namespace PROProtocol
             Moves[535].DamageType = DamageType.Special;
         }
 
-
         private void LoadMoveNames()
         {
             MoveNames[0] = string.Empty;
@@ -3833,6 +3806,16 @@ namespace PROProtocol
             MoveNames[534] = "Horn Leech";
             MoveNames[535] = "Scald";
             MoveNames[536] = "Dazzling Gleam";
+        }
+
+        public class MoveData
+        {
+            public int Accuracy;
+            public DamageType DamageType;
+            public string Name;
+            public int Power;
+            public bool Status;
+            public string Type;
         }
     }
 }
