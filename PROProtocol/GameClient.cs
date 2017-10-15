@@ -2372,6 +2372,10 @@ namespace PROProtocol
             {
                 var ddata = tdata[2].Split('|');
                 var num = FindPokedexEntry(Convert.ToInt32(tdata[1]));
+                if(PokedexList[num].Area.Count > 0)
+                {
+                    PokedexList[num].Area.Clear();
+                }
                 var selectedEntry = num;
                 var areadata = tdata[20].Split(new[]
                 {
