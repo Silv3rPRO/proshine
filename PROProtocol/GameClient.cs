@@ -11,7 +11,7 @@ namespace PROProtocol
     {
         public InventoryItem GroundMount;
         public InventoryItem WaterMount;
-        private const string Version = "Sinnoh";
+        private const string Version = "Spooky";
         private readonly Timeout _battleTimeout = new Timeout();
 
         private readonly GameConnection _connection;
