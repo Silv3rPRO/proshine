@@ -48,6 +48,13 @@
                         </GridViewColumn>
                     </GridView>
                 </ListView.View>
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Message" Click="MenuItemMessage_Click"/>
+                        <MenuItem Header="Friend/Unfriend" Click="MenuItemFriendToggle_Click"/>
+                        <MenuItem Header="Ignore/Unignore" Click="MenuItemIgnoreToggle_Click"/>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
             </ListView>
         </Border>
     </Grid>

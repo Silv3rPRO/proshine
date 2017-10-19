@@ -67,8 +67,10 @@ namespace PROShine
                             LastSeen = (DateTime.UtcNow - player.Updated).Seconds.ToString() + "s"
                         });
                     }
+                    int selected = PlayerListView.SelectedIndex;
                     PlayerListView.ItemsSource = listToDisplay;
                     PlayerListView.Items.Refresh();
+                    PlayerListView.SelectedIndex = selected;
                 }
             }
         }
@@ -88,6 +90,45 @@ namespace PROShine
 
             _lastColumn = column;
             _lastDirection = direction;
+        }
+
+        private void MenuItemMessage_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlayerListView.SelectedItems.Count <= 0)
+                return;
+
+            var player = (PlayerInfosView)PlayerListView.SelectedItems[0];
+            lock (_bot)
+            {
+                if (!_bot.Game.Conversations.Contains(player.Name))
+                {
+                    _bot.Game.SendStartPrivateMessage(player.Name);
+                }
+            }
+        }
+
+        private void MenuItemFriendToggle_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlayerListView.SelectedItems.Count <= 0)
+                return;
+
+            var player = (PlayerInfosView)PlayerListView.SelectedItems[0];
+            lock (_bot)
+            {
+                _bot.Game.SendFriendToggle(player.Name);
+            }
+        }
+
+        private void MenuItemIgnoreToggle_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlayerListView.SelectedItems.Count <= 0)
+                return;
+
+            var player = (PlayerInfosView)PlayerListView.SelectedItems[0];
+            lock (_bot)
+            {
+                _bot.Game.SendIgnoreToggle(player.Name);
+            }
         }
     }
 }

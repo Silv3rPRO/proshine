@@ -93,7 +93,7 @@ namespace PROProtocol
         public event Action<Shop> ShopOpened;
         public event Action<List<Pokemon>> PCBoxUpdated;
 
-        private const string Version = "Sinnoh";
+        private const string Version = "Spooky";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -429,6 +429,21 @@ namespace PROProtocol
             // DSSock.sendMSG
             string pmHeader = "/pm " + PlayerName + "-=-" + nickname;
             SendPacket("{|.|" + pmHeader + '|' + text);
+        }
+
+        public void SendStartPrivateMessage(string nickname)
+        {
+            SendMessage("/pm " + PlayerName + "-=-" + nickname);
+        }
+
+        public void SendFriendToggle(string nickname)
+        {
+            SendMessage("/friend " + nickname);
+        }
+
+        public void SendIgnoreToggle(string nickname)
+        {
+            SendMessage("/ignore " + nickname);
         }
 
         public void SendCreateCharacter(int hair, int colour, int tone, int clothe, int eyes)
