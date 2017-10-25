@@ -943,8 +943,11 @@ namespace PROShine
 
         private void MainWindow_OnDrop(object sender, DragEventArgs e)
         {
-            string[] file = (string[])e.Data.GetData(DataFormats.FileDrop);
-            LoadScript(file[0]);
+            string[] file = e.Data?.GetData(DataFormats.FileDrop) as string[];
+            if (file != null && file.Length > 0)
+            {
+                LoadScript(file[0]);
+            }
         }
     }
 }
