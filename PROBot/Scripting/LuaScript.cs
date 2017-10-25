@@ -196,6 +196,8 @@ namespace PROBot.Scripting
             _lua.Globals["isNight"] = new Func<bool>(IsNight);
             _lua.Globals["isOutside"] = new Func<bool>(IsOutside);
             _lua.Globals["isAutoEvolve"] = new Func<bool>(IsAutoEvolve);
+            _lua.Globals["setMount"] = new Func<string, bool>(SetMount);
+            _lua.Globals["setWaterMount"] = new Func<string, bool>(SetWaterMount);
 
             _lua.Globals["isCurrentPCBoxRefreshed"] = new Func<bool>(IsCurrentPCBoxRefreshed);
             _lua.Globals["getCurrentPCBoxId"] = new Func<int>(GetCurrentPCBoxId);
@@ -2825,6 +2827,42 @@ namespace PROBot.Scripting
         {
             if (Bot.TextOptions.ContainsKey(index))
                 Bot.RemoveText(index);
+        }
+	
+        // API: Sets the item that will be used to mount the player
+        private bool SetMount(string mount)
+        {
+            if (string.IsNullOrEmpty(mount))
+            {
+                Bot.Game.GroundMount = null;
+                return true;
+            }
+
+            InventoryItem item = Bot.Game.GetItemFromName(mount);
+
+            if (item == null)
+                return false;
+
+            Bot.Game.GroundMount = item;
+            return true;
+        }
+
+        // API: Sets the item that will be used when the player begins surfing
+        private bool SetWaterMount(string mount)
+        {
+            if (string.IsNullOrEmpty(mount))
+            {
+                Bot.Game.WaterMount = null;
+                return true;
+            }
+
+            InventoryItem item = Bot.Game.GetItemFromName(mount);
+
+            if (item == null)
+                return false;
+
+            Bot.Game.WaterMount = item;
+            return true;
         }
     }
 }
