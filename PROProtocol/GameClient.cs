@@ -447,6 +447,21 @@ namespace PROProtocol
             SendPacket("{|.|" + pmHeader + '|' + text);
         }
 
+        public void SendStartPrivateMessage(string nickname)
+        {
+            SendMessage("/pm " + PlayerName + "-=-" + nickname);
+        }
+
+        public void SendFriendToggle(string nickname)
+        {
+            SendMessage("/friend " + nickname);
+        }
+
+        public void SendIgnoreToggle(string nickname)
+        {
+            SendMessage("/ignore " + nickname);
+        }
+
         public void SendCreateCharacter(int hair, int colour, int tone, int clothe, int eyes)
         {
             SendMessage("/setchar " + hair + "," + colour + "," + tone + "," + clothe + "," + eyes);
