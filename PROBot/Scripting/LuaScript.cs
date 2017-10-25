@@ -249,6 +249,7 @@ namespace PROBot.Scripting
             _lua.Globals["getOpponentId"] = new Func<int>(GetOpponentId);
             _lua.Globals["getOpponentName"] = new Func<string>(GetOpponentName);
             _lua.Globals["getOpponentHealth"] = new Func<int>(GetOpponentHealth);
+            _lua.Globals["getOpponentMaxHealth"] = new Func<int>(GetOpponentMaxHealth);
             _lua.Globals["getOpponentHealthPercent"] = new Func<int>(GetOpponentHealthPercent);
             _lua.Globals["getOpponentLevel"] = new Func<int>(GetOpponentLevel);
             _lua.Globals["getOpponentStatus"] = new Func<string>(GetOpponentStatus);
@@ -1330,6 +1331,17 @@ namespace PROBot.Scripting
                 return 0;
             }
             return Bot.Game.ActiveBattle.CurrentHealth;
+        }
+
+        // API: Returns the maximum health of the opponent pokémon in the current battle.
+        private int GetOpponentMaxHealth()
+        {
+            if (!Bot.Game.IsInBattle)
+            {
+                Fatal("error: getOpponentMaxHealth can only be used in battle.");
+                return 0;
+            }
+            return Bot.Game.ActiveBattle.OpponentHealth;
         }
 
         // API: Returns the percentage of remaining health of the opponent pokémon in the current battle.
