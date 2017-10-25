@@ -10,6 +10,7 @@
         <Border BorderThickness="1,0,1,1" BorderBrush="#FFB5C3DA">
             <ListView Name="PokemonsListView" BorderThickness="0" FontSize="13.333" Background="#FFDFE4EE" Foreground="#FF101020"
                         PreviewMouseLeftButtonDown="List_PreviewMouseLeftButtonDown" 
+                        PreviewMouseRightButtonDown="List_PreviewMouseRightButtonDown"
                         PreviewMouseMove="List_MouseMove"
                         Drop="List_Drop" 
                         DragEnter="List_DragEnter" 
