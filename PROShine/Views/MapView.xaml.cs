@@ -50,7 +50,9 @@ namespace PROShine.Views
                 { 8, Brushes.White },
                 { 9, Brushes.White },
                 { 10, Brushes.LightGray },
-                { 12, Brushes.LightSkyBlue }
+                { 11, Brushes.PaleGreen },
+                { 12, Brushes.LightSkyBlue },
+                { 13, Brushes.Gray }
             };
 
             IsVisibleChanged += MapView_IsVisibleChanged;
