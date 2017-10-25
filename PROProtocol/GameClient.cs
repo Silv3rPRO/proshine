@@ -93,7 +93,7 @@ namespace PROProtocol
         public event Action<Shop> ShopOpened;
         public event Action<List<Pokemon>> PCBoxUpdated;
 
-        private const string Version = "Sinnoh";
+        private const string Version = "Spooky";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -439,7 +439,7 @@ namespace PROProtocol
         public void SendAuthentication(string username, string password, string hash)
         {
             // DSSock.AttemptLogin
-            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + hash);
+            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + HardwareHash.Empty);
         }
 
         public void SendUseItem(int id, int pokemon = 0)

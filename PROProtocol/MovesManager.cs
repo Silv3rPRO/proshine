@@ -30,7 +30,7 @@ namespace PROProtocol
             }
         }
 
-        public const int MovesCount = 537;
+        public const int MovesCount = 538;
 
         public MoveData[] Moves = new MoveData[MovesCount];
         public string[] MoveNames = new string[MovesCount];
@@ -3291,6 +3291,12 @@ namespace PROProtocol
             Moves[535].Type = "fairy";
             Moves[535].Status = false;
             Moves[535].DamageType = DamageType.Special;
+            Moves[536].Name = "foul play";
+            Moves[536].Power = 95;
+            Moves[536].Accuracy = 100;
+            Moves[536].Type = "dark";
+            Moves[536].DamageType = DamageType.Physical;
+            Moves[536].Status = false;
         }
 
 
@@ -3833,6 +3839,7 @@ namespace PROProtocol
             MoveNames[534] = "Horn Leech";
             MoveNames[535] = "Scald";
             MoveNames[536] = "Dazzling Gleam";
+            MoveNames[537] = "Foul Play";
         }
     }
 }
