@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using PROBot;
 using PROProtocol;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace PROShine
 {
@@ -90,6 +91,40 @@ namespace PROShine
 
             _lastColumn = column;
             _lastDirection = direction;
+        }
+
+        private void PlayerListView_PreviewMouseRightButtonDown(object sender, MouseEventArgs e)
+        {
+            if (PlayerListView.SelectedItems.Count <= 0)
+                return;
+
+            lock (_bot)
+            {
+                if (_bot.Game != null)
+                {
+                    if (_bot.Game.IsConnected)
+                    {
+                        ContextMenu contextMenu = new ContextMenu();
+
+                        MenuItem message = new MenuItem();
+                        message.Header = "Message";
+                        message.Click += MenuItemMessage_Click;
+                        contextMenu.Items.Add(message);
+
+                        MenuItem friendUnfriend = new MenuItem();
+                        friendUnfriend.Header = "Friend/Unfriend";
+                        friendUnfriend.Click += MenuItemFriendToggle_Click;
+                        contextMenu.Items.Add(friendUnfriend);
+
+                        MenuItem ignoreUnignore = new MenuItem();
+                        ignoreUnignore.Header = "Ignore/Unignore";
+                        ignoreUnignore.Click += MenuItemIgnoreToggle_Click;
+                        contextMenu.Items.Add(ignoreUnignore);
+
+                        PlayerListView.ContextMenu = contextMenu;
+                    }
+                }
+            }
         }
 
         private void MenuItemMessage_Click(object sender, RoutedEventArgs e)

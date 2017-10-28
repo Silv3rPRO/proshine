@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Border BorderThickness="1,0,1,1" BorderBrush="#FFB5C3DA">
-            <ListView Name="PlayerListView" BorderThickness="0" FontSize="13.333" Background="#FFDFE4EE" Foreground="#FF101020">
+            <ListView Name="PlayerListView" BorderThickness="0" FontSize="13.333" Background="#FFDFE4EE" Foreground="#FF101020" PreviewMouseRightButtonDown="PlayerListView_PreviewMouseRightButtonDown">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Distance}">
@@ -48,13 +48,6 @@
                         </GridViewColumn>
                     </GridView>
                 </ListView.View>
-                <ListBox.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Message" Click="MenuItemMessage_Click"/>
-                        <MenuItem Header="Friend/Unfriend" Click="MenuItemFriendToggle_Click"/>
-                        <MenuItem Header="Ignore/Unignore" Click="MenuItemIgnoreToggle_Click"/>
-                    </ContextMenu>
-                </ListBox.ContextMenu>
             </ListView>
         </Border>
     </Grid>
