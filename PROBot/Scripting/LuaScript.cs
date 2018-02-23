@@ -80,6 +80,11 @@ namespace PROBot.Scripting
             CallFunctionSafe("onSystemMessage", message);
         }
 
+        public override void OnWarningMessage(bool differentMap, int distance = -1)
+        {
+            CallFunctionSafe("onWarningMessage", differentMap, distance);
+        }
+
         public override void OnLearningMove(string moveName, int pokemonIndex)
         {
             CallFunctionSafe("onLearningMove", moveName, pokemonIndex);
