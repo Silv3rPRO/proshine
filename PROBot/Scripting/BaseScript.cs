@@ -19,6 +19,7 @@ namespace PROBot.Scripting
         public virtual void OnDialogMessage(string message) { }
         public virtual void OnBattleMessage(string message) { }
         public virtual void OnSystemMessage(string message) { }
+        public virtual void OnWarningMessage(bool differentMap, int distance = -1) { }
 
         public virtual void OnLearningMove(string moveName, int pokemonIndex) { }
 
