@@ -97,7 +97,7 @@ namespace PROProtocol
         public event Action<List<Pokemon>> PCBoxUpdated;
         public event Action<string> LogMessage;
         
-        private const string Version = "XMAS2017";
+        private const string Version = "2018E";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -470,7 +470,7 @@ namespace PROProtocol
         public void SendAuthentication(string username, string password, string hash)
         {
             // DSSock.AttemptLogin
-            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + hash);
+            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|X" + hash);
         }
 
         public void SendUseItem(int id, int pokemon = 0)
@@ -1002,7 +1002,7 @@ namespace PROProtocol
             OpenedShop = null;
             IsPCOpen = false;
             // DSSock.sendMove
-            SendPacket("/|.|" + direction);
+            SendPacket("#|.|" + direction);
         }
 
         private void SendAttack(string number)
@@ -1121,7 +1121,7 @@ namespace PROProtocol
                 case "h":
                     OnEvolving(data);
                     break;
-                case "u":
+                case "=":
                     OnUpdatePlayer(data);
                     break;
                 case "c":
