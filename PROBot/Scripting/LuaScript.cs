@@ -295,6 +295,8 @@ namespace PROBot.Scripting
             _lua.Globals["disablePrivateMessage"] = new Func<bool>(DisablePrivateMessage);
             _lua.Globals["enableAutoEvolve"] = new Func<bool>(EnableAutoEvolve);
             _lua.Globals["disableAutoEvolve"] = new Func<bool>(DisableAutoEvolve);
+            _lua.Globals["enableTrainerBattles"] = new Func<bool>(EnableTrainerBattles);
+            _lua.Globals["disableTrainerBattles"] = new Func<bool>(DisableTrainerBattles);
 
             // Path functions
             _lua.Globals["pushDialogAnswer"] = new Action<DynValue>(PushDialogAnswer);
@@ -1800,6 +1802,20 @@ namespace PROBot.Scripting
         {
             Bot.PokemonEvolver.IsEnabled = false;
             return !Bot.PokemonEvolver.IsEnabled;
+        }
+
+        //API: Activates npc trainers battling on sight, which is the default. 
+        private bool EnableTrainerBattles()
+        {
+            Bot.Game.IsTrainerBattlesActive = true;
+            return Bot.Game.IsTrainerBattlesActive;
+        }
+
+        //API: Deactivates npc trainer battles.
+        private bool DisableTrainerBattles()
+        {
+            Bot.Game.IsTrainerBattlesActive = false;
+            return !Bot.Game.IsTrainerBattlesActive;
         }
 
         // API: Check if the private message from normal users are blocked.

@@ -54,6 +54,7 @@ namespace PROProtocol
         public int Type { get; private set; }
         public int PositionX { get; private set; }
         public int PositionY { get; private set; }
+        public Direction ViewDirection { get; private set; }
         public int LosLength { get; private set; }
         public string TypeDescription { get { return (typeDescriptions.ContainsKey(Type) ? typeDescriptions[Type] + " ":"") + "(" + Type.ToString() + ")"; } }
         
@@ -61,7 +62,7 @@ namespace PROProtocol
 
         private string _path;
 
-        public Npc(int id, string name, bool isBattler, int type, int x, int y, int losLength, string path)
+        public Npc(int id, string name, bool isBattler, int type, int x, int y, Direction viewDirection, int losLength, string path)
         {
             Id = id;
             Name = name;
@@ -71,12 +72,13 @@ namespace PROProtocol
             PositionX = x;
             PositionY = y;
             LosLength = losLength;
+            ViewDirection = viewDirection;
             _path = path;
         }
 
         public Npc Clone()
         {
-            return new Npc(Id, Name, IsBattler, Type, PositionX, PositionY, LosLength, _path);
+            return new Npc(Id, Name, IsBattler, Type, PositionX, PositionY, ViewDirection, LosLength, _path);
         }
     }
 }

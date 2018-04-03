@@ -1,5 +1,7 @@
-﻿using System;
+﻿//#define DEBUG_TRAINER_BATTLES
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace PROProtocol
@@ -33,6 +35,7 @@ namespace PROProtocol
         public bool CanUseCut { get; private set; }
         public bool CanUseSmashRock { get; private set; }
         public bool IsPrivateMessageOn { get; private set; }
+        public bool IsTrainerBattlesActive { get; set; }
 
         public int Money { get; private set; }
         public int Coins { get; private set; }
@@ -187,6 +190,7 @@ namespace PROProtocol
             Players = new Dictionary<string, PlayerInfos>();
             PCGreatestUid = -1;
             IsPrivateMessageOn = true;
+            IsTrainerBattlesActive = true;
         }
 
         public void Open()
@@ -320,8 +324,138 @@ namespace PROProtocol
             }
         }
 
+
+
+        /// <summary>
+        /// A dictionary containing a point as key and it's guarding battler as value. Building the dictionary like that
+        /// is a little less readable and takes a bit more memory, but allows an access speed of O(1) instead of O(n).
+        /// Which is the case, when stored in a list. Since fields need to be tested after every movement, access speed
+        /// was prioritized.
+        /// </summary>
+        /// <attention>
+        /// Access via getGuardedFields(). Never call it directly.
+        /// </attention>
+		private Dictionary<Point, Npc> _guardedFields = null;
+        private Dictionary<Point, Npc> getGuardedFields()
+        {
+#if DEBUG && DEBUG_TRAINER_BATTLES
+            Console.WriteLine("Trainer Battles | guarded fields | access");
+#endif
+
+            //if initiated, then return it
+            if (_guardedFields != null)
+            {
+                return _guardedFields;
+            }
+
+#if DEBUG && DEBUG_TRAINER_BATTLES
+            Console.WriteLine("Trainer Battles | guarded fields | init");
+            Console.WriteLine("Trainer Battles | map ncp | count: " + Map.Npcs.Count);
+#endif
+
+            //initiate guardedFields
+            _guardedFields = new Dictionary<Point, Npc>();
+
+            //iterating all battlers
+            foreach (Npc battler in Map.Npcs.Where(npc => npc.CanBattle))
+            {
+
+#if DEBUG && DEBUG_TRAINER_BATTLES
+                Console.WriteLine("Trainer Battles | map ncp | "+battler.Id+" ("+battler.Name+") | guarded field count: " + getGuardedFields(battler).Count);
+#endif
+                //iterate all points those battlers have in vision
+                foreach (Point guardedField in getGuardedFields(battler))
+                {
+#if DEBUG && DEBUG_TRAINER_BATTLES
+                    if (_guardedFields.ContainsKey(guardedField))
+                        Console.WriteLine("Trainer Battles | guarded fields | conflict: " + guardedField.ToString());
+#endif
+                    //fill dictionary
+                    _guardedFields.Add(guardedField, battler);
+                }
+            }
+
+            return _guardedFields;
+        }
+
+        /// <summary>
+        /// A list of valid movement operations that don't break line of vision.
+        /// </summary>
+        /// <attention>
+        /// Only accessed by getGuardedFields() and shouldn't otherwise.
+        /// </attention>
+        private HashSet<Map.MoveResult> _validMovementResults = null;
+        private List<Point> getGuardedFields(Npc battler)
+        {
+            //init on first usage
+            if (_validMovementResults == null)
+            {
+                _validMovementResults = new HashSet<Map.MoveResult>();
+                _validMovementResults.Add(Map.MoveResult.Success);   //standard behaviour, free vision
+                _validMovementResults.Add(Map.MoveResult.Sliding);   //when sliding on ice, you can still be stopped for battle
+            }
+
+            //access declaration for future easy manipulation
+            Direction viewDirection = battler.ViewDirection;
+            int viewRange = battler.LosLength;
+
+            //the list of guarded fields in one direction
+            List<Point> guardedFields = new List<Point>();
+
+            //making copy, because reference would modify battlers position
+            //all elements in list would probably point to same Point obj at that time
+            Point battlerPos = new Point(battler.PositionX, battler.PositionY);
+            Point checkingPos = new Point(battler.PositionX, battler.PositionY);
+
+            //references, will be modified by Map.CanMove()
+            bool isOnGround = IsOnGround;
+            bool isSurfing = IsSurfing;
+
+            //algorithm vars, initiated to fail if not changed
+            Map.MoveResult result = Map.MoveResult.Fail;
+            bool isBlocked = true;
+            bool isInViewRange = false;
+
+            while (true)
+            {
+                //move into direction
+                checkingPos = viewDirection.ApplyToCoordinates(checkingPos);
+
+                //calculate move results
+                result = Map.CanMove(viewDirection, checkingPos.X, checkingPos.Y, isOnGround, isSurfing, CanUseCut, CanUseSmashRock);
+                isBlocked = !_validMovementResults.Contains(result);
+                isInViewRange = getManhattanDistance(battlerPos, checkingPos) <= viewRange;
+
+                //adding to guarded fields, if conditions are set
+                if (!isBlocked && isInViewRange)
+                    guardedFields.Add(checkingPos);
+
+                //leave loop otherwise
+                else
+                    break;
+            }
+
+            return guardedFields;
+        }
+
+        /// <summary>
+        /// In short: the method summarizes the axial differences. Google for Manhatten Distance or see
+        /// https://en.wikipedia.org/wiki/Taxicab_geometry for more information.
+        /// </summary>
+        /// <param name="p1">Start point of the distance calculation.</param>
+        /// <param name="p2">End point of the distance calculation.</param>
+        /// <returns>The manhatten distance between two points.</returns>
+        /// <remarks>
+        /// Couldn't find available libs for this standard function, so I still needed to implement it.
+        /// </remarks>
+        private static int getManhattanDistance(Point p1, Point p2)
+        {
+            return Math.Abs(p1.X - p2.X) + Math.Abs(p1.Y - p2.Y);
+        }
+
         private bool ApplyMovement(Direction direction)
         {
+            //init vars
             int destinationX = PlayerX;
             int destinationY = PlayerY;
             bool isOnGround = IsOnGround;
@@ -329,6 +463,35 @@ namespace PROProtocol
 
             direction.ApplyToCoordinates(ref destinationX, ref destinationY);
 
+            Point playerPos = new Point(PlayerX, PlayerY);
+
+#if DEBUG && DEBUG_TRAINER_BATTLES
+            Console.WriteLine("Trainer Battles | IsTrainerBattlesActive | " + IsTrainerBattlesActive);
+            Console.WriteLine("Trainer Battles | guarded fields | count: " + getGuardedFields().Count);
+            Console.WriteLine("Trainer Battles | guarded fields | contains playerpos: " + getGuardedFields().ContainsKey(playerPos));
+#endif
+            //--------analyze current position
+            if (IsTrainerBattlesActive && getGuardedFields().TryGetValue(playerPos, out Npc battler))
+            {
+                //stop bot movement
+                _movements.Clear();
+
+                //TODO: if wanted battler movement could be triggered here
+
+                //start battle
+                TalkToNpc(battler.Id);
+
+                //while sending, remove listed guarding fields
+                //ATTENTION: don't know how to handle interrupts here
+                foreach (Point guarded in getGuardedFields(battler))
+                    getGuardedFields().Remove(guarded);
+
+                //no further movement therefore return
+                return false;
+            }
+
+
+            //--------analyze next movement
             Map.MoveResult result = Map.CanMove(direction, destinationX, destinationY, isOnGround, isSurfing, CanUseCut, CanUseSmashRock);
             if (Map.ApplyMovement(direction, result, ref destinationX, ref destinationY, ref isOnGround, ref isSurfing))
             {
@@ -1243,7 +1406,7 @@ namespace PROProtocol
             PositionUpdated?.Invoke(MapName, PlayerX, playerY);
         }
 
-         private void OnPlayerInfos(string[] data)
+        private void OnPlayerInfos(string[] data)
         {
             string[] playerData = data[1].Split('|');
             PlayerName = playerData[0];
@@ -1269,7 +1432,7 @@ namespace PROProtocol
         {
             if (!IsMapLoaded) return;
 
-            IEnumerable<int> defeatedBattlers = data[1].Split(new [] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(id => int.Parse(id));
+            IEnumerable<int> defeatedBattlers = data[1].Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(id => int.Parse(id));
 
             Map.Npcs.Clear();
             foreach (Npc npc in Map.OriginalNpcs)
@@ -1916,6 +2079,11 @@ namespace PROProtocol
             MapName = mapName;
             _mapClient.DownloadMap(MapName);
             Players.Clear();
+            //when new map is requested, reset guarded fields from npc traineres
+            _guardedFields = null;
+#if DEBUG && DEBUG_TRAINER_BATTLES
+            Console.WriteLine("Trainer Battles | guarded fields | reset");
+#endif
         }
     }
 }
