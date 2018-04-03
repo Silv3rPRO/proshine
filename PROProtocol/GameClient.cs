@@ -52,9 +52,9 @@ namespace PROProtocol
         public Battle ActiveBattle { get; private set; }
         public Shop OpenedShop { get; private set; }
 
-        public List<ChatChannel> Channels { get; private set; }
-        public List<string> Conversations { get; private set; }
-        public Dictionary<string, PlayerInfos> Players { get; private set; }
+        public List<ChatChannel> Channels { get; }
+        public List<string> Conversations { get; }
+        public Dictionary<string, PlayerInfos> Players { get; }
         private DateTime _updatePlayers;
         private DateTime _refreshBoxTimeout;
         public bool IsPCBoxRefreshing { get; private set; }
@@ -117,6 +117,9 @@ namespace PROProtocol
         private Timeout _fishingTimeout = new Timeout();
         private Timeout _refreshingPCBox = new Timeout();
 
+        private Timeout _npcBattleTimeout = new Timeout();
+        private Npc _npcBattler;
+
         private MapClient _mapClient;
 
         public void ClearPath()
@@ -124,44 +127,25 @@ namespace PROProtocol
             _movements.Clear();
         }
 
-        public bool IsInactive
-        {
-            get
-            {
-                return _movements.Count == 0
-                    && !_movementTimeout.IsActive
-                    && !_battleTimeout.IsActive
-                    && !_loadingTimeout.IsActive
-                    && !_mountingTimeout.IsActive
-                    && !_teleportationTimeout.IsActive
-                    && !_dialogTimeout.IsActive
-                    && !_swapTimeout.IsActive
-                    && !_itemUseTimeout.IsActive
-                    && !_fishingTimeout.IsActive
-                    && !_refreshingPCBox.IsActive;
-            }
-        }
+        public bool IsInactive =>
+            _movements.Count == 0
+            && !_movementTimeout.IsActive
+            && !_battleTimeout.IsActive
+            && !_loadingTimeout.IsActive
+            && !_mountingTimeout.IsActive
+            && !_teleportationTimeout.IsActive
+            && !_dialogTimeout.IsActive
+            && !_swapTimeout.IsActive
+            && !_itemUseTimeout.IsActive
+            && !_fishingTimeout.IsActive
+            && !_refreshingPCBox.IsActive
+            && !_npcBattleTimeout.IsActive;
 
-        public bool IsTeleporting
-        {
-            get
-            {
-                return _teleportationTimeout.IsActive;
-            }
-        }
+        public bool IsTeleporting => _teleportationTimeout.IsActive;
 
-        public GameServer Server
-        {
-            get
-            {
-                return _connection.Server;
-            }
-        }
+        public GameServer Server => _connection.Server;
 
-        public bool IsMapLoaded
-        {
-            get { return Map != null; }
-        }
+        public bool IsMapLoaded => Map != null;
         public bool AreNpcReceived { get; private set; }
 
         public GameClient(GameConnection connection, MapConnection mapConnection)
@@ -222,6 +206,7 @@ namespace PROProtocol
             UpdateScript();
             UpdatePlayers();
             UpdatePCBox();
+            UpdateNpcBattle();
         }
 
         public void CloseChannel(string channelName)
@@ -275,6 +260,19 @@ namespace PROProtocol
                     {
                         _teleportationTimeout.Set();
                     }
+                    else
+                    {
+                        Npc battler = Map.Npcs.FirstOrDefault(npc => npc.CanBattle && npc.IsInLineOfSight(PlayerX, PlayerY));
+                        if (battler != null)
+                        {
+                            battler.CanBattle = false;
+                            LogMessage?.Invoke("The NPC " + (battler.Name ?? battler.Id.ToString()) + " saw us, interacting...");
+                            _npcBattler = battler;
+                            int distanceFromBattler = DistanceBetween(PlayerX, PlayerY, battler.PositionX, battler.PositionY);
+                            _npcBattleTimeout.Set(Rand.Next(1000, 2000) + distanceFromBattler * 250);
+                            ClearPath();
+                        }
+                    }
                 }
 
                 if (_movements.Count == 0 && _surfAfterMovement)
@@ -318,6 +316,17 @@ namespace PROProtocol
                 CurrentPCBox = new List<Pokemon>();
                 PCBoxUpdated?.Invoke(CurrentPCBox);
             }
+        }
+
+        private void UpdateNpcBattle()
+        {
+            if (_npcBattler == null) return;
+
+            _npcBattleTimeout.Update();
+            if (_npcBattleTimeout.IsActive) return;
+
+            TalkToNpc(_npcBattler.Id);
+            _npcBattler = null;
         }
 
         private bool ApplyMovement(Direction direction)
@@ -1057,7 +1066,7 @@ namespace PROProtocol
                 packet = "U|.|" + packet.Substring(1);
             }
 
-            string[] data = packet.Split(new string[] { "|.|" }, StringSplitOptions.None);
+            string[] data = packet.Split(new [] { "|.|" }, StringSplitOptions.None);
             string type = data[0].ToLowerInvariant();
             switch (type)
             {
@@ -1196,7 +1205,7 @@ namespace PROProtocol
 
         private void OnPlayerPosition(string[] data)
         {
-            string[] mapData = data[1].Split(new string[] { "|" }, StringSplitOptions.None);
+            string[] mapData = data[1].Split(new[] { "|" }, StringSplitOptions.None);
             string map = mapData[0];
             int playerX = Convert.ToInt32(mapData[1]);
             int playerY = Convert.ToInt32(mapData[2]);
@@ -1224,7 +1233,7 @@ namespace PROProtocol
 
         private void OnPlayerSync(string[] data)
         {
-            string[] mapData = data[1].Split(new string[] { "|" }, StringSplitOptions.None);
+            string[] mapData = data[1].Split(new[] { "|" }, StringSplitOptions.None);
 
             if (mapData.Length < 2)
                 return;
@@ -1258,7 +1267,6 @@ namespace PROProtocol
             string[] timeData = data[1].Split('|');
 
             PokemonTime = timeData[0];
-            DateTime dt = Convert.ToDateTime(PokemonTime);
 
             Weather = timeData[1];
 
@@ -1269,7 +1277,7 @@ namespace PROProtocol
         {
             if (!IsMapLoaded) return;
 
-            IEnumerable<int> defeatedBattlers = data[1].Split(new [] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(id => int.Parse(id));
+            List<int> defeatedBattlers = data[1].Split(new [] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
 
             Map.Npcs.Clear();
             foreach (Npc npc in Map.OriginalNpcs)

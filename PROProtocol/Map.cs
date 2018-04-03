@@ -19,24 +19,24 @@ namespace PROProtocol
             Icing
         }
 
-        public int[,] Colliders { get; private set; }
-        public MapLink[,] Links { get; private set; }
-        public int[,] Tiles1 { get; private set; }
-        public int[,] Tiles2 { get; private set; }
-        public int[,] Tiles3 { get; private set; }
-        public int[,] Tiles4 { get; private set; }
-        public int DimensionX { get; private set; }
-        public int DimensionY { get; private set; }
-        public int Width { get; private set; }
-        public int Height { get; private set; }
-        public string MapWeather { get; private set; }
-        public bool IsOutside { get; private set; }
-        public string Region { get; private set; }
-        public List<Npc> Npcs { get; private set; }
-        public List<Npc> OriginalNpcs { get; private set; }
-        public Dictionary<string, List<Tuple<int, int>>> LinkDestinations { get; private set; }
+        public int[,] Colliders { get; }
+        public MapLink[,] Links { get; }
+        public int[,] Tiles1 { get; }
+        public int[,] Tiles2 { get; }
+        public int[,] Tiles3 { get; }
+        public int[,] Tiles4 { get; }
+        public int DimensionX { get; }
+        public int DimensionY { get; }
+        public int Width { get; }
+        public int Height { get; }
+        public string MapWeather { get; }
+        public bool IsOutside { get; }
+        public string Region { get; }
+        public List<Npc> Npcs { get; }
+        public List<Npc> OriginalNpcs { get; }
+        public Dictionary<string, List<Tuple<int, int>>> LinkDestinations { get; }
 
-        private Dictionary<int, int> SliderValues = new Dictionary<int, int>
+        private readonly Dictionary<int, int> SliderValues = new Dictionary<int, int>
             {
                 { 6662, 1 },
                 { 6663, 2 },
@@ -146,10 +146,7 @@ namespace PROProtocol
 
                         int npcId = reader.ReadInt16();
 
-                        if (npcName != "TileScript")
-                        {
-                            OriginalNpcs.Add(new Npc(npcId, npcName, isBattler, type, x, y, losLength, path));
-                        }
+                        OriginalNpcs.Add(new Npc(npcId, npcName, isBattler, type, x, y, DirectionExtensions.FromNumber(direction), losLength, path));
 
                         reader.ReadInt16();
                         reader.ReadInt16();
@@ -259,7 +256,7 @@ namespace PROProtocol
             }
             foreach (Npc npc in Npcs)
             {
-                if (npc.PositionX == destinationX && npc.PositionY == destinationY && npc.LosLength < 100 && !npc.IsMoving)
+                if (npc.PositionX == destinationX && npc.PositionY == destinationY && npc.LosLength < 100 && !npc.IsMoving && npc.CanBlockPlayer)
                 {
                     return MoveResult.Fail;
                 }

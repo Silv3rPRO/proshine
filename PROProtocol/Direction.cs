@@ -72,8 +72,26 @@
                     return Direction.Left;
                 case 'r':
                     return Direction.Right;
+                default:
+                    throw new System.Exception("The direction '" + c + "' does not exist");
             }
-            throw new System.Exception("The direction '" + c + "' does not exist");
+        }
+
+        public static Direction FromNumber(int n)
+        {
+            switch (n)
+            {
+                case 0:
+                    return Direction.Up;
+                case 1:
+                    return Direction.Right;
+                case 2:
+                    return Direction.Down;
+                case 3:
+                    return Direction.Left;
+                default:
+                    throw new System.Exception("The direction '" + n + "' does not exist");
+            }
         }
     }
 }
