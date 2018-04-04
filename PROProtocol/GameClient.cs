@@ -1391,7 +1391,7 @@ namespace PROProtocol
 
             BattleStarted?.Invoke();
 
-            string[] battleMessages = ActiveBattle.BattleText.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            string[] battleMessages = ActiveBattle.BattleText.Split(new[] { "\r\n" }, StringSplitOptions.None);
 
             foreach (string message in battleMessages)
             {

@@ -23,9 +23,11 @@ namespace PROProtocol
 
         public bool IsFinished { get; private set; }
 
+        public bool IsTrapped { get; private set; }
+
         public bool RepeatAttack { get; set; }
 
-        private string _playerName;
+        private readonly string _playerName;
 
         public Battle(string playerName, string[] data)
         {
@@ -100,6 +102,8 @@ namespace PROProtocol
 
             if (message.StartsWith("P:"))
             {
+                IsTrapped = false;
+
                 if (data[1] == _playerName)
                 {
                     int index = Convert.ToInt32(data[2]) - 1;
@@ -113,6 +117,8 @@ namespace PROProtocol
 
             if (message.StartsWith("C:"))
             {
+                IsTrapped = false;
+
                 int pokemonId = Convert.ToInt32(data[2]);
                 int level = Convert.ToInt32(data[3]);
                 bool isShiny = data[4] == "1";
@@ -175,6 +181,11 @@ namespace PROProtocol
             {
                 // Capture animation (2 = fail, 3 = success).
                 return true;
+            }
+
+            if (message.Contains("$CantRun") || message.Contains("$NoSwitch"))
+            {
+                IsTrapped = true;
             }
 
             return false;

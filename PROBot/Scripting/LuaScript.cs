@@ -311,6 +311,7 @@ namespace PROBot.Scripting
             _lua.Globals["sendAnyPokemon"] = new Func<bool>(SendAnyPokemon);
             _lua.Globals["sendPokemon"] = new Func<int, bool>(SendPokemon);
             _lua.Globals["useMove"] = new Func<string, bool>(UseMove);
+            _lua.Globals["useAnyMove"] = new Func<bool>(UseAnyMove);
 
             // Move learning actions
             _lua.Globals["forgetMove"] = new Func<string, bool>(ForgetMove);
@@ -2631,6 +2632,14 @@ namespace PROBot.Scripting
             if (!ValidateAction("useMove", true)) return false;
 
             return ExecuteAction(Bot.AI.UseMove(moveName));
+        }
+
+        // API: Uses the first available move or struggle if out of PP.
+        private bool UseAnyMove()
+        {
+            if (!ValidateAction("useAnyMove", true)) return false;
+
+            return ExecuteAction(Bot.AI.UseAnyMove());
         }
 
         // API: Forgets the specified move, if existing, in order to learn a new one.
