@@ -454,7 +454,7 @@ namespace PROBot
             else if (Game.MapName != map)
             {
                 message += " [WARNING, different map] /!\\";
-                Script.OnWarningMessage(true);
+                Script?.OnWarningMessage(true);
             }
             else
             {
@@ -466,7 +466,7 @@ namespace PROBot
                 else
                 {
                     message += " [WARNING, distance=" + distance + "] /!\\";
-                    Script.OnWarningMessage(false, distance);
+                    Script?.OnWarningMessage(false, distance);
                 }
             }
             LogMessage(message);
