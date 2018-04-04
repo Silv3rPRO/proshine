@@ -103,8 +103,7 @@ namespace PROShine
 
         private void List_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (PokemonsListView.SelectedItems.Count <= 0)
-                return;
+            if (PokemonsListView.SelectedItems.Count == 0) return;
 
             lock (_bot)
             {
@@ -142,6 +141,7 @@ namespace PROShine
 
         private void MenuItemGiveItem_Click(object sender, RoutedEventArgs e)
         {
+            if (PokemonsListView.SelectedItems.Count == 0) return;
             Pokemon pokemon = (Pokemon)PokemonsListView.SelectedItems[0];
             string itemName = ((MenuItem)e.OriginalSource).Header.ToString();
             lock (_bot)
@@ -153,6 +153,7 @@ namespace PROShine
 
         private void MenuItemTakeItem_Click(object sender, RoutedEventArgs e)
         {
+            if (PokemonsListView.SelectedItems.Count == 0) return;
             Pokemon pokemon = (Pokemon)PokemonsListView.SelectedItems[0];
             lock (_bot)
             {
