@@ -2,7 +2,8 @@
 {
     public class PokemonAbility
     {
-        public int Id { get; private set; }
+        public int Id { get; }
+
         public string Name
         {
             get
@@ -212,7 +213,48 @@
             "Aura Break",
             "Primordial Sea",
             "Desolate Land",
-            "Delta Stream"
+            "Delta Stream",
+            "Stamina",
+            "Wimp Out",
+            "Emergency Exit",
+            "Water Compaction",
+            "Merciless",
+            "Shields Down",
+            "Stakeout",
+            "Water Bubble",
+            "Steelworker",
+            "Berserk",
+            "Slush Rush",
+            "Long Reach",
+            "Liquid Voice",
+            "Triage",
+            "Galvanize",
+            "Surge Surfer",
+            "Schooling",
+            "Disguise",
+            "Battle Bond",
+            "Power Construct",
+            "Corrosion",
+            "Comatose",
+            "Queenly Majesty",
+            "Innards Out",
+            "Dancer","Battery",
+            "Fluffy",
+            "Dazzling",
+            "Soul-Heart",
+            "Tangling Hair",
+            "Receiver",
+            "Power of Alchemy",
+            "Beast Boost",
+            "RKS System",
+            "Electric Surge",
+            "Psychic Surge",
+            "Misty Surge",
+            "Grassy Surge",
+            "Full Metal Body",
+            "Shadow Shield",
+            "Prism Armor",
+            "Neuroforce"
         };
     }
 }

@@ -80,6 +80,11 @@ namespace PROBot.Scripting
             CallFunctionSafe("onSystemMessage", message);
         }
 
+        public override void OnWarningMessage(bool differentMap, int distance = -1)
+        {
+            CallFunctionSafe("onWarningMessage", differentMap, distance);
+        }
+
         public override void OnLearningMove(string moveName, int pokemonIndex)
         {
             CallFunctionSafe("onLearningMove", moveName, pokemonIndex);
@@ -196,6 +201,8 @@ namespace PROBot.Scripting
             _lua.Globals["isNight"] = new Func<bool>(IsNight);
             _lua.Globals["isOutside"] = new Func<bool>(IsOutside);
             _lua.Globals["isAutoEvolve"] = new Func<bool>(IsAutoEvolve);
+            _lua.Globals["setMount"] = new Func<string, bool>(SetMount);
+            _lua.Globals["setWaterMount"] = new Func<string, bool>(SetWaterMount);
 
             _lua.Globals["isCurrentPCBoxRefreshed"] = new Func<bool>(IsCurrentPCBoxRefreshed);
             _lua.Globals["getCurrentPCBoxId"] = new Func<int>(GetCurrentPCBoxId);
@@ -247,6 +254,7 @@ namespace PROBot.Scripting
             _lua.Globals["getOpponentId"] = new Func<int>(GetOpponentId);
             _lua.Globals["getOpponentName"] = new Func<string>(GetOpponentName);
             _lua.Globals["getOpponentHealth"] = new Func<int>(GetOpponentHealth);
+            _lua.Globals["getOpponentMaxHealth"] = new Func<int>(GetOpponentMaxHealth);
             _lua.Globals["getOpponentHealthPercent"] = new Func<int>(GetOpponentHealthPercent);
             _lua.Globals["getOpponentLevel"] = new Func<int>(GetOpponentLevel);
             _lua.Globals["getOpponentStatus"] = new Func<string>(GetOpponentStatus);
@@ -303,6 +311,7 @@ namespace PROBot.Scripting
             _lua.Globals["sendAnyPokemon"] = new Func<bool>(SendAnyPokemon);
             _lua.Globals["sendPokemon"] = new Func<int, bool>(SendPokemon);
             _lua.Globals["useMove"] = new Func<string, bool>(UseMove);
+            _lua.Globals["useAnyMove"] = new Func<bool>(UseAnyMove);
 
             // Move learning actions
             _lua.Globals["forgetMove"] = new Func<string, bool>(ForgetMove);
@@ -1328,6 +1337,17 @@ namespace PROBot.Scripting
                 return 0;
             }
             return Bot.Game.ActiveBattle.CurrentHealth;
+        }
+
+        // API: Returns the maximum health of the opponent pokémon in the current battle.
+        private int GetOpponentMaxHealth()
+        {
+            if (!Bot.Game.IsInBattle)
+            {
+                Fatal("error: getOpponentMaxHealth can only be used in battle.");
+                return 0;
+            }
+            return Bot.Game.ActiveBattle.OpponentHealth;
         }
 
         // API: Returns the percentage of remaining health of the opponent pokémon in the current battle.
@@ -2614,6 +2634,14 @@ namespace PROBot.Scripting
             return ExecuteAction(Bot.AI.UseMove(moveName));
         }
 
+        // API: Uses the first available move or struggle if out of PP.
+        private bool UseAnyMove()
+        {
+            if (!ValidateAction("useAnyMove", true)) return false;
+
+            return ExecuteAction(Bot.AI.UseAnyMove());
+        }
+
         // API: Forgets the specified move, if existing, in order to learn a new one.
         private bool ForgetMove(string moveName)
         {
@@ -2825,6 +2853,42 @@ namespace PROBot.Scripting
         {
             if (Bot.TextOptions.ContainsKey(index))
                 Bot.RemoveText(index);
+        }
+	
+        // API: Sets the item that will be used to mount the player
+        private bool SetMount(string mount)
+        {
+            if (string.IsNullOrEmpty(mount))
+            {
+                Bot.Game.GroundMount = null;
+                return true;
+            }
+
+            InventoryItem item = Bot.Game.GetItemFromName(mount);
+
+            if (item == null)
+                return false;
+
+            Bot.Game.GroundMount = item;
+            return true;
+        }
+
+        // API: Sets the item that will be used when the player begins surfing
+        private bool SetWaterMount(string mount)
+        {
+            if (string.IsNullOrEmpty(mount))
+            {
+                Bot.Game.WaterMount = null;
+                return true;
+            }
+
+            InventoryItem item = Bot.Game.GetItemFromName(mount);
+
+            if (item == null)
+                return false;
+
+            Bot.Game.WaterMount = item;
+            return true;
         }
     }
 }

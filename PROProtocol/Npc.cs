@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
+
 namespace PROProtocol
 {
     public class Npc
     {
-        private static Dictionary<int, string> typeDescriptions = new Dictionary<int, string>()
+        private static readonly Dictionary<int, string> TypeDescriptions = new Dictionary<int, string>
         {
             {   1, "pokemon"},
             {   2, "camper" },
@@ -47,21 +49,24 @@ namespace PROProtocol
             { 119, "pokestop"},
         };
         
-        public int Id { get; private set; }
-        public string Name { get; private set; }
-        public bool IsBattler { get; private set; }
+        public int Id { get; }
+        public string Name { get; }
+        public bool IsBattler { get; }
         public bool CanBattle { get; set; }
-        public int Type { get; private set; }
-        public int PositionX { get; private set; }
-        public int PositionY { get; private set; }
-        public int LosLength { get; private set; }
-        public string TypeDescription { get { return (typeDescriptions.ContainsKey(Type) ? typeDescriptions[Type] + " ":"") + "(" + Type.ToString() + ")"; } }
-        
-        public bool IsMoving { get { return _path.Length > 0; } }
+        public int Type { get; }
+        public int PositionX { get; }
+        public int PositionY { get; }
+        public Direction Direction { get; }
+        public int LosLength { get; }
+        public string TypeDescription => (TypeDescriptions.ContainsKey(Type) ? TypeDescriptions[Type] + " ":"") + "(" + Type + ")";
 
-        private string _path;
+        public bool IsMoving => _path.Length > 0;
 
-        public Npc(int id, string name, bool isBattler, int type, int x, int y, int losLength, string path)
+        public bool CanBlockPlayer => Type != 10;
+
+        private readonly string _path;
+
+        public Npc(int id, string name, bool isBattler, int type, int x, int y, Direction direction, int losLength, string path)
         {
             Id = id;
             Name = name;
@@ -70,13 +75,34 @@ namespace PROProtocol
             Type = type;
             PositionX = x;
             PositionY = y;
+            Direction = direction;
             LosLength = losLength;
             _path = path;
         }
 
         public Npc Clone()
         {
-            return new Npc(Id, Name, IsBattler, Type, PositionX, PositionY, LosLength, _path);
+            return new Npc(Id, Name, IsBattler, Type, PositionX, PositionY, Direction, LosLength, _path);
+        }
+
+        public bool IsInLineOfSight(int x, int y)
+        {
+            if (x != PositionX && y != PositionY) return false;
+            int distance = GameClient.DistanceBetween(PositionX, PositionY, x, y);
+            if (distance > LosLength) return false;
+            switch (Direction)
+            {
+                case Direction.Up:
+                    return x == PositionX && y < PositionY;
+                case Direction.Down:
+                    return x == PositionX && y > PositionY;
+                case Direction.Left:
+                    return x < PositionX && y == PositionY;
+                case Direction.Right:
+                    return x > PositionX && y == PositionY;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

@@ -50,7 +50,9 @@ namespace PROShine.Views
                 { 8, Brushes.White },
                 { 9, Brushes.White },
                 { 10, Brushes.LightGray },
-                { 12, Brushes.LightSkyBlue }
+                { 11, Brushes.PaleGreen },
+                { 12, Brushes.LightSkyBlue },
+                { 13, Brushes.Gray }
             };
 
             IsVisibleChanged += MapView_IsVisibleChanged;
@@ -128,7 +130,7 @@ namespace PROShine.Views
             _lastDisplayedCell = new Point(x, y);
 
             StringBuilder logBuilder = new StringBuilder();
-            logBuilder.AppendLine(string.Format("Cell: ({0},{1})", x, y));
+            logBuilder.AppendLine($"Cell: ({x},{y})");
 
             if (_bot.Game.Map.HasLink(x, y))
             {
@@ -138,7 +140,7 @@ namespace PROShine.Views
             PlayerInfos[] playersOnCell = _bot.Game.Players.Values.Where(player => player.PosX == x && player.PosY == y).ToArray();
             if (playersOnCell.Length > 0)
             {
-                logBuilder.AppendLine(string.Format("{0} player{1}:", playersOnCell.Length, playersOnCell.Length != 1 ? "s" : ""));
+                logBuilder.AppendLine($"{playersOnCell.Length} player{(playersOnCell.Length != 1 ? "s" : "")}:");
                 foreach (PlayerInfos player in playersOnCell)
                 {
                     logBuilder.Append("  " + player.Name);
@@ -152,13 +154,16 @@ namespace PROShine.Views
             Npc[] npcsOnCell = _bot.Game.Map.Npcs.Where(npc => npc.PositionX == x && npc.PositionY == y).ToArray();
             if (npcsOnCell.Length > 0)
             {
-                logBuilder.AppendLine(string.Format("{0} npc{1}:", npcsOnCell.Length, npcsOnCell.Length != 1 ? "s" : ""));
+                logBuilder.AppendLine($"{npcsOnCell.Length} npc{(npcsOnCell.Length != 1 ? "s" : "")}:");
                 foreach (Npc npc in npcsOnCell)
                 {
                     logBuilder.AppendLine("  ID: " + npc.Id);
                     if (npc.Name != string.Empty) logBuilder.AppendLine("    name: " + npc.Name);
                     logBuilder.AppendLine("    type: " + npc.TypeDescription);
-                    logBuilder.AppendLine("    battler: " + npc.IsBattler.ToString());
+                    if (npc.IsBattler)
+                    {
+                        logBuilder.AppendLine("    beaten: " + (npc.CanBattle ? "No, LOS " + npc.LosLength : "Yes"));
+                    }
                 }
             }
 

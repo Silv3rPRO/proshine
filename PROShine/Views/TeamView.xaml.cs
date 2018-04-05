@@ -1,6 +1,7 @@
 ﻿using PROBot;
 using PROProtocol;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -97,6 +98,66 @@ namespace PROShine
             if (!e.Data.GetDataPresent("PROShinePokemon") || sender == e.Source)
             {
                 e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void List_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (PokemonsListView.SelectedItems.Count == 0) return;
+
+            lock (_bot)
+            {
+                if (_bot.Game != null)
+                {
+                    if (_bot.Game.IsConnected)
+                    {
+                        Pokemon pokemon = (Pokemon) PokemonsListView.SelectedItems[0];
+                        ContextMenu contextMenu = new ContextMenu();
+                        if (!string.IsNullOrEmpty(pokemon.ItemHeld))
+                        {
+                            MenuItem takeItem = new MenuItem();
+                            takeItem.Header = "Take " + pokemon.ItemHeld;
+                            takeItem.Click += MenuItemTakeItem_Click;
+                            contextMenu.Items.Add(takeItem);
+                        }
+                        if (_bot.Game.Items.Count > 0)
+                        {
+                            MenuItem giveItem = new MenuItem();
+                            giveItem.Header = "Give item";
+
+                            _bot.Game.Items
+                                .OrderBy(i => i.Name)
+                                .ToList()
+                                .ForEach(i => giveItem.Items.Add(i.Name));
+
+                            giveItem.Click += MenuItemGiveItem_Click;
+                            contextMenu.Items.Add(giveItem);
+                        }
+                        PokemonsListView.ContextMenu = contextMenu;
+                    }
+                }
+            }
+        }
+
+        private void MenuItemGiveItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (PokemonsListView.SelectedItems.Count == 0) return;
+            Pokemon pokemon = (Pokemon)PokemonsListView.SelectedItems[0];
+            string itemName = ((MenuItem)e.OriginalSource).Header.ToString();
+            lock (_bot)
+            {
+                InventoryItem item = _bot.Game.Items.Find(i => i.Name == itemName);
+                _bot.Game.SendGiveItem(pokemon.Uid, item.Id);
+            }
+        }
+
+        private void MenuItemTakeItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (PokemonsListView.SelectedItems.Count == 0) return;
+            Pokemon pokemon = (Pokemon)PokemonsListView.SelectedItems[0];
+            lock (_bot)
+            {
+                _bot.Game.SendTakeItem(pokemon.Uid);
             }
         }
     }

@@ -6,6 +6,9 @@ namespace PROProtocol
 {
     public class GameClient
     {
+        public InventoryItem GroundMount;
+        public InventoryItem WaterMount;
+        
         public Random Rand { get; private set; }
         public Language I18n { get; private set; }
 
@@ -49,9 +52,9 @@ namespace PROProtocol
         public Battle ActiveBattle { get; private set; }
         public Shop OpenedShop { get; private set; }
 
-        public List<ChatChannel> Channels { get; private set; }
-        public List<string> Conversations { get; private set; }
-        public Dictionary<string, PlayerInfos> Players { get; private set; }
+        public List<ChatChannel> Channels { get; }
+        public List<string> Conversations { get; }
+        public Dictionary<string, PlayerInfos> Players { get; }
         private DateTime _updatePlayers;
         private DateTime _refreshBoxTimeout;
         public bool IsPCBoxRefreshing { get; private set; }
@@ -92,8 +95,9 @@ namespace PROProtocol
         public event Action<string, string> PokeTimeUpdated;
         public event Action<Shop> ShopOpened;
         public event Action<List<Pokemon>> PCBoxUpdated;
-
-        private const string Version = "Sinnoh";
+        public event Action<string> LogMessage;
+        
+        private const string Version = "2018E";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -113,46 +117,35 @@ namespace PROProtocol
         private Timeout _fishingTimeout = new Timeout();
         private Timeout _refreshingPCBox = new Timeout();
 
+        private Timeout _npcBattleTimeout = new Timeout();
+        private Npc _npcBattler;
+
         private MapClient _mapClient;
 
-        public bool IsInactive
+        public void ClearPath()
         {
-            get
-            {
-                return _movements.Count == 0
-                    && !_movementTimeout.IsActive
-                    && !_battleTimeout.IsActive
-                    && !_loadingTimeout.IsActive
-                    && !_mountingTimeout.IsActive
-                    && !_teleportationTimeout.IsActive
-                    && !_dialogTimeout.IsActive
-                    && !_swapTimeout.IsActive
-                    && !_itemUseTimeout.IsActive
-                    && !_fishingTimeout.IsActive
-                    && !_refreshingPCBox.IsActive;
-            }
+            _movements.Clear();
         }
 
-        public bool IsTeleporting
-        {
-            get
-            {
-                return _teleportationTimeout.IsActive;
-            }
-        }
+        public bool IsInactive =>
+            _movements.Count == 0
+            && !_movementTimeout.IsActive
+            && !_battleTimeout.IsActive
+            && !_loadingTimeout.IsActive
+            && !_mountingTimeout.IsActive
+            && !_teleportationTimeout.IsActive
+            && !_dialogTimeout.IsActive
+            && !_swapTimeout.IsActive
+            && !_itemUseTimeout.IsActive
+            && !_fishingTimeout.IsActive
+            && !_refreshingPCBox.IsActive
+            && !_npcBattleTimeout.IsActive;
 
-        public GameServer Server
-        {
-            get
-            {
-                return _connection.Server;
-            }
-        }
+        public bool IsTeleporting => _teleportationTimeout.IsActive;
 
-        public bool IsMapLoaded
-        {
-            get { return Map != null; }
-        }
+        public GameServer Server => _connection.Server;
+
+        public bool IsMapLoaded => Map != null;
         public bool AreNpcReceived { get; private set; }
 
         public GameClient(GameConnection connection, MapConnection mapConnection)
@@ -213,6 +206,7 @@ namespace PROProtocol
             UpdateScript();
             UpdatePlayers();
             UpdatePCBox();
+            UpdateNpcBattle();
         }
 
         public void CloseChannel(string channelName)
@@ -248,6 +242,13 @@ namespace PROProtocol
 
             if (!_movementTimeout.IsActive && _movements.Count > 0)
             {
+                if (GroundMount != null && !_itemUseTimeout.IsActive && !IsBiking && !IsSurfing && Map.IsOutside)
+                {
+                    LogMessage?.Invoke($"Mounting [{GroundMount.Name}]");
+                    UseItem(GroundMount.Id);
+                    return;
+                }
+                
                 Direction direction = _movements[0];
                 _movements.RemoveAt(0);
 
@@ -258,6 +259,19 @@ namespace PROProtocol
                     if (Map.HasLink(PlayerX, PlayerY))
                     {
                         _teleportationTimeout.Set();
+                    }
+                    else
+                    {
+                        Npc battler = Map.Npcs.FirstOrDefault(npc => npc.CanBattle && npc.IsInLineOfSight(PlayerX, PlayerY));
+                        if (battler != null)
+                        {
+                            battler.CanBattle = false;
+                            LogMessage?.Invoke("The NPC " + (battler.Name ?? battler.Id.ToString()) + " saw us, interacting...");
+                            _npcBattler = battler;
+                            int distanceFromBattler = DistanceBetween(PlayerX, PlayerY, battler.PositionX, battler.PositionY);
+                            _npcBattleTimeout.Set(Rand.Next(1000, 2000) + distanceFromBattler * 250);
+                            ClearPath();
+                        }
                     }
                 }
 
@@ -302,6 +316,17 @@ namespace PROProtocol
                 CurrentPCBox = new List<Pokemon>();
                 PCBoxUpdated?.Invoke(CurrentPCBox);
             }
+        }
+
+        private void UpdateNpcBattle()
+        {
+            if (_npcBattler == null) return;
+
+            _npcBattleTimeout.Update();
+            if (_npcBattleTimeout.IsActive) return;
+
+            TalkToNpc(_npcBattler.Id);
+            _npcBattler = null;
         }
 
         private bool ApplyMovement(Direction direction)
@@ -431,6 +456,21 @@ namespace PROProtocol
             SendPacket("{|.|" + pmHeader + '|' + text);
         }
 
+        public void SendStartPrivateMessage(string nickname)
+        {
+            SendMessage("/pm " + PlayerName + "-=-" + nickname);
+        }
+
+        public void SendFriendToggle(string nickname)
+        {
+            SendMessage("/friend " + nickname);
+        }
+
+        public void SendIgnoreToggle(string nickname)
+        {
+            SendMessage("/ignore " + nickname);
+        }
+
         public void SendCreateCharacter(int hair, int colour, int tone, int clothe, int eyes)
         {
             SendMessage("/setchar " + hair + "," + colour + "," + tone + "," + clothe + "," + eyes);
@@ -439,7 +479,7 @@ namespace PROProtocol
         public void SendAuthentication(string username, string password, string hash)
         {
             // DSSock.AttemptLogin
-            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + hash);
+            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|X" + hash);
         }
 
         public void SendUseItem(int id, int pokemon = 0)
@@ -747,10 +787,11 @@ namespace PROProtocol
 
         public bool HasSurfAbility()
         {
-            return HasMove("Surf") &&
+            return (HasMove("Surf") || WaterMount != null) &&
                 (Map.Region == "1" && HasItemName("Soul Badge") ||
                 Map.Region == "2" && HasItemName("Fog Badge") ||
-                Map.Region == "3" && HasItemName("Balance Badge"));
+                Map.Region == "3" && HasItemName("Balance Badge") ||
+                Map.Region == "4" && HasItemName("Relic Badge"));
         }
 
         public bool HasCutAbility()
@@ -758,7 +799,8 @@ namespace PROProtocol
             return (HasMove("Cut") || HasTreeaxe()) &&
                 (Map.Region == "1" && HasItemName("Cascade Badge") ||
                 Map.Region == "2" && HasItemName("Hive Badge") ||
-                Map.Region == "3" && HasItemName("Stone Badge"));
+                Map.Region == "3" && HasItemName("Stone Badge") ||
+                Map.Region == "4" && HasItemName("Forest Badge"));
         }
 
         public bool HasRockSmashAbility()
@@ -823,10 +865,19 @@ namespace PROProtocol
 
         public void UseSurf()
         {
-            SendMessage("/surf");
+            if (WaterMount == null)
+            {
+                SendMessage("/surf");
+            }
+            else
+            {
+                LogMessage?.Invoke($"Mounting [{WaterMount.Name}]");
+                UseItem(WaterMount.Id);
+            }
+            
             _mountingTimeout.Set();
         }
-
+        
         public void UseSurfAfterMovement()
         {
             _surfAfterMovement = true;
@@ -960,7 +1011,7 @@ namespace PROProtocol
             OpenedShop = null;
             IsPCOpen = false;
             // DSSock.sendMove
-            SendPacket("/|.|" + direction);
+            SendPacket("#|.|" + direction);
         }
 
         private void SendAttack(string number)
@@ -1015,7 +1066,7 @@ namespace PROProtocol
                 packet = "U|.|" + packet.Substring(1);
             }
 
-            string[] data = packet.Split(new string[] { "|.|" }, StringSplitOptions.None);
+            string[] data = packet.Split(new [] { "|.|" }, StringSplitOptions.None);
             string type = data[0].ToLowerInvariant();
             switch (type)
             {
@@ -1079,7 +1130,7 @@ namespace PROProtocol
                 case "h":
                     OnEvolving(data);
                     break;
-                case "u":
+                case "=":
                     OnUpdatePlayer(data);
                     break;
                 case "c":
@@ -1154,7 +1205,7 @@ namespace PROProtocol
 
         private void OnPlayerPosition(string[] data)
         {
-            string[] mapData = data[1].Split(new string[] { "|" }, StringSplitOptions.None);
+            string[] mapData = data[1].Split(new[] { "|" }, StringSplitOptions.None);
             string map = mapData[0];
             int playerX = Convert.ToInt32(mapData[1]);
             int playerY = Convert.ToInt32(mapData[2]);
@@ -1182,7 +1233,7 @@ namespace PROProtocol
 
         private void OnPlayerSync(string[] data)
         {
-            string[] mapData = data[1].Split(new string[] { "|" }, StringSplitOptions.None);
+            string[] mapData = data[1].Split(new[] { "|" }, StringSplitOptions.None);
 
             if (mapData.Length < 2)
                 return;
@@ -1216,7 +1267,6 @@ namespace PROProtocol
             string[] timeData = data[1].Split('|');
 
             PokemonTime = timeData[0];
-            DateTime dt = Convert.ToDateTime(PokemonTime);
 
             Weather = timeData[1];
 
@@ -1227,7 +1277,7 @@ namespace PROProtocol
         {
             if (!IsMapLoaded) return;
 
-            IEnumerable<int> defeatedBattlers = data[1].Split(new [] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(id => int.Parse(id));
+            List<int> defeatedBattlers = data[1].Split(new [] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
 
             Map.Npcs.Clear();
             foreach (Npc npc in Map.OriginalNpcs)
@@ -1341,7 +1391,7 @@ namespace PROProtocol
 
             BattleStarted?.Invoke();
 
-            string[] battleMessages = ActiveBattle.BattleText.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            string[] battleMessages = ActiveBattle.BattleText.Split(new[] { "\r\n" }, StringSplitOptions.None);
 
             foreach (string message in battleMessages)
             {

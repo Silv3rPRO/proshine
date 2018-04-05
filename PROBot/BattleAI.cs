@@ -17,19 +17,22 @@ namespace PROBot
         private const int Selfdestruct = 250;
         private const int Synchronoise = 492;
 
-        private HashSet<int> _levitatingPokemons = new HashSet<int>()
+        private readonly HashSet<int> _levitatingPokemons = new HashSet<int>
             {
                 92, 93, 94, 109, 110, 200, 201, 329, 330, 337, 338, 343, 344, 355, 358, 380, 381,
                 429, 433, 436, 437, 455, 479, 480, 481, 482, 487, 488, 602, 603, 604, 615, 635
             };
 
-        private GameClient _client;
+        private readonly GameClient _client;
+
         private int _lastAttackId;
 
         public BattleAI(GameClient client)
         {
             _client = client;
         }
+
+        public Pokemon ActivePokemon => _client.Team[_client.ActiveBattle.SelectedPokemonIndex];
 
         public int UsablePokemonsCount
         {
@@ -46,15 +49,6 @@ namespace PROBot
                 return usablePokemons;
             }
         }
-
-        public Pokemon ActivePokemon
-        {
-            get
-            {
-                return _client.Team[_client.ActiveBattle.SelectedPokemonIndex];
-            }
-        }
-
         public bool UseMandatoryAction()
         {
             return RepeatAttack();
@@ -72,8 +66,28 @@ namespace PROBot
             return UseAttack(false);
         }
 
+        public bool UseAnyMove()
+        {
+            if (ActivePokemon.CurrentHealth == 0) return false;
+
+            for (int i = 0; i < ActivePokemon.Moves.Length; ++i)
+            {
+                PokemonMove move = ActivePokemon.Moves[i];
+                if (move.CurrentPoints > 0)
+                {
+                    _client.UseAttack(i + 1);
+                    return true;
+                }
+            }
+
+            // Struggle
+            _client.UseAttack(1);
+            return true;
+        }
+
         public bool SendPokemon(int index)
         {
+            if (_client.ActiveBattle.IsTrapped) return false;
             if (index < 1 || index > _client.Team.Count) return false;
             Pokemon pokemon = _client.Team[index - 1];
             if (pokemon.CurrentHealth > 0 && pokemon != ActivePokemon)
@@ -86,6 +100,7 @@ namespace PROBot
 
         public bool SendUsablePokemon()
         {
+            if (_client.ActiveBattle.IsTrapped) return false;
             foreach (Pokemon pokemon in _client.Team)
             {
                 if (IsPokemonUsable(pokemon) && pokemon != ActivePokemon)
@@ -99,6 +114,7 @@ namespace PROBot
 
         public bool SendAnyPokemon()
         {
+            if (_client.ActiveBattle.IsTrapped) return false;
             Pokemon pokemon = _client.Team.FirstOrDefault(p => p != ActivePokemon && p.CurrentHealth > 0);
             if (pokemon != null)
             {
@@ -112,6 +128,7 @@ namespace PROBot
         {
             if (ActivePokemon.CurrentHealth == 0) return false;
             if (!_client.ActiveBattle.IsWild) return false;
+            if (_client.ActiveBattle.IsTrapped) return false;
             _client.RunFromBattle();
             return true;
         }

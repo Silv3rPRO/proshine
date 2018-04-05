@@ -329,51 +329,56 @@ namespace PROShine
             LoadScript();
         }
 
-        private void LoadScript()
+        private void LoadScript(string filePath = null)
         {
-            OpenFileDialog openDialog = new OpenFileDialog
+            if (filePath == null)
             {
-                Filter = App.Name + " Scripts|*.lua;*.txt|All Files|*.*"
-            };
-
-            bool? result = openDialog.ShowDialog();
-
-            if (result.HasValue && result.Value)
-            {
-                try
+                OpenFileDialog openDialog = new OpenFileDialog
                 {
-                    lock (Bot)
+                    Filter = App.Name + " Scripts|*.lua;*.txt|All Files|*.*"
+                };
+                bool? result = openDialog.ShowDialog();
+
+                if (!(result.HasValue && result.Value))
+                    return;
+
+                filePath = openDialog.FileName;
+            }
+
+            try
+            {
+                lock (Bot)
+                {
+                    Bot.SliderOptions.Clear();
+                    Bot.TextOptions.Clear();
+                    _sliderOptions.Clear();
+                    _textOptions.Clear();
+                    OptionSliders.Items.Refresh();
+                    TextOptions.Items.Refresh();
+                    OptionsButton.Content = "Show Options";
+                    OptionsButton.Visibility = Visibility.Collapsed;
+                    OptionSliders.Visibility = Visibility.Collapsed;
+                    TextOptions.Visibility = Visibility.Collapsed;
+
+                    Bot.LoadScript(filePath);
+                    MenuPathScript.Header =
+                        "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine + filePath;
+                    LogMessage("Script \"{0}\" by \"{1}\" successfully loaded", Bot.Script.Name, Bot.Script.Author);
+                    if (!string.IsNullOrEmpty(Bot.Script.Description))
                     {
-                        Bot.SliderOptions.Clear();
-                        Bot.TextOptions.Clear();
-                        _sliderOptions.Clear();
-                        _textOptions.Clear();
-                        OptionSliders.Items.Refresh();
-                        TextOptions.Items.Refresh();
-                        OptionsButton.Content = "Show Options";
-                        OptionsButton.Visibility = Visibility.Collapsed;
-                        OptionSliders.Visibility = Visibility.Collapsed;
-                        TextOptions.Visibility = Visibility.Collapsed;
-                        
-                        Bot.LoadScript(openDialog.FileName);
-                        MenuPathScript.Header = "Script: \"" + Bot.Script.Name + "\"" + Environment.NewLine + openDialog.FileName;
-                        LogMessage("Script \"{0}\" by \"{1}\" successfully loaded", Bot.Script.Name, Bot.Script.Author);
-                        if (!string.IsNullOrEmpty(Bot.Script.Description))
-                        {
-                            LogMessage(Bot.Script.Description);
-                        }
-                        UpdateBotMenu();
+                        LogMessage(Bot.Script.Description);
                     }
+                    UpdateBotMenu();
                 }
-                catch (Exception ex)
-                {
-                    string filename = Path.GetFileName(openDialog.FileName);
+            }
+            catch (Exception ex)
+            {
+                string filename = Path.GetFileName(filePath);
 #if DEBUG
-                    LogMessage("Could not load script {0}: " + Environment.NewLine + "{1}", filename, ex);
+                LogMessage("Could not load script {0}: " + Environment.NewLine + "{1}", filename, ex);
 #else
-                    LogMessage("Could not load script {0}: " + Environment.NewLine + "{1}", filename, ex.Message);
+                LogMessage("Could not load script {0}: " + Environment.NewLine + "{1}", filename, ex.Message);
 #endif
-                }
             }
         }
 
@@ -933,6 +938,15 @@ namespace PROShine
             if (shouldLogin)
             {
                 OpenLoginWindow();
+            }
+        }
+
+        private void MainWindow_OnDrop(object sender, DragEventArgs e)
+        {
+            string[] file = e.Data?.GetData(DataFormats.FileDrop) as string[];
+            if (file != null && file.Length > 0)
+            {
+                LoadScript(file[0]);
             }
         }
     }
