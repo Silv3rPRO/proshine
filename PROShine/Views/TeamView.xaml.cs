@@ -11,8 +11,10 @@ namespace PROShine
 {
     public partial class TeamView : UserControl
     {
-        private BotClient _bot;
+        private readonly BotClient _bot;
+
         private Point _startPoint;
+        private Pokemon _selectedPokemon;
 
         public TeamView(BotClient bot)
         {
@@ -101,41 +103,52 @@ namespace PROShine
             }
         }
 
-        private void List_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        private void List_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (PokemonsListView.SelectedItems.Count == 0) return;
+            if (PokemonsListView.SelectedItems.Count > 0)
+            {
+                _selectedPokemon = (Pokemon)PokemonsListView.SelectedItems[0];
+            }
+            else
+            {
+                _selectedPokemon = null;
+            }
+        }
+
+        private void List_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            if (_selectedPokemon == null) return;
+
+            Pokemon pokemon = _selectedPokemon;
 
             lock (_bot)
             {
-                if (_bot.Game != null)
+                if (_bot.Game == null) return;
+                if (!_bot.Game.IsConnected) return;
+
+                ContextMenu contextMenu = new ContextMenu();
+                if (!string.IsNullOrEmpty(pokemon.ItemHeld))
                 {
-                    if (_bot.Game.IsConnected)
-                    {
-                        Pokemon pokemon = (Pokemon) PokemonsListView.SelectedItems[0];
-                        ContextMenu contextMenu = new ContextMenu();
-                        if (!string.IsNullOrEmpty(pokemon.ItemHeld))
-                        {
-                            MenuItem takeItem = new MenuItem();
-                            takeItem.Header = "Take " + pokemon.ItemHeld;
-                            takeItem.Click += MenuItemTakeItem_Click;
-                            contextMenu.Items.Add(takeItem);
-                        }
-                        if (_bot.Game.Items.Count > 0)
-                        {
-                            MenuItem giveItem = new MenuItem();
-                            giveItem.Header = "Give item";
-
-                            _bot.Game.Items
-                                .OrderBy(i => i.Name)
-                                .ToList()
-                                .ForEach(i => giveItem.Items.Add(i.Name));
-
-                            giveItem.Click += MenuItemGiveItem_Click;
-                            contextMenu.Items.Add(giveItem);
-                        }
-                        PokemonsListView.ContextMenu = contextMenu;
-                    }
+                    MenuItem takeItem = new MenuItem();
+                    takeItem.Header = "Take " + pokemon.ItemHeld;
+                    takeItem.Click += MenuItemTakeItem_Click;
+                    contextMenu.Items.Add(takeItem);
                 }
+                if (_bot.Game.Items.Count > 0)
+                {
+                    MenuItem giveItem = new MenuItem();
+                    giveItem.Header = "Give item";
+
+                    _bot.Game.Items
+                        .Where(i => i.CanBeHeld)
+                        .OrderBy(i => i.Name)
+                        .ToList()
+                        .ForEach(i => giveItem.Items.Add(i.Name));
+
+                    giveItem.Click += MenuItemGiveItem_Click;
+                    contextMenu.Items.Add(giveItem);
+                }
+                PokemonsListView.ContextMenu = contextMenu;
             }
         }
 
@@ -147,7 +160,10 @@ namespace PROShine
             lock (_bot)
             {
                 InventoryItem item = _bot.Game.Items.Find(i => i.Name == itemName);
-                _bot.Game.SendGiveItem(pokemon.Uid, item.Id);
+                if (item != null)
+                {
+                    _bot.Game.SendGiveItem(pokemon.Uid, item.Id);
+                }
             }
         }
 
