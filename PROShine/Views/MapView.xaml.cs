@@ -134,7 +134,7 @@ namespace PROShine.Views
                 int y = ingameY;
                 int startX = (int)_startDragCell.X;
                 int startY = (int)_startDragCell.Y;
-                Clipboard.SetDataObject($"{(startX > x ? x : startX)}, {(startY > y ? y : startY)}, {(startX > x ? startX : x)}, {(startY > y ? startY : y)}");
+                Clipboard.SetDataObject($"{Math.Min(x, startX)}, {Math.Min(y, startY)}, {Math.Max(x, startX)}, {Math.Max(y, startY)}");
             }
         }
 
@@ -207,7 +207,7 @@ namespace PROShine.Views
             {
                 int startX = (int)_startDragCell.X;
                 int startY = (int)_startDragCell.Y;
-                logBuilder.AppendLine($"Rectangle: ({(startX > x ? x : startX)}, {(startY > y ? y : startY)}, {(startX > x ? startX : x)}, {(startY > y ? startY : y)})");
+                logBuilder.AppendLine($"Rectangle: ({Math.Min(x, startX)}, {Math.Min(y, startY)}, {Math.Max(x, startX)}, {Math.Max(y, startY)})");
                 logBuilder.AppendLine();
             }
 
