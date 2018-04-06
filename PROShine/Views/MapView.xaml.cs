@@ -28,9 +28,12 @@ namespace PROShine.Views
         private Shape[] _npcs;
         private bool _arePlayersDirty;
         private Shape[] _otherPlayers;
+        private Shape _selectedRectangle;
+        private bool _dragging;
 
         private Point _lastDisplayedCell = new Point(-1, -1);
         private Point _playerPosition = new Point();
+        private Point _startDragCell = new Point();
 
         public MapView(BotClient bot)
         {
@@ -58,6 +61,13 @@ namespace PROShine.Views
             IsVisibleChanged += MapView_IsVisibleChanged;
             MouseDown += MapView_MouseDown;
             SizeChanged += MapView_SizeChanged;
+
+            _selectedRectangle = new Rectangle
+            {
+                Stroke = Brushes.Red,
+                Fill = Brushes.Transparent,
+                StrokeThickness = 1
+            };
         }
 
         private void MapCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -90,6 +100,44 @@ namespace PROShine.Views
             }
         }
 
+        private void MapCanvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Tuple<double, double> drawingOffset = GetDrawingOffset();
+            double deltaX = drawingOffset.Item1;
+            double deltaY = drawingOffset.Item2;
+            _startDragCell.X = (int)((e.GetPosition(this).X / _cellWidth - deltaX));
+            _startDragCell.Y = (int)((e.GetPosition(this).Y / _cellWidth) - deltaY);
+            _dragging = true;
+        }
+
+        private void MapCanvas_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!_dragging)
+                return;
+            _dragging = false;
+            Tuple<double, double> drawingOffset = GetDrawingOffset();
+            double deltaX = drawingOffset.Item1;
+            double deltaY = drawingOffset.Item2;
+            int ingameX = (int)((e.GetPosition(this).X / _cellWidth - deltaX));
+            int ingameY = (int)((e.GetPosition(this).Y / _cellWidth) - deltaY);
+            _selectedRectangle.Width = _cellWidth;
+            _selectedRectangle.Height = _cellWidth;
+            Canvas.SetLeft(_selectedRectangle, (ingameX + deltaX) * _cellWidth);
+            Canvas.SetTop(_selectedRectangle, (ingameY + deltaY) * _cellWidth);
+            if ((int)_startDragCell.X == ingameX && (int)_startDragCell.Y == ingameY)
+            {
+                Clipboard.SetDataObject($"{ingameX}, {ingameY}");
+            }
+            else
+            {
+                int x = ingameX;
+                int y = ingameY;
+                int startX = (int)_startDragCell.X;
+                int startY = (int)_startDragCell.Y;
+                Clipboard.SetDataObject($"{(startX > x ? x : startX)}, {(startY > y ? y : startY)}, {(startX > x ? startX : x)}, {(startY > y ? startY : y)}");
+            }
+        }
+
         private void MapCanvas_MouseLeave(object sender, MouseEventArgs e)
         {
             FloatingTip.IsOpen = false;
@@ -105,6 +153,30 @@ namespace PROShine.Views
 
             if (_lastDisplayedCell.X != ingameX || _lastDisplayedCell.Y != ingameY)
             {
+                if (_dragging)
+                {
+                    int xOffset = ingameX - (int)_startDragCell.X;
+                    int yOffset = ingameY - (int)_startDragCell.Y;
+
+                    if (xOffset >= 0)
+                        Canvas.SetLeft(_selectedRectangle, (_startDragCell.X + deltaX) * _cellWidth);
+                    else
+                        Canvas.SetLeft(_selectedRectangle, (ingameX + deltaX) * _cellWidth);
+
+                    if (yOffset >= 0)
+                        Canvas.SetTop(_selectedRectangle, (_startDragCell.Y + deltaY) * _cellWidth);
+                    else
+                        Canvas.SetTop(_selectedRectangle, (ingameY + deltaY) * _cellWidth);
+
+                    _selectedRectangle.Width = _cellWidth * (Math.Abs(xOffset) + 1);
+                    _selectedRectangle.Height = _cellWidth * (Math.Abs(yOffset) + 1);
+                }
+                else
+                {
+                    Canvas.SetLeft(_selectedRectangle, (ingameX + deltaX) * _cellWidth);
+                    Canvas.SetTop(_selectedRectangle, (ingameY + deltaY) * _cellWidth);
+                }
+
                 lock (_bot)
                 {
                     if (_bot.Game != null && _bot.Game.IsMapLoaded)
@@ -130,6 +202,15 @@ namespace PROShine.Views
             _lastDisplayedCell = new Point(x, y);
 
             StringBuilder logBuilder = new StringBuilder();
+            
+            if (_dragging && ((int)_startDragCell.X != x || (int)_startDragCell.Y != y))
+            {
+                int startX = (int)_startDragCell.X;
+                int startY = (int)_startDragCell.Y;
+                logBuilder.AppendLine($"Rectangle: ({(startX > x ? x : startX)}, {(startY > y ? y : startY)}, {(startX > x ? startX : x)}, {(startY > y ? startY : y)})");
+                logBuilder.AppendLine();
+            }
+
             logBuilder.AppendLine($"Cell: ({x},{y})");
 
             if (_bot.Game.Map.HasLink(x, y))
@@ -318,6 +399,16 @@ namespace PROShine.Views
                 RefreshPlayer(false);
                 RefreshNpcs();
                 RefreshOtherPlayers();
+
+                _dragging = false;
+                _selectedRectangle.Width = _cellWidth;
+                _selectedRectangle.Height = _cellWidth;
+                Tuple<double, double> drawingOffset = GetDrawingOffset();
+                double deltaX = drawingOffset.Item1;
+                double deltaY = drawingOffset.Item2;
+                Canvas.SetLeft(_selectedRectangle, (_lastDisplayedCell.X + deltaX) * _cellWidth);
+                Canvas.SetTop(_selectedRectangle, (_lastDisplayedCell.Y + deltaY) * _cellWidth);
+                MapCanvas.Children.Add(_selectedRectangle);
             }
         }
 
@@ -512,3 +603,4 @@ namespace PROShine.Views
         }
     }
 }
+
