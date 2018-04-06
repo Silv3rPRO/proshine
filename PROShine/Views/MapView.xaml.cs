@@ -138,9 +138,16 @@ namespace PROShine.Views
             }
         }
 
+        private void MapCanvas_MouseEnter(object sender, MouseEventArgs e)
+        {
+            FloatingTip.IsOpen = true;
+            _selectedRectangle.Visibility = Visibility.Visible;
+        }
+
         private void MapCanvas_MouseLeave(object sender, MouseEventArgs e)
         {
             FloatingTip.IsOpen = false;
+            _selectedRectangle.Visibility = Visibility.Hidden;
         }
 
         private void MapCanvas_MouseMove(object sender, MouseEventArgs e)
@@ -182,7 +189,6 @@ namespace PROShine.Views
                     if (_bot.Game != null && _bot.Game.IsMapLoaded)
                     {
                         RetrieveCellInfo(ingameX, ingameY);
-                        FloatingTip.IsOpen = true;
                     }
                 }
             }
