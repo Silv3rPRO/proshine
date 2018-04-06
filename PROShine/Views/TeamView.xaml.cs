@@ -126,6 +126,7 @@ namespace PROShine
                             giveItem.Header = "Give item";
 
                             _bot.Game.Items
+                                .Where(i => i.CanBeHeld)
                                 .OrderBy(i => i.Name)
                                 .ToList()
                                 .ForEach(i => giveItem.Items.Add(i.Name));
