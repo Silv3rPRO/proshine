@@ -50,6 +50,8 @@ namespace PROShine
         private ObservableCollection<OptionSlider> _sliderOptions;
         private ObservableCollection<TextOption> _textOptions;
 
+        private string _lastLoadedScript;
+
         public MainWindow()
         {
 #if !DEBUG
@@ -104,6 +106,13 @@ namespace PROShine
 
             OptionSliders.ItemsSource = _sliderOptions = new ObservableCollection<OptionSlider>();
             TextOptions.ItemsSource = _textOptions = new ObservableCollection<TextOption>();
+
+            _lastLoadedScript = Properties.Settings.Default.LastScript;
+            if (!string.IsNullOrEmpty(_lastLoadedScript))
+            {
+                ReloadScriptMenuItem.Header = "Reload " + Path.GetFileName(_lastLoadedScript) + " - Ctrl+R";
+                ReloadScriptMenuItem.IsEnabled = true;
+            }
         }
 
         public void Bot_SliderRemoved(OptionSlider option)
@@ -349,6 +358,12 @@ namespace PROShine
             {
                 lock (Bot)
                 {
+                    _lastLoadedScript = filePath;
+                    ReloadScriptMenuItem.Header = "Reload " + Path.GetFileName(filePath) + " - Ctrl+R";
+                    ReloadScriptMenuItem.IsEnabled = true;
+                    Properties.Settings.Default.LastScript = filePath;
+                    Properties.Settings.Default.Save();
+
                     Bot.SliderOptions.Clear();
                     Bot.TextOptions.Clear();
                     _sliderOptions.Clear();
@@ -948,6 +963,20 @@ namespace PROShine
             {
                 LoadScript(file[0]);
             }
+        }
+
+        private void ReloadHotkey_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(_lastLoadedScript))
+                return;
+            LoadScript(_lastLoadedScript);
+        }
+
+        private void ReloadScriptMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(_lastLoadedScript))
+                return;
+            LoadScript(_lastLoadedScript);
         }
     }
 }
