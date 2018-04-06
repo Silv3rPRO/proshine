@@ -13,63 +13,42 @@ namespace PROShine
         private BotClient _bot;
         public bool ShowAccounts { get; set; }
 
-        public string Username
-        {
-            get { return UsernameTextBox.Text.Trim(); }
-        }
+        public string Username => UsernameTextBox.Text.Trim();
 
-        public string Password
-        {
-            get { return PasswordTextBox.Password; }
-        }
+        public string Password => PasswordTextBox.Password;
 
-        public string Server
-        {
-            get { return ServerComboBox.Text.Trim().ToUpperInvariant().Split(' ')[0]; }
-        }
+        public string Server => ServerComboBox.Text.Trim().ToUpperInvariant().Split(' ')[0];
 
-        public string MacAddress
-        {
-            get { return !MacRandomCheckBox.IsChecked.Value ? MacAddressTextBox.Text.Trim() : null; }
-        }
+        public string MacAddress => !MacRandomCheckBox.IsChecked.Value ? MacAddressTextBox.Text.Trim() : null;
 
-        public bool HasProxy
-        {
-            get { return ProxyCheckBox.IsChecked.Value; }
-        }
+        public bool HasProxy => ProxyCheckBox.IsChecked.Value;
 
         public int ProxyVersion
         {
-            set { if (value == 4)
+            set
+            {
+                switch (value)
                 {
-                    Socks4RadioButton.IsChecked = true;
-                }
-                else if (value == 5)
-                {
-                    Socks5RadioButton.IsChecked = true;
+                    case 4:
+                        Socks4RadioButton.IsChecked = true;
+                        break;
+                    case 5:
+                        Socks5RadioButton.IsChecked = true;
+                        break;
                 }
             }
-            get { return Socks4RadioButton.IsChecked.Value ? 4 : 5; }
+            get => Socks4RadioButton.IsChecked.Value ? 4 : 5;
         }
 
-        public string ProxyHost
-        {
-            get { return ProxyHostTextBox.Text.Trim(); }
-        }
+        public string ProxyHost => ProxyHostTextBox.Text.Trim();
 
         public int ProxyPort { get; private set; }
 
-        public string ProxyUsername
-        {
-            get { return ProxyUsernameTextBox.Text.Trim(); }
-        }
+        public string ProxyUsername => ProxyUsernameTextBox.Text.Trim();
 
-        public string ProxyPassword
-        {
-            get { return ProxyPasswordTextBox.Password; }
-        }
+        public string ProxyPassword => ProxyPasswordTextBox.Password;
 
-        private Regex macAddressRegex = new Regex("^[0-9A-F]{12}([0-9A-F]{12})?$");
+        private readonly Regex macAddressRegex = new Regex("^[0-9A-F]{12}([0-9A-F]{12})?$");
 
         public LoginWindow(BotClient bot)
         {
@@ -82,9 +61,14 @@ namespace PROShine
             Title = App.Name + " - " + Title;
             UsernameTextBox.Focus();
 
-            ServerComboBox.ItemsSource = new List<string>() { "Red Server", "Blue Server", "Yellow Server" };
+            ServerComboBox.ItemsSource = new List<string> { "Red Server", "Blue Server", "Yellow Server" };
             ServerComboBox.SelectedIndex = 0;
             RefreshAccountList();
+            
+            if (_bot.AccountManager.Accounts.Count > 0 && !ShowAccounts)
+            {
+                ShowAccounts_Click(null, null);
+            }
         }
 
         public void RefreshAccountList()
