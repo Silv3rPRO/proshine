@@ -311,7 +311,7 @@ namespace PROBot
             bool canInteract = Game.Map.CanInteract(Game.PlayerX, Game.PlayerY, target.PositionX, target.PositionY);
             if (canInteract)
             {
-                Game.TalkToNpc(target.Id);
+                Game.TalkToNpc(target);
                 return true;
             }
             else

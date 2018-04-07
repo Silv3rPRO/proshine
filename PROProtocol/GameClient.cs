@@ -325,7 +325,7 @@ namespace PROProtocol
             _npcBattleTimeout.Update();
             if (_npcBattleTimeout.IsActive) return;
 
-            TalkToNpc(_npcBattler.Id);
+            TalkToNpc(_npcBattler);
             _npcBattler = null;
         }
 
@@ -893,9 +893,11 @@ namespace PROProtocol
             UseAttack(number + 5);
         }
 
-        public void TalkToNpc(int id)
+        public void TalkToNpc(Npc npc)
         {
-            SendTalkToNpc(id);
+            npc.CanBattle = false;
+
+            SendTalkToNpc(npc.Id);
             _dialogTimeout.Set();
         }
 
