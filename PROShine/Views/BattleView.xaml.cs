@@ -145,11 +145,13 @@ namespace PROShine.Views
                     }
 
                     int ratio = active.Experience.RatioToNextLevel;
-                    if (_expBarWidth < ratio)
-                    {
+
+                    // Small half unit buffer so _expBarWidth won't be greater than ratio unless the Pokemon levels up
+                    if (_expBarWidth < ratio - 0.5)
+                    {                        
                         _expBarWidth += (ratio - _expBarWidth) * 0.035;
                     }
-                    else
+                    else if (_expBarWidth > ratio)
                     {
                         // Pokemon just leveled up. Fill bar all the way, then empty it immediately
                         if (_expBarWidth < 54)
@@ -177,7 +179,7 @@ namespace PROShine.Views
                 _activeHPWidth = active.CurrentHealth;
                 ActiveHealthBar.Width = _activeHPWidth / active.MaxHealth * 200;
                 ActiveHealthBar.Background = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
-                _expBarWidth = active.Experience.RatioToNextLevel;
+                _expBarWidth = active.Experience.RatioToNextLevel - 0.5;
                 ExpBar.Width = _expBarWidth * 3.7;
             });
         }
@@ -199,7 +201,7 @@ namespace PROShine.Views
                 _activeHPWidth = active.CurrentHealth;
                 ActiveHealthBar.Width = _activeHPWidth / active.MaxHealth * 200;
                 ActiveHealthBar.Background = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
-                _expBarWidth = active.Experience.RatioToNextLevel;
+                _expBarWidth = active.Experience.RatioToNextLevel - 0.5;
                 ExpBar.Width = _expBarWidth * 3.7;
             });
         }
