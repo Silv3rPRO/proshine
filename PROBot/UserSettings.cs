@@ -88,7 +88,7 @@ namespace PROBot
         {
             public bool AutoReconnect;
             public bool AvoidStaff;
-            public bool AutoEvolve;
+            public bool AutoEvolve = true;
             public string LastScript;
 
             public void Save()
