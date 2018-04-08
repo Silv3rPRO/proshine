@@ -144,22 +144,29 @@ namespace PROShine.Views
                         ActiveHealthBar.Background = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
                     }
 
-                    int ratio = active.Experience.RatioToNextLevel;
-
-                    // Small half unit buffer so _expBarWidth won't be greater than ratio unless the Pokemon levels up
-                    if (_expBarWidth < ratio - 0.5)
-                    {                        
-                        _expBarWidth += (ratio - _expBarWidth) * 0.035;
-                    }
-                    else if (_expBarWidth > ratio)
+                    if (active.Experience.CurrentLevel == 100)
                     {
-                        // Pokemon just leveled up. Fill bar all the way, then empty it immediately
-                        if (_expBarWidth < 54)
-                            _expBarWidth += (54 - _expBarWidth) * 0.035;
-                        else
-                            _expBarWidth = 0;
+                        ExpBar.Width = 200;
                     }
-                    ExpBar.Width = _expBarWidth * 3.7;
+                    else
+                    {
+                        int ratio = active.Experience.RatioToNextLevel;
+
+                        // Small half unit buffer so _expBarWidth won't be greater than ratio unless the Pokemon levels up
+                        if (_expBarWidth < ratio - 0.5)
+                        {
+                            _expBarWidth += (ratio - _expBarWidth) * 0.035;
+                        }
+                        else if (_expBarWidth > ratio)
+                        {
+                            // Pokemon just leveled up. Fill bar all the way, then empty it immediately
+                            if (_expBarWidth < 54)
+                                _expBarWidth += (54 - _expBarWidth) * 0.035;
+                            else
+                                _expBarWidth = 0;
+                        }
+                        ExpBar.Width = _expBarWidth * 3.7;
+                    }
                 }
             });
         }
@@ -179,8 +186,15 @@ namespace PROShine.Views
                 _activeHPWidth = active.CurrentHealth;
                 ActiveHealthBar.Width = _activeHPWidth / active.MaxHealth * 200;
                 ActiveHealthBar.Background = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
-                _expBarWidth = active.Experience.RatioToNextLevel - 0.5;
-                ExpBar.Width = _expBarWidth * 3.7;
+                if (active.Experience.CurrentLevel == 100)
+                {
+                    ExpBar.Width = 200;
+                }
+                else
+                {
+                    _expBarWidth = active.Experience.RatioToNextLevel - 0.5;
+                    ExpBar.Width = _expBarWidth * 3.7;
+                }
             });
         }
 
@@ -201,8 +215,15 @@ namespace PROShine.Views
                 _activeHPWidth = active.CurrentHealth;
                 ActiveHealthBar.Width = _activeHPWidth / active.MaxHealth * 200;
                 ActiveHealthBar.Background = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
-                _expBarWidth = active.Experience.RatioToNextLevel - 0.5;
-                ExpBar.Width = _expBarWidth * 3.7;
+                if (active.Experience.CurrentLevel == 100)
+                {
+                    ExpBar.Width = 200;
+                }
+                else
+                {
+                    _expBarWidth = active.Experience.RatioToNextLevel - 0.5;
+                    ExpBar.Width = _expBarWidth * 3.7;
+                }
             });
         }
 
