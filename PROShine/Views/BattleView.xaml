@@ -10,7 +10,7 @@
              d:DesignHeight="350" d:DesignWidth="600">
     <Grid>
         <Image Name="PROShineLogo" HorizontalAlignment="Center" Height="100" VerticalAlignment="Center" Width="100" Source="/PROShine;component/logo.ico" ToolTip="You are not currently in a battle."/>
-        <Grid Name="UIGrid" Visibility="Visible">
+        <Grid Name="UIGrid" Visibility="Hidden">
             <WrapPanel Name="Buttons" Background="#848484" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" MaxWidth="205">
                 <Button Name="AttackButton" Content="Attack" MinWidth="87" Margin="5" FontSize="20" Click="AttackButton_Click"/>
                 <Button Name="ItemButton" Content="Item" MinWidth="87" Margin="5" FontSize="20" Click="ItemButton_Click"/>
