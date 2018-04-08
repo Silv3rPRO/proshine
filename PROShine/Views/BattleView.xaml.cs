@@ -145,11 +145,19 @@ namespace PROShine.Views
                     }
 
                     int ratio = active.Experience.RatioToNextLevel;
-                    if (_expBarWidth != ratio)
+                    if (_expBarWidth < ratio)
                     {
-                        _expBarWidth -= (_expBarWidth - ratio) * 0.035;
-                        ExpBar.Width = _expBarWidth * 3.7;
+                        _expBarWidth += (ratio - _expBarWidth) * 0.035;
                     }
+                    else
+                    {
+                        // Pokemon just leveled up. Fill bar all the way, then empty it immediately
+                        if (_expBarWidth < 54)
+                            _expBarWidth += (54 - _expBarWidth) * 0.035;
+                        else
+                            _expBarWidth = 0;
+                    }
+                    ExpBar.Width = _expBarWidth * 3.7;
                 }
             });
         }
