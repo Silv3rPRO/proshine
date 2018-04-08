@@ -24,9 +24,7 @@ namespace PROBot
             };
 
         private readonly GameClient _client;
-
-        private int _lastAttackId;
-
+        
         public BattleAI(GameClient client)
         {
             _client = client;
@@ -165,7 +163,8 @@ namespace PROBot
         {
             if (ActivePokemon.CurrentHealth > 0 && _client.ActiveBattle.RepeatAttack)
             {
-                _client.UseAttack(_lastAttackId);
+                System.Console.WriteLine("ATTACKING");
+                _client.UseAttack(1);
                 _client.ActiveBattle.RepeatAttack = false;
                 return true;
             }
@@ -258,13 +257,11 @@ namespace PROBot
 
             if (useBestAttack && bestMove != null)
             {
-                _lastAttackId = bestIndex + 1;
                 _client.UseAttack(bestIndex + 1);
                 return true;
             }
             if (!useBestAttack && worstMove != null)
             {
-                _lastAttackId = worstIndex + 1;
                 _client.UseAttack(worstIndex + 1);
                 return true;
             }
