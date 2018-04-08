@@ -10,7 +10,7 @@
              d:DesignHeight="350" d:DesignWidth="600">
     <Grid>
         <Image Name="PROShineLogo" HorizontalAlignment="Center" Height="100" VerticalAlignment="Center" Width="100" Source="/PROShine;component/logo.ico" ToolTip="You are not currently in a battle."/>
-        <Grid Name="UIGrid" Visibility="Hidden">
+        <Grid Name="UIGrid" Visibility="Visible">
             <WrapPanel Name="Buttons" Background="#848484" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" MaxWidth="205">
                 <Button Name="AttackButton" Content="Attack" MinWidth="87" Margin="5" FontSize="20" Click="AttackButton_Click"/>
                 <Button Name="ItemButton" Content="Item" MinWidth="87" Margin="5" FontSize="20" Click="ItemButton_Click"/>
@@ -29,9 +29,9 @@
                     </Canvas>
                 </WrapPanel>
                 <WrapPanel Margin="0,10,0,0">
-                    <Border BorderBrush="Black" Background="Gray" BorderThickness="3" CornerRadius="4">
+                    <Border BorderBrush="Black" Background="Gray" BorderThickness="3" CornerRadius="4" ClipToBounds="True">
                         <Canvas Width="200" Height="14">
-                            <Rectangle Name="OpponentHealthBar" Stroke="Transparent" Fill="Green" Width="200" Height="14"/>
+                            <Border Name="OpponentHealthBar" CornerRadius="3" Background="Green" Width="200" Height="14"/>
                             <TextBlock Name="OpponentCurrentHealth" Text="999" HorizontalAlignment="Right" Canvas.Right="104" Canvas.Bottom="-1"/>
                             <TextBlock Text="/" Canvas.Left="98" Canvas.Bottom="0"/>
                             <TextBlock Name="OpponentMaxHealth" Text="999" HorizontalAlignment="Left" Canvas.Left="104" Canvas.Bottom="-1"/>
@@ -214,9 +214,9 @@
                     </Canvas>
                 </WrapPanel>
                 <WrapPanel Margin="0,10,0,0">
-                    <Border BorderBrush="Black" Background="Gray" BorderThickness="3" CornerRadius="4">
+                    <Border BorderBrush="Black" Background="Gray" BorderThickness="3" CornerRadius="4" ClipToBounds="True">
                         <Canvas Width="200" Height="14">
-                            <Rectangle Name="ActiveHealthBar" Stroke="Transparent" Fill="Green" Width="200" Height="14"/>
+                            <Border Name="ActiveHealthBar" CornerRadius="3" Background="Green" Width="200" Height="14"/>
                             <TextBlock Name="ActiveCurrentHealth" Text="999" HorizontalAlignment="Right" Canvas.Right="104" Canvas.Bottom="-1"/>
                             <TextBlock Text="/" Canvas.Left="98" Canvas.Bottom="0"/>
                             <TextBlock Name="ActiveMaxHealth" Text="999" HorizontalAlignment="Left" Canvas.Left="104" Canvas.Bottom="-1"/>
@@ -227,7 +227,7 @@
                 <WrapPanel>
                     <Border BorderBrush="Black" Background="Gray" BorderThickness="3" CornerRadius="4">
                         <Canvas Width="200" Height="14">
-                            <Rectangle Name="ExpBar" Stroke="Transparent" Fill="#44daf4" Width="200" Height="14"/>
+                            <Border Name="ExpBar" CornerRadius="3" Background="#44daf4" Width="200" Height="14"/>
                             <TextBlock Name="NextLevel" Text="To level 100: 999999" Canvas.Bottom="-1" Canvas.Top="-2" Canvas.Left="2"/>
                         </Canvas>
                     </Border>

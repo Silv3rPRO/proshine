@@ -163,7 +163,6 @@ namespace PROBot
         {
             if (ActivePokemon.CurrentHealth > 0 && _client.ActiveBattle.RepeatAttack)
             {
-                System.Console.WriteLine("ATTACKING");
                 _client.UseAttack(1);
                 _client.ActiveBattle.RepeatAttack = false;
                 return true;

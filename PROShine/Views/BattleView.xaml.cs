@@ -134,14 +134,14 @@ namespace PROShine.Views
                     {
                         _opponentHPWidth -= (_opponentHPWidth - targetWidth) * 0.035;
                         OpponentHealthBar.Width = _opponentHPWidth / maxHealth * 200;
-                        OpponentHealthBar.Fill = new SolidColorBrush(EvaluateGradient(_opponentHPWidth / maxHealth));
+                        OpponentHealthBar.Background = new SolidColorBrush(EvaluateGradient(_opponentHPWidth / maxHealth));
                     }
 
                     if (_activeHPWidth != active.CurrentHealth)
                     {
                         _activeHPWidth -= (_activeHPWidth - active.CurrentHealth) * 0.035;
                         ActiveHealthBar.Width = _activeHPWidth / active.MaxHealth * 200;
-                        ActiveHealthBar.Fill = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
+                        ActiveHealthBar.Background = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
                     }
 
                     int ratio = active.Experience.RatioToNextLevel;
@@ -163,12 +163,12 @@ namespace PROShine.Views
                 _opponentHPWidth = _bot.Game.ActiveBattle.CurrentHealth;
                 int maxHealth = _bot.Game.ActiveBattle.OpponentHealth;
                 OpponentHealthBar.Width = _opponentHPWidth / maxHealth * 200;
-                OpponentHealthBar.Fill = new SolidColorBrush(EvaluateGradient(_opponentHPWidth / maxHealth));
+                OpponentHealthBar.Background = new SolidColorBrush(EvaluateGradient(_opponentHPWidth / maxHealth));
 
                 Pokemon active = _bot.Game.Team[_bot.Game.ActiveBattle.SelectedPokemonIndex];
                 _activeHPWidth = active.CurrentHealth;
                 ActiveHealthBar.Width = _activeHPWidth / active.MaxHealth * 200;
-                ActiveHealthBar.Fill = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
+                ActiveHealthBar.Background = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
                 _expBarWidth = active.Experience.RatioToNextLevel;
                 ExpBar.Width = _expBarWidth * 3.7;
             });
@@ -190,7 +190,7 @@ namespace PROShine.Views
                 Pokemon active = _bot.Game.Team[_bot.Game.ActiveBattle.SelectedPokemonIndex];
                 _activeHPWidth = active.CurrentHealth;
                 ActiveHealthBar.Width = _activeHPWidth / active.MaxHealth * 200;
-                ActiveHealthBar.Fill = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
+                ActiveHealthBar.Background = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
                 _expBarWidth = active.Experience.RatioToNextLevel;
                 ExpBar.Width = _expBarWidth * 3.7;
             });
@@ -203,7 +203,7 @@ namespace PROShine.Views
                 _opponentHPWidth = _bot.Game.ActiveBattle.CurrentHealth;
                 int maxHealth = _bot.Game.ActiveBattle.OpponentHealth;
                 OpponentHealthBar.Width = _opponentHPWidth / maxHealth * 200;
-                OpponentHealthBar.Fill = new SolidColorBrush(EvaluateGradient(_opponentHPWidth / maxHealth));
+                OpponentHealthBar.Background = new SolidColorBrush(EvaluateGradient(_opponentHPWidth / maxHealth));
             });
         }
 
