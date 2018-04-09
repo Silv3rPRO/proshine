@@ -250,27 +250,32 @@ namespace PROShine.Views
         {
             Pokemon active = _bot.Game.Team[_bot.Game.ActiveBattle.SelectedPokemonIndex];
             ContextMenu attacks = new ContextMenu();
-            bool hasPP = active.Moves.Any(move => !string.IsNullOrEmpty(move?.Name) && move.CurrentPoints > 0);
-            if (hasPP)
+            bool hasPP = false;
+
+            for (int i = 0; i < active.Moves.Length; i++)
             {
-                for (int i = 0; i < active.Moves.Length; i++)
+                PokemonMove move = active.Moves[i];
+                if (move == null || string.IsNullOrEmpty(move.Name))
+                    continue;
+                MenuItem menuItem = new MenuItem
                 {
-                    PokemonMove move = active.Moves[i];
-                    if (move == null || string.IsNullOrEmpty(move.Name))
-                        continue;
-                    MenuItem menuItem = new MenuItem
-                    {
-                        Header = $"{move.Name} ({move.CurrentPoints} / {move.MaxPoints})"
-                    };
-                    menuItem.Tag = i + 1;
-                    if (move.CurrentPoints > 0)
-                        menuItem.Click += Attack_Click;
-                    else
-                        menuItem.IsEnabled = false;
-                    attacks.Items.Add(menuItem);
+                    Header = move.Name,
+                    InputGestureText = $"({move.PP})",
+                };
+                menuItem.Tag = i + 1;
+                if (move.CurrentPoints > 0)
+                {
+                    menuItem.Click += Attack_Click;
+                    hasPP = true;
                 }
+                else
+                {
+                    menuItem.IsEnabled = false;
+                }
+                attacks.Items.Add(menuItem);
             }
-            else
+
+            if (!hasPP)
             {
                 MenuItem menuItem = new MenuItem
                 {
@@ -280,6 +285,7 @@ namespace PROShine.Views
                 menuItem.Click += Attack_Click;
                 attacks.Items.Add(menuItem);
             }
+
             attacks.PlacementTarget = sender as Button;
             attacks.IsOpen = true;
         }
@@ -301,7 +307,8 @@ namespace PROShine.Views
                 {
                     MenuItem menuItem = new MenuItem
                     {
-                        Header = $"{item.Name} ({item.Quantity})"
+                        Header = item.Name,
+                        InputGestureText = $"({item.Quantity})",
                     };
                     if (item.CanBeUsedOnPokemonInBattle)
                     {
@@ -348,7 +355,8 @@ namespace PROShine.Views
             {
                 MenuItem pokemonItem = new MenuItem
                 {
-                    Header = $"{pokemon.Name} Lv. {pokemon.Level}\t\t{pokemon.Health} HP"
+                    Header = pokemon.Name,
+                    InputGestureText = $"Lv. {pokemon.Level} - {pokemon.Health} HP",
                 };
                 pokemonItem.Tag = pokemon.Uid;
                 if (pokemon.Uid == _bot.Game.ActiveBattle.SelectedPokemonIndex + 1 || pokemon.CurrentHealth <= 0)
