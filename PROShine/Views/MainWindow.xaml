@@ -110,7 +110,7 @@
                     <MenuItem Name="BotStopMenuItem" Header="Stop" IsEnabled="False" Click="BotStopMenuItem_Click" />
                     <Separator />
                     <MenuItem Name="MenuPathScript" Header="Script: None" Click="MenuPathScript_Click" />
-                    <MenuItem Name="MenuReloadScript" Header="Reload Script" IsEnabled="False" Click="ReloadScript_Click" />
+                    <MenuItem Name="MenuReloadScript" Header="Reload Script" InputGestureText="Ctrl+R" IsEnabled="False" Click="ReloadScript_Click" />
                 </MenuItem>
                 <MenuItem Header="Help">
                     <MenuItem Header="Community (Forum)" Click="MenuForum_Click" />

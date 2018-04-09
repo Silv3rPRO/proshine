@@ -74,17 +74,17 @@ namespace PROShine
             
             InitializeComponent();
 
-            AutoEvolveSwitch.IsChecked = UserSettings.AutoEvolve;
-            AvoidStaffSwitch.IsChecked = UserSettings.AvoidStaff;
-            AutoReconnectSwitch.IsChecked = UserSettings.AutoReconnect;
+            AutoEvolveSwitch.IsChecked = Bot.Settings.AutoEvolve;
+            AvoidStaffSwitch.IsChecked = Bot.Settings.AvoidStaff;
+            AutoReconnectSwitch.IsChecked = Bot.Settings.AutoReconnect;
 
-            Bot.PokemonEvolver.IsEnabled = UserSettings.AutoEvolve;
-            Bot.StaffAvoider.IsEnabled = UserSettings.AvoidStaff;
-            Bot.AutoReconnector.IsEnabled = UserSettings.AutoReconnect;
+            Bot.PokemonEvolver.IsEnabled = Bot.Settings.AutoEvolve;
+            Bot.StaffAvoider.IsEnabled = Bot.Settings.AvoidStaff;
+            Bot.AutoReconnector.IsEnabled = Bot.Settings.AutoReconnect;
 
-            if (!string.IsNullOrEmpty(UserSettings.LastScript))
+            if (!string.IsNullOrEmpty(Bot.Settings.LastScript))
             {
-                MenuReloadScript.Header = "Reload " + Path.GetFileName(UserSettings.LastScript) + "\tCtrl+R";
+                MenuReloadScript.Header = "Reload " + Path.GetFileName(Bot.Settings.LastScript);
                 MenuReloadScript.IsEnabled = true;
             }
 
@@ -360,8 +360,8 @@ namespace PROShine
             {
                 lock (Bot)
                 {
-                    UserSettings.LastScript = filePath;
-                    MenuReloadScript.Header = "Reload " + Path.GetFileName(filePath) + "\tCtrl+R";
+                    Bot.Settings.LastScript = filePath;
+                    MenuReloadScript.Header = "Reload " + Path.GetFileName(filePath);
                     MenuReloadScript.IsEnabled = true;
                     Bot.SliderOptions.Clear();
                     Bot.TextOptions.Clear();
@@ -568,7 +568,7 @@ namespace PROShine
         {
             Dispatcher.InvokeAsync(delegate
             {
-                UserSettings.AutoReconnect = value;
+                Bot.Settings.AutoReconnect = value;
                 if (AutoReconnectSwitch.IsChecked == value) return;
                 AutoReconnectSwitch.IsChecked = value;
             });
@@ -578,7 +578,7 @@ namespace PROShine
         {
             Dispatcher.InvokeAsync(delegate
             {
-                UserSettings.AvoidStaff = value;
+                Bot.Settings.AvoidStaff = value;
                 if (AvoidStaffSwitch.IsChecked == value) return;
                 AvoidStaffSwitch.IsChecked = value;
             });
@@ -588,7 +588,7 @@ namespace PROShine
         {
             Dispatcher.InvokeAsync(delegate
             {
-                UserSettings.AutoEvolve = value;
+                Bot.Settings.AutoEvolve = value;
                 if (AutoEvolveSwitch.IsChecked == value) return;
                 AutoEvolveSwitch.IsChecked = value;
             });
@@ -969,16 +969,16 @@ namespace PROShine
 
         private void ReloadScript_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(UserSettings.LastScript))
+            if (string.IsNullOrEmpty(Bot.Settings.LastScript))
                 return;
-            LoadScript(UserSettings.LastScript);
+            LoadScript(Bot.Settings.LastScript);
         }
 
         private void ReloadHotkey_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(UserSettings.LastScript))
+            if (string.IsNullOrEmpty(Bot.Settings.LastScript))
                 return;
-            LoadScript(UserSettings.LastScript);
+            LoadScript(Bot.Settings.LastScript);
         }
     }
 }

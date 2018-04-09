@@ -22,6 +22,7 @@ namespace PROBot
         public AccountManager AccountManager { get; private set; }
         public Random Rand { get; private set; }
         public Account Account { get; set; }
+        public UserSettings Settings { get; private set;}
 
         public State Running { get; private set; }
         public bool IsPaused { get; private set; }
@@ -59,6 +60,7 @@ namespace PROBot
             Rand = new Random();
             SliderOptions = new Dictionary<int, OptionSlider>();
             TextOptions = new Dictionary<int, TextOption>();
+            Settings = new UserSettings();
         }
 
         public void RemoveText(int index)

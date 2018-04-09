@@ -5,11 +5,11 @@ using Newtonsoft.Json.Serialization;
 
 namespace PROBot
 {
-    public static class UserSettings
+    public class UserSettings
     {
-        private static SettingsCache _settings;
+        private SettingsCache _settings;
 
-        public static bool AutoReconnect
+        public bool AutoReconnect
         {
             get { return _settings.AutoReconnect; }
             set
@@ -22,7 +22,7 @@ namespace PROBot
             }
         }
 
-        public static bool AvoidStaff
+        public bool AvoidStaff
         {
             get { return _settings.AvoidStaff; }
             set
@@ -35,7 +35,7 @@ namespace PROBot
             }
         }
 
-        public static bool AutoEvolve
+        public bool AutoEvolve
         {
             get { return _settings.AutoEvolve; }
             set
@@ -48,7 +48,7 @@ namespace PROBot
             }
         }
 
-        public static string LastScript
+        public string LastScript
         {
             get { return _settings.LastScript; }
             set
@@ -61,7 +61,7 @@ namespace PROBot
             }
         }
 
-        static UserSettings()
+        public UserSettings()
         {
             try
             {
