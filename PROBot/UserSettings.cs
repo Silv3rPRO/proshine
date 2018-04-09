@@ -63,25 +63,18 @@ namespace PROBot
 
         static UserSettings()
         {
-            if (File.Exists("Settings.json"))
+            try
             {
-                string fileText = File.ReadAllText("Settings.json");
-                JObject json;
-                try
+                if (File.Exists("Settings.json"))
                 {
-                    json = JsonConvert.DeserializeObject(fileText) as JObject;
-                }
-                catch
-                {
-                    _settings = new SettingsCache();
+                    string fileText = File.ReadAllText("Settings.json");
+                    JObject json = JsonConvert.DeserializeObject(fileText) as JObject;
+                    _settings = JsonConvert.DeserializeObject<SettingsCache>(json.ToString());
                     return;
                 }
-                _settings = JsonConvert.DeserializeObject<SettingsCache>(json.ToString());
             }
-            else
-            {
-                _settings = new SettingsCache();
-            }
+            catch { }
+            _settings = new SettingsCache();
         }
 
         private class SettingsCache
