@@ -1,13 +1,12 @@
-﻿using PROBot;
+﻿using FontAwesome.WPF;
+using PROBot;
 using PROProtocol;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using FontAwesome.WPF;
 using System.Windows.Media;
-using System.Linq;
-using System.Text;
 
 namespace PROShine.Views
 {
@@ -76,7 +75,7 @@ namespace PROShine.Views
                         evs.Add($"{type}: {ev}");
                 }
 
-                OpponentEVs.ToolTip = string.Join("&#xD;", evs);
+                OpponentEVs.ToolTip = string.Join(Environment.NewLine, evs);
 
                 Pokemon active = _bot.Game.Team[_bot.Game.ActiveBattle.SelectedPokemonIndex];
                 ActiveName.Text = active.Name;
@@ -207,6 +206,15 @@ namespace PROShine.Views
             });
         }
 
+        public void OnConnectionClosed()
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                PROShineLogo.Visibility = Visibility.Visible;
+                UIGrid.Visibility = Visibility.Hidden;
+            });
+        }
+
         public void OnActivePokemonChanged()
         {
             Dispatcher.InvokeAsync(delegate
@@ -242,18 +250,7 @@ namespace PROShine.Views
         {
             Pokemon active = _bot.Game.Team[_bot.Game.ActiveBattle.SelectedPokemonIndex];
             ContextMenu attacks = new ContextMenu();
-            bool hasPP = false;
-            for (int i = 0; i < active.Moves.Length; i++)
-            {
-                PokemonMove move = active.Moves[i];
-                if (move == null || string.IsNullOrEmpty(move.Name))
-                    continue;
-                if (move.CurrentPoints > 0)
-                {
-                    hasPP = true;
-                    break;
-                }
-            }
+            bool hasPP = active.Moves.Any(move => !string.IsNullOrEmpty(move?.Name) && move.CurrentPoints > 0);
             if (hasPP)
             {
                 for (int i = 0; i < active.Moves.Length; i++)

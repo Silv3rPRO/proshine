@@ -623,6 +623,7 @@ namespace PROShine
                     Bot.Game.BattleEnded += Battle.OnBattleEnd;
                     Bot.Game.OnActivePokemonChanged += Battle.OnActivePokemonChanged;
                     Bot.Game.OnOpponentChanged += Battle.OnOpponentChanged;
+                    Bot.ConnectionClosed += Battle.OnConnectionClosed;
                 }
             }
             Dispatcher.InvokeAsync(delegate
