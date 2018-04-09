@@ -37,7 +37,7 @@ namespace PROShine.Views
             };
         }
 
-        public void OnBattleUpdate()
+        public void BattleUpdated()
         {
             Dispatcher.InvokeAsync(delegate
             {
@@ -170,7 +170,7 @@ namespace PROShine.Views
             });
         }
 
-        public void OnBattleStart()
+        public void BattleStarted()
         {
             Dispatcher.InvokeAsync(delegate
             {
@@ -197,7 +197,7 @@ namespace PROShine.Views
             });
         }
 
-        public void OnBattleEnd()
+        public void BattleEnded()
         {
             Dispatcher.InvokeAsync(delegate
             {
@@ -206,7 +206,7 @@ namespace PROShine.Views
             });
         }
 
-        public void OnConnectionClosed()
+        public void ConnectionClosed()
         {
             Dispatcher.InvokeAsync(delegate
             {
@@ -215,7 +215,7 @@ namespace PROShine.Views
             });
         }
 
-        public void OnActivePokemonChanged()
+        public void ActivePokemonChanged()
         {
             Dispatcher.InvokeAsync(delegate
             {
@@ -235,7 +235,7 @@ namespace PROShine.Views
             });
         }
 
-        public void OnOpponentChanged()
+        public void OpponentChanged()
         {
             Dispatcher.InvokeAsync(delegate
             {

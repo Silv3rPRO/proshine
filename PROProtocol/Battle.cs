@@ -5,8 +5,8 @@ namespace PROProtocol
 {
     public class Battle
     {
-        public event Action OnOpponentChanged;
-        public event Action OnActivePokemonChanged;
+        public event Action OpponentChanged;
+        public event Action ActivePokemonChanged;
 
         public int OpponentId { get; private set; }
         public int OpponentHealth { get; private set; }
@@ -140,7 +140,7 @@ namespace PROProtocol
                     if (SelectedPokemonIndex != index)
                     {
                         SelectedPokemonIndex = index;
-                        OnActivePokemonChanged?.Invoke();
+                        ActivePokemonChanged?.Invoke();
                     }
                 }
                 else
@@ -157,7 +157,7 @@ namespace PROProtocol
                     if (_opponentFainted)
                     {
                         _opponentFainted = false;
-                        OnOpponentChanged?.Invoke();
+                        OpponentChanged?.Invoke();
                     }
                 }
                 return true;

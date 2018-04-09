@@ -97,8 +97,8 @@ namespace PROProtocol
         public event Action<Shop> ShopOpened;
         public event Action<List<Pokemon>> PCBoxUpdated;
         public event Action<string> LogMessage;
-        public event Action OnActivePokemonChanged;
-        public event Action OnOpponentChanged;
+        public event Action ActivePokemonChanged;
+        public event Action OpponentChanged;
         
         private const string Version = "2018E";
 
@@ -1385,8 +1385,8 @@ namespace PROProtocol
 
             IsInBattle = true;
             ActiveBattle = new Battle(PlayerName, data);
-            ActiveBattle.OnActivePokemonChanged += OnActivePokemonChanged;
-            ActiveBattle.OnOpponentChanged += OnOpponentChanged;
+            ActiveBattle.ActivePokemonChanged += ActivePokemonChanged;
+            ActiveBattle.OpponentChanged += OpponentChanged;
 
             _movements.Clear();
             _slidingDirection = null;

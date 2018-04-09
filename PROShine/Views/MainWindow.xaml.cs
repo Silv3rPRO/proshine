@@ -618,12 +618,12 @@ namespace PROShine
                     Bot.Game.PlayerRemoved += Map.Client_PlayerLeftMap;
                     Bot.Game.PlayerUpdated += Map.Client_PlayerMoved;
                     Bot.Game.NpcReceived += Map.Client_NpcReceived;
-                    Bot.Game.BattleUpdated += Battle.OnBattleUpdate;
-                    Bot.Game.BattleStarted += Battle.OnBattleStart;
-                    Bot.Game.BattleEnded += Battle.OnBattleEnd;
-                    Bot.Game.OnActivePokemonChanged += Battle.OnActivePokemonChanged;
-                    Bot.Game.OnOpponentChanged += Battle.OnOpponentChanged;
-                    Bot.ConnectionClosed += Battle.OnConnectionClosed;
+                    Bot.Game.BattleUpdated += Battle.BattleUpdated;
+                    Bot.Game.BattleStarted += Battle.BattleStarted;
+                    Bot.Game.BattleEnded += Battle.BattleEnded;
+                    Bot.Game.ActivePokemonChanged += Battle.ActivePokemonChanged;
+                    Bot.Game.OpponentChanged += Battle.OpponentChanged;
+                    Bot.ConnectionClosed += Battle.ConnectionClosed;
                 }
             }
             Dispatcher.InvokeAsync(delegate
