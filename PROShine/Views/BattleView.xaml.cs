@@ -312,15 +312,16 @@ namespace PROShine.Views
                     };
                     if (item.CanBeUsedOnPokemonInBattle)
                     {
-                        for (int i = 0; i < _bot.Game.Team.Count; i++)
+                        foreach (Pokemon pokemon in _bot.Game.Team)
                         {
-                            MenuItem pokemon = new MenuItem
+                            MenuItem pokemonItem = new MenuItem
                             {
-                                Header = _bot.Game.Team[i].Name
+                                Header = pokemon.Name,
+                                InputGestureText = $"Lv. {pokemon.Level} ({pokemon.Health} HP)",
                             };
-                            pokemon.Tag = $"{item.Id}@{i + 1}";
-                            pokemon.Click += Item_Click;
-                            menuItem.Items.Add(pokemon);
+                            pokemonItem.Tag = $"{item.Id}@{pokemon.Uid}";
+                            pokemonItem.Click += Item_Click;
+                            menuItem.Items.Add(pokemonItem);
                         }
                     }
                     else
@@ -356,7 +357,7 @@ namespace PROShine.Views
                 MenuItem pokemonItem = new MenuItem
                 {
                     Header = pokemon.Name,
-                    InputGestureText = $"Lv. {pokemon.Level} - {pokemon.Health} HP",
+                    InputGestureText = $"Lv. {pokemon.Level} ({pokemon.Health} HP)",
                 };
                 pokemonItem.Tag = pokemon.Uid;
                 if (pokemon.Uid == _bot.Game.ActiveBattle.SelectedPokemonIndex + 1 || pokemon.CurrentHealth <= 0)
