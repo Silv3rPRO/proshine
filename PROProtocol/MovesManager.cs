@@ -58,7 +58,30 @@ namespace PROProtocol
                 }
             }
         }
-
+        public MoveData GetMoveData(string moveName)
+        {
+            if (!string.IsNullOrEmpty(moveName))
+            {
+                for (int i = 1; i < MovesCount; i++)
+                {
+                    if (_idsToMoves[i].Name.ToLowerInvariant() == moveName.ToLowerInvariant())
+                        return _idsToMoves[i];
+                }
+            }
+            return null;
+        }
+        public int GetMoveID(string moveName)
+        {
+            if (!string.IsNullOrEmpty(moveName))
+            {
+                for (int i = 1; i < MovesCount; i++)
+                {
+                    if (_idsToMoves[i].Name.ToLowerInvariant() == moveName.ToLowerInvariant())
+                        return i;
+                }
+            }
+            return -1;
+        }
         public MoveData GetMoveData(int moveId)
         {
             if (moveId > 0 && moveId < MovesCount)

@@ -191,6 +191,7 @@ namespace PROBot.Scripting
             _lua.Globals["isNpcVisible"] = new Func<string, bool>(IsNpcVisible);
             _lua.Globals["isNpcOnCell"] = new Func<int, int, bool>(IsNpcOnCell);
             _lua.Globals["isShopOpen"] = new Func<bool>(IsShopOpen);
+            _lua.Globals["isRelearningMoves"] = new Func<bool>(IsRelearningMoves);
             _lua.Globals["getMoney"] = new Func<int>(GetMoney);
             _lua.Globals["isMounted"] = new Func<bool>(IsMounted);
             _lua.Globals["isSurfing"] = new Func<bool>(IsSurfing);
@@ -282,6 +283,7 @@ namespace PROBot.Scripting
             _lua.Globals["sortTeamRangeByLevelAscending"] = new Func<int, int, bool>(SortTeamRangeByLevelAscending);
             _lua.Globals["sortTeamRangeByLevelDescending"] = new Func<int, int, bool>(SortTeamRangeByLevelDescending);
             _lua.Globals["buyItem"] = new Func<string, int, bool>(BuyItem);
+            _lua.Globals["relearnMove"] = new Func<string, bool>(RelearnMove);
             _lua.Globals["usePC"] = new Func<bool>(UsePC);
             _lua.Globals["openPCBox"] = new Func<int, bool>(OpenPCBox);
             _lua.Globals["depositPokemonToPC"] = new Func<int, bool>(DepositPokemonToPC);
@@ -1243,7 +1245,11 @@ namespace PROBot.Scripting
         {
             return Bot.Game.OpenedShop != null;
         }
-
+        // API: Returns true if the player is relearing a move of a Pokemon from a Npc.
+        private bool IsRelearningMoves()
+        {
+            return Bot.Game.MoveRelearner != null;
+        }
         // API: Returns the amount of money in the inventory.
         private int GetMoney()
         {
@@ -2464,7 +2470,27 @@ namespace PROBot.Scripting
 
             return ExecuteAction(Bot.Game.BuyItem(item.Id, quantity));
         }
+        // API: Relearn Moves from Move Relarn Npc(s)
+        private bool RelearnMove(string moveName)
+        {
+            if (!ValidateAction("relearnMove", false)) return false;
+            if (GetMoney() < 2000) return false;
 
+            if (Bot.Game.MoveRelearner is null)
+            {
+                Fatal("error: relearnMove can only be used when you have talked with the move relearner npc.");
+                return false;
+            }
+
+            MovesManager.MoveData move = Bot.Game.MoveRelearner.Moves.FirstOrDefault(i => i.Name.Equals(moveName.ToLowerInvariant(), StringComparison.InvariantCultureIgnoreCase));
+
+            if (move == null)
+            {
+                Fatal($"error: relearnMove: the move '{ moveName }' cannot be learn by the current Pokemon or already learnt.");
+                return false;
+            }
+            return ExecuteAction(Bot.Game.PurchaseMove(moveName));
+        }
         // API: Give the specified item on the specified pokemon.
         private bool GiveItemToPokemon(string itemName, int pokemonIndex)
         {
