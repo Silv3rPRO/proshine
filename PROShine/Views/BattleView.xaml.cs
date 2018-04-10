@@ -109,62 +109,65 @@ namespace PROShine.Views
         {
             Dispatcher.InvokeAsync(delegate
             {
-                if (_bot.Game != null && _bot.Game.IsInBattle)
+                if (_bot.Game != null && _bot.Game.ActiveBattle != null)
                 {
-                    // All buttons are enabled only if client is inactive and the bot's script isn't running
-                    Buttons.IsEnabled = _bot.Game.IsInactive && _bot.Running != BotClient.State.Started;
-
-                    Pokemon active = _bot.Game.Team[_bot.Game.ActiveBattle.SelectedPokemonIndex];
-
-                    // Only the 'Pokemon' button is enabled if active Pokemon has been knocked out
-                    AttackButton.IsEnabled = ItemButton.IsEnabled = active.CurrentHealth > 0;
-
-                    RunButton.IsEnabled = active.CurrentHealth > 0 && _bot.Game.ActiveBattle.IsWild;
-
-                    // Hide the graphics if the window is too small
-                    OpponentGraphic.Visibility = _parent.Width < 530 ? Visibility.Hidden : Visibility.Visible;
-                    PlayerGraphic.Visibility = _parent.Width < 425 ? Visibility.Hidden : Visibility.Visible;
-
-                    // Lerp health bar widths and colors to target positions
-
-                    int targetWidth = _bot.Game.ActiveBattle.CurrentHealth;
-                    int maxHealth = _bot.Game.ActiveBattle.OpponentHealth;
-                    if (_opponentHPWidth != targetWidth)
+                    lock (_bot.Game.ActiveBattle)
                     {
-                        _opponentHPWidth -= (_opponentHPWidth - targetWidth) * 0.035;
-                        OpponentHealthBar.Width = _opponentHPWidth / maxHealth * 200;
-                        OpponentHealthBar.Background = new SolidColorBrush(EvaluateGradient(_opponentHPWidth / maxHealth));
-                    }
+                        // All buttons are enabled only if client is inactive and the bot's script isn't running
+                        Buttons.IsEnabled = _bot.Game.IsInactive && _bot.Running != BotClient.State.Started;
 
-                    if (_activeHPWidth != active.CurrentHealth)
-                    {
-                        _activeHPWidth -= (_activeHPWidth - active.CurrentHealth) * 0.035;
-                        ActiveHealthBar.Width = _activeHPWidth / active.MaxHealth * 200;
-                        ActiveHealthBar.Background = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
-                    }
+                        Pokemon active = _bot.Game.Team[_bot.Game.ActiveBattle.SelectedPokemonIndex];
 
-                    if (active.Experience.CurrentLevel == 100)
-                    {
-                        ExpBar.Width = 200;
-                    }
-                    else
-                    {
-                        int ratio = active.Experience.RatioToNextLevel;
+                        // Only the 'Pokemon' button is enabled if active Pokemon has been knocked out
+                        AttackButton.IsEnabled = ItemButton.IsEnabled = active.CurrentHealth > 0;
 
-                        // Small half unit buffer so _expBarWidth won't be greater than ratio unless the Pokemon levels up
-                        if (_expBarWidth < ratio - 0.5)
+                        RunButton.IsEnabled = active.CurrentHealth > 0 && _bot.Game.ActiveBattle.IsWild;
+
+                        // Hide the graphics if the window is too small
+                        OpponentGraphic.Visibility = _parent.Width < 530 ? Visibility.Hidden : Visibility.Visible;
+                        PlayerGraphic.Visibility = _parent.Width < 425 ? Visibility.Hidden : Visibility.Visible;
+
+                        // Lerp health bar widths and colors to target positions
+
+                        int targetWidth = _bot.Game.ActiveBattle.CurrentHealth;
+                        int maxHealth = _bot.Game.ActiveBattle.OpponentHealth;
+                        if (_opponentHPWidth != targetWidth)
                         {
-                            _expBarWidth += (ratio - _expBarWidth) * 0.035;
+                            _opponentHPWidth -= (_opponentHPWidth - targetWidth) * 0.035;
+                            OpponentHealthBar.Width = _opponentHPWidth / maxHealth * 200;
+                            OpponentHealthBar.Background = new SolidColorBrush(EvaluateGradient(_opponentHPWidth / maxHealth));
                         }
-                        else if (_expBarWidth > ratio)
+
+                        if (_activeHPWidth != active.CurrentHealth)
                         {
-                            // Pokemon just leveled up. Fill bar all the way, then empty it immediately
-                            if (_expBarWidth < 54)
-                                _expBarWidth += (54 - _expBarWidth) * 0.035;
-                            else
-                                _expBarWidth = 0;
+                            _activeHPWidth -= (_activeHPWidth - active.CurrentHealth) * 0.035;
+                            ActiveHealthBar.Width = _activeHPWidth / active.MaxHealth * 200;
+                            ActiveHealthBar.Background = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
                         }
-                        ExpBar.Width = _expBarWidth * 3.7;
+
+                        if (active.Experience.CurrentLevel == 100)
+                        {
+                            ExpBar.Width = 200;
+                        }
+                        else
+                        {
+                            int ratio = active.Experience.RatioToNextLevel;
+
+                            // Small half unit buffer so _expBarWidth won't be greater than ratio unless the Pokemon levels up
+                            if (_expBarWidth < ratio - 0.5)
+                            {
+                                _expBarWidth += (ratio - _expBarWidth) * 0.035;
+                            }
+                            else if (_expBarWidth > ratio)
+                            {
+                                // Pokemon just leveled up. Fill bar all the way, then empty it immediately
+                                if (_expBarWidth < 54)
+                                    _expBarWidth += (54 - _expBarWidth) * 0.035;
+                                else
+                                    _expBarWidth = 0;
+                            }
+                            ExpBar.Width = _expBarWidth * 3.7;
+                        }
                     }
                 }
             });
