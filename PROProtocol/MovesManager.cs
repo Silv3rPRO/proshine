@@ -34,15 +34,14 @@ namespace PROProtocol
 
         public MoveData[] Moves = new MoveData[MovesCount];
         public string[] MoveNames = new string[MovesCount];
-        private Dictionary<string, MoveData> _namesToMoves;
-        private Dictionary<string, int> _namesToIds;
+        private Dictionary<string, MoveData> _namesToMoves = new Dictionary<string, MoveData>();
+        private Dictionary<string, int> _namesToIds = new Dictionary<string, int>();
         private MoveData[] _idsToMoves = new MoveData[MovesCount];
 
         private MovesManager()
         {
             LoadMoves();
 
-            _namesToMoves = new Dictionary<string, MoveData>();
             for (int i = 0; i < MovesCount; i++)
             {
                 if (Moves[i].Name != null && !_namesToMoves.ContainsKey(Moves[i].Name))
