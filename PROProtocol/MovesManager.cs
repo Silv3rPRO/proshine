@@ -65,6 +65,7 @@ namespace PROProtocol
 
         public int GetMoveId(string moveName)
         {
+            moveName = moveName.ToLowerInvariant();
             if (_namesToIds.ContainsKey(moveName))
             {
                 return _namesToIds[moveName];
@@ -74,6 +75,7 @@ namespace PROProtocol
 
         public MoveData GetMoveData(string moveName)
         {
+            moveName = moveName.ToLowerInvariant();
             if (_namesToMoves.ContainsKey(moveName))
             {
                 return _namesToMoves[moveName];
