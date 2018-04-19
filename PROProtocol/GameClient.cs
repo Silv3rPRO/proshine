@@ -479,7 +479,7 @@ namespace PROProtocol
         public void SendAuthentication(string username, string password, string hash)
         {
             // DSSock.AttemptLogin
-            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|X" + hash);
+            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|G" + hash);
         }
 
         public void SendUseItem(int id, int pokemon = 0)
