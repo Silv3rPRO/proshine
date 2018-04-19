@@ -97,7 +97,7 @@ namespace PROProtocol
         public event Action<List<Pokemon>> PCBoxUpdated;
         public event Action<string> LogMessage;
         
-        private const string Version = "2018E";
+        private const string Version = "2018F";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -479,7 +479,7 @@ namespace PROProtocol
         public void SendAuthentication(string username, string password, string hash)
         {
             // DSSock.AttemptLogin
-            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|X" + hash);
+            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|G" + hash);
         }
 
         public void SendUseItem(int id, int pokemon = 0)
