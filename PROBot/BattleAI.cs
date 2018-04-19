@@ -227,7 +227,7 @@ namespace PROBot
                     power = 0;
                 }
 
-                power = ApplySpecialEffects(move, power);
+                power *= ApplySpecialEffects(move);
 
                 if (move.Id == Synchronoise)
                 {
@@ -293,7 +293,7 @@ namespace PROBot
             return moveData.Power > 0 || move.Id == DragonRage || move.Id == SeismicToss || move.Id == NightShade || move.Id == Psywave;
         }
 
-        private double ApplySpecialEffects(PokemonMove move, double power)
+        private double ApplySpecialEffects(PokemonMove move)
         {
             if (move.Id == DragonRage)
             {
@@ -315,7 +315,7 @@ namespace PROBot
                 return 0.1;
             }
 
-            return power;
+            return 1.0;
         }
     }
 }
