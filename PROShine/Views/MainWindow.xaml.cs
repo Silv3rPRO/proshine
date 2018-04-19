@@ -608,6 +608,7 @@ namespace PROShine
                     Bot.Game.InvalidPacket += Client_InvalidPacket;
                     Bot.Game.PokeTimeUpdated += Client_PokeTimeUpdated;
                     Bot.Game.ShopOpened += Client_ShopOpened;
+                    Bot.Game.MoveRelearnerOpened += Client_MoveRelearnerOpened;
                     Bot.Game.MapLoaded += Map.Client_MapLoaded;
                     Bot.Game.PositionUpdated += Map.Client_PositionUpdated;
                     Bot.Game.PlayerAdded += Map.Client_PlayerEnteredMap;
@@ -776,6 +777,22 @@ namespace PROShine
                     content.AppendLine();
                     content.Append(item.Name);
                     content.Append(" ($" + item.Price + ")");
+                }
+                LogMessage(content.ToString());
+            });
+        }
+
+        private void Client_MoveRelearnerOpened(MoveRelearner moveRelearnManager)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                StringBuilder content = new StringBuilder();
+                content.Append("Move relearner:");
+                foreach (MovesManager.MoveData move in moveRelearnManager.Moves)
+                {
+                    content.AppendLine();
+                    content.Append(MovesManager.Instance.GetTrueName(move.Name));
+                    content.Append(" ($2000)");
                 }
                 LogMessage(content.ToString());
             });
