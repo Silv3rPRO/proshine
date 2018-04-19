@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -46,18 +47,25 @@
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>
-                                    <TextBlock Canvas.Top="8" Canvas.Left="184" Text="{Binding Gender}"  FontSize="15">
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
+                                    <fa:FontAwesome Canvas.Top="8" Canvas.Left="184" FontSize="15">
+                                        <fa:FontAwesome.Style>
+                                            <Style TargetType="fa:FontAwesome">
                                                 <Setter Property="Foreground" Value="White"/>
+                                                <Setter Property="Icon" Value="Question"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding IsShiny}" Value="True">
                                                         <Setter Property="Foreground" Value="Black"/>
                                                     </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Gender}" Value="M">
+                                                        <Setter Property="Icon" Value="Mars"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Gender}" Value="F">
+                                                        <Setter Property="Icon" Value="Venus"/>
+                                                    </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
+                                        </fa:FontAwesome.Style>
+                                    </fa:FontAwesome>
                                     <TextBlock Canvas.Top="8" Canvas.Left="237" Text="Level:" FontSize="15">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
