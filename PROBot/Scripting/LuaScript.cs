@@ -1245,11 +1245,13 @@ namespace PROBot.Scripting
         {
             return Bot.Game.OpenedShop != null;
         }
-        // API: Returns true if the player is relearing a move of a Pokemon from a Npc.
+
+        // API: Returns true if the player is relearning the move of a Pokemon from an NPC.
         private bool IsRelearningMoves()
         {
             return Bot.Game.MoveRelearner != null;
         }
+
         // API: Returns the amount of money in the inventory.
         private int GetMoney()
         {
@@ -2470,7 +2472,8 @@ namespace PROBot.Scripting
 
             return ExecuteAction(Bot.Game.BuyItem(item.Id, quantity));
         }
-        // API: Relearn Moves from Move Relarn Npc(s)
+
+        // API: Relearn a move from the move relearner NPC.
         private bool RelearnMove(string moveName)
         {
             if (!ValidateAction("relearnMove", false)) return false;
@@ -2491,6 +2494,7 @@ namespace PROBot.Scripting
             }
             return ExecuteAction(Bot.Game.PurchaseMove(moveName));
         }
+
         // API: Give the specified item on the specified pokemon.
         private bool GiveItemToPokemon(string itemName, int pokemonIndex)
         {

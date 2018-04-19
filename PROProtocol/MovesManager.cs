@@ -35,6 +35,7 @@ namespace PROProtocol
         public MoveData[] Moves = new MoveData[MovesCount];
         public string[] MoveNames = new string[MovesCount];
         private Dictionary<string, MoveData> _namesToMoves;
+        private Dictionary<string, int> _namesToIds;
         private MoveData[] _idsToMoves = new MoveData[MovesCount];
 
         private MovesManager()
@@ -55,38 +56,47 @@ namespace PROProtocol
                 if (_namesToMoves.ContainsKey(lowerName))
                 {
                     _idsToMoves[i] = _namesToMoves[lowerName];
+                    if (!_namesToIds.ContainsKey(lowerName))
+                    {
+                        _namesToIds.Add(lowerName, i);
+                    }
                 }
             }
         }
-        public MoveData GetMoveData(string moveName)
+
+        public int GetMoveId(string moveName)
         {
-            if (!string.IsNullOrEmpty(moveName))
+            if (_namesToIds.ContainsKey(moveName))
             {
-                for (int i = 1; i < MovesCount; i++)
-                {
-                    if (_idsToMoves[i].Name.ToLowerInvariant() == moveName.ToLowerInvariant())
-                        return _idsToMoves[i];
-                }
-            }
-            return null;
-        }
-        public int GetMoveID(string moveName)
-        {
-            if (!string.IsNullOrEmpty(moveName))
-            {
-                for (int i = 1; i < MovesCount; i++)
-                {
-                    if (_idsToMoves[i].Name.ToLowerInvariant() == moveName.ToLowerInvariant())
-                        return i;
-                }
+                return _namesToIds[moveName];
             }
             return -1;
         }
+
+        public MoveData GetMoveData(string moveName)
+        {
+            if (_namesToMoves.ContainsKey(moveName))
+            {
+                return _namesToMoves[moveName];
+            }
+            return null;
+        }
+
         public MoveData GetMoveData(int moveId)
         {
             if (moveId > 0 && moveId < MovesCount)
             {
                 return _idsToMoves[moveId];
+            }
+            return null;
+        }
+
+        public string GetTrueName(string lowerName)
+        {
+            int id = GetMoveId(lowerName);
+            if (id != -1)
+            {
+                return MoveNames[id];
             }
             return null;
         }
