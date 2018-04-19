@@ -1,12 +1,11 @@
-﻿using System;
+using System;
 
 namespace PROProtocol
 {
     public enum GameServer
     {
-        Red,
-        Blue,
-        Yellow
+        Silver,
+        Gold
     }
 
     public static class GameServerExtensions
@@ -15,11 +14,9 @@ namespace PROProtocol
         {
             switch (server)
             {
-                case GameServer.Red:
-                    return "95.183.48.67";
-                case GameServer.Blue:
-                    return "46.28.207.53";
-                case GameServer.Yellow:
+                case GameServer.Silver:
+                    return "95.183.48.126";
+                case GameServer.Gold:
                     return "46.28.205.63";
             }
             return null;
@@ -29,12 +26,10 @@ namespace PROProtocol
         {
             switch (name.ToUpperInvariant())
             {
-                case "RED":
-                    return GameServer.Red;
-                case "BLUE":
-                    return GameServer.Blue;
-                case "YELLOW":
-                    return GameServer.Yellow;
+                case "SILVER":
+                    return GameServer.Silver;
+                case "GOLD":
+                    return GameServer.Gold;
             }
             throw new Exception("The server " + name + " does not exist");
         }
