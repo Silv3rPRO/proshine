@@ -73,9 +73,20 @@ namespace PROShine
             Bot.TextboxRemoved += Bot_TextboxRemoved;
             
             InitializeComponent();
-            AutoReconnectSwitch.IsChecked = Bot.AutoReconnector.IsEnabled;
-            AvoidStaffSwitch.IsChecked = Bot.StaffAvoider.IsEnabled;
-            AutoEvolveSwitch.IsChecked = Bot.PokemonEvolver.IsEnabled;
+
+            AutoEvolveSwitch.IsChecked = Bot.Settings.AutoEvolve;
+            AvoidStaffSwitch.IsChecked = Bot.Settings.AvoidStaff;
+            AutoReconnectSwitch.IsChecked = Bot.Settings.AutoReconnect;
+
+            Bot.PokemonEvolver.IsEnabled = Bot.Settings.AutoEvolve;
+            Bot.StaffAvoider.IsEnabled = Bot.Settings.AvoidStaff;
+            Bot.AutoReconnector.IsEnabled = Bot.Settings.AutoReconnect;
+
+            if (!string.IsNullOrEmpty(Bot.Settings.LastScript))
+            {
+                MenuReloadScript.Header = "Reload " + Path.GetFileName(Bot.Settings.LastScript);
+                MenuReloadScript.IsEnabled = true;
+            }
 
             App.InitializeVersion();
 
@@ -349,6 +360,9 @@ namespace PROShine
             {
                 lock (Bot)
                 {
+                    Bot.Settings.LastScript = filePath;
+                    MenuReloadScript.Header = "Reload " + Path.GetFileName(filePath);
+                    MenuReloadScript.IsEnabled = true;
                     Bot.SliderOptions.Clear();
                     Bot.TextOptions.Clear();
                     _sliderOptions.Clear();
@@ -554,6 +568,7 @@ namespace PROShine
         {
             Dispatcher.InvokeAsync(delegate
             {
+                Bot.Settings.AutoReconnect = value;
                 if (AutoReconnectSwitch.IsChecked == value) return;
                 AutoReconnectSwitch.IsChecked = value;
             });
@@ -563,6 +578,7 @@ namespace PROShine
         {
             Dispatcher.InvokeAsync(delegate
             {
+                Bot.Settings.AvoidStaff = value;
                 if (AvoidStaffSwitch.IsChecked == value) return;
                 AvoidStaffSwitch.IsChecked = value;
             });
@@ -572,6 +588,7 @@ namespace PROShine
         {
             Dispatcher.InvokeAsync(delegate
             {
+                Bot.Settings.AutoEvolve = value;
                 if (AutoEvolveSwitch.IsChecked == value) return;
                 AutoEvolveSwitch.IsChecked = value;
             });
@@ -948,6 +965,20 @@ namespace PROShine
             {
                 LoadScript(file[0]);
             }
+        }
+
+        private void ReloadScript_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(Bot.Settings.LastScript))
+                return;
+            LoadScript(Bot.Settings.LastScript);
+        }
+
+        private void ReloadHotkey_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(Bot.Settings.LastScript))
+                return;
+            LoadScript(Bot.Settings.LastScript);
         }
     }
 }

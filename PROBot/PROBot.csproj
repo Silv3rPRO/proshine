@@ -58,6 +58,7 @@
     <Compile Include="Scripting\LuaScript.cs" />
     <Compile Include="Socks.cs" />
     <Compile Include="Modules\StaffAvoider.cs" />
+    <Compile Include="UserSettings.cs" />
     <Compile Include="Utils\TaskUtils.cs" />
   </ItemGroup>
   <ItemGroup>
