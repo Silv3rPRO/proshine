@@ -97,7 +97,7 @@ namespace PROProtocol
         public event Action<List<Pokemon>> PCBoxUpdated;
         public event Action<string> LogMessage;
         
-        private const string Version = "2018E";
+        private const string Version = "2018F";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
