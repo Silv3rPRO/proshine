@@ -29,6 +29,7 @@ namespace PROShine
         public ChatView Chat { get; private set; }
         public PlayersView Players { get; private set; }
         public MapView Map { get; private set; }
+        public BattleView Battle { get; private set; }
 
         private struct TabView
         {
@@ -95,6 +96,7 @@ namespace PROShine
             Chat = new ChatView(Bot);
             Players = new PlayersView(Bot);
             Map = new MapView(Bot);
+            Battle = new BattleView(Bot, this);
 
             FileLog = new FileLogger();
 
@@ -106,6 +108,7 @@ namespace PROShine
             AddView(Chat, ChatContent, ChatButton);
             AddView(Players, PlayersContent, PlayersButton);
             AddView(Map, MapContent, MapButton);
+            AddView(Battle, BattleContent, BattleButton);
 
             SetTitle(null);
 
@@ -282,6 +285,7 @@ namespace PROShine
                     Bot.Game.Update();
                 }
                 Bot.Update();
+                Battle.UpdateBattleHUD();
             }
             Task.Delay(1).ContinueWith((previous) => UpdateClients());
         }
@@ -632,6 +636,12 @@ namespace PROShine
                     Bot.Game.PlayerRemoved += Map.Client_PlayerLeftMap;
                     Bot.Game.PlayerUpdated += Map.Client_PlayerMoved;
                     Bot.Game.NpcReceived += Map.Client_NpcReceived;
+                    Bot.Game.BattleUpdated += Battle.BattleUpdated;
+                    Bot.Game.BattleStarted += Battle.BattleStarted;
+                    Bot.Game.BattleEnded += Battle.BattleEnded;
+                    Bot.Game.ActivePokemonChanged += Battle.ActivePokemonChanged;
+                    Bot.Game.OpponentChanged += Battle.OpponentChanged;
+                    Bot.ConnectionClosed += Battle.ConnectionClosed;
                 }
             }
             Dispatcher.InvokeAsync(delegate

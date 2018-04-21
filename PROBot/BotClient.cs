@@ -178,6 +178,11 @@ namespace PROBot
                 return;
             }
 
+            if (Game != null && Game.IsInBattle && Game.IsInactive && AI != null && AI.UseMandatoryAction())
+            {
+                return;
+            }
+
             if (Running != State.Started)
             {
                 return;

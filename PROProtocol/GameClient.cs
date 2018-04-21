@@ -77,6 +77,7 @@ namespace PROProtocol
         public event Action BattleStarted;
         public event Action<string> BattleMessage;
         public event Action BattleEnded;
+        public event Action BattleUpdated;
         public event Action<string> DialogOpened;
         public event Action<string, string, int> EmoteMessage;
         public event Action<string, string, string> ChatMessage;
@@ -98,6 +99,8 @@ namespace PROProtocol
         public event Action<MoveRelearner> MoveRelearnerOpened;
         public event Action<List<Pokemon>> PCBoxUpdated;
         public event Action<string> LogMessage;
+        public event Action ActivePokemonChanged;
+        public event Action OpponentChanged;
         
         private const string Version = "2018F";
 
@@ -1426,6 +1429,8 @@ namespace PROProtocol
 
             IsInBattle = true;
             ActiveBattle = new Battle(PlayerName, data);
+            ActiveBattle.ActivePokemonChanged += ActivePokemonChanged;
+            ActiveBattle.OpponentChanged += OpponentChanged;
 
             _movements.Clear();
             _slidingDirection = null;
@@ -1444,6 +1449,8 @@ namespace PROProtocol
                     BattleMessage?.Invoke(I18n.Replace(message));
                 }
             }
+
+            BattleUpdated?.Invoke();
         }
 
         private void OnBattleMessage(string[] data)
@@ -1465,6 +1472,7 @@ namespace PROProtocol
             }
 
             PokemonsUpdated?.Invoke();
+            BattleUpdated?.Invoke();
 
             if (ActiveBattle.IsFinished)
             {

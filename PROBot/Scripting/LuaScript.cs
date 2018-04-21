@@ -92,11 +92,6 @@ namespace PROBot.Scripting
 
         public override bool ExecuteNextAction()
         {
-            if (Bot.Game.IsInBattle && Bot.AI.UseMandatoryAction())
-            {
-                return true;
-            }
-
             string functionName = Bot.Game.IsInBattle ? "onBattleAction" : "onPathAction";
 
             _actionExecuted = false;
@@ -2553,23 +2548,18 @@ namespace PROBot.Scripting
             }
         }
 
-        private static HashSet<int> _outOfCombatItemScopes = new HashSet<int> { 8, 10, 15 };
-        private static HashSet<int> _inCombatItemScopes = new HashSet<int> { 5 };
-        private static HashSet<int> _outOfCombatOnPokemonItemScopes = new HashSet<int> { 2, 3, 9, 13, 14 };
-        private static HashSet<int> _inCombatOnPokemonItemScopes = new HashSet<int> { 2 };
-
         // API: Uses the specified item.
         private bool UseItem(string itemName)
         {
             InventoryItem item = Bot.Game.GetItemFromName(itemName.ToUpperInvariant());
             if (item != null && item.Quantity > 0)
             {
-                if (Bot.Game.IsInBattle && _inCombatItemScopes.Contains(item.Scope))
+                if (Bot.Game.IsInBattle && item.CanBeUsedInBattle)
                 {
                     if (!ValidateAction("useItem", true)) return false;
                     return ExecuteAction(Bot.AI.UseItem(item.Id));
                 }
-                else if (!Bot.Game.IsInBattle && _outOfCombatItemScopes.Contains(item.Scope))
+                else if (!Bot.Game.IsInBattle && item.CanBeUsedOutsideOfBattle)
                 {
                     if (!ValidateAction("useItem", false)) return false;
                     Bot.Game.UseItem(item.Id);
@@ -2587,12 +2577,12 @@ namespace PROBot.Scripting
 
             if (item != null && item.Quantity > 0)
             {
-                if (Bot.Game.IsInBattle && _inCombatOnPokemonItemScopes.Contains(item.Scope))
+                if (Bot.Game.IsInBattle && item.CanBeUsedOnPokemonInBattle)
                 {
                     if (!ValidateAction("useItemOnPokemon", true)) return false;
                     return ExecuteAction(Bot.AI.UseItem(item.Id, pokemonIndex));
                 }
-                else if (!Bot.Game.IsInBattle && _outOfCombatOnPokemonItemScopes.Contains(item.Scope))
+                else if (!Bot.Game.IsInBattle && item.CanBeUsedOnPokemonOutsideOfBattle)
                 {
                     if (!ValidateAction("useItemOnPokemon", false)) return false;
                     Bot.Game.UseItem(item.Id, pokemonIndex);
