@@ -116,6 +116,7 @@ namespace PROBot.Scripting
             _lua.Globals["log"] = new Action<string>(Log);
             _lua.Globals["fatal"] = new Action<string>(Fatal);
             _lua.Globals["logout"] = new Action<string>(Logout);
+            _lua.Globals["relog"] = new Action<double, string>(Relog);
             _lua.Globals["stringContains"] = new Func<string, string, bool>(StringContains);
             _lua.Globals["playSound"] = new Action<string>(PlaySound);
             _lua.Globals["registerHook"] = new Action<string, DynValue>(RegisterHook);
@@ -449,6 +450,13 @@ namespace PROBot.Scripting
             LogMessage(message);
             Bot.Stop();
             Bot.Logout(false);
+        }
+
+        // API: Logs out and logs back in after the specified number of seconds.
+        private void Relog(double delay, string message)
+        {
+            LogMessage(message);
+            Bot.Relog(delay);
         }
 
         // API return an array of all NPCs that can be challenged on the current map. format : {"npcName" = {"x" = x, "y" = y}}

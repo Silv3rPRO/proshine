@@ -140,6 +140,13 @@ namespace PROBot
             _loginRequested = true;
         }
 
+        public void Relog(double delay)
+        {
+            Stop();
+            AutoReconnector.Relog(delay);
+            Game.Close();
+        }
+
         private void LoginUpdate()
         {
             GameClient client;
