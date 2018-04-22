@@ -26,6 +26,8 @@ namespace PROBot.Modules
 
         private BotClient _bot;
         private bool _reconnecting;
+        private bool _relogging;
+        private double _reloggingDelay;
         private DateTime _autoReconnectTimeout;
 
         public AutoReconnector(BotClient bot)
@@ -47,7 +49,7 @@ namespace PROBot.Modules
 
         public void Update()
         {
-            if (IsEnabled == true && _reconnecting && (_bot.Game == null || !_bot.Game.IsConnected))
+            if ((IsEnabled || _relogging) && _reconnecting && (_bot.Game == null || !_bot.Game.IsConnected))
             {
                 if (_autoReconnectTimeout < DateTime.UtcNow)
                 {
@@ -58,12 +60,19 @@ namespace PROBot.Modules
             }
         }
 
+        public void Relog(double delay)
+        {
+            _relogging = true;
+            _reloggingDelay = delay;
+        }
+
         private void Client_ConnectionClosed(Exception ex)
         {
-            if (IsEnabled)
+            if (IsEnabled || _relogging)
             {
                 _reconnecting = true;
-                int seconds = _bot.Rand.Next(MinDelay, MaxDelay + 1);
+                double seconds = _relogging ? _reloggingDelay : _bot.Rand.Next(MinDelay, MaxDelay + 1);
+
                 _autoReconnectTimeout = DateTime.UtcNow.AddSeconds(seconds);
                 _bot.LogMessage("Reconnecting in " + seconds + " seconds.");
             }
@@ -73,13 +82,15 @@ namespace PROBot.Modules
         {
             if (_reconnecting)
             {
-                _bot.Start();
                 _reconnecting = false;
+                _relogging = false;
+                _bot.Start();
             }
         }
 
         private void Client_AuthenticationFailed(AuthenticationResult result)
         {
+            _relogging = false;
             if (result == AuthenticationResult.InvalidUser || result == AuthenticationResult.InvalidPassword
                 || result == AuthenticationResult.InvalidVersion || result == AuthenticationResult.Banned
                 || result == AuthenticationResult.EmailNotActivated)

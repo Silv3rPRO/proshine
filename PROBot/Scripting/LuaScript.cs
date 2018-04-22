@@ -92,11 +92,6 @@ namespace PROBot.Scripting
 
         public override bool ExecuteNextAction()
         {
-            if (Bot.Game.IsInBattle && Bot.AI.UseMandatoryAction())
-            {
-                return true;
-            }
-
             string functionName = Bot.Game.IsInBattle ? "onBattleAction" : "onPathAction";
 
             _actionExecuted = false;
@@ -121,6 +116,7 @@ namespace PROBot.Scripting
             _lua.Globals["log"] = new Action<string>(Log);
             _lua.Globals["fatal"] = new Action<string>(Fatal);
             _lua.Globals["logout"] = new Action<string>(Logout);
+            _lua.Globals["relog"] = new Action<double, string>(Relog);
             _lua.Globals["stringContains"] = new Func<string, string, bool>(StringContains);
             _lua.Globals["playSound"] = new Action<string>(PlaySound);
             _lua.Globals["registerHook"] = new Action<string, DynValue>(RegisterHook);
@@ -454,6 +450,13 @@ namespace PROBot.Scripting
             LogMessage(message);
             Bot.Stop();
             Bot.Logout(false);
+        }
+
+        // API: Logs out and logs back in after the specified number of seconds.
+        private void Relog(double delay, string message)
+        {
+            LogMessage(message);
+            Bot.Relog(delay);
         }
 
         // API return an array of all NPCs that can be challenged on the current map. format : {"npcName" = {"x" = x, "y" = y}}
@@ -1245,11 +1248,13 @@ namespace PROBot.Scripting
         {
             return Bot.Game.OpenedShop != null;
         }
-        // API: Returns true if the player is relearing a move of a Pokemon from a Npc.
+
+        // API: Returns true if the player is relearning the move of a Pokemon from an NPC.
         private bool IsRelearningMoves()
         {
             return Bot.Game.MoveRelearner != null;
         }
+
         // API: Returns the amount of money in the inventory.
         private int GetMoney()
         {
@@ -2470,7 +2475,8 @@ namespace PROBot.Scripting
 
             return ExecuteAction(Bot.Game.BuyItem(item.Id, quantity));
         }
-        // API: Relearn Moves from Move Relarn Npc(s)
+
+        // API: Relearn a move from the move relearner NPC.
         private bool RelearnMove(string moveName)
         {
             if (!ValidateAction("relearnMove", false)) return false;
@@ -2491,6 +2497,7 @@ namespace PROBot.Scripting
             }
             return ExecuteAction(Bot.Game.PurchaseMove(moveName));
         }
+
         // API: Give the specified item on the specified pokemon.
         private bool GiveItemToPokemon(string itemName, int pokemonIndex)
         {
@@ -2549,23 +2556,18 @@ namespace PROBot.Scripting
             }
         }
 
-        private static HashSet<int> _outOfCombatItemScopes = new HashSet<int> { 8, 10, 15 };
-        private static HashSet<int> _inCombatItemScopes = new HashSet<int> { 5 };
-        private static HashSet<int> _outOfCombatOnPokemonItemScopes = new HashSet<int> { 2, 3, 9, 13, 14 };
-        private static HashSet<int> _inCombatOnPokemonItemScopes = new HashSet<int> { 2 };
-
         // API: Uses the specified item.
         private bool UseItem(string itemName)
         {
             InventoryItem item = Bot.Game.GetItemFromName(itemName.ToUpperInvariant());
             if (item != null && item.Quantity > 0)
             {
-                if (Bot.Game.IsInBattle && _inCombatItemScopes.Contains(item.Scope))
+                if (Bot.Game.IsInBattle && item.CanBeUsedInBattle)
                 {
                     if (!ValidateAction("useItem", true)) return false;
                     return ExecuteAction(Bot.AI.UseItem(item.Id));
                 }
-                else if (!Bot.Game.IsInBattle && _outOfCombatItemScopes.Contains(item.Scope))
+                else if (!Bot.Game.IsInBattle && item.CanBeUsedOutsideOfBattle)
                 {
                     if (!ValidateAction("useItem", false)) return false;
                     Bot.Game.UseItem(item.Id);
@@ -2583,12 +2585,12 @@ namespace PROBot.Scripting
 
             if (item != null && item.Quantity > 0)
             {
-                if (Bot.Game.IsInBattle && _inCombatOnPokemonItemScopes.Contains(item.Scope))
+                if (Bot.Game.IsInBattle && item.CanBeUsedOnPokemonInBattle)
                 {
                     if (!ValidateAction("useItemOnPokemon", true)) return false;
                     return ExecuteAction(Bot.AI.UseItem(item.Id, pokemonIndex));
                 }
-                else if (!Bot.Game.IsInBattle && _outOfCombatOnPokemonItemScopes.Contains(item.Scope))
+                else if (!Bot.Game.IsInBattle && item.CanBeUsedOnPokemonOutsideOfBattle)
                 {
                     if (!ValidateAction("useItemOnPokemon", false)) return false;
                     Bot.Game.UseItem(item.Id, pokemonIndex);
