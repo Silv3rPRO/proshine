@@ -1,0 +1,370 @@
+﻿<UserControl x:Class="PROShine.Views.BattleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:PROShine.Views"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:p="clr-namespace:PROShine"
+             mc:Ignorable="d"
+             d:DesignHeight="350" d:DesignWidth="600">
+    <Grid>
+        <Image Name="PROShineLogo" HorizontalAlignment="Center" Height="100" VerticalAlignment="Center" Width="100" Source="/PROShine;component/logo.ico" ToolTip="You are not currently in a battle."/>
+        <Grid Name="UIGrid" Visibility="Hidden">
+            <WrapPanel Name="Buttons" Background="#848484" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" MaxWidth="205">
+                <Button Name="AttackButton" Content="Attack" MinWidth="87" Margin="5" FontSize="20" Click="AttackButton_Click"/>
+                <Button Name="ItemButton" Content="Item" MinWidth="87" Margin="5" FontSize="20" Click="ItemButton_Click"/>
+                <Button Name="PokemonButton" Content="Pokemon" MinWidth="87" Margin="5" FontSize="20" Click="PokemonButton_Click"/>
+                <Button Name="RunButton" Content="Run" MinWidth="87" Margin="5" FontSize="20" Click="RunButton_Click"/>
+            </WrapPanel>
+            <fa:FontAwesome Name="OpponentGraphic" Icon="OptinMonster" Margin="20,20,50,20" FontSize="72" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Height="100"/>
+            <fa:FontAwesome Name="PlayerGraphic"  Icon="PaperPlaneOutline" Margin="50,20,20,0" FontSize="72" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="100"/>
+            <StackPanel Margin="10,10,10,10" ClipToBounds="False">
+                <WrapPanel>
+                    <TextBlock Name="OpponentName" TextWrapping="NoWrap" VerticalAlignment="Top" Height="Auto" MinWidth="210" FontSize="20" FontWeight="Bold" Text="[Opponent Name]"/>
+                    <fa:FontAwesome Name="OpponentGender" Margin="0,5,0,0" Icon="Question" Foreground="Black" FontSize="18"/>
+                    <Canvas Margin="10,0,0,20" Width="61">
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Lv." VerticalAlignment="Top" FontSize="20"/>
+                        <TextBlock Name="OpponentLevel" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="Auto" Width="Auto" FontSize="20" Text="100" Canvas.Left="28"/>
+                    </Canvas>
+                </WrapPanel>
+                <WrapPanel Margin="0,10,0,0">
+                    <Border BorderBrush="Black" Background="Gray" BorderThickness="3" CornerRadius="4" ClipToBounds="True">
+                        <Canvas Width="200" Height="14">
+                            <Border Name="OpponentHealthBar" CornerRadius="3" Background="Green" Width="200" Height="14"/>
+                            <TextBlock Name="OpponentCurrentHealth" Text="999" HorizontalAlignment="Right" Canvas.Right="104" Canvas.Bottom="-1"/>
+                            <TextBlock Text="/" Canvas.Left="98" Canvas.Bottom="0"/>
+                            <TextBlock Name="OpponentMaxHealth" Text="999" HorizontalAlignment="Left" Canvas.Left="104" Canvas.Bottom="-1"/>
+                        </Canvas>
+                    </Border>
+                    <TextBlock Name="OpponentStatus" Margin="10,-4,0,0" Text="[Status]" FontSize="18"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <fa:FontAwesome Name="OpponentCaughtIcon" Margin="0,5,0,0" Icon="Check" Foreground="Black" FontSize="18" ToolTip="This Pokemon has already been caught before."/>
+                    <p:OutlinedTextBlock x:Name="OpponentType1" Margin="10,0,5,0" StrokeThickness="3" FontSize="18" TextWrapping="NoWrap" Text="[Type1]" FontWeight="SemiBold" TextAlignment="Right">
+                        <p:OutlinedTextBlock.Style>
+                            <Style TargetType="{x:Type p:OutlinedTextBlock}">
+                                <Setter Property="Fill" Value="White"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Normal">
+                                        <Setter Property="Fill" Value="#A8A77A"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Fighting">
+                                        <Setter Property="Fill" Value="#C22E28"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Flying">
+                                        <Setter Property="Fill" Value="#A98FF3"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Poison">
+                                        <Setter Property="Fill" Value="#A33EA1"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Ground">
+                                        <Setter Property="Fill" Value="#E2BF65"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Rock">
+                                        <Setter Property="Fill" Value="#B6A136"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Bug">
+                                        <Setter Property="Fill" Value="#A6B91A"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Ghost">
+                                        <Setter Property="Fill" Value="#735797"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Steel">
+                                        <Setter Property="Fill" Value="#B7B7CE"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Fire">
+                                        <Setter Property="Fill" Value="#EE8130"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Water">
+                                        <Setter Property="Fill" Value="#6390F0"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Grass">
+                                        <Setter Property="Fill" Value="#7AC74C"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Electric">
+                                        <Setter Property="Fill" Value="#F7D02C"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Psychic">
+                                        <Setter Property="Fill" Value="#F95587"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Ice">
+                                        <Setter Property="Fill" Value="#96D9D6"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Dragon">
+                                        <Setter Property="Fill" Value="#6F35FC"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Dark">
+                                        <Setter Property="Fill" Value="#705746"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType1}" Value="Fairy">
+                                        <Setter Property="Fill" Value="#D685AD"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </p:OutlinedTextBlock.Style>
+                    </p:OutlinedTextBlock>
+                    <TextBlock Canvas.Left="124" TextWrapping="Wrap" Text="/" Canvas.Top="66" Height="25" FontSize="18" FontWeight="Bold">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="None">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <p:OutlinedTextBlock x:Name="OpponentType2" Margin="5,0,0,0" StrokeThickness="3" FontSize="18" TextWrapping="NoWrap" Text="[Type2]" FontWeight="SemiBold">
+                        <p:OutlinedTextBlock.Style>
+                            <Style TargetType="{x:Type p:OutlinedTextBlock}">
+                                <Setter Property="Fill" Value="White"/>
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="None">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Normal">
+                                        <Setter Property="Fill" Value="#A8A77A"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Fighting">
+                                        <Setter Property="Fill" Value="#C22E28"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Flying">
+                                        <Setter Property="Fill" Value="#A98FF3"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Poison">
+                                        <Setter Property="Fill" Value="#A33EA1"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Ground">
+                                        <Setter Property="Fill" Value="#E2BF65"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Rock">
+                                        <Setter Property="Fill" Value="#B6A136"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Bug">
+                                        <Setter Property="Fill" Value="#A6B91A"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Ghost">
+                                        <Setter Property="Fill" Value="#735797"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Steel">
+                                        <Setter Property="Fill" Value="#B7B7CE"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Fire">
+                                        <Setter Property="Fill" Value="#EE8130"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Water">
+                                        <Setter Property="Fill" Value="#6390F0"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Grass">
+                                        <Setter Property="Fill" Value="#7AC74C"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Electric">
+                                        <Setter Property="Fill" Value="#F7D02C"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Psychic">
+                                        <Setter Property="Fill" Value="#F95587"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Ice">
+                                        <Setter Property="Fill" Value="#96D9D6"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Dragon">
+                                        <Setter Property="Fill" Value="#6F35FC"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Dark">
+                                        <Setter Property="Fill" Value="#705746"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=OpponentType2}" Value="Fairy">
+                                        <Setter Property="Fill" Value="#D685AD"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </p:OutlinedTextBlock.Style>
+                    </p:OutlinedTextBlock>
+                    <Border Name="OpponentEVs" Margin="10,0,0,0" Background="#848484" BorderBrush="Black" BorderThickness="2" CornerRadius="4" Height="20" ClipToBounds="True" Width="27" ToolTip="Attack: 1&#xD;SpAttack: 1&#xD;Speed: 1">
+                        <TextBlock Text="EVs" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </WrapPanel>
+                <WrapPanel>
+                    <TextBlock Margin="0,5,0,0" Text="Form:"/>
+                    <TextBlock Name="OpponentForm" Margin="5,5,0,0" Text="0"/>
+                </WrapPanel>
+            </StackPanel>
+            <StackPanel Margin="0,0,10,100" ClipToBounds="False" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <WrapPanel>
+                    <TextBlock Name="ActiveName" TextWrapping="NoWrap" VerticalAlignment="Top" Height="Auto" MinWidth="210" FontSize="20" FontWeight="Bold" Text="[Active Name]"/>
+                    <fa:FontAwesome Name="ActiveGender" Margin="0,5,0,0" Icon="Question" Foreground="Black" FontSize="18"/>
+                    <Canvas Margin="10,0,0,20" Width="61">
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Lv." VerticalAlignment="Top" FontSize="20"/>
+                        <TextBlock Name="ActiveLevel" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="Auto" Width="Auto" FontSize="20" Text="100" Canvas.Left="28"/>
+                    </Canvas>
+                </WrapPanel>
+                <WrapPanel Margin="0,10,0,0">
+                    <Border BorderBrush="Black" Background="Gray" BorderThickness="3" CornerRadius="4" ClipToBounds="True">
+                        <Canvas Width="200" Height="14">
+                            <Border Name="ActiveHealthBar" CornerRadius="3" Background="Green" Width="200" Height="14"/>
+                            <TextBlock Name="ActiveCurrentHealth" Text="999" HorizontalAlignment="Right" Canvas.Right="104" Canvas.Bottom="-1"/>
+                            <TextBlock Text="/" Canvas.Left="98" Canvas.Bottom="0"/>
+                            <TextBlock Name="ActiveMaxHealth" Text="999" HorizontalAlignment="Left" Canvas.Left="104" Canvas.Bottom="-1"/>
+                        </Canvas>
+                    </Border>
+                    <TextBlock Name="ActiveStatus" Margin="10,-4,0,0" Text="[Status]" FontSize="18"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Border BorderBrush="Black" Background="Gray" BorderThickness="3" CornerRadius="4">
+                        <Canvas Width="200" Height="14">
+                            <Border Name="ExpBar" CornerRadius="3" Background="#44daf4" Width="200" Height="14"/>
+                            <TextBlock Name="NextLevel" Text="To level 100: 999999" Canvas.Bottom="-1" Canvas.Top="-2" Canvas.Left="2"/>
+                        </Canvas>
+                    </Border>
+                </WrapPanel>
+                <WrapPanel>
+                    <p:OutlinedTextBlock x:Name="ActiveType1" Margin="10,0,5,0" StrokeThickness="3" FontSize="18" TextWrapping="NoWrap" Text="[Type1]" FontWeight="SemiBold" TextAlignment="Right">
+                        <p:OutlinedTextBlock.Style>
+                            <Style TargetType="{x:Type p:OutlinedTextBlock}">
+                                <Setter Property="Fill" Value="White"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Normal">
+                                        <Setter Property="Fill" Value="#A8A77A"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Fighting">
+                                        <Setter Property="Fill" Value="#C22E28"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Flying">
+                                        <Setter Property="Fill" Value="#A98FF3"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Poison">
+                                        <Setter Property="Fill" Value="#A33EA1"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Ground">
+                                        <Setter Property="Fill" Value="#E2BF65"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Rock">
+                                        <Setter Property="Fill" Value="#B6A136"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Bug">
+                                        <Setter Property="Fill" Value="#A6B91A"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Ghost">
+                                        <Setter Property="Fill" Value="#735797"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Steel">
+                                        <Setter Property="Fill" Value="#B7B7CE"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Fire">
+                                        <Setter Property="Fill" Value="#EE8130"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Water">
+                                        <Setter Property="Fill" Value="#6390F0"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Grass">
+                                        <Setter Property="Fill" Value="#7AC74C"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Electric">
+                                        <Setter Property="Fill" Value="#F7D02C"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Psychic">
+                                        <Setter Property="Fill" Value="#F95587"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Ice">
+                                        <Setter Property="Fill" Value="#96D9D6"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Dragon">
+                                        <Setter Property="Fill" Value="#6F35FC"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Dark">
+                                        <Setter Property="Fill" Value="#705746"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType1}" Value="Fairy">
+                                        <Setter Property="Fill" Value="#D685AD"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </p:OutlinedTextBlock.Style>
+                    </p:OutlinedTextBlock>
+                    <TextBlock Canvas.Left="124" TextWrapping="Wrap" Text="/" Canvas.Top="66" Height="25" FontSize="18" FontWeight="Bold">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="None">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <p:OutlinedTextBlock x:Name="ActiveType2" Margin="5,0,0,0" StrokeThickness="3" FontSize="18" TextWrapping="NoWrap" Text="[Type2]" FontWeight="SemiBold">
+                        <p:OutlinedTextBlock.Style>
+                            <Style TargetType="{x:Type p:OutlinedTextBlock}">
+                                <Setter Property="Fill" Value="White"/>
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="None">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Normal">
+                                        <Setter Property="Fill" Value="#A8A77A"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Fighting">
+                                        <Setter Property="Fill" Value="#C22E28"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Flying">
+                                        <Setter Property="Fill" Value="#A98FF3"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Poison">
+                                        <Setter Property="Fill" Value="#A33EA1"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Ground">
+                                        <Setter Property="Fill" Value="#E2BF65"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Rock">
+                                        <Setter Property="Fill" Value="#B6A136"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Bug">
+                                        <Setter Property="Fill" Value="#A6B91A"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Ghost">
+                                        <Setter Property="Fill" Value="#735797"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Steel">
+                                        <Setter Property="Fill" Value="#B7B7CE"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Fire">
+                                        <Setter Property="Fill" Value="#EE8130"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Water">
+                                        <Setter Property="Fill" Value="#6390F0"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Grass">
+                                        <Setter Property="Fill" Value="#7AC74C"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Electric">
+                                        <Setter Property="Fill" Value="#F7D02C"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Psychic">
+                                        <Setter Property="Fill" Value="#F95587"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Ice">
+                                        <Setter Property="Fill" Value="#96D9D6"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Dragon">
+                                        <Setter Property="Fill" Value="#6F35FC"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Dark">
+                                        <Setter Property="Fill" Value="#705746"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=ActiveType2}" Value="Fairy">
+                                        <Setter Property="Fill" Value="#D685AD"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </p:OutlinedTextBlock.Style>
+                    </p:OutlinedTextBlock>
+                </WrapPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

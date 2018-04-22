@@ -1,4 +1,4 @@
-﻿using PROBot;
+using PROBot;
 using PROProtocol;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +61,7 @@ namespace PROShine
             Title = App.Name + " - " + Title;
             UsernameTextBox.Focus();
 
-            ServerComboBox.ItemsSource = new List<string> { "Red Server", "Blue Server", "Yellow Server" };
+            ServerComboBox.ItemsSource = new List<string> { "Silver Server", "Gold Server" };
             ServerComboBox.SelectedIndex = 0;
             RefreshAccountList();
             
@@ -238,18 +238,14 @@ namespace PROShine
                     {
                         PasswordTextBox.Password = account.Password;
                     }
-                    if (account.Server == "YELLOW")
-                    {
-                        ServerComboBox.SelectedIndex = 2;
-                    }
-                    else if (account.Server == "BLUE")
+                    if (account.Server == "GOLD" || account.Server == "YELLOW")
                     {
                         ServerComboBox.SelectedIndex = 1;
                     }
                     else
                     {
                         ServerComboBox.SelectedIndex = 0;
-                    }
+                    }                    
                     if (account.MacAddress != null)
                     {
                         MacRandomCheckBox.IsChecked = false;

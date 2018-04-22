@@ -5,6 +5,9 @@ namespace PROProtocol
 {
     public class Battle
     {
+        public event Action OpponentChanged;
+        public event Action ActivePokemonChanged;
+
         public int OpponentId { get; private set; }
         public int OpponentHealth { get; private set; }
         public int CurrentHealth { get; private set; }
@@ -28,6 +31,8 @@ namespace PROProtocol
         public bool RepeatAttack { get; set; }
 
         private readonly string _playerName;
+
+        private bool _opponentFainted;
 
         public Battle(string playerName, string[] data)
         {
@@ -132,7 +137,11 @@ namespace PROProtocol
 
                 if (data[1] == _playerName)
                 {
-                    SelectedPokemonIndex = index;
+                    if (SelectedPokemonIndex != index)
+                    {
+                        SelectedPokemonIndex = index;
+                        ActivePokemonChanged?.Invoke();
+                    }
                 }
                 else
                 {
@@ -145,6 +154,11 @@ namespace PROProtocol
                     OpponentGender = gender;
                     AlreadyCaught = alreadyCaught;
                     AlternateForm = int.Parse(alternateForm);
+                    if (_opponentFainted)
+                    {
+                        _opponentFainted = false;
+                        OpponentChanged?.Invoke();
+                    }
                 }
                 return true;
             }
@@ -152,7 +166,8 @@ namespace PROProtocol
             if (message.StartsWith("F:"))
             {
                 // Fainted
-                string player = data[1];
+                if (data[1] != _playerName)
+                    _opponentFainted = true;
                 return true;
             }
 

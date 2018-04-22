@@ -51,6 +51,7 @@ namespace PROProtocol
 
         public Battle ActiveBattle { get; private set; }
         public Shop OpenedShop { get; private set; }
+        public MoveRelearner MoveRelearner { get; private set; }
 
         public List<ChatChannel> Channels { get; }
         public List<string> Conversations { get; }
@@ -76,6 +77,7 @@ namespace PROProtocol
         public event Action BattleStarted;
         public event Action<string> BattleMessage;
         public event Action BattleEnded;
+        public event Action BattleUpdated;
         public event Action<string> DialogOpened;
         public event Action<string, string, int> EmoteMessage;
         public event Action<string, string, string> ChatMessage;
@@ -94,10 +96,13 @@ namespace PROProtocol
         public event Action<int, int> Evolving;
         public event Action<string, string> PokeTimeUpdated;
         public event Action<Shop> ShopOpened;
+        public event Action<MoveRelearner> MoveRelearnerOpened;
         public event Action<List<Pokemon>> PCBoxUpdated;
         public event Action<string> LogMessage;
+        public event Action ActivePokemonChanged;
+        public event Action OpponentChanged;
         
-        private const string Version = "2018E";
+        private const string Version = "2018F";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -116,6 +121,7 @@ namespace PROProtocol
         private Timeout _itemUseTimeout = new Timeout();
         private Timeout _fishingTimeout = new Timeout();
         private Timeout _refreshingPCBox = new Timeout();
+        private Timeout _moveRelearnerTimeout = new Timeout();
 
         private Timeout _npcBattleTimeout = new Timeout();
         private Npc _npcBattler;
@@ -139,7 +145,8 @@ namespace PROProtocol
             && !_itemUseTimeout.IsActive
             && !_fishingTimeout.IsActive
             && !_refreshingPCBox.IsActive
-            && !_npcBattleTimeout.IsActive;
+            && !_npcBattleTimeout.IsActive
+            && !_moveRelearnerTimeout.IsActive;
 
         public bool IsTeleporting => _teleportationTimeout.IsActive;
 
@@ -200,6 +207,7 @@ namespace PROProtocol
             _itemUseTimeout.Update();
             _fishingTimeout.Update();
             _refreshingPCBox.Update();
+            _moveRelearnerTimeout.Update();
 
             SendRegularPing();
             UpdateMovement();
@@ -479,7 +487,7 @@ namespace PROProtocol
         public void SendAuthentication(string username, string password, string hash)
         {
             // DSSock.AttemptLogin
-            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|X" + hash);
+            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|G" + hash);
         }
 
         public void SendUseItem(int id, int pokemon = 0)
@@ -932,6 +940,38 @@ namespace PROProtocol
             return false;
         }
 
+        public bool PurchaseMove(string moveName)
+        {
+            if (MoveRelearner != null && MoveRelearner.Moves.Any(move => move.Name == moveName.ToLowerInvariant()))
+            {
+                _moveRelearnerTimeout.Set();
+                SendPurchaseMove(MoveRelearner.SelectedPokemonUid, moveName);
+                return true;
+            }
+            return false;
+        }
+
+        private void SendPurchaseMove(int pokemonUid, string moveName)
+        {
+            // DSSock.cs handles Move Relearn as below.
+
+            if (MoveRelearner != null)
+            {
+                if (!MoveRelearner.IsEgg)
+                {
+                    SendPacket("z|.|" + pokemonUid + "|.|" + moveName);
+                }
+                else
+                {
+                    int moveId = MovesManager.Instance.GetMoveId(moveName);
+                    if (moveId != -1)
+                    {
+                        SendPacket("b|.|" + pokemonUid + "|.|" + moveId);
+                    }
+                }
+            }
+        }
+
         private void MapClient_ConnectionOpened()
         {
 #if DEBUG
@@ -1011,6 +1051,7 @@ namespace PROProtocol
             _lastMovement = DateTime.UtcNow;
             // Consider the pokemart closed after the first movement.
             OpenedShop = null;
+            MoveRelearner = null;
             IsPCOpen = false;
             // DSSock.sendMove
             SendPacket("#|.|" + direction);
@@ -1077,6 +1118,10 @@ namespace PROProtocol
                     break;
                 case "6":
                     OnAuthenticationResult(data);
+                    break;
+                case "l":
+                    //Move relearn content
+                    OnMoveRelearn(data);
                     break;
                 case ")":
                     OnQueueUpdated(data);
@@ -1384,6 +1429,8 @@ namespace PROProtocol
 
             IsInBattle = true;
             ActiveBattle = new Battle(PlayerName, data);
+            ActiveBattle.ActivePokemonChanged += ActivePokemonChanged;
+            ActiveBattle.OpponentChanged += OpponentChanged;
 
             _movements.Clear();
             _slidingDirection = null;
@@ -1402,6 +1449,8 @@ namespace PROProtocol
                     BattleMessage?.Invoke(I18n.Replace(message));
                 }
             }
+
+            BattleUpdated?.Invoke();
         }
 
         private void OnBattleMessage(string[] data)
@@ -1423,6 +1472,7 @@ namespace PROProtocol
             }
 
             PokemonsUpdated?.Invoke();
+            BattleUpdated?.Invoke();
 
             if (ActiveBattle.IsFinished)
             {
@@ -1463,6 +1513,22 @@ namespace PROProtocol
                     ShopOpened?.Invoke(OpenedShop);
                     continue;
                 }
+                if (message.StartsWith("moverelearner"))
+                {
+                    int pokemonUid = Convert.ToInt32(message.Substring(13));
+                    MoveRelearner = new MoveRelearner(pokemonUid, false);
+
+                    SendPacket("a|.|" + pokemonUid);
+                    continue;
+                }
+                if (message.StartsWith("eggsrelearner"))
+                {
+                    int pokemonUid = Convert.ToInt32(message.Substring(13));
+                    MoveRelearner = new MoveRelearner(pokemonUid, true);
+
+                    SendPacket(".|.|" + message.Substring(13));
+                    continue;
+                }
                 DialogOpened?.Invoke(message);
             }
 
@@ -1470,6 +1536,15 @@ namespace PROProtocol
             _dialogTimeout.Set(Rand.Next(1500, 4000));
             ScriptId = id;
             ScriptStatus = status;
+        }
+
+        private void OnMoveRelearn(string[] data)
+        {
+            if (MoveRelearner != null)
+            {
+                MoveRelearner.ProcessMessage(data[1]);
+                MoveRelearnerOpened?.Invoke(MoveRelearner);
+            }
         }
 
         private void OnBikingUpdate(string[] data)
@@ -1509,7 +1584,9 @@ namespace PROProtocol
             int pokemonUid = Convert.ToInt32(data[3]);
             int movePp = Convert.ToInt32(data[4]);
             LearningMove?.Invoke(moveId, moveName, pokemonUid);
+            MoveRelearner = null;
             _itemUseTimeout.Cancel();
+            _moveRelearnerTimeout.Cancel();
             // ^|.|348|.|Cut|.|3|.|30|.\
         }
 
@@ -1903,6 +1980,7 @@ namespace PROProtocol
             _loadingTimeout.Set(Rand.Next(1500, 4000));
 
             OpenedShop = null;
+            MoveRelearner = null;
             _movements.Clear();
             _surfAfterMovement = false;
             _slidingDirection = null;

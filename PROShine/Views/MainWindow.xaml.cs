@@ -29,6 +29,7 @@ namespace PROShine
         public ChatView Chat { get; private set; }
         public PlayersView Players { get; private set; }
         public MapView Map { get; private set; }
+        public BattleView Battle { get; private set; }
 
         private struct TabView
         {
@@ -73,9 +74,20 @@ namespace PROShine
             Bot.TextboxRemoved += Bot_TextboxRemoved;
             
             InitializeComponent();
-            AutoReconnectSwitch.IsChecked = Bot.AutoReconnector.IsEnabled;
-            AvoidStaffSwitch.IsChecked = Bot.StaffAvoider.IsEnabled;
-            AutoEvolveSwitch.IsChecked = Bot.PokemonEvolver.IsEnabled;
+
+            AutoEvolveSwitch.IsChecked = Bot.Settings.AutoEvolve;
+            AvoidStaffSwitch.IsChecked = Bot.Settings.AvoidStaff;
+            AutoReconnectSwitch.IsChecked = Bot.Settings.AutoReconnect;
+
+            Bot.PokemonEvolver.IsEnabled = Bot.Settings.AutoEvolve;
+            Bot.StaffAvoider.IsEnabled = Bot.Settings.AvoidStaff;
+            Bot.AutoReconnector.IsEnabled = Bot.Settings.AutoReconnect;
+
+            if (!string.IsNullOrEmpty(Bot.Settings.LastScript))
+            {
+                MenuReloadScript.Header = "Reload " + Path.GetFileName(Bot.Settings.LastScript);
+                MenuReloadScript.IsEnabled = true;
+            }
 
             App.InitializeVersion();
 
@@ -84,6 +96,7 @@ namespace PROShine
             Chat = new ChatView(Bot);
             Players = new PlayersView(Bot);
             Map = new MapView(Bot);
+            Battle = new BattleView(Bot, this);
 
             FileLog = new FileLogger();
 
@@ -95,6 +108,7 @@ namespace PROShine
             AddView(Chat, ChatContent, ChatButton);
             AddView(Players, PlayersContent, PlayersButton);
             AddView(Map, MapContent, MapButton);
+            AddView(Battle, BattleContent, BattleButton);
 
             SetTitle(null);
 
@@ -271,6 +285,7 @@ namespace PROShine
                     Bot.Game.Update();
                 }
                 Bot.Update();
+                Battle.UpdateBattleHUD();
             }
             Task.Delay(1).ContinueWith((previous) => UpdateClients());
         }
@@ -349,6 +364,9 @@ namespace PROShine
             {
                 lock (Bot)
                 {
+                    Bot.Settings.LastScript = filePath;
+                    MenuReloadScript.Header = "Reload " + Path.GetFileName(filePath);
+                    MenuReloadScript.IsEnabled = true;
                     Bot.SliderOptions.Clear();
                     Bot.TextOptions.Clear();
                     _sliderOptions.Clear();
@@ -554,6 +572,7 @@ namespace PROShine
         {
             Dispatcher.InvokeAsync(delegate
             {
+                Bot.Settings.AutoReconnect = value;
                 if (AutoReconnectSwitch.IsChecked == value) return;
                 AutoReconnectSwitch.IsChecked = value;
             });
@@ -563,6 +582,7 @@ namespace PROShine
         {
             Dispatcher.InvokeAsync(delegate
             {
+                Bot.Settings.AvoidStaff = value;
                 if (AvoidStaffSwitch.IsChecked == value) return;
                 AvoidStaffSwitch.IsChecked = value;
             });
@@ -572,6 +592,7 @@ namespace PROShine
         {
             Dispatcher.InvokeAsync(delegate
             {
+                Bot.Settings.AutoEvolve = value;
                 if (AutoEvolveSwitch.IsChecked == value) return;
                 AutoEvolveSwitch.IsChecked = value;
             });
@@ -608,12 +629,19 @@ namespace PROShine
                     Bot.Game.InvalidPacket += Client_InvalidPacket;
                     Bot.Game.PokeTimeUpdated += Client_PokeTimeUpdated;
                     Bot.Game.ShopOpened += Client_ShopOpened;
+                    Bot.Game.MoveRelearnerOpened += Client_MoveRelearnerOpened;
                     Bot.Game.MapLoaded += Map.Client_MapLoaded;
                     Bot.Game.PositionUpdated += Map.Client_PositionUpdated;
                     Bot.Game.PlayerAdded += Map.Client_PlayerEnteredMap;
                     Bot.Game.PlayerRemoved += Map.Client_PlayerLeftMap;
                     Bot.Game.PlayerUpdated += Map.Client_PlayerMoved;
                     Bot.Game.NpcReceived += Map.Client_NpcReceived;
+                    Bot.Game.BattleUpdated += Battle.BattleUpdated;
+                    Bot.Game.BattleStarted += Battle.BattleStarted;
+                    Bot.Game.BattleEnded += Battle.BattleEnded;
+                    Bot.Game.ActivePokemonChanged += Battle.ActivePokemonChanged;
+                    Bot.Game.OpponentChanged += Battle.OpponentChanged;
+                    Bot.ConnectionClosed += Battle.ConnectionClosed;
                 }
             }
             Dispatcher.InvokeAsync(delegate
@@ -776,6 +804,22 @@ namespace PROShine
                     content.AppendLine();
                     content.Append(item.Name);
                     content.Append(" ($" + item.Price + ")");
+                }
+                LogMessage(content.ToString());
+            });
+        }
+
+        private void Client_MoveRelearnerOpened(MoveRelearner moveRelearnManager)
+        {
+            Dispatcher.InvokeAsync(delegate
+            {
+                StringBuilder content = new StringBuilder();
+                content.Append("Move relearner:");
+                foreach (MovesManager.MoveData move in moveRelearnManager.Moves)
+                {
+                    content.AppendLine();
+                    content.Append(MovesManager.Instance.GetTrueName(move.Name));
+                    content.Append(" ($2000)");
                 }
                 LogMessage(content.ToString());
             });
@@ -948,6 +992,20 @@ namespace PROShine
             {
                 LoadScript(file[0]);
             }
+        }
+
+        private void ReloadScript_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(Bot.Settings.LastScript))
+                return;
+            LoadScript(Bot.Settings.LastScript);
+        }
+
+        private void ReloadHotkey_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(Bot.Settings.LastScript))
+                return;
+            LoadScript(Bot.Settings.LastScript);
         }
     }
 }

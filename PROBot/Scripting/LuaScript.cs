@@ -92,11 +92,6 @@ namespace PROBot.Scripting
 
         public override bool ExecuteNextAction()
         {
-            if (Bot.Game.IsInBattle && Bot.AI.UseMandatoryAction())
-            {
-                return true;
-            }
-
             string functionName = Bot.Game.IsInBattle ? "onBattleAction" : "onPathAction";
 
             _actionExecuted = false;
@@ -121,6 +116,7 @@ namespace PROBot.Scripting
             _lua.Globals["log"] = new Action<string>(Log);
             _lua.Globals["fatal"] = new Action<string>(Fatal);
             _lua.Globals["logout"] = new Action<string>(Logout);
+            _lua.Globals["relog"] = new Action<double, string>(Relog);
             _lua.Globals["stringContains"] = new Func<string, string, bool>(StringContains);
             _lua.Globals["playSound"] = new Action<string>(PlaySound);
             _lua.Globals["registerHook"] = new Action<string, DynValue>(RegisterHook);
@@ -191,6 +187,7 @@ namespace PROBot.Scripting
             _lua.Globals["isNpcVisible"] = new Func<string, bool>(IsNpcVisible);
             _lua.Globals["isNpcOnCell"] = new Func<int, int, bool>(IsNpcOnCell);
             _lua.Globals["isShopOpen"] = new Func<bool>(IsShopOpen);
+            _lua.Globals["isRelearningMoves"] = new Func<bool>(IsRelearningMoves);
             _lua.Globals["getMoney"] = new Func<int>(GetMoney);
             _lua.Globals["isMounted"] = new Func<bool>(IsMounted);
             _lua.Globals["isSurfing"] = new Func<bool>(IsSurfing);
@@ -282,6 +279,7 @@ namespace PROBot.Scripting
             _lua.Globals["sortTeamRangeByLevelAscending"] = new Func<int, int, bool>(SortTeamRangeByLevelAscending);
             _lua.Globals["sortTeamRangeByLevelDescending"] = new Func<int, int, bool>(SortTeamRangeByLevelDescending);
             _lua.Globals["buyItem"] = new Func<string, int, bool>(BuyItem);
+            _lua.Globals["relearnMove"] = new Func<string, bool>(RelearnMove);
             _lua.Globals["usePC"] = new Func<bool>(UsePC);
             _lua.Globals["openPCBox"] = new Func<int, bool>(OpenPCBox);
             _lua.Globals["depositPokemonToPC"] = new Func<int, bool>(DepositPokemonToPC);
@@ -452,6 +450,13 @@ namespace PROBot.Scripting
             LogMessage(message);
             Bot.Stop();
             Bot.Logout(false);
+        }
+
+        // API: Logs out and logs back in after the specified number of seconds.
+        private void Relog(double delay, string message)
+        {
+            LogMessage(message);
+            Bot.Relog(delay);
         }
 
         // API return an array of all NPCs that can be challenged on the current map. format : {"npcName" = {"x" = x, "y" = y}}
@@ -1242,6 +1247,12 @@ namespace PROBot.Scripting
         private bool IsShopOpen()
         {
             return Bot.Game.OpenedShop != null;
+        }
+
+        // API: Returns true if the player is relearning the move of a Pokemon from an NPC.
+        private bool IsRelearningMoves()
+        {
+            return Bot.Game.MoveRelearner != null;
         }
 
         // API: Returns the amount of money in the inventory.
@@ -2465,6 +2476,28 @@ namespace PROBot.Scripting
             return ExecuteAction(Bot.Game.BuyItem(item.Id, quantity));
         }
 
+        // API: Relearn a move from the move relearner NPC.
+        private bool RelearnMove(string moveName)
+        {
+            if (!ValidateAction("relearnMove", false)) return false;
+            if (GetMoney() < 2000) return false;
+
+            if (Bot.Game.MoveRelearner is null)
+            {
+                Fatal("error: relearnMove can only be used when you have talked with the move relearner npc.");
+                return false;
+            }
+
+            MovesManager.MoveData move = Bot.Game.MoveRelearner.Moves.FirstOrDefault(i => i.Name.Equals(moveName.ToLowerInvariant(), StringComparison.InvariantCultureIgnoreCase));
+
+            if (move == null)
+            {
+                Fatal($"error: relearnMove: the move '{ moveName }' cannot be learn by the current Pokemon or already learnt.");
+                return false;
+            }
+            return ExecuteAction(Bot.Game.PurchaseMove(moveName));
+        }
+
         // API: Give the specified item on the specified pokemon.
         private bool GiveItemToPokemon(string itemName, int pokemonIndex)
         {
@@ -2523,23 +2556,18 @@ namespace PROBot.Scripting
             }
         }
 
-        private static HashSet<int> _outOfCombatItemScopes = new HashSet<int> { 8, 10, 15 };
-        private static HashSet<int> _inCombatItemScopes = new HashSet<int> { 5 };
-        private static HashSet<int> _outOfCombatOnPokemonItemScopes = new HashSet<int> { 2, 3, 9, 13, 14 };
-        private static HashSet<int> _inCombatOnPokemonItemScopes = new HashSet<int> { 2 };
-
         // API: Uses the specified item.
         private bool UseItem(string itemName)
         {
             InventoryItem item = Bot.Game.GetItemFromName(itemName.ToUpperInvariant());
             if (item != null && item.Quantity > 0)
             {
-                if (Bot.Game.IsInBattle && _inCombatItemScopes.Contains(item.Scope))
+                if (Bot.Game.IsInBattle && item.CanBeUsedInBattle)
                 {
                     if (!ValidateAction("useItem", true)) return false;
                     return ExecuteAction(Bot.AI.UseItem(item.Id));
                 }
-                else if (!Bot.Game.IsInBattle && _outOfCombatItemScopes.Contains(item.Scope))
+                else if (!Bot.Game.IsInBattle && item.CanBeUsedOutsideOfBattle)
                 {
                     if (!ValidateAction("useItem", false)) return false;
                     Bot.Game.UseItem(item.Id);
@@ -2557,12 +2585,12 @@ namespace PROBot.Scripting
 
             if (item != null && item.Quantity > 0)
             {
-                if (Bot.Game.IsInBattle && _inCombatOnPokemonItemScopes.Contains(item.Scope))
+                if (Bot.Game.IsInBattle && item.CanBeUsedOnPokemonInBattle)
                 {
                     if (!ValidateAction("useItemOnPokemon", true)) return false;
                     return ExecuteAction(Bot.AI.UseItem(item.Id, pokemonIndex));
                 }
-                else if (!Bot.Game.IsInBattle && _outOfCombatOnPokemonItemScopes.Contains(item.Scope))
+                else if (!Bot.Game.IsInBattle && item.CanBeUsedOnPokemonOutsideOfBattle)
                 {
                     if (!ValidateAction("useItemOnPokemon", false)) return false;
                     Bot.Game.UseItem(item.Id, pokemonIndex);
