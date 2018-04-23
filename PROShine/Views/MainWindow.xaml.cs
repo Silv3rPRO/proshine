@@ -285,8 +285,8 @@ namespace PROShine
                     Bot.Game.Update();
                 }
                 Bot.Update();
-                Battle.UpdateBattleHUD();
             }
+            Battle.UpdateBattleHUD();
             Task.Delay(1).ContinueWith((previous) => UpdateClients());
         }
 

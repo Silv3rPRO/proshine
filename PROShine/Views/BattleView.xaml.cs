@@ -41,67 +41,71 @@ namespace PROShine.Views
         {
             Dispatcher.InvokeAsync(delegate
             {
-                if (_bot.Game.ActiveBattle == null)
-                    return;
-                OpponentName.Text = PokemonNamesManager.Instance.Names[_bot.Game.ActiveBattle.OpponentId];
-                if (_bot.Game.ActiveBattle.IsShiny)
-                    OpponentName.Text = "Shiny " + OpponentName.Text;
-                if (_bot.Game.ActiveBattle.IsWild)
-                    OpponentName.Text = "Wild " + OpponentName.Text;
-                OpponentCaughtIcon.Visibility = _bot.Game.ActiveBattle.AlreadyCaught ? Visibility.Visible : Visibility.Hidden;
-                OpponentLevel.Text = _bot.Game.ActiveBattle.OpponentLevel.ToString();
-                OpponentMaxHealth.Text = _bot.Game.ActiveBattle.OpponentHealth.ToString();
-                OpponentCurrentHealth.Text = _bot.Game.ActiveBattle.CurrentHealth.ToString();
-
-                if (_bot.Game.ActiveBattle.OpponentStatus.ToLowerInvariant() == "none")
-                    OpponentStatus.Text = "";
-                else
-                    OpponentStatus.Text = _bot.Game.ActiveBattle.OpponentStatus;
-
-                OpponentType1.Text = TypesManager.Instance.Type1[_bot.Game.ActiveBattle.OpponentId].ToString();
-                OpponentType2.Text = TypesManager.Instance.Type2[_bot.Game.ActiveBattle.OpponentId].ToString();
-
-                string gender = _bot.Game.ActiveBattle.OpponentGender;
-                OpponentGender.Icon = gender == "M" ? FontAwesomeIcon.Mars : gender == "F" ? FontAwesomeIcon.Venus : FontAwesomeIcon.Question;
-                OpponentForm.Text = _bot.Game.ActiveBattle.AlternateForm.ToString();
-
-                PokemonStats stats = EffortValuesManager.Instance.BattleValues[_bot.Game.ActiveBattle.OpponentId];
-                List<string> evs = new List<string>();
-
-                foreach (StatType type in Enum.GetValues(typeof(StatType)).Cast<StatType>())
+                lock (_bot)
                 {
-                    int ev = stats.GetStat(type);
-                    if (ev > 0)
-                        evs.Add($"{type}: {ev}");
+                    if (_bot.Game != null && _bot.Game.ActiveBattle != null)
+                    {
+                        OpponentName.Text = PokemonNamesManager.Instance.Names[_bot.Game.ActiveBattle.OpponentId];
+                        if (_bot.Game.ActiveBattle.IsShiny)
+                            OpponentName.Text = "Shiny " + OpponentName.Text;
+                        if (_bot.Game.ActiveBattle.IsWild)
+                            OpponentName.Text = "Wild " + OpponentName.Text;
+                        OpponentCaughtIcon.Visibility = _bot.Game.ActiveBattle.AlreadyCaught ? Visibility.Visible : Visibility.Hidden;
+                        OpponentLevel.Text = _bot.Game.ActiveBattle.OpponentLevel.ToString();
+                        OpponentMaxHealth.Text = _bot.Game.ActiveBattle.OpponentHealth.ToString();
+                        OpponentCurrentHealth.Text = _bot.Game.ActiveBattle.CurrentHealth.ToString();
+
+                        if (_bot.Game.ActiveBattle.OpponentStatus.ToLowerInvariant() == "none")
+                            OpponentStatus.Text = "";
+                        else
+                            OpponentStatus.Text = _bot.Game.ActiveBattle.OpponentStatus;
+
+                        OpponentType1.Text = TypesManager.Instance.Type1[_bot.Game.ActiveBattle.OpponentId].ToString();
+                        OpponentType2.Text = TypesManager.Instance.Type2[_bot.Game.ActiveBattle.OpponentId].ToString();
+
+                        string gender = _bot.Game.ActiveBattle.OpponentGender;
+                        OpponentGender.Icon = gender == "M" ? FontAwesomeIcon.Mars : gender == "F" ? FontAwesomeIcon.Venus : FontAwesomeIcon.Question;
+                        OpponentForm.Text = _bot.Game.ActiveBattle.AlternateForm.ToString();
+
+                        PokemonStats stats = EffortValuesManager.Instance.BattleValues[_bot.Game.ActiveBattle.OpponentId];
+                        List<string> evs = new List<string>();
+
+                        foreach (StatType type in Enum.GetValues(typeof(StatType)).Cast<StatType>())
+                        {
+                            int ev = stats.GetStat(type);
+                            if (ev > 0)
+                                evs.Add($"{type}: {ev}");
+                        }
+
+                        OpponentEVs.ToolTip = string.Join(Environment.NewLine, evs);
+
+                        Pokemon active = _bot.Game.Team[_bot.Game.ActiveBattle.SelectedPokemonIndex];
+                        ActiveName.Text = active.Name;
+                        ActiveLevel.Text = active.Level.ToString();
+                        ActiveMaxHealth.Text = active.MaxHealth.ToString();
+                        ActiveCurrentHealth.Text = active.CurrentHealth.ToString();
+
+                        if (active.Experience.CurrentLevel == 100)
+                        {
+                            NextLevel.Visibility = Visibility.Hidden;
+                        }
+                        else
+                        {
+                            NextLevel.Visibility = Visibility.Visible;
+                            NextLevel.Text = $"To level {active.Experience.CurrentLevel + 1}: {active.Experience.RemainingExperience}";
+                        }
+
+                        if (active.Status.ToLowerInvariant() == "none")
+                            ActiveStatus.Text = "";
+                        else
+                            ActiveStatus.Text = active.Status;
+
+                        ActiveType1.Text = TypesManager.Instance.Type1[active.Id].ToString();
+                        ActiveType2.Text = TypesManager.Instance.Type2[active.Id].ToString();
+
+                        ActiveGender.Icon = active.Gender == "M" ? FontAwesomeIcon.Mars : active.Gender == "F" ? FontAwesomeIcon.Venus : FontAwesomeIcon.Question;
+                    }
                 }
-
-                OpponentEVs.ToolTip = string.Join(Environment.NewLine, evs);
-
-                Pokemon active = _bot.Game.Team[_bot.Game.ActiveBattle.SelectedPokemonIndex];
-                ActiveName.Text = active.Name;
-                ActiveLevel.Text = active.Level.ToString();
-                ActiveMaxHealth.Text = active.MaxHealth.ToString();
-                ActiveCurrentHealth.Text = active.CurrentHealth.ToString();
-
-                if (active.Experience.CurrentLevel == 100)
-                {
-                    NextLevel.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    NextLevel.Visibility = Visibility.Visible;
-                    NextLevel.Text = $"To level {active.Experience.CurrentLevel + 1}: {active.Experience.RemainingExperience}";
-                }
-
-                if (active.Status.ToLowerInvariant() == "none")
-                    ActiveStatus.Text = "";
-                else
-                    ActiveStatus.Text = active.Status;
-
-                ActiveType1.Text = TypesManager.Instance.Type1[active.Id].ToString();
-                ActiveType2.Text = TypesManager.Instance.Type2[active.Id].ToString();
-
-                ActiveGender.Icon = active.Gender == "M" ? FontAwesomeIcon.Mars : active.Gender == "F" ? FontAwesomeIcon.Venus : FontAwesomeIcon.Question;
             });
         }
 
@@ -109,9 +113,9 @@ namespace PROShine.Views
         {
             Dispatcher.InvokeAsync(delegate
             {
-                if (_bot.Game != null && _bot.Game.ActiveBattle != null)
+                lock (_bot)
                 {
-                    lock (_bot.Game.ActiveBattle)
+                    if (_bot.Game != null && _bot.Game.ActiveBattle != null)
                     {
                         // All buttons are enabled only if client is inactive and the bot's script isn't running
                         Buttons.IsEnabled = _bot.Game.IsInactive && _bot.Running != BotClient.State.Started;
@@ -177,25 +181,31 @@ namespace PROShine.Views
         {
             Dispatcher.InvokeAsync(delegate
             {
-                PROShineLogo.Visibility = Visibility.Hidden;
-                UIGrid.Visibility = Visibility.Visible;
-                _opponentHPWidth = _bot.Game.ActiveBattle.CurrentHealth;
-                int maxHealth = _bot.Game.ActiveBattle.OpponentHealth;
-                OpponentHealthBar.Width = _opponentHPWidth / maxHealth * 200;
-                OpponentHealthBar.Background = new SolidColorBrush(EvaluateGradient(_opponentHPWidth / maxHealth));
+                lock (_bot)
+                {
+                    if (_bot.Game != null && _bot.Game.ActiveBattle != null)
+                    {
+                        PROShineLogo.Visibility = Visibility.Hidden;
+                        UIGrid.Visibility = Visibility.Visible;
+                        _opponentHPWidth = _bot.Game.ActiveBattle.CurrentHealth;
+                        int maxHealth = _bot.Game.ActiveBattle.OpponentHealth;
+                        OpponentHealthBar.Width = _opponentHPWidth / maxHealth * 200;
+                        OpponentHealthBar.Background = new SolidColorBrush(EvaluateGradient(_opponentHPWidth / maxHealth));
 
-                Pokemon active = _bot.Game.Team[_bot.Game.ActiveBattle.SelectedPokemonIndex];
-                _activeHPWidth = active.CurrentHealth;
-                ActiveHealthBar.Width = _activeHPWidth / active.MaxHealth * 200;
-                ActiveHealthBar.Background = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
-                if (active.Experience.CurrentLevel == 100)
-                {
-                    ExpBar.Width = 200;
-                }
-                else
-                {
-                    _expBarWidth = active.Experience.RatioToNextLevel - 0.5;
-                    ExpBar.Width = _expBarWidth * 3.7;
+                        Pokemon active = _bot.Game.Team[_bot.Game.ActiveBattle.SelectedPokemonIndex];
+                        _activeHPWidth = active.CurrentHealth;
+                        ActiveHealthBar.Width = _activeHPWidth / active.MaxHealth * 200;
+                        ActiveHealthBar.Background = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
+                        if (active.Experience.CurrentLevel == 100)
+                        {
+                            ExpBar.Width = 200;
+                        }
+                        else
+                        {
+                            _expBarWidth = active.Experience.RatioToNextLevel - 0.5;
+                            ExpBar.Width = _expBarWidth * 3.7;
+                        }
+                    }
                 }
             });
         }
@@ -222,18 +232,24 @@ namespace PROShine.Views
         {
             Dispatcher.InvokeAsync(delegate
             {
-                Pokemon active = _bot.Game.Team[_bot.Game.ActiveBattle.SelectedPokemonIndex];
-                _activeHPWidth = active.CurrentHealth;
-                ActiveHealthBar.Width = _activeHPWidth / active.MaxHealth * 200;
-                ActiveHealthBar.Background = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
-                if (active.Experience.CurrentLevel == 100)
+                lock (_bot)
                 {
-                    ExpBar.Width = 200;
-                }
-                else
-                {
-                    _expBarWidth = active.Experience.RatioToNextLevel - 0.5;
-                    ExpBar.Width = _expBarWidth * 3.7;
+                    if (_bot.Game != null && _bot.Game.ActiveBattle != null)
+                    {
+                        Pokemon active = _bot.Game.Team[_bot.Game.ActiveBattle.SelectedPokemonIndex];
+                        _activeHPWidth = active.CurrentHealth;
+                        ActiveHealthBar.Width = _activeHPWidth / active.MaxHealth * 200;
+                        ActiveHealthBar.Background = new SolidColorBrush(EvaluateGradient(_activeHPWidth / active.MaxHealth));
+                        if (active.Experience.CurrentLevel == 100)
+                        {
+                            ExpBar.Width = 200;
+                        }
+                        else
+                        {
+                            _expBarWidth = active.Experience.RatioToNextLevel - 0.5;
+                            ExpBar.Width = _expBarWidth * 3.7;
+                        }
+                    }
                 }
             });
         }
@@ -242,10 +258,16 @@ namespace PROShine.Views
         {
             Dispatcher.InvokeAsync(delegate
             {
-                _opponentHPWidth = _bot.Game.ActiveBattle.CurrentHealth;
-                int maxHealth = _bot.Game.ActiveBattle.OpponentHealth;
-                OpponentHealthBar.Width = _opponentHPWidth / maxHealth * 200;
-                OpponentHealthBar.Background = new SolidColorBrush(EvaluateGradient(_opponentHPWidth / maxHealth));
+                lock (_bot)
+                {
+                    if (_bot.Game != null && _bot.Game.ActiveBattle != null)
+                    {
+                        _opponentHPWidth = _bot.Game.ActiveBattle.CurrentHealth;
+                        int maxHealth = _bot.Game.ActiveBattle.OpponentHealth;
+                        OpponentHealthBar.Width = _opponentHPWidth / maxHealth * 200;
+                        OpponentHealthBar.Background = new SolidColorBrush(EvaluateGradient(_opponentHPWidth / maxHealth));
+                    }
+                }
             });
         }
 
