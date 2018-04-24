@@ -483,6 +483,7 @@ namespace PROShine
                 UpdateBotMenu();
                 StatusText.Text = "Offline";
                 StatusText.Foreground = Brushes.DarkRed;
+                Players.ClearList();
             });
         }
 
