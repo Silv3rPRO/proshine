@@ -167,7 +167,7 @@ namespace PROBot.Scripting
             _lua.Globals["isPokemonUsable"] = new Func<int, bool>(IsPokemonUsable);
             _lua.Globals["getUsablePokemonCount"] = new Func<int>(GetUsablePokemonCount);
             _lua.Globals["hasMove"] = new Func<int, string, bool>(HasMove);
-            _lua.Globals["getActiveBattlers"] = new Func<Dictionary<string, Dictionary<string, int>>>(GetActiveBattlers);
+            _lua.Globals["getActiveBattlers"] = new Func<List<Dictionary<string, DynValue>>>(GetActiveBattlers);
             _lua.Globals["getActiveDigSpots"] = new Func<List<Dictionary<string, int>>>(GetActiveDigSpots);
             _lua.Globals["getActiveHeadbuttTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveHeadbuttTrees);
             _lua.Globals["getActiveBerryTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveBerryTrees);
@@ -459,16 +459,17 @@ namespace PROBot.Scripting
             Bot.Relog(delay);
         }
 
-        // API return an array of all NPCs that can be challenged on the current map. format : {"npcName" = {"x" = x, "y" = y}}
-        private Dictionary<string, Dictionary<string, int>> GetActiveBattlers()
+        // API: Returns an array of all NPCs that can be challenged on the current map. format : {index = {"x" = x, "y" = y}}
+        private List<Dictionary<string, DynValue>> GetActiveBattlers()
         {
-            var activeBattlers = new Dictionary<string, Dictionary<string, int>>();
+            var activeBattlers = new List<Dictionary<string, DynValue>>();
             foreach (Npc npc in Bot.Game.Map.Npcs.Where(npc => npc.CanBattle))
             {
-                var npcData = new Dictionary<string, int>();
-                npcData["x"] = npc.PositionX;
-                npcData["y"] = npc.PositionY;
-                activeBattlers[npc.Name] = npcData;
+                var npcData = new Dictionary<string, DynValue>();
+                npcData["x"] = DynValue.NewNumber(npc.PositionX);
+                npcData["y"] = DynValue.NewNumber(npc.PositionY);
+                npcData["name"] = DynValue.NewString(npc.Name);
+                activeBattlers.Add(npcData);
             }
             return activeBattlers;
         }
