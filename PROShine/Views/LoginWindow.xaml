@@ -86,7 +86,7 @@
                 <RowDefinition />
                 <RowDefinition Height="30" />
             </Grid.RowDefinitions>
-            <ListBox Name="AccountListView" Grid.Row="0" ItemsSource="{Binding AccountName}" SelectionChanged="AccountListView_SelectionChanged" />
+            <ListBox Name="AccountListView" Grid.Row="0" ItemsSource="{Binding AccountName}" SelectionChanged="AccountListView_SelectionChanged" MouseDoubleClick="AccountListView_MouseDoubleClick" />
             <Button Name="DeleteAccountButton" Grid.Row="1" Content="Delete" Background="#FFCDD5E2" Foreground="#FF101020" Margin="2" Click="DeleteAccountButton_Click" />
         </Grid>
     </Grid>
