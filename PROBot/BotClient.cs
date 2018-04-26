@@ -310,11 +310,11 @@ namespace PROBot
             else
             {
                 result = path.MoveTo(x, y, requiredDistance);
-            }
 
-            if (result)
-            {
-                MovementResynchronizer.ApplyMovement(x, y);
+                if (result)
+                {
+                    MovementResynchronizer.ApplyMovement(x, y);
+                }
             }
 
             return result;
