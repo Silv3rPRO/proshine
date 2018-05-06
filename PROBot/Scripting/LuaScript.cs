@@ -601,6 +601,11 @@ namespace PROBot.Scripting
             if (map.IsPC(x, y)) return "PC";
             if (map.HasLink(x, y)) return "Link";
 
+            int collider = map.GetCollider(x, y);
+            if (collider == 2) return "Ledge South";
+            if (collider == 3) return "Ledge East";
+            if (collider == 4) return "Ledge West";
+
             return "Collider";
         }
 
