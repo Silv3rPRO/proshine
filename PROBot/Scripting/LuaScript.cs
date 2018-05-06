@@ -594,12 +594,12 @@ namespace PROBot.Scripting
         {
             Map map = Bot.Game.Map;
 
+            if (map.HasLink(x, y)) return "Link";
             if (map.IsGrass(x, y)) return "Grass";
             if (map.IsWater(x, y)) return "Water";
             if (map.IsNormalGround(x, y)) return "Normal Ground";
             if (map.IsIce(x, y)) return "Ice";
             if (map.IsPC(x, y)) return "PC";
-            if (map.HasLink(x, y)) return "Link";
 
             int collider = map.GetCollider(x, y);
             if (collider == 2) return "Ledge South";
