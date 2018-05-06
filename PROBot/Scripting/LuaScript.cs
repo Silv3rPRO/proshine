@@ -605,6 +605,8 @@ namespace PROBot.Scripting
             if (collider == 2) return "Ledge South";
             if (collider == 3) return "Ledge East";
             if (collider == 4) return "Ledge West";
+            if (collider == 11) return "Tree";
+            if (collider == 13) return "Rock";
 
             return "Collider";
         }
