@@ -102,7 +102,7 @@ namespace PROProtocol
         public event Action ActivePokemonChanged;
         public event Action OpponentChanged;
         
-        private const string Version = "2018F";
+        private const string Version = "P1";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
