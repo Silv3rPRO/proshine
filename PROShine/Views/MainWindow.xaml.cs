@@ -830,8 +830,12 @@ namespace PROShine
         {
             lock (Bot)
             {
-                BotStartMenuItem.IsEnabled = Bot.Game != null && Bot.Game.IsConnected && Bot.Script != null && Bot.Running == BotClient.State.Stopped;
-                BotStopMenuItem.IsEnabled = Bot.Game != null && Bot.Game.IsConnected && Bot.Running != BotClient.State.Stopped;
+                bool canStart = Bot.Game != null && Bot.Game.IsConnected && Bot.Script != null && Bot.Running == BotClient.State.Stopped;
+                bool canStop = Bot.Game != null && Bot.Game.IsConnected && Bot.Running != BotClient.State.Stopped;
+                BotStartMenuItem.IsEnabled = canStart;
+                StartScriptButton.IsEnabled = canStart;
+                BotStopMenuItem.IsEnabled = canStop;
+                StopScriptButton.IsEnabled = canStop;
             }
         }
         

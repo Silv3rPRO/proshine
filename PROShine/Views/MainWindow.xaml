@@ -149,12 +149,12 @@
                     <fa:FontAwesome Name="LoginButtonIcon"  Foreground="#FF101020" Icon="SignIn" Padding="2, 2, 2, 2" FontSize="16"/>
                 </Button.Content>
             </Button>
-            <Button x:Name="StartScriptButton" Margin="2,1,2,1" Background="#FFCDD5E2" Foreground="#FF101020" Click="StartScriptButton_Click">
+            <Button x:Name="StartScriptButton" Margin="2,1,2,1" Background="#FFCDD5E2" Foreground="#FF101020" Click="StartScriptButton_Click" IsEnabled="False">
                 <Button.Content>
                     <fa:FontAwesome Name="StartScriptButtonIcon"  Foreground="#FF101020" Icon="Play" Padding="2, 2, 2, 2" FontSize="16"/>
                 </Button.Content>
             </Button>
-            <Button x:Name="StopScriptButton" Margin="2,1,2,1" Background="#FFCDD5E2" Foreground="#FF101020" Click="StopScriptButton_Click">
+            <Button x:Name="StopScriptButton" Margin="2,1,2,1" Background="#FFCDD5E2" Foreground="#FF101020" Click="StopScriptButton_Click" IsEnabled="False">
                 <Button.Content>
                     <fa:FontAwesome Name="StopScriptButtonIcon" Foreground="#FF101020" Icon="Stop" Padding="2, 2, 2, 2" FontSize="16"/>
                 </Button.Content>
