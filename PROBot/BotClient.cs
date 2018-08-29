@@ -276,10 +276,10 @@ namespace PROBot
                 Script.ScriptMessage += Script_ScriptMessage;
                 Script.Initialize();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Script = null;
-                throw ex;
+                throw;
             }
         }
 
@@ -310,11 +310,11 @@ namespace PROBot
             else
             {
                 result = path.MoveTo(x, y, requiredDistance);
-            }
 
-            if (result)
-            {
-                MovementResynchronizer.ApplyMovement(x, y);
+                if (result)
+                {
+                    MovementResynchronizer.ApplyMovement(x, y);
+                }
             }
 
             return result;

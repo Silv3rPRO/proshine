@@ -48,7 +48,7 @@ namespace PROShine
 
         public string ProxyPassword => ProxyPasswordTextBox.Password;
 
-        private readonly Regex macAddressRegex = new Regex("^[0-9A-F]{12}([0-9A-F]{12})?$");
+        private readonly Regex _macAddressRegex = new Regex("^[0-9A-F]{12}([0-9A-F]{12})?$");
 
         public LoginWindow(BotClient bot)
         {
@@ -88,7 +88,7 @@ namespace PROShine
             AccountListView.Items.Refresh();
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void Login()
         {
             if (Username.Length == 0)
             {
@@ -102,7 +102,7 @@ namespace PROShine
             }
 
             string macAddress = MacAddress;
-            if (macAddress != null && macAddress != HardwareHash.Empty && !macAddressRegex.IsMatch(macAddress))
+            if (macAddress != null && macAddress != HardwareHash.Empty && !_macAddressRegex.IsMatch(macAddress))
             {
                 MacAddressTextBox.Focus();
                 return;
@@ -121,6 +121,19 @@ namespace PROShine
             {
                 DialogResult = true;
             }
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            Login();
+        }
+
+        private void AccountListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (AccountListView.SelectedIndex == -1)
+                return;
+            
+            Login();
         }
 
         private void MacUseRandom_Checked(object sender, RoutedEventArgs e)

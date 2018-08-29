@@ -1,6 +1,7 @@
 ﻿using PROProtocol;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PROBot
 {
@@ -98,7 +99,12 @@ namespace PROBot
                 direction.ApplyToCoordinates(ref destinationX, ref destinationY);
 
                 Map.MoveResult result = _client.Map.CanMove(direction, destinationX, destinationY, _client.IsOnGround, _client.IsSurfing, _client.CanUseCut, _client.CanUseSmashRock);
-                if (result == Map.MoveResult.Success || result == Map.MoveResult.OnGround || result == Map.MoveResult.NoLongerOnGround)
+                bool canAvoidLink = _client.Map.HasLink(destinationX, destinationY) && direction != _directions.Last();
+
+                if ((result == Map.MoveResult.Success 
+                    || result == Map.MoveResult.OnGround 
+                    || result == Map.MoveResult.NoLongerOnGround)
+                    && !canAvoidLink)
                 {
                     _client.Move(direction);
                     _client.Move(direction.GetOpposite());
