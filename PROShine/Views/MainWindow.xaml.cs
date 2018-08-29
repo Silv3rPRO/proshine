@@ -404,7 +404,14 @@ namespace PROShine
         {
             lock (Bot)
             {
-                Bot.Start();
+                if (Bot.Running == BotClient.State.Stopped)
+                {
+                    Bot.Start();
+                }
+                else if (Bot.Running == BotClient.State.Started || Bot.Running == BotClient.State.Paused)
+                {
+                    Bot.Pause();
+                }
             }
         }
 
@@ -546,16 +553,19 @@ namespace PROShine
                 {
                     stateText = "started";
                     StartScriptButtonIcon.Icon = FontAwesome.WPF.FontAwesomeIcon.Pause;
+                    BotStartMenuItem.Header = "Pause";
                 }
                 else if (BotClient.State.Paused == state)
                 {
                     stateText = "paused";
                     StartScriptButtonIcon.Icon = FontAwesome.WPF.FontAwesomeIcon.Play;
+                    BotStartMenuItem.Header = "Start";
                 }
                 else
                 {
                     stateText = "stopped";
                     StartScriptButtonIcon.Icon = FontAwesome.WPF.FontAwesomeIcon.Play;
+                    BotStartMenuItem.Header = "Start";
                 }
                 LogMessage("Bot " + stateText);
             });
@@ -830,8 +840,9 @@ namespace PROShine
         {
             lock (Bot)
             {
-                bool canStart = Bot.Game != null && Bot.Game.IsConnected && Bot.Script != null && Bot.Running == BotClient.State.Stopped;
+                bool canStart = Bot.Game != null && Bot.Game.IsConnected && Bot.Script != null;
                 bool canStop = Bot.Game != null && Bot.Game.IsConnected && Bot.Running != BotClient.State.Stopped;
+
                 BotStartMenuItem.IsEnabled = canStart;
                 StartScriptButton.IsEnabled = canStart;
                 BotStopMenuItem.IsEnabled = canStop;
