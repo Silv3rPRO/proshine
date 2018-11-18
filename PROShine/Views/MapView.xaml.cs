@@ -221,7 +221,7 @@ namespace PROShine.Views
 
             if (_bot.Game.Map.HasLink(x, y))
             {
-                logBuilder.AppendLine("Link: " + _bot.Game.Map.Links[x, y].DestinationMap);
+                logBuilder.AppendLine("Link: " + _bot.Game.Map.Links[x, y]);
             }
 
             PlayerInfos[] playersOnCell = _bot.Game.Players.Values.Where(player => player.PosX == x && player.PosY == y).ToArray();
@@ -250,6 +250,11 @@ namespace PROShine.Views
                     if (npc.IsBattler)
                     {
                         logBuilder.AppendLine("    beaten: " + (npc.CanBattle ? "No, LOS " + npc.LosLength : "Yes"));
+                    }
+                    if (npc.Path.Length > 0)
+                    {
+                        logBuilder.AppendLine("    path: " + npc.Path);
+                        logBuilder.AppendLine("    moving: " + npc.IsMoving);
                     }
                 }
             }

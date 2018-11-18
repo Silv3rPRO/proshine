@@ -139,7 +139,7 @@ namespace PROBot
                 {
                     if (closedList.Contains(node.Hash))
                         continue;
-                    if (_client.Map.HasLink(node.X, node.Y) && node.X != toX && node.Y != toY)
+                    if (_client.Map.HasLink(node.X, node.Y) && (node.X != toX || node.Y != toY))
                         continue;
 
                     node.Parent = current;

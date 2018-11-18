@@ -75,6 +75,11 @@ namespace PROShine
             }
         }
 
+        public void ClearList()
+        {
+            PlayerListView.ItemsSource = null;
+        }
+
         private void GridViewHeader_Click(object sender, RoutedEventArgs e)
         {
             GridViewColumnHeader column = (sender as GridViewColumnHeader);
@@ -100,6 +105,8 @@ namespace PROShine
             var player = (PlayerInfosView)PlayerListView.SelectedItems[0];
             lock (_bot)
             {
+                if (_bot.Game == null || !_bot.Game.IsConnected) return;
+
                 if (!_bot.Game.Conversations.Contains(player.Name))
                 {
                     _bot.Game.SendStartPrivateMessage(player.Name);
@@ -115,6 +122,8 @@ namespace PROShine
             var player = (PlayerInfosView)PlayerListView.SelectedItems[0];
             lock (_bot)
             {
+                if (_bot.Game == null || !_bot.Game.IsConnected) return;
+
                 _bot.Game.SendFriendToggle(player.Name);
             }
         }
@@ -127,6 +136,8 @@ namespace PROShine
             var player = (PlayerInfosView)PlayerListView.SelectedItems[0];
             lock (_bot)
             {
+                if (_bot.Game == null || !_bot.Game.IsConnected) return;
+
                 _bot.Game.SendIgnoreToggle(player.Name);
             }
         }

@@ -1,8 +1,8 @@
 using PROBot;
 using PROProtocol;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -19,7 +19,7 @@ namespace PROShine
 
         public string Server => ServerComboBox.Text.Trim().ToUpperInvariant().Split(' ')[0];
 
-        public string MacAddress => !MacRandomCheckBox.IsChecked.Value ? MacAddressTextBox.Text.Trim() : null;
+        public Guid? DeviceId { get; set; }
 
         public bool HasProxy => ProxyCheckBox.IsChecked.Value;
 
@@ -47,8 +47,6 @@ namespace PROShine
         public string ProxyUsername => ProxyUsernameTextBox.Text.Trim();
 
         public string ProxyPassword => ProxyPasswordTextBox.Password;
-
-        private readonly Regex macAddressRegex = new Regex("^[0-9A-F]{12}([0-9A-F]{12})?$");
 
         public LoginWindow(BotClient bot)
         {
@@ -101,11 +99,18 @@ namespace PROShine
                 return;
             }
 
-            string macAddress = MacAddress;
-            if (macAddress != null && macAddress != HardwareHash.Empty && !macAddressRegex.IsMatch(macAddress))
+            string deviceIdText = !MacRandomCheckBox.IsChecked.Value ? MacAddressTextBox.Text.Trim() : null;
+            if (deviceIdText != null)
             {
-                MacAddressTextBox.Focus();
-                return;
+                if (Guid.TryParse(deviceIdText, out Guid deviceId))
+                {
+                    DeviceId = deviceId;
+                }
+                else
+                {
+                    MacAddressTextBox.Focus();
+                    return;
+                }
             }
 
             if (HasProxy)
@@ -135,19 +140,9 @@ namespace PROShine
 
         private void MacRandomButton_Click(object sender, RoutedEventArgs e)
         {
-            MacAddressTextBox.Text = HardwareHash.GenerateRandom();
+            MacAddressTextBox.Text = HardwareHash.GenerateRandom().ToString();
         }
-
-        private void MacRealButton_Click(object sender, RoutedEventArgs e)
-        {
-            MacAddressTextBox.Text = HardwareHash.RetrieveMAC();
-        }
-
-        private void MacEmptyButton_Click(object sender, RoutedEventArgs e)
-        {
-            MacAddressTextBox.Text = HardwareHash.Empty;
-        }
-
+        
         private void ProxyCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             RefreshVisibility();
@@ -246,10 +241,10 @@ namespace PROShine
                     {
                         ServerComboBox.SelectedIndex = 0;
                     }                    
-                    if (account.MacAddress != null)
+                    if (account.DeviceId != null)
                     {
                         MacRandomCheckBox.IsChecked = false;
-                        MacAddressTextBox.Text = account.MacAddress;
+                        MacAddressTextBox.Text = account.DeviceId.ToString();
                     }
                     else
                     {
@@ -332,7 +327,12 @@ namespace PROShine
             {
                 account.Password = PasswordTextBox.Password;
             }
-            account.MacAddress = MacAddress;
+
+            string deviceIdText = !MacRandomCheckBox.IsChecked.Value ? MacAddressTextBox.Text.Trim() : null;
+            if (deviceIdText != null && Guid.TryParse(deviceIdText, out Guid deviceId))
+            {
+                account.DeviceId = deviceId;
+            }
 
             account.Server = Server;
             if (HasProxy)
@@ -353,8 +353,7 @@ namespace PROShine
                 }
                 if (ProxyPortTextBox.Text != null && ProxyPortTextBox.Text.Trim() != "")
                 {
-                    int port;
-                    if (int.TryParse(ProxyPortTextBox.Text.Trim(), out port))
+                    if (int.TryParse(ProxyPortTextBox.Text.Trim(), out int port))
                     {
                         account.Socks.Port = port;
                     }

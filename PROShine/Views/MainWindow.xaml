@@ -114,6 +114,7 @@
                 </MenuItem>
                 <MenuItem Header="Help">
                     <MenuItem Header="Community (Forum)" Click="MenuForum_Click" />
+                    <MenuItem Header="Chat (Discord)" Click="MenuDiscord_Click" />
                     <MenuItem Header="Source code (GitHub)" Click="MenuGitHub_Click" />
                     <MenuItem Header="Donate (Patreon)" Click="MenuDonate_Click" />
                     <Separator />

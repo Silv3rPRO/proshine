@@ -20,7 +20,7 @@ namespace PROProtocol
         }
 
         public int[,] Colliders { get; }
-        public MapLink[,] Links { get; }
+        public bool[,] Links { get; }
         public int[,] Tiles1 { get; }
         public int[,] Tiles2 { get; }
         public int[,] Tiles3 { get; }
@@ -68,45 +68,19 @@ namespace PROProtocol
                     reader.ReadInt16();
                     reader.ReadInt16();
                     IsOutside = reader.ReadByte() != 0;
+                    reader.ReadByte();
                     Region = ReadString(reader);
-                    reader.ReadInt16();
 
-                    int count = reader.ReadInt16() - 1;
-                    reader.ReadInt16();
-                    reader.ReadInt16();
-                    reader.ReadInt16();
-                    reader.ReadInt16();
-                    reader.ReadInt16();
-                    reader.ReadInt16();
-                    reader.ReadInt16();
-                    reader.ReadInt16();
-
-                    Links = new MapLink[DimensionX, DimensionY];
-                    LinkDestinations = new Dictionary<string, List<Tuple<int, int>>>();
-                    for (int i = 0; i < count; ++i)
+                    Links = new bool[DimensionX, DimensionY];
+                    int linkCount = reader.ReadInt16();
+                    for (int i = 0; i < linkCount; ++i)
                     {
-                        string destination = ReadString(reader);
                         int x = reader.ReadInt16();
                         int y = reader.ReadInt16();
-                        int toX = reader.ReadInt16();
-                        int toY = reader.ReadInt16();
-
-                        Links[x, y] = new MapLink(destination, toX, toY);
-
-                        destination = destination.ToUpperInvariant();
-                        if (!LinkDestinations.ContainsKey(destination))
-                        {
-                            LinkDestinations.Add(destination, new List<Tuple<int, int>>());
-                        }
-                        LinkDestinations[destination].Add(new Tuple<int, int>(x, y));
+                        Links[x, y] = true;
                     }
 
-                    int k = reader.ReadInt16();
-                    int npcCount = reader.ReadInt16() - 1;
-                    for (int i = 0; i < 45; ++i)
-                    {
-                        int b = reader.ReadInt16();
-                    }
+                    int npcCount = reader.ReadInt16();
 
                     Npcs = new List<Npc>();
                     OriginalNpcs = new List<Npc>();
@@ -119,49 +93,16 @@ namespace PROProtocol
                         int direction = reader.ReadByte();
                         int losLength = reader.ReadByte();
                         int type = reader.ReadInt16();
-
-                        ReadString(reader);
+                        
                         string path = ReadString(reader);
-
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-
+                        
                         bool isBattler = reader.ReadInt16() != 0;
-
-                        reader.ReadInt16();
-                        reader.ReadSingle();
-                        reader.ReadSingle();
 
                         int npcId = reader.ReadInt16();
 
-                        OriginalNpcs.Add(new Npc(npcId, npcName, isBattler, type, x, y, DirectionExtensions.FromNumber(direction), losLength, path));
+                        reader.ReadInt16();
 
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
-                        reader.ReadInt16();
+                        OriginalNpcs.Add(new Npc(npcId, npcName, isBattler, type, x, y, DirectionExtensions.FromNumber(direction), losLength, path));
                     }
                 }
             }
@@ -174,14 +115,8 @@ namespace PROProtocol
 
         private int[,] ReadTiles(BinaryReader reader)
         {
-            if (reader.ReadInt16() != 2)
-            {
-                return null;
-            }
             int height = reader.ReadInt32();
-            reader.ReadInt32();
             int width = reader.ReadInt32();
-            reader.ReadInt32();
             int[,] tiles = new int[width, height];
             for (int y = 0; y < height; ++y)
             {
@@ -206,7 +141,7 @@ namespace PROProtocol
         {
             if (x >= 0 && x < DimensionX && y >= 0 && y < DimensionY)
             {
-                return Links[x, y] != null;
+                return Links[x, y];
             }
             return false;
         }

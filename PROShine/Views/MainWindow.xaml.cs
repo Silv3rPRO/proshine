@@ -113,6 +113,11 @@ namespace PROShine
             SetTitle(null);
 
             LogMessage("Running " + App.Name + " by " + App.Author + ", version " + App.Version);
+            if (App.IsBeta)
+            {
+                LogMessage("This is a BETA version. Bugs, crashes and bans might occur.");
+                LogMessage("Report any problem on the forums and join the Discord chat for the latest information.");
+            }
 
             Task.Run(() => UpdateClients());
 
@@ -312,7 +317,7 @@ namespace PROShine
             {
                 account.Password = login.Password;
                 account.Server = login.Server;
-                account.MacAddress = login.MacAddress;
+                account.DeviceId = login.DeviceId;
                 if (login.HasProxy)
                 {
                     account.Socks.Version = (SocksVersion)login.ProxyVersion;
@@ -483,6 +488,7 @@ namespace PROShine
                 UpdateBotMenu();
                 StatusText.Text = "Offline";
                 StatusText.Foreground = Brushes.DarkRed;
+                Players.ClearList();
             });
         }
 
@@ -877,6 +883,11 @@ namespace PROShine
         private void MenuForum_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("https://proshine-bot.com/");
+        }
+
+        private void MenuDiscord_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://discord.gg/0t8HE2IMuqUTour9");
         }
 
         private void MenuGitHub_Click(object sender, RoutedEventArgs e)
