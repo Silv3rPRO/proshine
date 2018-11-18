@@ -2005,6 +2005,8 @@ namespace PROProtocol
 
         private void LoadMap(string mapName)
         {
+            if (!IsAuthenticated)
+                return;
             mapName = MapClient.RemoveExtension(mapName);
 
             _loadingTimeout.Set(Rand.Next(1500, 4000));
