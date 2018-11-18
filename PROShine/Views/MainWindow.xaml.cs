@@ -113,6 +113,11 @@ namespace PROShine
             SetTitle(null);
 
             LogMessage("Running " + App.Name + " by " + App.Author + ", version " + App.Version);
+            if (App.IsBeta)
+            {
+                LogMessage("This is a BETA version. Bugs, crashes and bans might occur.");
+                LogMessage("Report any problem on the forums and join the Discord chat for the latest information.");
+            }
 
             Task.Run(() => UpdateClients());
 
@@ -878,6 +883,11 @@ namespace PROShine
         private void MenuForum_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("https://proshine-bot.com/");
+        }
+
+        private void MenuDiscord_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://discord.gg/0t8HE2IMuqUTour9");
         }
 
         private void MenuGitHub_Click(object sender, RoutedEventArgs e)

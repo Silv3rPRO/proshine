@@ -10,13 +10,15 @@ namespace PROShine
         public static string Version { get; private set; }
         public static string Author { get; private set; }
         public static string Description { get; private set; }
+        public static bool IsBeta { get; private set; }
 
         public static void InitializeVersion()
         {
             Assembly assembly = typeof(App).Assembly;
             AssemblyName assemblyName = assembly.GetName();
             Name = assemblyName.Name;
-            Version = assemblyName.Version.ToString();
+            Version = assemblyName.Version.ToString() + "-beta1";
+            IsBeta = true;
             Author = ((AssemblyCompanyAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyCompanyAttribute), false)).Company;
             Description = ((AssemblyDescriptionAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyDescriptionAttribute), false)).Description;
         }
