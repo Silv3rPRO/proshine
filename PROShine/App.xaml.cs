@@ -17,7 +17,7 @@ namespace PROShine
             Assembly assembly = typeof(App).Assembly;
             AssemblyName assemblyName = assembly.GetName();
             Name = assemblyName.Name;
-            Version = assemblyName.Version.ToString() + "-beta1";
+            Version = assemblyName.Version.ToString(3) + "-beta2";
             IsBeta = true;
             Author = ((AssemblyCompanyAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyCompanyAttribute), false)).Company;
             Description = ((AssemblyDescriptionAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyDescriptionAttribute), false)).Description;
