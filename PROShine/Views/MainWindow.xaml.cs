@@ -312,7 +312,7 @@ namespace PROShine
             {
                 account.Password = login.Password;
                 account.Server = login.Server;
-                account.MacAddress = login.MacAddress;
+                account.DeviceId = login.DeviceId;
                 if (login.HasProxy)
                 {
                     account.Socks.Version = (SocksVersion)login.ProxyVersion;

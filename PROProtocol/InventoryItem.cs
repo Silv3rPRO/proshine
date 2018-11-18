@@ -7,9 +7,9 @@
         public int Quantity { get; }
         public int Scope { get; }
 
-        public InventoryItem(string name, int id, int quantity, int scope)
+        public InventoryItem(int id, int quantity, int scope)
         {
-            Name = name;
+            Name = ItemsDatabase.Instance.GetItemName(id);
             Id = id;
             Quantity = quantity;
             Scope = scope;

@@ -102,7 +102,7 @@ namespace PROProtocol
         public event Action ActivePokemonChanged;
         public event Action OpponentChanged;
         
-        private const string Version = "P1";
+        private const string Version = "Spookiest";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -182,7 +182,7 @@ namespace PROProtocol
 
         public void Open()
         {
-            _mapClient.Open();
+            _connection.Connect();
         }
 
         public void Close(Exception error = null)
@@ -234,13 +234,31 @@ namespace PROProtocol
             }
         }
 
+        private int _pingCurrentStep = 0;
+        private bool _isPingSwapped = false;
+
         private void SendRegularPing()
         {
-            if ((DateTime.UtcNow - _lastMovement).TotalSeconds >= 10)
+            if ((DateTime.UtcNow - _lastMovement).TotalSeconds >= 6)
             {
                 _lastMovement = DateTime.UtcNow;
                 // DSSock.Update
-                SendPacket("2");
+                int packetType;
+                if (_pingCurrentStep == 5)
+                {
+                    packetType = _isPingSwapped ? 1 : 2;
+                    _pingCurrentStep = 0;
+                }
+                else
+                {
+                    packetType = Rand.Next(2) + 1;
+                }
+                if (packetType == 1)
+                {
+                    _isPingSwapped = !_isPingSwapped;
+                }
+                _pingCurrentStep++;
+                SendPacket(packetType.ToString());
             }
         }
 
@@ -484,10 +502,10 @@ namespace PROProtocol
             SendMessage("/setchar " + hair + "," + colour + "," + tone + "," + clothe + "," + eyes);
         }
 
-        public void SendAuthentication(string username, string password, string hash)
+        public void SendAuthentication(string username, string password, Guid deviceId)
         {
             // DSSock.AttemptLogin
-            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|G" + hash);
+            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + deviceId);
         }
 
         public void SendUseItem(int id, int pokemon = 0)
@@ -977,7 +995,7 @@ namespace PROProtocol
 #if DEBUG
             Console.WriteLine("[+++] Connecting to the game server");
 #endif
-            _connection.Connect();
+            FinishLogin();
         }
 
         private void MapClient_ConnectionFailed(Exception ex)
@@ -1211,23 +1229,35 @@ namespace PROProtocol
             }
         }
 
-
+        private bool _isNewCharacter = false;
+        
         private void OnLoggedIn(string[] data)
         {
+            Console.WriteLine("[Login] Authenticated successfully, connecting to map server");
+
+            _isNewCharacter = data[1] == "1";
+
+            string[] mapServerHost = data[2].Split(':');
+            _mapClient.Open(mapServerHost[0], int.Parse(mapServerHost[1]));
+        }
+
+        private void FinishLogin()
+        {
+            Console.WriteLine("[Login] Finishing the login process");
+
             // DSSock.ProcessCommands
             SendPacket(")");
             SendPacket("_");
             SendPacket("g");
             IsAuthenticated = true;
 
-            if (data[1] == "1")
+            if (_isNewCharacter)
             {
                 IsScriptActive = true;
                 ScriptStatus = 1234;
                 _dialogTimeout.Set(Rand.Next(4000, 8000));
             }
 
-            Console.WriteLine("[Login] Authenticated successfully");
             LoggedIn?.Invoke();
         }
 
@@ -1411,7 +1441,7 @@ namespace PROProtocol
                 if (item == string.Empty)
                     continue;
                 string[] itemData = item.Split(new[] { "|" }, StringSplitOptions.None);
-                Items.Add(new InventoryItem(itemData[0], Convert.ToInt32(itemData[1]), Convert.ToInt32(itemData[2]), Convert.ToInt32(itemData[3])));
+                Items.Add(new InventoryItem(Convert.ToInt32(itemData[0]), Convert.ToInt32(itemData[1]), Convert.ToInt32(itemData[2])));
             }
 
             if (_itemUseTimeout.IsActive)

@@ -29,12 +29,12 @@ namespace PROProtocol
             _connection.Disconnected += OnDisconnected;
         }
 
-        public void Open()
+        public void Open(string host, int port)
         {
 #if DEBUG
             Console.WriteLine("[+++] Connecting to the map server");
 #endif
-            _connection.Connect();
+            _connection.Connect(host, port);
         }
 
         public void Update()

@@ -9,9 +9,6 @@ namespace PROProtocol
     {
         // TODO: Remove the duplication with GameConnection by creating an abstract class?
 
-        private const string ServerAddress = "95.183.48.126";
-        private const int ServerPort = 803;
-
         private bool _useSocks;
         private int _socksVersion;
         private string _socksHost;
@@ -38,17 +35,17 @@ namespace PROProtocol
             _socksPass = socksPass;
         }
 
-        public async void Connect()
+        public async void Connect(string serverAddress, int serverPort)
         {
             if (!_useSocks)
             {
-                Connect(IPAddress.Parse(ServerAddress), ServerPort);
+                Connect(IPAddress.Parse(serverAddress), serverPort);
             }
             else
             {
                 try
                 {
-                    Socket socket = await SocksConnection.OpenConnection(_socksVersion, ServerAddress, ServerPort, _socksHost, _socksPort, _socksUser, _socksPass);
+                    Socket socket = await SocksConnection.OpenConnection(_socksVersion, serverAddress, serverPort, _socksHost, _socksPort, _socksUser, _socksPass);
                     Initialize(socket);
                 }
                 catch (Exception ex)

@@ -48,6 +48,8 @@ namespace PROProtocol
             { 111, "bill" },
             { 119, "pokestop"},
         };
+
+        private static readonly char[] Movements = new[] { 'U', 'D', 'L', 'R' };
         
         public int Id { get; }
         public string Name { get; }
@@ -59,13 +61,12 @@ namespace PROProtocol
         public Direction Direction { get; }
         public int LosLength { get; }
         public string TypeDescription => (TypeDescriptions.ContainsKey(Type) ? TypeDescriptions[Type] + " ":"") + "(" + Type + ")";
-
-        public bool IsMoving => _path.Length > 0;
+        public string Path { get; }
+        
+        public bool IsMoving => Path.Length > 0 && Path.IndexOfAny(Movements) >= 0;
 
         public bool CanBlockPlayer => Type != 10;
-
-        private readonly string _path;
-
+        
         public Npc(int id, string name, bool isBattler, int type, int x, int y, Direction direction, int losLength, string path)
         {
             Id = id;
@@ -77,12 +78,12 @@ namespace PROProtocol
             PositionY = y;
             Direction = direction;
             LosLength = losLength;
-            _path = path;
+            Path = path;
         }
 
         public Npc Clone()
         {
-            return new Npc(Id, Name, IsBattler, Type, PositionX, PositionY, Direction, LosLength, _path);
+            return new Npc(Id, Name, IsBattler, Type, PositionX, PositionY, Direction, LosLength, Path);
         }
 
         public bool IsInLineOfSight(int x, int y)
