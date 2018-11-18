@@ -47,6 +47,10 @@ namespace PROShine
                 IList<ChatChannel> channelList;
                 lock (_bot)
                 {
+                    if (_bot.Game == null)
+                    {
+                        return;
+                    }
                     channelList = _bot.Game.Channels.ToArray();
                 }
                 foreach (ChatChannel channel in channelList)

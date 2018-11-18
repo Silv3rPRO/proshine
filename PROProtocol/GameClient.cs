@@ -61,6 +61,8 @@ namespace PROProtocol
         public bool IsPCBoxRefreshing { get; private set; }
         public int CurrentPCBoxId { get; private set; }
 
+        public bool IsCreatingNewCharacter { get; private set; }
+
         public event Action ConnectionOpened;
         public event Action<Exception> ConnectionFailed;
         public event Action<Exception> ConnectionClosed;
@@ -146,7 +148,8 @@ namespace PROProtocol
             && !_fishingTimeout.IsActive
             && !_refreshingPCBox.IsActive
             && !_npcBattleTimeout.IsActive
-            && !_moveRelearnerTimeout.IsActive;
+            && !_moveRelearnerTimeout.IsActive
+            && !IsCreatingNewCharacter;
 
         public bool IsTeleporting => _teleportationTimeout.IsActive;
 
@@ -418,12 +421,6 @@ namespace PROProtocol
                     SendDialogResponse(GetNextDialogResponse());
                     _dialogTimeout.Set();
                 }
-                else if (ScriptStatus == 1234) // Yes, this is a magic value. I don't care.
-                {
-                    SendCreateCharacter(Rand.Next(14), Rand.Next(28), Rand.Next(8), Rand.Next(6), Rand.Next(5));
-                    IsScriptActive = false;
-                    _dialogTimeout.Set();
-                }
             }
         }
 
@@ -497,7 +494,15 @@ namespace PROProtocol
             SendMessage("/ignore " + nickname);
         }
 
-        public void SendCreateCharacter(int hair, int colour, int tone, int clothe, int eyes)
+        public void CreateCharacter(int hair, int colour, int tone, int clothe, int eyes)
+        {
+            if (!IsCreatingNewCharacter) return;
+            IsCreatingNewCharacter = false;
+            SendCreateCharacter(hair, colour, tone, clothe, eyes);
+            _dialogTimeout.Set();
+        }
+
+        private void SendCreateCharacter(int hair, int colour, int tone, int clothe, int eyes)
         {
             SendMessage("/setchar " + hair + "," + colour + "," + tone + "," + clothe + "," + eyes);
         }
@@ -995,7 +1000,10 @@ namespace PROProtocol
 #if DEBUG
             Console.WriteLine("[+++] Connecting to the game server");
 #endif
-            FinishLogin();
+            if (MapName != null && Map == null)
+            {
+                _mapClient.DownloadMap(MapName);
+            }
         }
 
         private void MapClient_ConnectionFailed(Exception ex)
@@ -1228,35 +1236,21 @@ namespace PROProtocol
                     break;
             }
         }
-
-        private bool _isNewCharacter = false;
         
         private void OnLoggedIn(string[] data)
         {
             Console.WriteLine("[Login] Authenticated successfully, connecting to map server");
 
-            _isNewCharacter = data[1] == "1";
+            IsCreatingNewCharacter = data[1] == "1";
 
             string[] mapServerHost = data[2].Split(':');
             _mapClient.Open(mapServerHost[0], int.Parse(mapServerHost[1]));
-        }
-
-        private void FinishLogin()
-        {
-            Console.WriteLine("[Login] Finishing the login process");
 
             // DSSock.ProcessCommands
             SendPacket(")");
             SendPacket("_");
             SendPacket("g");
             IsAuthenticated = true;
-
-            if (_isNewCharacter)
-            {
-                IsScriptActive = true;
-                ScriptStatus = 1234;
-                _dialogTimeout.Set(Rand.Next(4000, 8000));
-            }
 
             LoggedIn?.Invoke();
         }
@@ -2032,8 +2026,12 @@ namespace PROProtocol
             Map = null;
             AreNpcReceived = false;
             MapName = mapName;
-            _mapClient.DownloadMap(MapName);
             Players.Clear();
+
+            if (_mapClient.IsConnected)
+            {
+                _mapClient.DownloadMap(MapName);
+            }
         }
     }
 }
