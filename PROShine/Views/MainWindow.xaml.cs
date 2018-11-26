@@ -498,6 +498,13 @@ namespace PROShine
             {
                 _lastQueueBreakPoint = null;
                 LogMessage("Authenticated successfully!");
+                lock (Bot)
+                {
+                    if (Bot.Game != null && Bot.Game.IsCreatingNewCharacter)
+                    {
+                        LogMessage("This is a new account, with no character. A random character will be created if you start the bot.");
+                    }
+                }
                 UpdateBotMenu();
                 StatusText.Text = "Online";
                 StatusText.Foreground = Brushes.DarkGreen;

@@ -195,6 +195,13 @@ namespace PROBot
                 return;
             }
             
+            if (Game.IsCreatingNewCharacter)
+            {
+                LogMessage("Creating a new character with a random skin...");
+                Game.CreateCharacter(Rand.Next(14), Rand.Next(28), Rand.Next(8), Rand.Next(6), Rand.Next(5));
+                return;
+            }
+
             if (PokemonEvolver.Update()) return;
             if (MoveTeacher.Update()) return;
 
