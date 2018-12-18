@@ -104,7 +104,7 @@ namespace PROProtocol
         public event Action ActivePokemonChanged;
         public event Action OpponentChanged;
         
-        private const string Version = "Spookiest";
+        private const string Version = "Eumi";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -1239,6 +1239,10 @@ namespace PROProtocol
         
         private void OnLoggedIn(string[] data)
         {
+            Console.WriteLine("Sending /in1"); // idk what we call it 
+
+            SendMessage("/in1");
+
             Console.WriteLine("[Login] Authenticated successfully, connecting to map server");
 
             IsCreatingNewCharacter = data[1] == "1";
