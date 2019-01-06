@@ -104,7 +104,7 @@ namespace PROProtocol
         public event Action ActivePokemonChanged;
         public event Action OpponentChanged;
         
-        private const string Version = "Spookiest";
+        private const string Version = "Dolphin";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -510,7 +510,9 @@ namespace PROProtocol
         public void SendAuthentication(string username, string password, Guid deviceId)
         {
             // DSSock.AttemptLogin
-            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + deviceId);
+            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + deviceId + "|.|" + "Windows 10  (10.0.0) 64bit");
+            // TODO: Add an option to select the OS we want, it could be useful.
+            // I use Windows 10 here because the version is the same for everyone. This is not the case on Windows 7 or Mac.
         }
 
         public void SendUseItem(int id, int pokemon = 0)
@@ -1247,6 +1249,8 @@ namespace PROProtocol
             _mapClient.Open(mapServerHost[0], int.Parse(mapServerHost[1]));
 
             // DSSock.ProcessCommands
+            SendMessage("/in1");
+            // TODO: Add a setting to disable the party inspection (send /in0 instead).
             SendPacket(")");
             SendPacket("_");
             SendPacket("g");
