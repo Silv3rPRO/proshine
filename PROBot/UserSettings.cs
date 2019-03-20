@@ -1,4 +1,7 @@
 ﻿using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -61,6 +64,19 @@ namespace PROBot
             }
         }
 
+        public List<Sound> Sounds
+        {
+            get { return _settings.Sounds; }
+            set
+            {
+                if (_settings.Sounds != value)
+                {
+                    _settings.Sounds = value;
+                    _settings.Save();
+                }
+            }
+        }
+
         public UserSettings()
         {
             try
@@ -83,6 +99,26 @@ namespace PROBot
             public bool AvoidStaff;
             public bool AutoEvolve = true;
             public string LastScript;
+
+            public List<Sound> Sounds = new List<Sound>
+            {
+                // Battle
+                new Sound("CaptureFail", false, "capture_fail.wav"),
+                new Sound("Captured", true, "captured.wav"),
+                new Sound("CaptureAttempt", false, "capture_attempt.wav"),
+                new Sound("Escaped", false, "escaped.wav"),
+                new Sound("LevelUp", false, "levelup.wav"),
+                new Sound("ShinyEncounter", true, "shiny.wav"),
+                // Questing
+                new Sound("Select", false, "select.wav"),
+                new Sound("HiddenItemFound", true, "item_hidden.wav"),
+                new Sound("ItemFound", false, "item.wav"),
+                new Sound("PcUsage", false, "pc_turningon.wav"),
+                new Sound("Purchase", true, "purchase.wav"),
+                // Proshine
+                new Sound("Pause", true, "pause.wav"),
+                new Sound("LogOut", true, "logout.wav")
+            };
 
             public void Save()
             {

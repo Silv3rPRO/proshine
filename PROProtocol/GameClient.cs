@@ -510,7 +510,7 @@ namespace PROProtocol
         public void SendAuthentication(string username, string password, Guid deviceId)
         {
             // DSSock.AttemptLogin
-            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + deviceId + "|.|" + "Windows 10  (10.0.0) 64bit");
+            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + deviceId + "|.|" + "Android OS 7.1.1 / API-25 (NOF26V/3636322)");
             // TODO: Add an option to select the OS we want, it could be useful.
             // I use Windows 10 here because the version is the same for everyone. This is not the case on Windows 7 or Mac.
         }

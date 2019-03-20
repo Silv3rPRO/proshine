@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace PROProtocol
 {
@@ -12,18 +14,19 @@ namespace PROProtocol
 
         public Shop(string content)
         {
-            string[] data = content.Split(',');
-            if (data.Length >= 31)
+            string[] data = content.Split(new[] { "[PD]," }, StringSplitOptions.None);
+            if (data.Length >= 4)
             {
-                for (int i = 0; i < 10; ++i)
+                for (int i = 0; i < data.Length - 1; ++i)
                 {
-                    ShopItem item = new ShopItem(data, i * 3);
+                    var itemData = data[i].Split(',');
+                    var item = new ShopItem(itemData, 0);
                     if (item.Id > 0)
                     {
                         _items.Add(item);
                     }
                 }
-                Id = int.Parse(data[30]);
+                Id = int.Parse(data.LastOrDefault());
             }
         }
     }

@@ -1497,8 +1497,9 @@ namespace PROBot.Scripting
         // API: Moves to the nearest cell teleporting to the specified map.
         private bool MoveToMap(string mapName)
         {
-            Fatal("error: moveToMap: this function is no longer available, please use moveToCell or moveToRectangle instead.");
-            return false;
+            if (!ValidateAction("moveToMap", false)) return false;
+
+            return ExecuteAction(Bot.MoveToLink(mapName.ToUpperInvariant()));
         }
 
         // API: Moves to a random accessible cell of the specified rectangle.
@@ -2471,8 +2472,12 @@ namespace PROBot.Scripting
                 Fatal("error: buyItem: the item '" + itemName + "' does not exist in the opened shop.");
                 return false;
             }
-
-            return ExecuteAction(Bot.Game.BuyItem(item.Id, quantity));
+            if (ExecuteAction(Bot.Game.BuyItem(item.Id, quantity)))
+            {
+                Bot.SoundPlayer.Play("Purchase");
+                return true;
+            }
+            return false;
         }
 
         // API: Relearn a move from the move relearner NPC.
@@ -2544,10 +2549,12 @@ namespace PROBot.Scripting
             if (answerValue.Type == DataType.String)
             {
                 Bot.Game.PushDialogAnswer(answerValue.CastToString());
+                Bot.SoundPlayer.Play("Select");
             }
             else if (answerValue.Type == DataType.Number)
             {
                 Bot.Game.PushDialogAnswer((int)answerValue.CastToNumber());
+                Bot.SoundPlayer.Play("Select");
             }
             else
             {

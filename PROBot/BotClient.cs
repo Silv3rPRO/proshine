@@ -4,6 +4,7 @@ using PROProtocol;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Media;
 
 namespace PROBot
 {
@@ -23,6 +24,7 @@ namespace PROBot
         public Random Rand { get; private set; }
         public Account Account { get; set; }
         public UserSettings Settings { get; private set;}
+        public SoundPlayerHelper SoundPlayer { get; private set; }
 
         public State Running { get; private set; }
         public bool IsPaused { get; private set; }
@@ -61,6 +63,7 @@ namespace PROBot
             SliderOptions = new Dictionary<int, OptionSlider>();
             TextOptions = new Dictionary<int, TextOption>();
             Settings = new UserSettings();
+            SoundPlayer = new SoundPlayerHelper(this);
         }
 
         public void RemoveText(int index)
@@ -171,6 +174,7 @@ namespace PROBot
             {
                 AutoReconnector.IsEnabled = false;
             }
+            SoundPlayer.Play("LogOut");
             Game.Close();
         }
 
@@ -205,7 +209,7 @@ namespace PROBot
             if (PokemonEvolver.Update()) return;
             if (MoveTeacher.Update()) return;
 
-            if (Game.IsMapLoaded && Game.AreNpcReceived && Game.IsInactive)
+            if (Game.IsMapLoaded && Game.AreNpcReceived && Game.IsInactive && Game.Team.Count > 0)
             {
                 ExecuteNextAction();
             }
@@ -230,6 +234,7 @@ namespace PROBot
                 {
                     Running = State.Paused;
                     StateChanged?.Invoke(Running);
+                    SoundPlayer.Play("Pause");
                     Script.Pause();
                 }
                 else
@@ -351,6 +356,7 @@ namespace PROBot
             int distance = Game.DistanceTo(pcPosition.Item1, pcPosition.Item2);
             if (distance == 1)
             {
+                SoundPlayer.Play("PcUsage");
                 return Game.OpenPC();
             }
             else
@@ -462,6 +468,31 @@ namespace PROBot
             if (Running == State.Started)
             {
                 Script.OnBattleMessage(message);
+
+                if (message.Contains("A Wild SHINY"))
+                {
+                    SoundPlayer.Play("ShinyEncounter");
+                }
+                if (message.Contains("Success! You caught"))
+                {
+                    SoundPlayer.Play("Captured");
+                }
+                if (message.Contains("Oh no! The Pokemon broke free!"))
+                {
+                    SoundPlayer.Play("CaptureFail");
+                }
+                if (message.Contains("You have run away from the wild Pokemon."))
+                {
+                    SoundPlayer.Play("Escaped");
+                }
+                if (message.Contains("You throw a"))
+                {
+                    SoundPlayer.Play("CaptureAttempt");
+                }
+                if (message.Contains("has grown to level"))
+                {
+                    SoundPlayer.Play("LevelUp");
+                }
             }
         }
 

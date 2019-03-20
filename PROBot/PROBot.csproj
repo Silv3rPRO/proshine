@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Account.cs" />
     <Compile Include="AccountManager.cs" />
+    <Compile Include="Sound.cs" />
     <Compile Include="Modules\AutoReconnector.cs" />
     <Compile Include="BattleAI.cs" />
     <Compile Include="BotClient.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Scripting\LuaScript.cs" />
     <Compile Include="Socks.cs" />
     <Compile Include="Modules\StaffAvoider.cs" />
+    <Compile Include="SoundPlayerHelper.cs" />
     <Compile Include="UserSettings.cs" />
     <Compile Include="Utils\TaskUtils.cs" />
   </ItemGroup>

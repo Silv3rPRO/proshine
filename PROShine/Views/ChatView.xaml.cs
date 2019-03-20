@@ -383,14 +383,7 @@ namespace PROShine
             {
                 IntPtr handle = new WindowInteropHelper(window).Handle;
                 FlashWindowHelper.Flash(handle);
-
-                if (File.Exists("Assets/message.wav"))
-                {
-                    using (SoundPlayer player = new SoundPlayer("Assets/message.wav"))
-                    {
-                        player.Play();
-                    }
-                }
+                _bot.SoundPlayer.Play("Assets/message.wav");
             }
         }
     }

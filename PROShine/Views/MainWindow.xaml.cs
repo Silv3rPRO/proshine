@@ -330,6 +330,12 @@ namespace PROShine
             }
         }
 
+        private void SoundsWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            SoundsWindow Sounds = new SoundsWindow(Bot) { Owner = this };
+            Sounds.Show();
+        }
+
         private void LogoutMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Logout();

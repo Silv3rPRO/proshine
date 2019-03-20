@@ -79,6 +79,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SoundsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -109,6 +113,9 @@
     <Compile Include="Utils\FlashWindowHelper.cs" />
     <Compile Include="Views\InventoryView.xaml.cs">
       <DependentUpon>InventoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SoundsWindow.xaml.cs">
+      <DependentUpon>SoundsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
