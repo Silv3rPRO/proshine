@@ -1497,9 +1497,12 @@ namespace PROBot.Scripting
         // API: Moves to the nearest cell teleporting to the specified map.
         private bool MoveToMap(string mapName)
         {
-            if (!ValidateAction("moveToMap", false)) return false;
+            Fatal("error: moveToMap: this function is no longer available, please use moveToCell or moveToRectangle instead." +
+                " Or use https://github.com/TybaIt/ProShinePathfinder");
+            return false;
+            /*if (!ValidateAction("moveToMap", false)) return false;
 
-            return ExecuteAction(Bot.MoveToLink(mapName.ToUpperInvariant()));
+            return ExecuteAction(Bot.MoveToLink(mapName.ToUpperInvariant()));*/
         }
 
         // API: Moves to a random accessible cell of the specified rectangle.
