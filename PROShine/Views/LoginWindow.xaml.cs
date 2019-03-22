@@ -61,6 +61,17 @@ namespace PROShine
 
             ServerComboBox.ItemsSource = new List<string> { "Silver Server", "Gold Server" };
             ServerComboBox.SelectedIndex = 0;
+
+            Dictionary<string, int> OSystems = new Dictionary<string, int>
+            {
+                { "Windows 64bit", 0},
+                { "Android", 1},
+                { "Mac", 2}
+            };
+
+            OSystemComboBox.ItemsSource = OSystems;
+            OSystemComboBox.SelectedIndex = 0;
+
             RefreshAccountList();
             
             if (_bot.AccountManager.Accounts.Count > 0 && !ShowAccounts)
@@ -240,7 +251,10 @@ namespace PROShine
                     else
                     {
                         ServerComboBox.SelectedIndex = 0;
-                    }                    
+                    }
+
+                    OSystemComboBox.SelectedIndex = account.OSystem;
+
                     if (account.DeviceId != null)
                     {
                         MacRandomCheckBox.IsChecked = false;
@@ -326,6 +340,10 @@ namespace PROShine
             if (PasswordTextBox.Password != "" && PasswordTextBox.Password != null)
             {
                 account.Password = PasswordTextBox.Password;
+            }
+            if (OSystemComboBox.SelectedIndex != -1)
+            {
+                account.OSystem = ((KeyValuePair<string, int>)OSystemComboBox.SelectedItem).Value;
             }
 
             string deviceIdText = !MacRandomCheckBox.IsChecked.Value ? MacAddressTextBox.Text.Trim() : null;

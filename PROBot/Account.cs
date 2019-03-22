@@ -8,6 +8,7 @@ namespace PROBot
         public string Name { get; set; }
         public string Password { get; set; }
         public string Server { get; set; }
+        public int OSystem { get; set; }
         public Guid? DeviceId { get; set; }
         public Socks Socks { get; set; }
 

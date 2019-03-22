@@ -408,7 +408,7 @@ namespace PROBot
         private void Client_ConnectionOpened()
         {
             ConnectionOpened?.Invoke();
-            Game.SendAuthentication(Account.Name, Account.Password, Account.DeviceId ?? HardwareHash.GenerateRandom());
+            Game.SendAuthentication(Account.Name, Account.Password, Account.DeviceId ?? HardwareHash.GenerateRandom(), Account.OSystem);
         }
 
         private void Client_ConnectionClosed(Exception ex)

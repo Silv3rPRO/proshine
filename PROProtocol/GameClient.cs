@@ -507,12 +507,32 @@ namespace PROProtocol
             SendMessage("/setchar " + hair + "," + colour + "," + tone + "," + clothe + "," + eyes);
         }
 
-        public void SendAuthentication(string username, string password, Guid deviceId)
+        public void SendAuthentication(string username, string password, Guid deviceId, int OSystem)
         {
+            List<string> WindowsBuilds = new List<string>
+            {
+                "Windows 10  (10.0.0) 64bit"
+            };
+            List<string> AndroidBuilds = new List<string>
+            {
+                "Android OS 7.1.1 / API-25 (NOF26V/3636322)" // Nougat
+            };
+            List<string> MacBuilds = new List<string>
+            {
+                "Mac OS X 10.13.6" // High Sierra
+            };
+            List<List<string>> OSystems = new List<List<string>>
+            {
+                WindowsBuilds,
+                AndroidBuilds,
+                MacBuilds
+            };
+            string OS = OSystems[OSystem][new Random().Next(0, OSystems[OSystem].Count() - 1)];
+            // TODO: Non-random IF in the future there are more than one build in OS builds list. Not the case for now..
+
             // DSSock.AttemptLogin
-            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + deviceId + "|.|" + "Android OS 7.1.1 / API-25 (NOF26V/3636322)");
-            // TODO: Add an option to select the OS we want, it could be useful.
-            // I use Windows 10 here because the version is the same for everyone. This is not the case on Windows 7 or Mac.
+            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + deviceId + "|.|" + OS);
+
         }
 
         public void SendUseItem(int id, int pokemon = 0)
