@@ -317,6 +317,7 @@ namespace PROShine
             {
                 account.Password = login.Password;
                 account.Server = login.Server;
+                account.OSystem = login.OSystem;
                 account.DeviceId = login.DeviceId;
                 if (login.HasProxy)
                 {

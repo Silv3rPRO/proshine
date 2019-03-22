@@ -19,6 +19,8 @@ namespace PROShine
 
         public string Server => ServerComboBox.Text.Trim().ToUpperInvariant().Split(' ')[0];
 
+        public int OSystem => ((KeyValuePair<string, int>)OSystemComboBox.SelectedItem).Value;
+
         public Guid? DeviceId { get; set; }
 
         public bool HasProxy => ProxyCheckBox.IsChecked.Value;
@@ -107,6 +109,10 @@ namespace PROShine
             if (Password.Length == 0)
             {
                 PasswordTextBox.Focus();
+                return;
+            }
+            if (OSystem == -1)
+            {
                 return;
             }
 
