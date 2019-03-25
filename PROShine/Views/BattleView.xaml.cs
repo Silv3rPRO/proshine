@@ -45,7 +45,14 @@ namespace PROShine.Views
                 {
                     if (_bot.Game != null && _bot.Game.ActiveBattle != null)
                     {
-                        OpponentName.Text = PokemonNamesManager.Instance.Names[_bot.Game.ActiveBattle.OpponentId];
+                        if (_bot.Game.ActiveBattle.OpponentId <= (PokemonNamesManager.Instance.Names.Length - 1))
+                        {
+                            OpponentName.Text = PokemonNamesManager.Instance.Names[_bot.Game.ActiveBattle.OpponentId];
+                        }
+                        else
+                        {
+                            OpponentName.Text = "???";
+                        }
                         if (_bot.Game.ActiveBattle.IsShiny)
                             OpponentName.Text = "Shiny " + OpponentName.Text;
                         if (_bot.Game.ActiveBattle.IsWild)
@@ -59,26 +66,34 @@ namespace PROShine.Views
                             OpponentStatus.Text = "";
                         else
                             OpponentStatus.Text = _bot.Game.ActiveBattle.OpponentStatus;
-
-                        OpponentType1.Text = TypesManager.Instance.Type1[_bot.Game.ActiveBattle.OpponentId].ToString();
-                        OpponentType2.Text = TypesManager.Instance.Type2[_bot.Game.ActiveBattle.OpponentId].ToString();
-
+                        if (_bot.Game.ActiveBattle.OpponentId <= (PokemonNamesManager.Instance.Names.Length - 1))
+                        {
+                            OpponentType1.Text = TypesManager.Instance.Type1[_bot.Game.ActiveBattle.OpponentId].ToString();
+                            OpponentType2.Text = TypesManager.Instance.Type2[_bot.Game.ActiveBattle.OpponentId].ToString();
+                        }
+                        else
+                        {
+                            OpponentType1.Text = "???";
+                            OpponentType2.Text = "???";
+                        }
                         string gender = _bot.Game.ActiveBattle.OpponentGender;
                         OpponentGender.Icon = gender == "M" ? FontAwesomeIcon.Mars : gender == "F" ? FontAwesomeIcon.Venus : FontAwesomeIcon.Question;
                         OpponentForm.Text = _bot.Game.ActiveBattle.AlternateForm.ToString();
 
-                        PokemonStats stats = EffortValuesManager.Instance.BattleValues[_bot.Game.ActiveBattle.OpponentId];
-                        List<string> evs = new List<string>();
-
-                        foreach (StatType type in Enum.GetValues(typeof(StatType)).Cast<StatType>())
+                        if (_bot.Game.ActiveBattle.OpponentId <= (PokemonNamesManager.Instance.Names.Length - 1))
                         {
-                            int ev = stats.GetStat(type);
-                            if (ev > 0)
-                                evs.Add($"{type}: {ev}");
+                            PokemonStats stats = EffortValuesManager.Instance.BattleValues[_bot.Game.ActiveBattle.OpponentId];
+                            List<string> evs = new List<string>();
+
+                            foreach (StatType type in Enum.GetValues(typeof(StatType)).Cast<StatType>())
+                            {
+                                int ev = stats.GetStat(type);
+                                if (ev > 0)
+                                    evs.Add($"{type}: {ev}");
+                            }
+
+                            OpponentEVs.ToolTip = string.Join(Environment.NewLine, evs);
                         }
-
-                        OpponentEVs.ToolTip = string.Join(Environment.NewLine, evs);
-
                         Pokemon active = _bot.Game.Team[_bot.Game.ActiveBattle.SelectedPokemonIndex];
                         ActiveName.Text = active.Name;
                         ActiveLevel.Text = active.Level.ToString();

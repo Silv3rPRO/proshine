@@ -30,8 +30,9 @@ namespace PROBot
                     }
                 }
             }
-            catch (InvalidOperationException ex)
+            catch (NullReferenceException ex)
             {
+                Console.WriteLine("Sub-directory './Assets/Sounds/<*>.wav' missing from root directory or sound file not found.");
                 throw ex;
             }
         }
