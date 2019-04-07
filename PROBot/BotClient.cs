@@ -286,7 +286,7 @@ namespace PROBot
             catch (Exception ex)
             {
                 Script = null;
-                throw ex;
+                throw;
             }
         }
 
