@@ -104,7 +104,7 @@ namespace PROProtocol
         public event Action ActivePokemonChanged;
         public event Action OpponentChanged;
         
-        private const string Version = "Valentinev3";
+        private const string Version = "Marchv4";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -1192,9 +1192,9 @@ namespace PROProtocol
                 case "@":
                     OnNpcBattlers(data);
                     break;
-                case "*":
+                /*case "*":
                     OnNpcDestroy(data);
-                    break;
+                    break;*/
                 case "#":
                     OnTeamUpdate(data);
                     break;
@@ -1347,7 +1347,7 @@ namespace PROProtocol
             PositionUpdated?.Invoke(MapName, PlayerX, playerY);
         }
 
-         private void OnPlayerInfos(string[] data)
+        private void OnPlayerInfos(string[] data)
         {
             string[] playerData = data[1].Split('|');
             PlayerName = playerData[0];
@@ -1372,7 +1372,8 @@ namespace PROProtocol
         {
             if (!IsMapLoaded) return;
 
-            List<int> defeatedBattlers = data[1].Split(new [] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+            var npcData = data[1].Split('*');
+            var defeatedBattlers = npcData[0].Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
 
             Map.Npcs.Clear();
             foreach (Npc npc in Map.OriginalNpcs)
@@ -1384,23 +1385,20 @@ namespace PROProtocol
                 }
                 Map.Npcs.Add(clone);
             }
-        }
 
-        private void OnNpcDestroy(string[] data)
-        {
-            if (!IsMapLoaded) return;
-
-            string[] npcData = data[1].Split('|');
-
-            foreach (string npcText in npcData)
+            if (npcData[1] != "")
             {
-                int npcId = int.Parse(npcText);
-                foreach (Npc npc in Map.Npcs)
+                var destroyedNpcs = npcData[1].Split('|');
+                foreach (string npcText in destroyedNpcs)
                 {
-                    if (npc.Id == npcId)
+                    int npcId = int.Parse(npcText);
+                    foreach (Npc npc in Map.Npcs)
                     {
-                        Map.Npcs.Remove(npc);
-                        break;
+                        if (npc.Id == npcId)
+                        {
+                            Map.Npcs.Remove(npc);
+                            break;
+                        }
                     }
                 }
             }
