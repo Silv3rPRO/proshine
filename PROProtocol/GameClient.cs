@@ -1172,9 +1172,6 @@ namespace PROProtocol
                 case "@":
                     OnNpcBattlers(data);
                     break;
-                //case "*":
-                //    OnNpcDestroy(data);
-                //    break;
                 case "#":
                     OnTeamUpdate(data);
                     break;
@@ -1353,62 +1350,25 @@ namespace PROProtocol
             if (!IsMapLoaded) return;
 
             var npcData = data[1].Split('*');
-            var defeatedBattlers = npcData[0].Split(new [] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+            var defeatedNpcs = npcData[0].Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse);
+            var destroyedNpcs = npcData[1].Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse);
 
             Map.Npcs.Clear();
             foreach (Npc npc in Map.OriginalNpcs)
             {
-                Npc clone = npc.Clone();
-                if (defeatedBattlers.Contains(npc.Id))
+                if (!destroyedNpcs.Contains(npc.Id))
                 {
-                    clone.CanBattle = false;
-                }
-                Map.Npcs.Add(clone);
-            }
+                    Npc clone = npc.Clone();
+                    if (defeatedNpcs.Contains(npc.Id))
+                        clone.CanBattle = false;
 
-            if (npcData[1] != "")
-            {
-                var destroyedNpcs = npcData[1].Split('|');
-                foreach (string npcText in destroyedNpcs)
-                {
-                    int npcId = int.Parse(npcText);
-                    foreach (Npc npc in Map.Npcs)
-                    {
-                        if (npc.Id == npcId)
-                        {
-                            Map.Npcs.Remove(npc);
-                            break;
-                        }
-                    }
+                    Map.Npcs.Add(clone);
                 }
             }
 
             AreNpcReceived = true;
             NpcReceived?.Invoke(Map.Npcs);
         }
-
-        //private void OnNpcDestroy(string[] data)
-        //{
-        //    if (!IsMapLoaded) return;
-
-        //    string[] npcData = data[1].Split('|');
-
-        //    foreach (string npcText in npcData)
-        //    {
-        //        int npcId = int.Parse(npcText);
-        //        foreach (Npc npc in Map.Npcs)
-        //        {
-        //            if (npc.Id == npcId)
-        //            {
-        //                Map.Npcs.Remove(npc);
-        //                break;
-        //            }
-        //        }
-        //    }
-
-        //    AreNpcReceived = true;
-        //    NpcReceived?.Invoke(Map.Npcs);
-        //}
 
         private void OnTeamUpdate(string[] data)
         {
