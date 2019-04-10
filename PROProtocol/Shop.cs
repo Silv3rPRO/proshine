@@ -13,17 +13,17 @@ namespace PROProtocol
         public Shop(string content)
         {
             string[] data = content.Split(',');
-            if (data.Length >= 31)
+            if (data.Length >= 41)
             {
                 for (int i = 0; i < 10; ++i)
                 {
-                    ShopItem item = new ShopItem(data, i * 3);
+                    ShopItem item = new ShopItem(data, i * 4);
                     if (item.Id > 0)
                     {
                         _items.Add(item);
                     }
                 }
-                Id = int.Parse(data[30]);
+                Id = int.Parse(data[40]);
             }
         }
     }
