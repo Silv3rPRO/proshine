@@ -1371,7 +1371,7 @@ namespace PROProtocol
         {
             if (!IsMapLoaded) return;
 
-            string[] npcData = data[1].Split('*')[1].Split('|');
+            string[] npcData = data[1].Split('*')[1].Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string npcText in npcData)
             {
