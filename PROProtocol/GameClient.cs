@@ -1352,7 +1352,7 @@ namespace PROProtocol
         {
             if (!IsMapLoaded) return;
 
-            List<int> defeatedBattlers = data[1].Replace("*","").Split(new [] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+            List<int> defeatedBattlers = data[1].Split('*')[1].Split(new [] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
 
             Map.Npcs.Clear();
             foreach (Npc npc in Map.OriginalNpcs)
