@@ -111,7 +111,7 @@ namespace PROBot.Scripting
             _hookedFunctions = new Dictionary<string, IList<DynValue>>();
 
             _lua = new Script(CoreModules.Preset_SoftSandbox | CoreModules.LoadMethods);
-            _lua.Options.ScriptLoader = new CustomScriptLoader(_path) { ModulePaths = new[] { "?.lua" } };
+            _lua.Options.ScriptLoader = new CustomScriptLoader(_path) { ModulePaths = new[] { "?.lua", Directory.GetCurrentDirectory() + "/Libs/?.lua" } };
             _lua.Options.CheckThreadAccess = false;
             _lua.Globals["log"] = new Action<string>(Log);
             _lua.Globals["fatal"] = new Action<string>(Fatal);
@@ -2462,9 +2462,9 @@ namespace PROBot.Scripting
 		{
 			return null;
 		}
-		
+
 		int id = Bot.Game.CurrentPCBox[boxPokemonId - 1].Id;
-		
+
 		if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
 		{
 			return new string[] { "Unknown", "Unknown" };
