@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:PROShine.Views"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:p="clr-namespace:PROShine"
+             xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
              mc:Ignorable="d"
              d:DesignHeight="350" d:DesignWidth="600">
     <Grid>
@@ -17,8 +18,8 @@
                 <Button Name="PokemonButton" Content="Pokemon" MinWidth="87" Margin="5" FontSize="20" Click="PokemonButton_Click"/>
                 <Button Name="RunButton" Content="Run" MinWidth="87" Margin="5" FontSize="20" Click="RunButton_Click"/>
             </WrapPanel>
-            <fa:FontAwesome Name="OpponentGraphic" Icon="OptinMonster" Margin="20,20,50,20" FontSize="72" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Height="100"/>
-            <fa:FontAwesome Name="PlayerGraphic"  Icon="PaperPlaneOutline" Margin="50,20,20,0" FontSize="72" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="100"/>
+            <Image gif:AnimationBehavior.Error="ErrorLoadingGraphic" gif:AnimationBehavior.RepeatBehavior="Forever" Source="https://cdn.bulbagarden.net/upload/archive/8/8e/20090709005535%21Spr_3r_000.png" Name="OpponentGraphic" Margin="20,20,100,20" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Height="100"/>
+            <Image gif:AnimationBehavior.Error="ErrorLoadingGraphic" gif:AnimationBehavior.RepeatBehavior="Forever" Source="https://cdn.bulbagarden.net/upload/archive/8/8e/20090709005535%21Spr_3r_000.png" Name="PlayerGraphic" Margin="50,0,0,50" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="150" Height="150"/>
             <StackPanel Margin="10,10,10,10" ClipToBounds="False">
                 <WrapPanel>
                     <TextBlock Name="OpponentName" TextWrapping="NoWrap" VerticalAlignment="Top" Height="Auto" MinWidth="210" FontSize="20" FontWeight="Bold" Text="[Opponent Name]"/>
