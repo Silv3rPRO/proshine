@@ -20,6 +20,7 @@
         Dragon,
         Dark,
         Fairy,
+        Bird, // https://bulbapedia.bulbagarden.net/wiki/List_of_glitch_types#Bird
         None
     }
     public static class PokemonTypeExtensions

@@ -392,6 +392,7 @@ namespace PROBot.Scripting
                     if (isPathAction && _actionExecuted) return;
                 }
             }
+            Console.WriteLine(functionName);
             CallDynValueFunction(_lua.Globals.Get(functionName), functionName, args);
         }
 
@@ -1023,7 +1024,7 @@ namespace PROBot.Scripting
 
             int id = Bot.Game.Team[index - 1].Id;
 
-            if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
+            if (!TypesManager.Instance.Type1.ContainsKey(id))
             {
                 return new string[] { "Unknown", "Unknown" };
             }
@@ -1541,7 +1542,7 @@ namespace PROBot.Scripting
 
             int id = Bot.Game.ActiveBattle.OpponentId;	    
 
-            if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
+            if (!TypesManager.Instance.Type1.ContainsKey(id))
             {
                 return new string[] { "Unknown", "Unknown" };
             }
@@ -1560,7 +1561,7 @@ namespace PROBot.Scripting
         // API: Moves to the nearest cell teleporting to the specified map.
         private bool MoveToMap(string mapName)
         {
-            Fatal("error: moveToMap: this function is no longer available, please use moveToCell or moveToRectangle instead.");
+            Fatal("error: moveToMap: this function is no longer available, please use moveToCell instead.");
             return false;
         }
 
@@ -1695,25 +1696,8 @@ namespace PROBot.Scripting
         // API: Moves near the cell teleporting to the specified map.
         private bool MoveNearExit(string mapName)
         {
-            if (!ValidateAction("moveNearExit", false)) return false;
-
-            Tuple<int, int> nearest = Bot.Game.Map.GetNearestLinks(mapName.ToUpperInvariant(), Bot.Game.PlayerX, Bot.Game.PlayerY).First();
-            if (nearest == null)
-            {
-                Fatal("error: moveNearExit: could not find the exit '" + mapName + "'.");
-                return false;
-            }
-
-            int x, y;
-            int tries = 0;
-            do
-            {
-                x = Bot.Game.Rand.Next(-10, 10) + nearest.Item1;
-                y = Bot.Game.Rand.Next(-10, 10) + nearest.Item2;
-                if (++tries > 100) return false;
-            } while (x <= 0 || y <= 0 || !Bot.Game.Map.IsNormalGround(x, y) || (x == Bot.Game.PlayerX && y == Bot.Game.PlayerY));
-
-            return ExecuteAction(Bot.MoveToCell(x, y));
+            Fatal("error: moveNearExit: this function is no longer available, please use moveToNormalGround instead.");
+            return false;
         }
 
         // API: Moves then talk to NPC specified by its name.
@@ -2465,7 +2449,7 @@ namespace PROBot.Scripting
 
 		int id = Bot.Game.CurrentPCBox[boxPokemonId - 1].Id;
 
-		if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
+		if (!TypesManager.Instance.Type1.ContainsKey(id))
 		{
 			return new string[] { "Unknown", "Unknown" };
 		}
