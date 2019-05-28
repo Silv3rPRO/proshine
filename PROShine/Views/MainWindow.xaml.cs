@@ -774,11 +774,19 @@ namespace PROShine
             });
         }
 
-        private void Client_DialogOpened(string message)
+        private void Client_DialogOpened(string message, string[] options)
         {
             Dispatcher.InvokeAsync(delegate
             {
-                LogMessage(message);
+                var content = new StringBuilder(message);
+                for (int i = 0; i < options.Length; i++)
+                {
+                    content.AppendLine()
+                        .Append(i + 1)
+                        .Append(". ")
+                        .Append(options[i]);
+                }
+                LogMessage(content.ToString());
             });
         }
 
@@ -816,7 +824,7 @@ namespace PROShine
                 {
                     content.AppendLine();
                     content.Append(item.Name);
-                    content.Append(" ($" + item.Price + ")");
+                    content.Append(" ($").Append(item.Price).Append(')');
                 }
                 LogMessage(content.ToString());
             });

@@ -438,7 +438,7 @@ namespace PROBot
             SetClient(null);
         }
 
-        private void Client_DialogOpened(string message)
+        private void Client_DialogOpened(string message, string[] options)
         {
             if (Running == State.Started)
             {
