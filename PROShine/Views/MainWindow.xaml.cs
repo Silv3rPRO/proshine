@@ -85,8 +85,11 @@ namespace PROShine
 
             if (!string.IsNullOrEmpty(Bot.Settings.LastScript))
             {
-                MenuReloadScript.Header = "Reload " + Path.GetFileName(Bot.Settings.LastScript);
+                string fileName = Path.GetFileName(Bot.Settings.LastScript);
+                MenuReloadScript.Header = "Reload " + fileName;
                 MenuReloadScript.IsEnabled = true;
+                MenuExploreScript.Header = "Explore " + fileName;
+                MenuExploreScript.IsEnabled = true;
             }
 
             App.InitializeVersion();
@@ -1032,6 +1035,14 @@ namespace PROShine
             if (string.IsNullOrEmpty(Bot.Settings.LastScript))
                 return;
             LoadScript(Bot.Settings.LastScript);
+        }
+
+        private void MenuExploreScript_Click(object sender, RoutedEventArgs e)
+        {
+            if (!File.Exists(Bot.Settings.LastScript))
+                return;
+
+            Process.Start("explorer.exe", "/select, " + Bot.Settings.LastScript);
         }
     }
 }
