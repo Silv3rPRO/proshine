@@ -14,19 +14,18 @@ namespace PROProtocol
 
         public Shop(string content)
         {
-            string[] data = content.Split(new[] { "[PD]," }, StringSplitOptions.None);
-            if (data.Length >= 4)
+            string[] data = content.Split(',');
+            if (data.Length >= 41)
             {
                 for (int i = 0; i < data.Length - 1; ++i)
                 {
-                    var itemData = data[i].Split(',');
-                    var item = new ShopItem(itemData, 0);
+                    ShopItem item = new ShopItem(data, i * 4);
                     if (item.Id > 0)
                     {
                         _items.Add(item);
                     }
                 }
-                Id = int.Parse(data.LastOrDefault());
+                Id = int.Parse(data[40]);
             }
         }
     }

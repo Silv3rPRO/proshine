@@ -4,7 +4,7 @@ using PROProtocol;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Media;
+using System.Linq;
 
 namespace PROBot
 {
@@ -266,17 +266,13 @@ namespace PROBot
         {
             string input = File.ReadAllText(filename);
 
-            List<string> libs = new List<string>();
+            var libs = new List<string>();
             if (Directory.Exists("Libs"))
             {
-                string[] files = Directory.GetFiles("Libs");
-                foreach (string file in files)
-                {
-                    if (file.ToUpperInvariant().EndsWith(".LUA"))
-                    {
-                        libs.Add(File.ReadAllText(file));
-                    }
-                }
+                libs = Directory.GetFiles("Libs")
+                    .Where(f => f.EndsWith(".lua", StringComparison.InvariantCultureIgnoreCase))
+                    .Select(File.ReadAllText)
+                    .ToList();
             }
 
             BaseScript script = new LuaScript(this, Path.GetFullPath(filename), input, libs);
@@ -288,10 +284,10 @@ namespace PROBot
                 Script.ScriptMessage += Script_ScriptMessage;
                 Script.Initialize();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Script = null;
-                throw ex;
+                throw;
             }
         }
 

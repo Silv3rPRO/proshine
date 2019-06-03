@@ -104,7 +104,7 @@ namespace PROProtocol
         public event Action ActivePokemonChanged;
         public event Action OpponentChanged;
         
-        private const string Version = "Marchv4";
+        private const string Version = "Hope2019";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -888,7 +888,7 @@ namespace PROProtocol
 
         public InventoryItem GetItemFromId(int id)
         {
-            return Items.FirstOrDefault(i => i.Id == id && i.Quantity > 0);
+            return Items.Find(i => i.Id == id && i.Quantity > 0);
         }
 
         public bool HasItemId(int id)
@@ -898,7 +898,8 @@ namespace PROProtocol
 
         public InventoryItem GetItemFromName(string itemName)
         {
-            return Items.FirstOrDefault(i => i.Name.Equals(itemName, StringComparison.InvariantCultureIgnoreCase) && i.Quantity > 0);
+            return Items.Find(i => i.Name?.Equals(itemName, StringComparison.InvariantCultureIgnoreCase) == true 
+                && i.Quantity > 0);
         }
 
         public bool HasItemName(string itemName)
@@ -913,7 +914,7 @@ namespace PROProtocol
 
         public Pokemon FindFirstPokemonInTeam(string pokemonName)
         {
-            return Team.FirstOrDefault(p => p.Name.Equals(pokemonName, StringComparison.InvariantCultureIgnoreCase));
+            return Team.Find(p => p.Name.Equals(pokemonName, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public void UseSurf()
@@ -1192,9 +1193,6 @@ namespace PROProtocol
                 case "@":
                     OnNpcBattlers(data);
                     break;
-                /*case "*":
-                    OnNpcDestroy(data);
-                    break;*/
                 case "#":
                     OnTeamUpdate(data);
                     break;
@@ -1373,33 +1371,19 @@ namespace PROProtocol
             if (!IsMapLoaded) return;
 
             var npcData = data[1].Split('*');
-            var defeatedBattlers = npcData[0].Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+            var defeatedNpcs = npcData[0].Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse);
+            var destroyedNpcs = npcData[1].Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse);
 
             Map.Npcs.Clear();
             foreach (Npc npc in Map.OriginalNpcs)
             {
-                Npc clone = npc.Clone();
-                if (defeatedBattlers.Contains(npc.Id))
+                if (!destroyedNpcs.Contains(npc.Id))
                 {
-                    clone.CanBattle = false;
-                }
-                Map.Npcs.Add(clone);
-            }
+                    Npc clone = npc.Clone();
+                    if (defeatedNpcs.Contains(npc.Id))
+                        clone.CanBattle = false;
 
-            if (npcData[1] != "")
-            {
-                var destroyedNpcs = npcData[1].Split('|');
-                foreach (string npcText in destroyedNpcs)
-                {
-                    int npcId = int.Parse(npcText);
-                    foreach (Npc npc in Map.Npcs)
-                    {
-                        if (npc.Id == npcId)
-                        {
-                            Map.Npcs.Remove(npc);
-                            break;
-                        }
-                    }
+                    Map.Npcs.Add(clone);
                 }
             }
 

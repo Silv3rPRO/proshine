@@ -111,7 +111,7 @@ namespace PROBot.Scripting
             _hookedFunctions = new Dictionary<string, IList<DynValue>>();
 
             _lua = new Script(CoreModules.Preset_SoftSandbox | CoreModules.LoadMethods);
-            _lua.Options.ScriptLoader = new CustomScriptLoader(_path) { ModulePaths = new[] { "?.lua" } };
+            _lua.Options.ScriptLoader = new CustomScriptLoader(_path) { ModulePaths = new[] { "?.lua", Directory.GetCurrentDirectory() + "/Libs/?.lua" } };
             _lua.Options.CheckThreadAccess = false;
             _lua.Globals["log"] = new Action<string>(Log);
             _lua.Globals["fatal"] = new Action<string>(Fatal);
@@ -172,7 +172,11 @@ namespace PROBot.Scripting
             _lua.Globals["getActiveHeadbuttTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveHeadbuttTrees);
             _lua.Globals["getActiveBerryTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveBerryTrees);
             _lua.Globals["getDiscoverableItems"] = new Func<List<Dictionary<string, int>>>(GetDiscoverableItems);
-            _lua.Globals["getNpcData"] = new Func<List<Dictionary<string, string>>>(GetNpcData);
+            _lua.Globals["getNpcData"] = new Func<List<Dictionary<string, DynValue>>>(GetNpcData);
+            _lua.Globals["getMapLinks"] = new Func<List<Dictionary<string, int>>>(GetMapLinks);
+            _lua.Globals["getMapWidth"] = new Func<int>(GetMapWidth);
+            _lua.Globals["getMapHeight"] = new Func<int>(GetMapHeight);
+            _lua.Globals["getCellType"] = new Func<int, int, string>(GetCellType);
 
             _lua.Globals["hasItem"] = new Func<string, bool>(HasItem);
             _lua.Globals["getItemQuantity"] = new Func<string, int>(GetItemQuantity);
@@ -530,23 +534,82 @@ namespace PROBot.Scripting
             return items;
         }
 
-        // API return npc data on current map, format : { { "x" = x , "y" = y, "type" = type }, {...}, ... }
-        private List<Dictionary<string, string>> GetNpcData()
+        // API: Returns npc data on current map, format : { { "x" = x , "y" = y, "type" = type }, {...}, ... }
+        private List<Dictionary<string, DynValue>> GetNpcData()
         {
-            var lNpc = new List<Dictionary<string, string>>();
+            var lNpc = new List<Dictionary<string, DynValue>>();
             foreach (Npc npc in Bot.Game.Map.Npcs)
             {
-                var npcData = new Dictionary<string, string>();
-                npcData["x"] = npc.PositionX.ToString();
-                npcData["y"] = npc.PositionY.ToString();
-                npcData["type"] = npc.Type.ToString();
-                npcData["name"] = npc.Name;
-                npcData["isBattler"] = npc.IsBattler.ToString();
-                npcData["id"] = npc.Id.ToString();
-                npcData["los"] = npc.LosLength.ToString();
+                var npcData = new Dictionary<string, DynValue>
+                {
+                    ["x"] = DynValue.NewNumber(npc.PositionX),
+                    ["y"] = DynValue.NewNumber(npc.PositionY),
+                    ["type"] = DynValue.NewNumber(npc.Type),
+                    ["name"] = DynValue.NewString(npc.Name),
+                    ["isBattler"] = DynValue.NewBoolean(npc.IsBattler),
+                    ["id"] = DynValue.NewNumber(npc.Id),
+                    ["los"] = DynValue.NewNumber(npc.LosLength)
+                };
                 lNpc.Add(npcData);
             }
             return lNpc;
+        }
+
+        // API: Returns an array of all map links on the current map
+        public List<Dictionary<string, int>> GetMapLinks()
+        {
+            var links = new List<Dictionary<string, int>>();
+
+            for (int y = 0; y < Bot.Game.Map.DimensionY; y++)
+            {
+                for (int x = 0; x < Bot.Game.Map.DimensionX; x++)
+                {
+                    if (Bot.Game.Map.Links[x, y])
+                    {
+                        links.Add(new Dictionary<string, int>
+                        {
+                            ["x"] = x,
+                            ["y"] = y,
+                        });
+                    }
+                }
+            }
+
+            return links;
+        }
+
+        // API: The number of cells on the current map in the x direction.
+        private int GetMapWidth()
+        {
+            return Bot.Game.Map.Width;
+        }
+
+        // API: The number of cells on the current map in the y direction.
+        private int GetMapHeight()
+        {
+            return Bot.Game.Map.Height;
+        }
+
+        // API: Returns the cell type of the specified cell on the current map.
+        private string GetCellType(int x, int y)
+        {
+            Map map = Bot.Game.Map;
+
+            if (map.HasLink(x, y)) return "Link";
+            if (map.IsGrass(x, y)) return "Grass";
+            if (map.IsWater(x, y)) return "Water";
+            if (map.IsNormalGround(x, y)) return "Normal Ground";
+            if (map.IsIce(x, y)) return "Ice";
+            if (map.IsPC(x, y)) return "PC";
+
+            int collider = map.GetCollider(x, y);
+            if (collider == 2) return "Ledge South";
+            if (collider == 3) return "Ledge East";
+            if (collider == 4) return "Ledge West";
+            if (collider == 11) return "Tree";
+            if (collider == 13) return "Rock";
+
+            return "Collider";
         }
 
         // API: Returns true if the string contains the specified part, ignoring the case.
@@ -2403,9 +2466,9 @@ namespace PROBot.Scripting
 		{
 			return null;
 		}
-		
+
 		int id = Bot.Game.CurrentPCBox[boxPokemonId - 1].Id;
-		
+
 		if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
 		{
 			return new string[] { "Unknown", "Unknown" };
