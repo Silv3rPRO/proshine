@@ -104,7 +104,7 @@ namespace PROProtocol
         public event Action ActivePokemonChanged;
         public event Action OpponentChanged;
         
-        private const string Version = "Dolphin";
+        private const string Version = "Easter2019";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -1171,10 +1171,11 @@ namespace PROProtocol
                     break;
                 case "@":
                     OnNpcBattlers(data);
-                    break;
-                case "*":
                     OnNpcDestroy(data);
                     break;
+                //case "*":
+                //    OnNpcDestroy(data);
+                //    break;
                 case "#":
                     OnTeamUpdate(data);
                     break;
@@ -1352,7 +1353,7 @@ namespace PROProtocol
         {
             if (!IsMapLoaded) return;
 
-            List<int> defeatedBattlers = data[1].Split(new [] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+            List<int> defeatedBattlers = data[1].Split('*')[0].Split(new [] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
 
             Map.Npcs.Clear();
             foreach (Npc npc in Map.OriginalNpcs)
@@ -1370,7 +1371,7 @@ namespace PROProtocol
         {
             if (!IsMapLoaded) return;
 
-            string[] npcData = data[1].Split('|');
+            string[] npcData = data[1].Split('*')[1].Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string npcText in npcData)
             {
