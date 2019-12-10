@@ -37,15 +37,17 @@ namespace PROProtocol
 
         public async void Connect(string serverAddress, int serverPort)
         {
+            var serverIp = IPAddress.Parse(serverAddress);
+
             if (!_useSocks)
             {
-                Connect(IPAddress.Parse(serverAddress), serverPort);
+                Connect(serverIp, serverPort);
             }
             else
             {
                 try
                 {
-                    Socket socket = await SocksConnection.OpenConnection(_socksVersion, serverAddress, serverPort, _socksHost, _socksPort, _socksUser, _socksPass);
+                    Socket socket = await SocksConnection.OpenConnection(_socksVersion, serverIp, serverPort, _socksHost, _socksPort, _socksUser, _socksPass);
                     Initialize(socket);
                 }
                 catch (Exception ex)

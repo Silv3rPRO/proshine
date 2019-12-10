@@ -104,7 +104,7 @@ namespace PROProtocol
         public event Action ActivePokemonChanged;
         public event Action OpponentChanged;
         
-        private const string Version = "Spookiest";
+        private const string Version = "Easter2019";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -510,7 +510,9 @@ namespace PROProtocol
         public void SendAuthentication(string username, string password, Guid deviceId)
         {
             // DSSock.AttemptLogin
-            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + deviceId);
+            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + deviceId + "|.|" + "Windows 10  (10.0.0) 64bit");
+            // TODO: Add an option to select the OS we want, it could be useful.
+            // I use Windows 10 here because the version is the same for everyone. This is not the case on Windows 7 or Mac.
         }
 
         public void SendUseItem(int id, int pokemon = 0)
@@ -866,7 +868,7 @@ namespace PROProtocol
 
         public InventoryItem GetItemFromId(int id)
         {
-            return Items.FirstOrDefault(i => i.Id == id && i.Quantity > 0);
+            return Items.Find(i => i.Id == id && i.Quantity > 0);
         }
 
         public bool HasItemId(int id)
@@ -876,7 +878,8 @@ namespace PROProtocol
 
         public InventoryItem GetItemFromName(string itemName)
         {
-            return Items.FirstOrDefault(i => i.Name.Equals(itemName, StringComparison.InvariantCultureIgnoreCase) && i.Quantity > 0);
+            return Items.Find(i => i.Name?.Equals(itemName, StringComparison.InvariantCultureIgnoreCase) == true 
+                && i.Quantity > 0);
         }
 
         public bool HasItemName(string itemName)
@@ -891,7 +894,7 @@ namespace PROProtocol
 
         public Pokemon FindFirstPokemonInTeam(string pokemonName)
         {
-            return Team.FirstOrDefault(p => p.Name.Equals(pokemonName, StringComparison.InvariantCultureIgnoreCase));
+            return Team.Find(p => p.Name.Equals(pokemonName, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public void UseSurf()
@@ -1170,9 +1173,6 @@ namespace PROProtocol
                 case "@":
                     OnNpcBattlers(data);
                     break;
-                case "*":
-                    OnNpcDestroy(data);
-                    break;
                 case "#":
                     OnTeamUpdate(data);
                     break;
@@ -1247,6 +1247,8 @@ namespace PROProtocol
             _mapClient.Open(mapServerHost[0], int.Parse(mapServerHost[1]));
 
             // DSSock.ProcessCommands
+            SendMessage("/in1");
+            // TODO: Add a setting to disable the party inspection (send /in0 instead).
             SendPacket(")");
             SendPacket("_");
             SendPacket("g");
@@ -1323,7 +1325,7 @@ namespace PROProtocol
             PositionUpdated?.Invoke(MapName, PlayerX, playerY);
         }
 
-         private void OnPlayerInfos(string[] data)
+        private void OnPlayerInfos(string[] data)
         {
             string[] playerData = data[1].Split('|');
             PlayerName = playerData[0];
@@ -1348,36 +1350,20 @@ namespace PROProtocol
         {
             if (!IsMapLoaded) return;
 
-            List<int> defeatedBattlers = data[1].Split(new [] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+            var npcData = data[1].Split('*');
+            var defeatedNpcs = npcData[0].Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse);
+            var destroyedNpcs = npcData[1].Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse);
 
             Map.Npcs.Clear();
             foreach (Npc npc in Map.OriginalNpcs)
             {
-                Npc clone = npc.Clone();
-                if (defeatedBattlers.Contains(npc.Id))
+                if (!destroyedNpcs.Contains(npc.Id))
                 {
-                    clone.CanBattle = false;
-                }
-                Map.Npcs.Add(clone);
-            }
-        }
+                    Npc clone = npc.Clone();
+                    if (defeatedNpcs.Contains(npc.Id))
+                        clone.CanBattle = false;
 
-        private void OnNpcDestroy(string[] data)
-        {
-            if (!IsMapLoaded) return;
-
-            string[] npcData = data[1].Split('|');
-
-            foreach (string npcText in npcData)
-            {
-                int npcId = int.Parse(npcText);
-                foreach (Npc npc in Map.Npcs)
-                {
-                    if (npc.Id == npcId)
-                    {
-                        Map.Npcs.Remove(npc);
-                        break;
-                    }
+                    Map.Npcs.Add(clone);
                 }
             }
 

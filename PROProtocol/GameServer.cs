@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 
 namespace PROProtocol
 {
@@ -10,14 +11,14 @@ namespace PROProtocol
 
     public static class GameServerExtensions
     {
-        public static string GetAddress(this GameServer server)
+        public static IPEndPoint GetAddress(this GameServer server)
         {
             switch (server)
             {
                 case GameServer.Silver:
-                    return "95.183.48.67";
+                    return new IPEndPoint(IPAddress.Parse("185.83.214.111"), 800);
                 case GameServer.Gold:
-                    return "46.28.205.63";
+                    return new IPEndPoint(IPAddress.Parse("185.83.214.111"), 801);
             }
             return null;
         }

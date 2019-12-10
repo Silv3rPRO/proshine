@@ -9,7 +9,7 @@
         public ShopItem(string[] data, int index)
         {
             Id = int.Parse(data[index]);
-            Name = data[index + 1].Replace("\"", "");
+            Name = data[index + 1].Trim('"');
             Price = int.Parse(data[index + 2]);
         }
     }
