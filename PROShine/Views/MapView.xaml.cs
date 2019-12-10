@@ -105,9 +105,15 @@ namespace PROShine.Views
             Tuple<double, double> drawingOffset = GetDrawingOffset();
             double deltaX = drawingOffset.Item1;
             double deltaY = drawingOffset.Item2;
-            _startDragCell.X = (int)((e.GetPosition(this).X / _cellWidth - deltaX));
-            _startDragCell.Y = (int)((e.GetPosition(this).Y / _cellWidth) - deltaY);
+            int x = (int)((e.GetPosition(this).X / _cellWidth - deltaX));
+            int y = (int)((e.GetPosition(this).Y / _cellWidth) - deltaY);
+            _startDragCell.X = x;
+            _startDragCell.Y = y;
             _dragging = true;
+
+#if DEBUG
+            _bot.LogMessage($"DATA:\nCell[{x},{y}]:\nCollider: {_bot.Game.Map.GetCollider(x, y)}; Tiles1: {_bot.Game.Map.Tiles1[x, y]}\nTiles2: {_bot.Game.Map.Tiles2[x, y]}; Tiles3: {_bot.Game.Map.Tiles3[x, y]}\n Tiles4: {_bot.Game.Map.Tiles4[x, y]}");
+#endif
         }
 
         private void MapCanvas_MouseRightButtonUp(object sender, MouseButtonEventArgs e)

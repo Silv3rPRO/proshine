@@ -2449,7 +2449,7 @@ namespace PROBot.Scripting
 
 		int id = Bot.Game.CurrentPCBox[boxPokemonId - 1].Id;
 
-		if (!TypesManager.Instance.Type1.ContainsKey(id))
+		if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
 		{
 			return new string[] { "Unknown", "Unknown" };
 		}
