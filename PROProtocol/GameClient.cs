@@ -104,7 +104,7 @@ namespace PROProtocol
         public event Action ActivePokemonChanged;
         public event Action OpponentChanged;
         
-        private const string Version = "Easter2019";
+        private const string Version = "Xmas19";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -237,19 +237,19 @@ namespace PROProtocol
             }
         }
 
-        private int _pingCurrentStep = 0;
+        private int _pingCurrentStep = 1;
         private bool _isPingSwapped = false;
 
         private void SendRegularPing()
         {
-            if ((DateTime.UtcNow - _lastMovement).TotalSeconds >= 6)
+            if ((DateTime.UtcNow - _lastMovement).TotalSeconds > 6)
             {
                 _lastMovement = DateTime.UtcNow;
                 // DSSock.Update
                 int packetType;
                 if (_pingCurrentStep == 5)
                 {
-                    packetType = _isPingSwapped ? 1 : 2;
+                    packetType = _isPingSwapped ? 2 : 1;
                     _pingCurrentStep = 0;
                 }
                 else
@@ -510,7 +510,7 @@ namespace PROProtocol
         public void SendAuthentication(string username, string password, Guid deviceId)
         {
             // DSSock.AttemptLogin
-            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + deviceId + "|.|" + "Windows 10  (10.0.0) 64bit");
+            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + XorEncryption.FixDeviceId(deviceId) + "|.|" + "Windows 10  (10.0.0) 64bit");
             // TODO: Add an option to select the OS we want, it could be useful.
             // I use Windows 10 here because the version is the same for everyone. This is not the case on Windows 7 or Mac.
         }
@@ -1140,101 +1140,109 @@ namespace PROProtocol
 
             string[] data = packet.Split(new [] { "|.|" }, StringSplitOptions.None);
             string type = data[0].ToLowerInvariant();
-            switch (type)
+            try
             {
-                case "5":
-                    OnLoggedIn(data);
-                    break;
-                case "6":
-                    OnAuthenticationResult(data);
-                    break;
-                case "l":
-                    //Move relearn content
-                    OnMoveRelearn(data);
-                    break;
-                case ")":
-                    OnQueueUpdated(data);
-                    break;
-                case "q":
-                    OnPlayerPosition(data);
-                    break;
-                case "s":
-                    OnPlayerSync(data);
-                    break;
-                case "i":
-                    OnPlayerInfos(data);
-                    break;
-                case "(":
-                    // CDs ?
-                    break;
-                case "e":
-                    OnUpdateTime(data);
-                    break;
-                case "@":
-                    OnNpcBattlers(data);
-                    break;
-                case "#":
-                    OnTeamUpdate(data);
-                    break;
-                case "d":
-                    OnInventoryUpdate(data);
-                    break;
-                case "&":
-                    OnItemsUpdate(data);
-                    break;
-                case "!":
-                    OnBattleJoin(packet);
-                    break;
-                case "a":
-                    OnBattleMessage(data);
-                    break;
-                case "r":
-                    OnScript(data);
-                    break;
-                case "$":
-                    OnBikingUpdate(data);
-                    break;
-                case "%":
-                    OnSurfingUpdate(data);
-                    break;
-                case "^":
-                    OnLearningMove(data);
-                    break;
-                case "h":
-                    OnEvolving(data);
-                    break;
-                case "=":
-                    OnUpdatePlayer(data);
-                    break;
-                case "c":
-                    OnChannels(data);
-                    break;
-                case "w":
-                    OnChatMessage(data);
-                    break;
-                case "o":
-                    // Shop content
-                    break;
-                case "pm":
-                    OnPrivateMessage(data);
-                    break;
-                case ".":
-                    // DSSock.ProcessCommands
-                    SendPacket("_");
-                    break;
-                case "'":
-                    // DSSock.ProcessCommands
-                    SendPacket("'");
-                    break;
-                case "m":
-                    OnPCBox(data);
-                    break;
-                default:
+                switch (type)
+                {
+                    case "5":
+                        OnLoggedIn(data);
+                        break;
+                    case "6":
+                        OnAuthenticationResult(data);
+                        break;
+                    case "l":
+                        //Move relearn content
+                        OnMoveRelearn(data);
+                        break;
+                    case ")":
+                        OnQueueUpdated(data);
+                        break;
+                    case "q":
+                        OnPlayerPosition(data);
+                        break;
+                    case "s":
+                        OnPlayerSync(data);
+                        break;
+                    case "i":
+                        OnPlayerInfos(data);
+                        break;
+                    case "(":
+                        // CDs ?
+                        break;
+                    case "e":
+                        OnUpdateTime(data);
+                        break;
+                    case "@":
+                        OnNpcBattlers(data);
+                        break;
+                    case "#":
+                        OnTeamUpdate(data);
+                        break;
+                    case "d":
+                        OnInventoryUpdate(data);
+                        break;
+                    case "&":
+                        OnItemsUpdate(data);
+                        break;
+                    case "!":
+                        OnBattleJoin(packet);
+                        break;
+                    case "a":
+                        OnBattleMessage(data);
+                        break;
+                    case "r":
+                        OnScript(data);
+                        break;
+                    case "$":
+                        OnBikingUpdate(data);
+                        break;
+                    case "%":
+                        OnSurfingUpdate(data);
+                        break;
+                    case "^":
+                        OnLearningMove(data);
+                        break;
+                    case "h":
+                        OnEvolving(data);
+                        break;
+                    case "=":
+                        OnUpdatePlayer(data);
+                        break;
+                    case "c":
+                        OnChannels(data);
+                        break;
+                    case "w":
+                        OnChatMessage(data);
+                        break;
+                    case "o":
+                        // Shop content
+                        break;
+                    case "pm":
+                        OnPrivateMessage(data);
+                        break;
+                    case ".":
+                        // DSSock.ProcessCommands
+                        SendPacket("_");
+                        break;
+                    case "'":
+                        // DSSock.ProcessCommands
+                        SendPacket("'");
+                        break;
+                    case "m":
+                        OnPCBox(data);
+                        break;
+                    default:
 #if DEBUG
-                    Console.WriteLine(" ^ unhandled /!\\");
+                        Console.WriteLine(" ^ unhandled /!\\");
 #endif
-                    break;
+                        break;
+                }
             }
+            catch(System.FormatException)
+            {
+                LogMessage?.Invoke("Format error occurred(Probably server issue): " + packet);
+            }
+            
         }
         
         private void OnLoggedIn(string[] data)
@@ -1244,7 +1252,7 @@ namespace PROProtocol
             IsCreatingNewCharacter = data[1] == "1";
 
             string[] mapServerHost = data[2].Split(':');
-            _mapClient.Open(mapServerHost[0], int.Parse(mapServerHost[1]));
+            _mapClient.Open(mapServerHost[0] == string.Empty ? "185.83.214.114" : mapServerHost[0], int.Parse(mapServerHost[1]));
 
             // DSSock.ProcessCommands
             SendMessage("/in1");
@@ -1252,6 +1260,8 @@ namespace PROProtocol
             SendPacket(")");
             SendPacket("_");
             SendPacket("g");
+            SendPacket("p|.|l|0");
+            SendRegularPing();
             IsAuthenticated = true;
 
             LoggedIn?.Invoke();

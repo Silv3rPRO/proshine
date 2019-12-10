@@ -61,12 +61,16 @@ namespace PROProtocol
 
         protected override string ProcessDataBeforeSending(string data)
         {
-            return XorEncryption.Encrypt(data);
+            var input_bytes = TextEncoding.GetBytes(data);
+            var output_bytes = XorEncryption.Encrypt(input_bytes);
+            return TextEncoding.GetString(output_bytes);
         }
 
         protected override string ProcessDataBeforeReceiving(string data)
         {
-            return XorEncryption.Encrypt(data);
+            var input_bytes = TextEncoding.GetBytes(data);
+            var output_bytes = XorEncryption.Decrypt(input_bytes);
+            return TextEncoding.GetString(output_bytes);
         }
     }
 }
