@@ -80,7 +80,7 @@ namespace PROProtocol
         public event Action<string> BattleMessage;
         public event Action BattleEnded;
         public event Action BattleUpdated;
-        public event Action<string> DialogOpened;
+        public event Action<string, string[]> DialogOpened;
         public event Action<string, string, int> EmoteMessage;
         public event Action<string, string, string> ChatMessage;
         public event Action RefreshChannelList;
@@ -1518,13 +1518,15 @@ namespace PROProtocol
             string script = data[3];
 
             DialogContent = script.Split(new string[] { "-#-" }, StringSplitOptions.None);
-            if (script.Contains("-#-") && status > 1)
+            bool isPrompt = script.Contains("-#-") && status > 1;
+            if (isPrompt)
             {
                 script = DialogContent[0];
             }
             string[] messages = script.Split(new string[] { "-=-" }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string message in messages)
+            for (int i = 0; i < messages.Length; i++)
             {
+                string message = messages[i];
                 if (message.StartsWith("emote") || message.StartsWith("playsound") || message.StartsWith("playmusic") || message.StartsWith("playcry"))
                     continue;
                 if (message.StartsWith("shop"))
@@ -1549,9 +1551,20 @@ namespace PROProtocol
                     SendPacket(".|.|" + message.Substring(13));
                     continue;
                 }
-                DialogOpened?.Invoke(message);
-            }
 
+                bool lastMessage = (i == messages.Length - 1);
+                if (lastMessage && isPrompt)
+                {
+                    var dialogOptions = new string[DialogContent.Length - 1];
+                    Array.Copy(DialogContent, 1, dialogOptions, 0, dialogOptions.Length);
+                    DialogOpened?.Invoke(message, dialogOptions);
+                }
+                else
+                {
+                    DialogOpened?.Invoke(message, new string[0]);
+                }
+            }
+            
             IsScriptActive = true;
             _dialogTimeout.Set(Rand.Next(1500, 4000));
             ScriptId = id;

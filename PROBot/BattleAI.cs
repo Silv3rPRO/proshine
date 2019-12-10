@@ -47,6 +47,7 @@ namespace PROBot
                 return usablePokemons;
             }
         }
+
         public bool UseMandatoryAction()
         {
             return RepeatAttack();

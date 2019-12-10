@@ -38,7 +38,7 @@
             Reset();
         }
 
-        private void Game_DialogOpened(string message)
+        private void Game_DialogOpened(string message, string[] options)
         {
             Reset();
         }
