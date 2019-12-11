@@ -99,11 +99,7 @@ namespace PROProtocol
                         
                         bool isBattler = reader.ReadInt16() != 0;
 
-                        int npcId = reader.ReadInt16();
-                        if (npcId < 0)
-                            continue;
-
-                        reader.ReadInt16();
+                        int npcId = reader.ReadInt32();
 
                         OriginalNpcs.Add(new Npc(npcId, npcName, isBattler, type, x, y, DirectionExtensions.FromNumber(direction), losLength, path));
                     }
