@@ -1231,6 +1231,9 @@ namespace PROProtocol
                     case "m":
                         OnPCBox(data);
                         break;
+                    case "z":
+                        OnPlayerMovement(data);
+                        break;
                     default:
 #if DEBUG
                         Console.WriteLine(" ^ unhandled /!\\");
@@ -1310,6 +1313,20 @@ namespace PROProtocol
             }
 
             PositionUpdated?.Invoke(MapName, PlayerX, playerY);
+
+            _teleportationTimeout.Cancel();
+        }
+
+        // Server sends some movement data to move the character.
+        private void OnPlayerMovement(string[] data)
+        {
+            _dialogTimeout.Set();
+            _movements.Clear();
+            string[] movements = data[1].Split(new[] { "|" }, StringSplitOptions.None);
+            foreach(var movement in movements)
+            {
+                Move(DirectionExtensions.FromChar(movement[0]));
+            }
 
             _teleportationTimeout.Cancel();
         }
