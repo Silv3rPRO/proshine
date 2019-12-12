@@ -2934,16 +2934,17 @@ namespace PROBot.Scripting
         {
             if (string.IsNullOrEmpty(mount))
             {
-                Bot.Game.GroundMount = null;
+                Bot.Game.GroundMountName = null;
                 return true;
             }
+
+            Bot.Game.GroundMountName = mount;
 
             InventoryItem item = Bot.Game.GetItemFromName(mount);
 
             if (item == null)
                 return false;
 
-            Bot.Game.GroundMount = item;
             return true;
         }
 
@@ -2952,16 +2953,16 @@ namespace PROBot.Scripting
         {
             if (string.IsNullOrEmpty(mount))
             {
-                Bot.Game.WaterMount = null;
+                Bot.Game.WaterMountName = null;
                 return true;
             }
 
+            Bot.Game.WaterMountName = mount;
             InventoryItem item = Bot.Game.GetItemFromName(mount);
 
             if (item == null)
                 return false;
 
-            Bot.Game.WaterMount = item;
             return true;
         }
     }

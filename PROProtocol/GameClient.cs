@@ -6,8 +6,11 @@ namespace PROProtocol
 {
     public class GameClient
     {
-        public InventoryItem GroundMount;
-        public InventoryItem WaterMount;
+        private InventoryItem GroundMount;
+        private InventoryItem WaterMount;
+
+        public string GroundMountName;
+        public string WaterMountName;
         
         public Random Rand { get; private set; }
         public Language I18n { get; private set; }
@@ -218,6 +221,7 @@ namespace PROProtocol
             UpdatePlayers();
             UpdatePCBox();
             UpdateNpcBattle();
+            UpdateMounts();
         }
 
         public void CloseChannel(string channelName)
@@ -422,6 +426,24 @@ namespace PROProtocol
                     _dialogTimeout.Set();
                 }
             }
+        }
+
+        // Sometimes because of the connection speed the bot may receive items data later, so saving the mount name and would try to set it when it receives all items.
+        private void UpdateMounts()
+        {
+            bool isGroundMountSet = !string.IsNullOrEmpty(GroundMountName);
+            bool isWaterMountSet = !string.IsNullOrEmpty(WaterMountName);
+
+            if (!isGroundMountSet)
+                GroundMount = null;
+            if (!isWaterMountSet)
+                WaterMount = null;
+
+            if ((GroundMount is null && isWaterMountSet) || (GroundMount != null && GroundMount.Name == WaterMountName))
+                GroundMount = GetItemFromName(GroundMountName);
+
+            if ((WaterMount is null && isWaterMountSet) || (WaterMount != null && WaterMount.Name == WaterMountName))
+                WaterMount = GetItemFromName(WaterMountName);
         }
 
         private int GetNextDialogResponse()
@@ -1105,16 +1127,16 @@ namespace PROProtocol
             SendPacket("R|.|" + ScriptId + "|.|" + number);
         }
 
-        public void SendAcceptEvolution(int evolvingPokemonUid, int evolvingItem)
+        public void SendAcceptEvolution(int evolvingPokemonDBid, int evolvingItem)
         {
             // DSSock.AcceptEvo
-            SendPacket("h|.|" + evolvingPokemonUid + "|.|" + evolvingItem);
+            SendPacket("h|.|" + evolvingPokemonDBid + "|.|" + evolvingItem);
         }
 
-        public void SendCancelEvolution(int evolvingPokemonUid, int evolvingItem)
+        public void SendCancelEvolution(int evolvingPokemonDBid, int evolvingItem)
         {
             // DSSock.CancelEvo
-            SendPacket("j|.|" + evolvingPokemonUid + "|.|" + evolvingItem);
+            SendPacket("j|.|" + evolvingPokemonDBid + "|.|" + evolvingItem);
         }
 
         private void SendSwapPokemons(int pokemon1, int pokemon2)
@@ -1642,11 +1664,12 @@ namespace PROProtocol
 
         private void OnEvolving(string[] data)
         {
-            int evolvingPokemonUid = Convert.ToInt32(data[1]);
-            int evolvingItem = Convert.ToInt32(data[3]);
+            int evlovingPokemonDBid = Convert.ToInt32(data[1]);
+            int evolvingItem = Convert.ToInt32(data[2]);
 
-
-            Evolving.Invoke(evolvingPokemonUid, evolvingItem);
+            // h|.|41258652|.|178
+            //      ^^ Data base id
+            Evolving.Invoke(evlovingPokemonDBid, evolvingItem);
         }
 
         private void OnUpdatePlayer(string[] data)
