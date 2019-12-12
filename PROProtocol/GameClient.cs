@@ -38,7 +38,7 @@ namespace PROProtocol
         public bool IsPrivateMessageOn { get; private set; }
 
         public int Money { get; private set; }
-        public int Coins { get; private set; }U
+        public int Coins { get; private set; }
         public bool IsMember { get; private set; }
         public List<Pokemon> Team { get; private set; }
         public List<Pokemon> CurrentPCBox { get; private set; }
