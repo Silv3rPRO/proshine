@@ -375,6 +375,8 @@ namespace PROShine
                     Bot.Settings.LastScript = filePath;
                     MenuReloadScript.Header = "Reload " + Path.GetFileName(filePath);
                     MenuReloadScript.IsEnabled = true;
+                    MenuExploreScript.Header = "Explore " + Path.GetFileName(filePath);
+                    MenuExploreScript.IsEnabled = true;
                     Bot.SliderOptions.Clear();
                     Bot.TextOptions.Clear();
                     _sliderOptions.Clear();
