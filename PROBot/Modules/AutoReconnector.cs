@@ -29,7 +29,7 @@ namespace PROBot.Modules
         private bool _relogging;
         private double _reloggingDelay;
         private DateTime _autoReconnectTimeout;
-        private Timeout _botStartTimeout;
+        private Timeout _reloggingStartDelayTimeout = new Timeout();
 
         public AutoReconnector(BotClient bot)
         {
@@ -60,10 +60,10 @@ namespace PROBot.Modules
                 }
             }
 
-            if (_botStartTimeout != null && !_botStartTimeout.Update())
+            if (_relogging && !_reloggingStartDelayTimeout.Update())
             {
+                _relogging = false;
                 _bot.Start();
-                _botStartTimeout = null;
             }
         }
 
@@ -90,9 +90,7 @@ namespace PROBot.Modules
             if (_reconnecting)
             {
                 _reconnecting = false;
-                _relogging = false;
-                _botStartTimeout = new Timeout();
-                _botStartTimeout.Set(500); // sometimes some data are received later, so just in that case the bot will not start the script immediately.
+                _reloggingStartDelayTimeout.Set(500); // delaying for realism
             }
         }
 
