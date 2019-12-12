@@ -38,7 +38,7 @@ namespace PROProtocol
         public bool IsPrivateMessageOn { get; private set; }
 
         public int Money { get; private set; }
-        public int Coins { get; private set; }
+        public int Coins { get; private set; }U
         public bool IsMember { get; private set; }
         public List<Pokemon> Team { get; private set; }
         public List<Pokemon> CurrentPCBox { get; private set; }
@@ -439,7 +439,7 @@ namespace PROProtocol
             if (!isWaterMountSet)
                 WaterMount = null;
 
-            if ((GroundMount is null && isWaterMountSet) || (GroundMount != null && GroundMount.Name.ToLowerInvariant() != WaterMountName.ToLowerInvariant()))
+            if ((GroundMount is null && isWaterMountSet) || (GroundMount != null && GroundMount.Name.ToLowerInvariant() != GroundMount.ToLowerInvariant()))
                 GroundMount = GetItemFromName(GroundMountName);
 
             if ((WaterMount is null && isWaterMountSet) || (WaterMount != null && WaterMount.Name.ToLowerInvariant() != WaterMountName.ToLowerInvariant()))
