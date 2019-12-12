@@ -439,7 +439,7 @@ namespace PROProtocol
             if (!isWaterMountSet)
                 WaterMount = null;
 
-            if ((GroundMount is null && isWaterMountSet) || (GroundMount != null && GroundMount.Name.ToLowerInvariant() != GroundMount.ToLowerInvariant()))
+            if ((GroundMount is null && isWaterMountSet) || (GroundMount != null && GroundMount.Name.ToLowerInvariant() != GroundMountName.ToLowerInvariant()))
                 GroundMount = GetItemFromName(GroundMountName);
 
             if ((WaterMount is null && isWaterMountSet) || (WaterMount != null && WaterMount.Name.ToLowerInvariant() != WaterMountName.ToLowerInvariant()))

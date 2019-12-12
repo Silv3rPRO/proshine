@@ -67,6 +67,8 @@
                     return PokemonType.Dark;
                 case "fairy":
                     return PokemonType.Fairy;
+                case "bird":
+                    return PokemonType.Bird;
                 default:
                     throw new System.Exception("The pokemon type " + typeName + " does not exist");
             }
