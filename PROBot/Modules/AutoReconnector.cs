@@ -29,7 +29,7 @@ namespace PROBot.Modules
         private bool _relogging;
         private double _reloggingDelay;
         private DateTime _autoReconnectTimeout;
-        private Timeout _botStartDelayTimeout;
+        private DateTime _botDelay = DateTime.MaxValue;
 
         public AutoReconnector(BotClient bot)
         {
@@ -59,11 +59,11 @@ namespace PROBot.Modules
                     _autoReconnectTimeout = DateTime.UtcNow.AddSeconds(_bot.Rand.Next(MinDelay, MaxDelay + 1));
                 }
             }
-            
-            if (_botStartDelayTimeout != null && !_botStartDelayTimeout.Update())
+
+            if (_botDelay < DateTime.UtcNow)
             {
                 _bot.Start();
-                _botStartDelayTimeout = null;
+                _botDelay = DateTime.MaxValue;
             }
         }
 
@@ -91,8 +91,7 @@ namespace PROBot.Modules
             {
                 _reconnecting = false;
                 _relogging = false;
-                _botStartDelayTimeout = new Timeout();
-                _botStartDelayTimeout.Set(500); // delaying for realism
+                _botDelay = DateTime.UtcNow.AddSeconds(1);
             }
         }
 
