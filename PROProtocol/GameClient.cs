@@ -1279,7 +1279,8 @@ namespace PROProtocol
             IsCreatingNewCharacter = data[1] == "1";
 
             string[] mapServerHost = data[2].Split(':');
-            _mapClient.Open(mapServerHost[0] == string.Empty ? "185.83.214.114" : mapServerHost[0], int.Parse(mapServerHost[1]));
+
+            _mapClient.Open(Server.GetMapAdress(), int.Parse(mapServerHost[1]));
 
             // DSSock.ProcessCommands
             SendMessage("/in1");
