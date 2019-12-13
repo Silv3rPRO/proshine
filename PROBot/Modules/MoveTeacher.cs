@@ -5,7 +5,7 @@ namespace PROBot.Modules
     public class MoveTeacher
     {
         public bool IsLearning { get; private set; }
-        public int PokemonUid { get; private set; }
+        public int PokemonDBid { get; private set; }
         public int MoveToForget { get; set; }
 
         private readonly BotClient _bot;
@@ -23,7 +23,7 @@ namespace PROBot.Modules
             if (_learningTimeout.IsActive && !_learningTimeout.Update())
             {
                 IsLearning = false;
-                _bot.Game.LearnMove(PokemonUid, MoveToForget);
+                _bot.Game.LearnMove(PokemonDBid, MoveToForget);
                 return true;
             }
             return _learningTimeout.IsActive;
@@ -37,16 +37,15 @@ namespace PROBot.Modules
             }
         }
 
-        private void Game_LearningMove(int moveId, string moveName, int pokemonUid)
+        private void Game_LearningMove(int moveId, string moveName, int pokemonDBid)
         {
             if (_bot.Game == null || _bot.Script == null) return;
 
             IsLearning = true;
-            PokemonUid = pokemonUid;
+            PokemonDBid = pokemonDBid;
             MoveToForget = 0;
             _learningTimeout.Set(_bot.Rand.Next(1000, 3000));
-
-            _bot.Script.OnLearningMove(moveName, pokemonUid);
+            _bot.Script.OnLearningMove(moveName, _bot.Game.GetPokemonFromDBId(pokemonDBid).Uid);
         }
     }
 }

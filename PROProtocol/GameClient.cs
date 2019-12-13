@@ -878,6 +878,8 @@ namespace PROProtocol
             return Team.FirstOrDefault(p => p.Uid == pokemonUid)?.Moves.Any(m => m.Name?.Equals(moveName, StringComparison.InvariantCultureIgnoreCase) ?? false) ?? false;
         }
 
+        public Pokemon GetPokemonFromDBId(int pokemonDBId) => Team.Find(pokemon => pokemon.DatabaseId == pokemonDBId);
+
         public bool HasMove(string moveName)
         {
             return Team.Any(p => p.Moves.Any(m => m.Name?.Equals(moveName, StringComparison.InvariantCultureIgnoreCase) ?? false));
@@ -1653,13 +1655,13 @@ namespace PROProtocol
         {
             int moveId = Convert.ToInt32(data[1]);
             string moveName = Convert.ToString(data[2]);
-            int pokemonUid = Convert.ToInt32(data[3]);
+            int pokemonDBid = Convert.ToInt32(data[3]);
             int movePp = Convert.ToInt32(data[4]);
-            LearningMove?.Invoke(moveId, moveName, pokemonUid);
+            LearningMove?.Invoke(moveId, moveName, pokemonDBid);
             MoveRelearner = null;
             _itemUseTimeout.Cancel();
             _moveRelearnerTimeout.Cancel();
-            // ^|.|348|.|Cut|.|3|.|30|.\
+            // ^|.|348|.|Cut|.|26703356|.|30
         }
 
         private void OnEvolving(string[] data)
