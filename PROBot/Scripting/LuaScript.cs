@@ -2726,7 +2726,7 @@ namespace PROBot.Scripting
             }
 
             moveName = moveName.ToUpperInvariant();
-            Pokemon pokemon = Bot.Game.Team[Bot.MoveTeacher.PokemonUid - 1];
+            Pokemon pokemon = Bot.Game.GetPokemonFromDBId(Bot.MoveTeacher.PokemonDBid);
             PokemonMove move = pokemon.Moves.FirstOrDefault(m => MovesManager.Instance.GetMoveData(m.Id)?.Name.ToUpperInvariant() == moveName);
 
             if (move != null)
@@ -2752,7 +2752,7 @@ namespace PROBot.Scripting
                 movesInvariantNames.Add(value.CastToString().ToUpperInvariant());
             }
 
-            Pokemon pokemon = Bot.Game.Team[Bot.MoveTeacher.PokemonUid - 1];
+            Pokemon pokemon = Bot.Game.GetPokemonFromDBId(Bot.MoveTeacher.PokemonDBid);
             PokemonMove move = pokemon.Moves.FirstOrDefault(m => !movesInvariantNames.Contains(MovesManager.Instance.GetMoveData(m.Id)?.Name.ToUpperInvariant()));
 
             if (move != null)
