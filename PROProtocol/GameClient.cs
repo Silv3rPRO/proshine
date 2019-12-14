@@ -132,6 +132,7 @@ namespace PROProtocol
         private Npc _npcBattler;
 
         private MapClient _mapClient;
+        private int _movementCount = 0;
 
         public void ClearPath()
         {
@@ -204,7 +205,6 @@ namespace PROProtocol
                 return;
 
             _movementTimeout.Update();
-            _battleTimeout.Update();
             _loadingTimeout.Update();
             _mountingTimeout.Update();
             _teleportationTimeout.Update();
@@ -214,6 +214,12 @@ namespace PROProtocol
             _fishingTimeout.Update();
             _refreshingPCBox.Update();
             _moveRelearnerTimeout.Update();
+
+            if (!_battleTimeout.Update() && ActiveBattle != null && ActiveBattle.IsFinished)
+            {
+                ActiveBattle = null;
+                SendPacket("_");
+            }
 
             SendRegularPing();
             UpdateMovement();
@@ -242,6 +248,7 @@ namespace PROProtocol
         }
 
         private int _pingCurrentStep = 1;
+        private int _pingCount = 0;
         private bool _isPingSwapped = false;
 
         private void SendRegularPing()
@@ -265,6 +272,7 @@ namespace PROProtocol
                     _isPingSwapped = !_isPingSwapped;
                 }
                 _pingCurrentStep++;
+                _pingCount++;
                 SendPacket(packetType.ToString());
             }
         }
@@ -586,7 +594,8 @@ namespace PROProtocol
 
         private void SendReleasePokemon(int pokemonUid)
         {
-            SendMessage("/release " + pokemonUid);
+            SendMessage("/release " + pokemonUid + ", 1");
+            SendPacket("mb|.|/release " + pokemonUid);
         }
 
         private void SendPrivateMessageOn()
@@ -925,7 +934,7 @@ namespace PROProtocol
         {
             if (WaterMount == null)
             {
-                SendMessage("/surf");
+                SendPacket("w|.|/surf");
             }
             else
             {
@@ -1101,6 +1110,7 @@ namespace PROProtocol
 
         private void SendMovement(string direction)
         {
+            _movementCount++;
             _lastMovement = DateTime.UtcNow;
             // Consider the pokemart closed after the first movement.
             OpenedShop = null;
@@ -1548,7 +1558,6 @@ namespace PROProtocol
             if (ActiveBattle.IsFinished)
             {
                 IsInBattle = false;
-                ActiveBattle = null;
                 BattleEnded?.Invoke();
             }
         }
