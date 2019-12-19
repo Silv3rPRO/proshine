@@ -39,11 +39,11 @@ namespace PROBot.Modules
             {
                 if (IsEnabled)
                 {
-                    _bot.Game.SendAcceptEvolution(_evolvingPokemonDBid, _evolvingItem);
+                    _bot.Game.SendAcceptEvolution(_evolvingPokemonDBid);
                 }
                 else
                 {
-                    _bot.Game.SendCancelEvolution(_evolvingPokemonDBid, _evolvingItem);
+                    _bot.Game.SendCancelEvolution(_evolvingPokemonDBid);
                 }
                 return true;
             }
