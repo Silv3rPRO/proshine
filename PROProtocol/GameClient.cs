@@ -18,6 +18,7 @@ namespace PROProtocol
         public bool IsConnected { get; private set; }
         public bool IsAuthenticated { get; private set; }
         public string PlayerName { get; private set; }
+        public int GuildId { get; private set; } = -1;
 
         public int PlayerX { get; private set; }
         public int PlayerY { get; private set; }
@@ -132,6 +133,7 @@ namespace PROProtocol
         private Npc _npcBattler;
 
         private MapClient _mapClient;
+        private List<int> _requestedGuildData = new List<int>();
 
         public void ClearPath()
         {
@@ -204,7 +206,6 @@ namespace PROProtocol
                 return;
 
             _movementTimeout.Update();
-            _battleTimeout.Update();
             _loadingTimeout.Update();
             _mountingTimeout.Update();
             _teleportationTimeout.Update();
@@ -214,6 +215,12 @@ namespace PROProtocol
             _fishingTimeout.Update();
             _refreshingPCBox.Update();
             _moveRelearnerTimeout.Update();
+
+            if (!_battleTimeout.Update() && ActiveBattle != null && ActiveBattle.IsFinished)
+            {
+                ActiveBattle = null;
+                SendPacket("_");
+            }
 
             SendRegularPing();
             UpdateMovement();
@@ -260,10 +267,12 @@ namespace PROProtocol
                 {
                     packetType = Rand.Next(2) + 1;
                 }
+
                 if (packetType == 1)
                 {
                     _isPingSwapped = !_isPingSwapped;
                 }
+                
                 _pingCurrentStep++;
                 SendPacket(packetType.ToString());
             }
@@ -586,7 +595,8 @@ namespace PROProtocol
 
         private void SendReleasePokemon(int pokemonUid)
         {
-            SendMessage("/release " + pokemonUid);
+            SendMessage("/release " + pokemonUid + ", 1");
+            SendPacket("mb|.|/release " + pokemonUid);
         }
 
         private void SendPrivateMessageOn()
@@ -602,6 +612,11 @@ namespace PROProtocol
         private void SendPrivateMessageAway()
         {
             SendMessage("/pmaway");
+        }
+
+        private void SendRequestGuildData(int id)
+        {
+            SendPacket(":|.|" + id);
         }
 
         public bool PrivateMessageOn()
@@ -925,7 +940,7 @@ namespace PROProtocol
         {
             if (WaterMount == null)
             {
-                SendMessage("/surf");
+                SendPacket("w|.|/surf");
             }
             else
             {
@@ -1129,16 +1144,16 @@ namespace PROProtocol
             SendPacket("R|.|" + ScriptId + "|.|" + number);
         }
 
-        public void SendAcceptEvolution(int evolvingPokemonDBid, int evolvingItem)
+        public void SendAcceptEvolution(int evolvingPokemonDBid)
         {
             // DSSock.AcceptEvo
-            SendPacket("h|.|" + evolvingPokemonDBid + "|.|" + evolvingItem);
+            SendPacket("h|.|" + evolvingPokemonDBid);
         }
 
-        public void SendCancelEvolution(int evolvingPokemonDBid, int evolvingItem)
+        public void SendCancelEvolution(int evolvingPokemonDBid)
         {
             // DSSock.CancelEvo
-            SendPacket("j|.|" + evolvingPokemonDBid + "|.|" + evolvingItem);
+            SendPacket("j|.|" + evolvingPokemonDBid);
         }
 
         private void SendSwapPokemons(int pokemon1, int pokemon2)
@@ -1258,6 +1273,9 @@ namespace PROProtocol
                     case "z":
                         OnPlayerMovement(data);
                         break;
+                    case "y":
+                        OnGuildData(data);
+                        break;
                     default:
 #if DEBUG
                         Console.WriteLine(" ^ unhandled /!\\");
@@ -1271,7 +1289,8 @@ namespace PROProtocol
             }
             
         }
-        
+
+
         private void OnLoggedIn(string[] data)
         {
             Console.WriteLine("[Login] Authenticated successfully, connecting to map server");
@@ -1385,6 +1404,17 @@ namespace PROProtocol
             PokedexSeen = Convert.ToInt32(playerData[5]);
             PokedexEvolved = Convert.ToInt32(playerData[6]);
             IsMember = playerData[10] == "1";
+            if (GuildId != -1 && !_requestedGuildData.Contains(GuildId)) 
+            {
+                SendRequestGuildData(GuildId);
+                _requestedGuildData.Add(GuildId);
+            }
+        }
+
+        private void OnGuildData(string[] data)
+        {
+            //y|.|Guild name|999(id)|guild description|total members format: (total/max)|Leader Name|.\
+            GuildId = int.Parse(data[1].Split('|')[1]);
         }
 
         private void OnUpdateTime(string[] data)
@@ -1548,7 +1578,6 @@ namespace PROProtocol
             if (ActiveBattle.IsFinished)
             {
                 IsInBattle = false;
-                ActiveBattle = null;
                 BattleEnded?.Invoke();
             }
         }
@@ -1713,6 +1742,11 @@ namespace PROProtocol
             if (isNewPlayer)
             {
                 PlayerAdded?.Invoke(player);
+                if (!_requestedGuildData.Contains(player.GuildId) && player.GuildId != 0)
+                {
+                    SendRequestGuildData(player.GuildId);
+                    _requestedGuildData.Add(player.GuildId);
+                }
             }
             else
             {
