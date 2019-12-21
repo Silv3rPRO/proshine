@@ -59,6 +59,7 @@
     <Compile Include="Map.cs" />
     <Compile Include="Npc.cs" />
     <Compile Include="PlayerInfos.cs" />
+    <Compile Include="Pokedex.cs" />
     <Compile Include="Pokemon.cs" />
     <Compile Include="AbilitiesManager.cs" />
     <Compile Include="PokemonExperience.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="PokemonStats.cs" />
     <Compile Include="PokemonType.cs" />
     <Compile Include="Region.cs" />
+    <Compile Include="ResourcesUtil.cs" />
     <Compile Include="Shop.cs" />
     <Compile Include="ShopItem.cs" />
     <Compile Include="StatType.cs" />

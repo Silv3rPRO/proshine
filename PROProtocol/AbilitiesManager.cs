@@ -13,8 +13,6 @@ namespace PROProtocol
 
     public class AbilitiesManager
     {
-        private const string AbilitiesFile = "Resources/Abilities.json";
-
         private static AbilitiesManager _instance;
 
         public static AbilitiesManager Instance
@@ -29,24 +27,7 @@ namespace PROProtocol
 
         private AbilitiesManager()
         {
-            try
-            {
-                if (File.Exists(AbilitiesFile))
-                {
-                    string json = File.ReadAllText(AbilitiesFile);
-                    Abilities = JsonConvert.DeserializeObject<Dictionary<int, AbilityData>>(json);
-                }
-                else
-                {
-                    Console.Error.WriteLine($"File '{AbilitiesFile}' is missing");
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine("Could not read the abilities: " + ex.Message);
-                return;
-            }
+            Abilities = ResourcesUtil.GetResource<Dictionary<int, AbilityData>>("Abilities.json");
         }
     }
 }
