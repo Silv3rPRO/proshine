@@ -1299,7 +1299,7 @@ namespace PROProtocol
 
             string[] mapServerHost = data[2].Split(':');
 
-            _mapClient.Open(Server.GetMapAdress(), int.Parse(mapServerHost[1]));
+            _mapClient.Open(Server.GetMapAddress(), int.Parse(mapServerHost[1]));
 
             // DSSock.ProcessCommands
             SendMessage("/in1");

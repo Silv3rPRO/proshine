@@ -35,7 +35,7 @@ namespace PROProtocol
             throw new Exception("The server " + name + " does not exist");
         }
 
-        public static IPAddress GetMapAdress(this GameServer server)
+        public static IPAddress GetMapAddress(this GameServer server)
         {
             var rand = new Random();
             var addresses = Dns.GetHostAddresses(server + ".pokemonrevolution.net");
