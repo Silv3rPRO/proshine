@@ -1,4 +1,8 @@
 {
+  "0": {
+    "name": "Unknown",
+    "desc": ""
+  },
   "1": {
     "name": "Potion",
     "desc": "Restores 20 HP."
@@ -13,11 +17,11 @@
   },
   "4": {
     "name": "Pokeball",
-    "desc": "A device for catching wild Pokémon. It's thrown like a ball at a Pokémon, comfortably encapsulating its target."
+    "desc": "A device for catching wild PokÃ©mon. It's thrown like a ball at a PokÃ©mon, comfortably encapsulating its target."
   },
   "5": {
     "name": "Old Rod",
-    "desc": "An old and beat-up fishing rod. Use it by any body of water to fish for wild aquatic Pokémon."
+    "desc": "An old and beat-up fishing rod. Use it by any body of water to fish for wild aquatic PokÃ©mon."
   },
   "6": {
     "name": "Hyper Potion",
@@ -25,11 +29,11 @@
   },
   "7": {
     "name": "Awakening",
-    "desc": "Awakens a sleeping Pokémon."
+    "desc": "Awakens a sleeping PokÃ©mon."
   },
   "8": {
     "name": "Full Restore",
-    "desc": "A medicine that can be used to fully restore the HP of a single Pokémon and heal any status conditions it has."
+    "desc": "A medicine that can be used to fully restore the HP of a single PokÃ©mon and heal any status conditions it has."
   },
   "9": {
     "name": "Leaf Stone",
@@ -57,7 +61,7 @@
   },
   "15": {
     "name": "Metal Coat",
-    "desc": "A metallic substance that can be used to cover a Pokémon. Boosts the power of Steel-type moves by 20% when held."
+    "desc": "A metallic substance that can be used to cover a PokÃ©mon. Boosts the power of Steel-type moves by 20% when held."
   },
   "16": {
     "name": "Boulder Badge",
@@ -93,15 +97,16 @@
   },
   "24": {
     "name": "Ability Capsule",
-    "desc": "A capsule that allows a Pokémon with two Abilities to switch between these Abilities when it is used."
+    "desc": "A capsule that allows a PokÃ©mon with two Abilities to switch between these Abilities when it is used.",
+    "prompt": true
   },
   "25": {
     "name": "Ability Urge",
-    "desc": "When used, it activates the Ability of an ally Pokémon."
+    "desc": "When used, it activates the Ability of an ally PokÃ©mon."
   },
   "26": {
     "name": "Adrenaline Orb",
-    "desc": "Using it makes wild Pokémon more likely to call for help. If held by a Pokémon, it boosts Speed when intimidated. It can be used only once."
+    "desc": "Using it makes wild PokÃ©mon more likely to call for help. If held by a PokÃ©mon, it boosts Speed when intimidated. It can be used only once."
   },
   "27": {
     "name": "Aloraichium Z",
@@ -113,11 +118,11 @@
   },
   "29": {
     "name": "Beast Ball",
-    "desc": "A special Pokéball designed to catch Ultra Beasts. It has a low success rate for catching others."
+    "desc": "A special PokÃ©ball designed to catch Ultra Beasts. It has a low success rate for catching others."
   },
   "30": {
     "name": "Big Malasada",
-    "desc": "The Alola region s local specialty fried bread. It can be used once to heal all the status conditions of a Pokémon."
+    "desc": "The Alola regionâ€™s local specialtyâ€”fried bread. It can be used once to heal all the status conditions of a PokÃ©mon."
   },
   "31": {
     "name": "Black Flute",
@@ -133,19 +138,19 @@
   },
   "34": {
     "name": "Bright Powder",
-    "desc": "Lowers the opponent s accuracy."
+    "desc": "Lowers the opponentâ€™s accuracy."
   },
   "35": {
     "name": "Burn Heal",
-    "desc": "A spray-type medicine for treating burns. It can be used once to heal a Pokémon suffering from a burn."
+    "desc": "A spray-type medicine for treating burns. It can be used once to heal a PokÃ©mon suffering from a burn."
   },
   "36": {
     "name": "Ice Heal",
-    "desc": "A spray-type medicine for freezing. It can be used once to defrost a Pokémon that has been frozen solid."
+    "desc": "A spray-type medicine for freezing. It can be used once to defrost a PokÃ©mon that has been frozen solid."
   },
   "37": {
     "name": "Bug Memory",
-    "desc": "A memory disc that contains Bug-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Bug-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "38": {
     "name": "Running Shoes",
@@ -161,15 +166,15 @@
   },
   "41": {
     "name": "Eject Button",
-    "desc": "If the holder is hit by an attack, it will switch with another Pokémon in your party."
+    "desc": "If the holder is hit by an attack, it will switch with another PokÃ©mon in your party."
   },
   "42": {
     "name": "Calcium",
-    "desc": "A nutritious drink for Pokémon. When consumed, it raises the base Sp. Atk stat of a single Pokémon."
+    "desc": "A nutritious drink for PokÃ©mon. When consumed, it raises the base Sp. Atk stat of a single PokÃ©mon."
   },
   "43": {
     "name": "Carbos",
-    "desc": "A nutritious drink for Pokémon. When consumed, it raises the base Speed stat of a single Pokémon."
+    "desc": "A nutritious drink for PokÃ©mon. When consumed, it raises the base Speed stat of a single PokÃ©mon."
   },
   "44": {
     "name": "Clever Wing",
@@ -181,7 +186,7 @@
   },
   "46": {
     "name": "HP Up",
-    "desc": "A nutritious drink for Pokémon. When consumed, it raises the base HP of a single Pokémon."
+    "desc": "A nutritious drink for PokÃ©mon. When consumed, it raises the base HP of a single PokÃ©mon."
   },
   "47": {
     "name": "Health Wing",
@@ -189,31 +194,31 @@
   },
   "48": {
     "name": "Iron",
-    "desc": "A nutritious drink for Pokémon. When consumed, it raises the base Defense stat of a single Pokémon."
+    "desc": "A nutritious drink for PokÃ©mon. When consumed, it raises the base Defense stat of a single PokÃ©mon."
   },
   "49": {
     "name": "Lava Cookie",
-    "desc": "Lavaridge Town s local specialty. It heals all the status problems of one Pokemon."
+    "desc": "Lavaridge Townâ€™s local specialty. It heals all the status problems of one Pokemon."
   },
   "50": {
     "name": "Old Chateau",
-    "desc": "Old Chateau s hidden specialty. It heals all the status problems of a single Pokémon."
+    "desc": "Old Chateauâ€™s hidden specialty. It heals all the status problems of a single PokÃ©mon."
   },
   "51": {
     "name": "PP Max",
-    "desc": "It maximally raises the top PP of a selected move that has been learned by the target Pokémon."
+    "desc": "It maximally raises the top PP of a selected move that has been learned by the target PokÃ©mon."
   },
   "52": {
     "name": "PP Up",
-    "desc": "A medicine that can slightly raise the maximum PP of a single move that has been learned by the target Pokémon."
+    "desc": "A medicine that can slightly raise the maximum PP of a single move that has been learned by the target PokÃ©mon."
   },
   "53": {
     "name": "Protein",
-    "desc": "A nutritious drink for Pokémon. When consumed, it raises the base Attack stat of a single Pokémon."
+    "desc": "A nutritious drink for PokÃ©mon. When consumed, it raises the base Attack stat of a single PokÃ©mon."
   },
   "54": {
     "name": "Rare Candy",
-    "desc": "A candy that is packed with energy. It raises the level of a single Pokémon by one."
+    "desc": "A candy that is packed with energy. It raises the level of a single PokÃ©mon by one."
   },
   "55": {
     "name": "Resist Wing",
@@ -221,7 +226,7 @@
   },
   "56": {
     "name": "Sacred Ash",
-    "desc": "Fully restores the HP of all fainted Pokémon in the party. It can only be used outside of battle. It is consumed after use."
+    "desc": "Fully restores the HP of all fainted PokÃ©mon in the party. It can only be used outside of battle. It is consumed after use."
   },
   "57": {
     "name": "Bicycle",
@@ -229,7 +234,7 @@
   },
   "58": {
     "name": "Sweet Heart",
-    "desc": "Very sweet chocolate. It restores the HP of one Pokémon by only 20 points."
+    "desc": "Very sweet chocolate. It restores the HP of one PokÃ©mon by only 20 points."
   },
   "59": {
     "name": "Zephyr Badge",
@@ -269,7 +274,7 @@
   },
   "68": {
     "name": "Zinc",
-    "desc": "A nutritious drink for Pokémon. When consumed, it raises the base Sp. Def stat of a single Pokémon."
+    "desc": "A nutritious drink for PokÃ©mon. When consumed, it raises the base Sp. Def stat of a single PokÃ©mon."
   },
   "69": {
     "name": "Bike Voucher",
@@ -301,11 +306,11 @@
   },
   "78": {
     "name": "Itemfinder",
-    "desc": "Gift from Professor Oak's aide in the gate of Route 11 if the player has 30 or more Pokémon registered in his or her Pokédex."
+    "desc": "Gift from Professor Oak's aide in the gate of Route 11 if the player has 30 or more PokÃ©mon registered in his or her PokÃ©dex."
   },
   "79": {
     "name": "Max Potion",
-    "desc": "Heals a Pokémon to its full HP."
+    "desc": "Heals a PokÃ©mon to its full HP."
   },
   "80": {
     "name": "Lift Key",
@@ -321,11 +326,11 @@
   },
   "83": {
     "name": "Oak's Parcel",
-    "desc": "When delivered to Professor Oak, he will give the player a Pokédex."
+    "desc": "When delivered to Professor Oak, he will give the player a PokÃ©dex."
   },
   "84": {
     "name": "Silph Scope",
-    "desc": "Silph Co's scope makes unseeable Pokémon visible."
+    "desc": "Silph Co's scope makes unseeable PokÃ©mon visible."
   },
   "85": {
     "name": "Secret Key",
@@ -333,7 +338,7 @@
   },
   "86": {
     "name": "Radio",
-    "desc": "The Radio usually allows the players to tune in to the local programs, allowing the player to get tips from Professor Oak and DJ Mary on Prof. Oak's Pokémon Talk, or to let the player tune in to specific channels such as Buena's Password to win prizes."
+    "desc": "The Radio usually allows the players to tune in to the local programs, allowing the player to get tips from Professor Oak and DJ Mary on Prof. Oak's PokÃ©mon Talk, or to let the player tune in to specific channels such as Buena's Password to win prizes."
   },
   "87": {
     "name": "S. S.  Ticket",
@@ -344,8 +349,8 @@
     "desc": "Displays a map of the Kanto region."
   },
   "89": {
-    "name": "Basment Key",
-    "desc": "A Key for the Basement in the Goldenrod Mart"
+    "name": "Basement Key",
+    "desc": "A Key for the basement in the Goldenrod Mart-"
   },
   "90": {
     "name": "Clear Bell",
@@ -357,15 +362,15 @@
   },
   "92": {
     "name": "Timer Ball",
-    "desc": "A somewhat different Poké Ball that becomes progressively more effective the more turns that are taken in battle."
+    "desc": "A somewhat different PokÃ© Ball that becomes progressively more effective the more turns that are taken in battle."
   },
   "93": {
     "name": "Super Rod",
-    "desc": "An awesome, high-tech fishing rod. Use it at any body of water to fish for wild aquatic Pokémon."
+    "desc": "An awesome, high-tech fishing rod. Use it at any body of water to fish for wild aquatic PokÃ©mon."
   },
   "94": {
     "name": "Plume Fossil",
-    "desc": "A fossil from a prehistoric Pokémon that once lived in the sky. It looks as if it could come from part of its wing."
+    "desc": "A fossil from a prehistoric PokÃ©mon that once lived in the sky. It looks as if it could come from part of its wing."
   },
   "95": {
     "name": "Master Rod",
@@ -381,15 +386,15 @@
   },
   "100": {
     "name": "Great Ball",
-    "desc": "A good, high-performance Pokéball that provides a higher Pokémon catch rate than a standard Pokéball can."
+    "desc": "A good, high-performance PokÃ©ball that provides a higher PokÃ©mon catch rate than a standard PokÃ©ball can."
   },
   "101": {
     "name": "Ultra Ball",
-    "desc": "An ultra-high performance Pokéball that provides a higher success rate for catching Pokémon than a Great Ball."
+    "desc": "An ultra-high performance PokÃ©ball that provides a higher success rate for catching PokÃ©mon than a Great Ball."
   },
   "102": {
     "name": "Master Ball",
-    "desc": "The best Pokéball with the ultimate level of performance. With it, you will catch any wild Pokémon without fail."
+    "desc": "The best PokÃ©ball with the ultimate level of performance. With it, you will catch any wild PokÃ©mon without fail."
   },
   "103": {
     "name": "Good Cage",
@@ -409,7 +414,7 @@
   },
   "107": {
     "name": "Dragon Scale",
-    "desc": "A very tough and inflexible scale. Dragon-type Pokémon may be holding this item when caught."
+    "desc": "A very tough and inflexible scale. Dragon-type PokÃ©mon may be holding this item when caught."
   },
   "108": {
     "name": "UpGrade",
@@ -417,11 +422,11 @@
   },
   "109": {
     "name": "Prism Scale",
-    "desc": "A mysterious scale that causes a certain Pokémon to evolve. It shines in rainbow colors."
+    "desc": "A mysterious scale that causes a certain PokÃ©mon to evolve. It shines in rainbow colors."
   },
   "110": {
     "name": "Soothe Bell",
-    "desc": "An item to be held by a Pokémon. The comforting chime of this bell calms the holder, making it friendly."
+    "desc": "An item to be held by a PokÃ©mon. The comforting chime of this bell calms the holder, making it friendly."
   },
   "111": {
     "name": "GS Ball",
@@ -429,67 +434,67 @@
   },
   "112": {
     "name": "Helix Fossil",
-    "desc": "A fossil from a prehistoric Pokémon that once lived in the sea. It might be a piece of a seashell. "
+    "desc": "A fossil from a prehistoric PokÃ©mon that once lived in the sea. It might be a piece of a seashell. "
   },
   "113": {
     "name": "Dome Fossil",
-    "desc": "A fossil from a prehistoric Pokémon that once lived in the sea. It could be a shell or carapace."
+    "desc": "A fossil from a prehistoric PokÃ©mon that once lived in the sea. It could be a shell or carapace."
   },
   "114": {
     "name": "Old Amber",
-    "desc": "A piece of amber that still contains the genetic material of an ancient Pokémon. It's clear with a tawny, reddish tint."
+    "desc": "A piece of amber that still contains the genetic material of an ancient PokÃ©mon. It's clear with a tawny, reddish tint."
   },
   "115": {
     "name": "Root Fossil",
-    "desc": "A fossil from a prehistoric Pokémon that once lived in the sea. It looks as if it could be part of a plant's root."
+    "desc": "A fossil from a prehistoric PokÃ©mon that once lived in the sea. It looks as if it could be part of a plant's root."
   },
   "116": {
     "name": "Claw Fossil",
-    "desc": "A fossil from a prehistoric Pokémon that once lived in the sea. It appears to be a fragment of a claw. "
+    "desc": "A fossil from a prehistoric PokÃ©mon that once lived in the sea. It appears to be a fragment of a claw. "
   },
   "117": {
     "name": "Machine Part",
-    "desc": "The Machine Part allows the staff of the Power Plant to resume operations, restoring function to the Magnet Train and Lavender Radio Tower."
+    "desc": "The Machine Part allows the staff of the Power Plant to resume operations."
   },
   "120": {
     "name": "Secret Potion",
-    "desc": "A fantastic medicine dispensed by the pharmacy in Cianwood City. It fully heals a Pokémon of any ailment."
+    "desc": "A fantastic medicine dispensed by the pharmacy in Cianwood City. It fully heals a PokÃ©mon of any ailment."
   },
   "121": {
     "name": "Heal Powder",
-    "desc": "A very bitter medicine powder. When consumed, it heals all of a Pokémon's status conditions."
+    "desc": "A very bitter medicine powder. When consumed, it heals all of a PokÃ©mon's status conditions."
   },
   "122": {
     "name": "Energy Powder",
-    "desc": "A bitter medicine powder. When consumed, it restores 50 HP to an injured Pokémon."
+    "desc": "A bitter medicine powder. When consumed, it restores 50 HP to an injured PokÃ©mon."
   },
   "123": {
     "name": "Energy Root",
-    "desc": "An extremely bitter medicinal root. When consumed, it restores 200 HP to an injured Pokémon."
+    "desc": "An extremely bitter medicinal root. When consumed, it restores 200 HP to an injured PokÃ©mon."
   },
   "124": {
     "name": "Revival Herb",
-    "desc": "A terribly bitter medicinal herb. It revives a fainted Pokémon and fully restores its maximum HP."
+    "desc": "A terribly bitter medicinal herb. It revives a fainted PokÃ©mon and fully restores its maximum HP."
   },
   "125": {
     "name": "Fresh Water",
-    "desc": "Water with a high mineral content. When consumed, it restores 30 HP to an injured Pokémon."
+    "desc": "Water with a high mineral content. When consumed, it restores 30 HP to an injured PokÃ©mon."
   },
   "126": {
     "name": "Soda Pop",
-    "desc": "A highly carbonated soda drink. When consumed, it restores 50 HP to an injured Pokémon."
+    "desc": "A highly carbonated soda drink. When consumed, it restores 50 HP to an injured PokÃ©mon."
   },
   "127": {
     "name": "Lemonade",
-    "desc": "A very sweet and refreshing drink. When consumed, it restores 70 HP to an injured Pokémon."
+    "desc": "A very sweet and refreshing drink. When consumed, it restores 70 HP to an injured PokÃ©mon."
   },
   "128": {
     "name": "Moomoo Milk",
-    "desc": "A bottle of highly nutritious milk. When consumed, it restores 100 HP to an injured Pokémon."
+    "desc": "A bottle of highly nutritious milk. When consumed, it restores 100 HP to an injured PokÃ©mon."
   },
   "129": {
     "name": "Berry Juice",
-    "desc": "A 100 percent pure juice made of Berries. When consumed, it restores 20 HP to an injured Pokémon."
+    "desc": "A 100 percent pure juice made of Berries. When consumed, it restores 20 HP to an injured PokÃ©mon."
   },
   "130": {
     "name": "Green tea",
@@ -517,7 +522,7 @@
   },
   "138": {
     "name": "SquirtBottle",
-    "desc": "Allows the player to water a Sudowoodo posing as a tree on Route 36, prompting a battle with the wild Pokémon. After completing the battle, Sudowoodo will no longer block the path to Ecruteak City."
+    "desc": "Allows the player to water a Sudowoodo posing as a tree on Route 36, prompting a battle with the wild PokÃ©mon. After completing the battle, Sudowoodo will no longer block the path to Ecruteak City."
   },
   "139": {
     "name": "Meteorite",
@@ -565,7 +570,7 @@
   },
   "150": {
     "name": "Storage Key",
-    "desc": "The key to Team Galactic s sinister warehouse located at the edge of Veilstone City."
+    "desc": "The key to Team Galacticâ€™s sinister warehouse located at the edge of Veilstone City."
   },
   "151": {
     "name": "AuroraTicket",
@@ -605,7 +610,7 @@
   },
   "161": {
     "name": "TM Case",
-    "desc": "A case that holds TMs and HMs. It is attached to the Bag s compartment for important items."
+    "desc": "A case that holds TMs and HMs. It is attached to the Bagâ€™s compartment for important items."
   },
   "162": {
     "name": "Azure Flute",
@@ -625,15 +630,15 @@
   },
   "166": {
     "name": "Old Charm",
-    "desc": "An ancient good-luck charm made of Pokémon bones to be taken to the elder of Celestic Town."
+    "desc": "An ancient good-luck charm made of PokÃ©mon bones to be taken to the elder of Celestic Town."
   },
   "167": {
     "name": "Personal Letter",
     "desc": ""
   },
   "168": {
-    "name": "Poké Radar",
-    "desc": "A tool that can search out Pokémon that are hiding in grass. Its battery is recharged as you walk."
+    "name": "PokÃ© Radar",
+    "desc": "A tool that can search out PokÃ©mon that are hiding in grass. Its battery is recharged as you walk."
   },
   "169": {
     "name": "Vs. Recorder",
@@ -645,7 +650,7 @@
   },
   "171": {
     "name": "Dark Stone",
-    "desc": "Zekrom s body was destroyed and changed into this stone. It is said to be waiting for the emergence of a hero."
+    "desc": "Zekromâ€™s body was destroyed and changed into this stone. It is said to be waiting for the emergence of a hero."
   },
   "172": {
     "name": "Dowsing Machine",
@@ -653,11 +658,11 @@
   },
   "173": {
     "name": "Gracidea",
-    "desc": "A flower sometimes bundled in bouquets to convey gratitude on special occasions like birthdays."
+    "desc": "A flower sometimes bundled in bouquets to convey gratitude on special occasions like birthdys."
   },
   "174": {
     "name": "Light Stone",
-    "desc": "Reshiram s body was destroyed and changed into this stone. It is said to be waiting for the emergence of a hero."
+    "desc": "Reshiramâ€™s body was destroyed and changed into this stone. It is said to be waiting for the emergence of a hero."
   },
   "175": {
     "name": "Pal Pad",
@@ -665,7 +670,7 @@
   },
   "176": {
     "name": "Dragon Skull",
-    "desc": "A skull of a Pokémon which was said to have braved the angry waters to fly around the world."
+    "desc": "A skull of a PokÃ©mon which was said to have braved the angry waters to fly around the world."
   },
   "177": {
     "name": "Liberty Pass",
@@ -677,7 +682,7 @@
   },
   "179": {
     "name": "Colress MCHN",
-    "desc": "The Colress Machine forcibly awakens sleeping Pokémon. First used by Colress on Route 4, the player uses this device to awaken a sleeping wild Crustle in Seaside Cave that is blocking the way to where Team Plasma docked the Plasma Frigate after the Opelucid City incident. The awakening Crustle will lash out at the player, forcing them into a battle."
+    "desc": "The Colress Machine forcibly awakens sleeping PokÃ©mon. First used by Colress on Route 4, the player uses this device to awaken a sleeping wild Crustle in Seaside Cave that is blocking the way to where Team Plasma docked the Plasma Frigate after the Opelucid City incident. The awakening Crustle will lash out at the player, forcing them into a battle."
   },
   "180": {
     "name": "Magma Stone",
@@ -693,15 +698,15 @@
   },
   "183": {
     "name": "Oval Charm",
-    "desc": "An oval charm said to increase the chance of Pokémon Eggs being found at the Day Care."
+    "desc": "An oval charm said to increase the chance of PokÃ©mon Eggs being found at the Day Care."
   },
   "184": {
     "name": "DNA Splicers",
-    "desc": "A splicer that fuses Kyurem and a certain Pokémon. They are said to have been one in the beginning."
+    "desc": "A splicer that fuses Kyurem and a certain PokÃ©mon. They are said to have been one in the beginning."
   },
   "185": {
     "name": "Elevator Key",
-    "desc": "A card key that activates the elevator in Lysandre Labs. It is emblazoned with Team Flare s logo."
+    "desc": "A card key that activates the elevator in Lysandre Labs. It is emblazoned with Team Flareâ€™s logo."
   },
   "186": {
     "name": "Honor Of Kalos",
@@ -709,11 +714,11 @@
   },
   "187": {
     "name": "Intriguing Stone",
-    "desc": "A rather curious stone that might appear to be valuable to some. It s all in the eye of the beholder."
+    "desc": "A rather curious stone that might appear to be valuable to some. Itâ€™s all in the eye of the beholder."
   },
   "188": {
     "name": "Revive All Orb",
-    "desc": "A hold item that revives all Pokémon that have fainted."
+    "desc": "A hold item that revives all PokÃ©mon that have fainted."
   },
   "189": {
     "name": "Full Heal All",
@@ -721,7 +726,7 @@
   },
   "190": {
     "name": "Revive",
-    "desc": "A medicine that can revive fainted Pokémon. It also restores half of a fainted Pokémon's HP."
+    "desc": "A medicine that can revive fainted PokÃ©mon. It also restores half of a fainted PokÃ©mon's HP."
   },
   "191": {
     "name": "Silver Disc",
@@ -741,7 +746,7 @@
   },
   "195": {
     "name": "Shalour Sable",
-    "desc": "Shalour City s famous shortbread. It can be used once to heal all the status conditions of a Pokémon."
+    "desc": "Shalour Cityâ€™s famous shortbread. It can be used once to heal all the status conditions of a PokÃ©mon."
   },
   "196": {
     "name": "Colress Machine",
@@ -749,19 +754,19 @@
   },
   "197": {
     "name": "Reaper Cloth",
-    "desc": "An eerie cloth imbued with horrifyingly strong spiritual energy. It allows a certain kind of Pokémon to evolve."
+    "desc": "An eerie cloth imbued with horrifyingly strong spiritual energy. It allows a certain kind of PokÃ©mon to evolve."
   },
   "198": {
     "name": "Electirizer",
-    "desc": "A box full of a massive amount of electric energy. It allows a certain kind of Pokémon to evolve."
+    "desc": "A box full of a massive amount of electric energy. It allows a certain kind of PokÃ©mon to evolve."
   },
   "199": {
     "name": "Magmarizer",
-    "desc": "A box brimming with a huge amount of magma energy. It allows a certain kind of Pokémon to evolve."
+    "desc": "A box brimming with a huge amount of magma energy. It allows a certain kind of PokÃ©mon to evolve."
   },
   "200": {
     "name": "Shiny Stone",
-    "desc": "An odd stone that shines with dazzling light. It allows certain kinds of Pokémon to evolve."
+    "desc": "An odd stone that shines with dazzling light. It allows certain kinds of PokÃ©mon to evolve."
   },
   "201": {
     "name": "TM01 - Mega Punch",
@@ -769,7 +774,7 @@
   },
   "202": {
     "name": "TM02 - Razor Wind",
-    "desc": "[33CCFF]Razor Wind[-]: \nA two-turn attack. Blades of wind hit opposing Pokémon on the second turn. Critical hits land more easily."
+    "desc": "[33CCFF]Razor Wind[-]: \nA two-turn attack. Blades of wind hit opposing PokÃ©mon on the second turn. Critical hits land more easily."
   },
   "203": {
     "name": "TM03 - Energy Ball",
@@ -777,7 +782,7 @@
   },
   "204": {
     "name": "TM04 - Whirlwind",
-    "desc": "[33CCFF]Whirlwind[-]: \nThe target is blown away, and a different Pokémon is dragged out. In the wild, this ends a battle against a single Pokémon."
+    "desc": "[33CCFF]Whirlwind[-]: \nThe target is blown away, and a different PokÃ©mon is dragged out. In the wild, this ends a battle against a single PokÃ©mon."
   },
   "205": {
     "name": "TM05 - Mega Kick",
@@ -817,7 +822,7 @@
   },
   "214": {
     "name": "TM14 - Blizzard",
-    "desc": "[33CCFF]Blizzard[-]: \nA howling blizzard is summoned to strike opposing Pokémon. This may also leave the opposing Pokémon frozen."
+    "desc": "[33CCFF]Blizzard[-]: \nA howling blizzard is summoned to strike opposing PokÃ©mon. This may also leave the opposing PokÃ©mon frozen."
   },
   "215": {
     "name": "TM15 - Hyper Beam",
@@ -865,7 +870,7 @@
   },
   "226": {
     "name": "TM26 - Earthquake",
-    "desc": "[33CCFF]Earthquake[-]: \nThe user sets off an earthquake that strikes every Pokémon around it."
+    "desc": "[33CCFF]Earthquake[-]: \nThe user sets off an earthquake that strikes every PokÃ©mon around it."
   },
   "227": {
     "name": "TM27 - Fissure",
@@ -881,11 +886,11 @@
   },
   "230": {
     "name": "TM30 - Teleport",
-    "desc": "[33CCFF]Teleport[-]: \nUse it to flee from any wild Pokémon. It can also warp to the last Pokémon Center visited."
+    "desc": "[33CCFF]Teleport[-]: \nUse it to flee from any wild PokÃ©mon. It can also warp to the last PokÃ©mon Center visited."
   },
   "231": {
     "name": "TM31 - Mimic",
-    "desc": "[33CCFF]Mimic[-]: \nThe user copies the target's last move. The move can be used during battle until the Pokémon is switched out."
+    "desc": "[33CCFF]Mimic[-]: \nThe user copies the target's last move. The move can be used during battle until the PokÃ©mon is switched out."
   },
   "232": {
     "name": "TM32 - Double Team",
@@ -897,7 +902,7 @@
   },
   "234": {
     "name": "TM34 - Bide",
-    "desc": "[33CCFF]Bide[-]: \nGives the user a Bide status. A Pokémon that has a Bide status waits, then does double any damage it took under Bide status."
+    "desc": "[33CCFF]Bide[-]: \nGives the user a Bide status. A PokÃ©mon that has a Bide status waits, then does double any damage it took under Bide status."
   },
   "235": {
     "name": "TM35 - Metronome",
@@ -917,7 +922,7 @@
   },
   "239": {
     "name": "TM39 - Swift",
-    "desc": "[33CCFF]Swift[-]: \nStar-shaped rays are shot at the opposing Pokémon. This attack never misses."
+    "desc": "[33CCFF]Swift[-]: \nStar-shaped rays are shot at the opposing PokÃ©mon. This attack never misses."
   },
   "240": {
     "name": "TM40 - Skull-Bash",
@@ -953,7 +958,7 @@
   },
   "248": {
     "name": "TM48 - Rock Slide",
-    "desc": "[33CCFF]Rock Slide[-]: \nLarge boulders are hurled at the opposing Pokémon to inflict damage. This may also make the opposing Pokémon flinch."
+    "desc": "[33CCFF]Rock Slide[-]: \nLarge boulders are hurled at the opposing PokÃ©mon to inflict damage. This may also make the opposing PokÃ©mon flinch."
   },
   "249": {
     "name": "TM49 - Tri-Attack",
@@ -961,7 +966,7 @@
   },
   "250": {
     "name": "TM50 - Substitute",
-    "desc": "[33CCFF]Substitute[-]: \nThe user makes a copy of itself using some of its HP. The copy serves as the user s decoy."
+    "desc": "[33CCFF]Substitute[-]: \nThe user makes a copy of itself using some of its HP. The copy serves as the userâ€™s decoy."
   },
   "251": {
     "name": "TM51 - Endure",
@@ -981,7 +986,7 @@
   },
   "255": {
     "name": "TM55 - Roar",
-    "desc": "[33CCFF]Roar[-]: \nThe target is scared off and a different Pokémon is dragged out. In the wild, this ends a battle against a single Pokémon."
+    "desc": "[33CCFF]Roar[-]: \nThe target is scared off and a different PokÃ©mon is dragged out. In the wild, this ends a battle against a single PokÃ©mon."
   },
   "256": {
     "name": "TM56 - Embargo",
@@ -989,7 +994,7 @@
   },
   "257": {
     "name": "TM57 - Hail",
-    "desc": "[33CCFF]Hail[-]: \nThe user summons a hailstorm lasting five turns. It damages all Pokémon except the Ice type."
+    "desc": "[33CCFF]Hail[-]: \nThe user summons a hailstorm lasting five turns. It damages all PokÃ©mon except the Ice type."
   },
   "258": {
     "name": "TM58 - Bulk Up",
@@ -1001,7 +1006,7 @@
   },
   "260": {
     "name": "TM60 - Hidden Power",
-    "desc": "[33CCFF]Hidden Power[-]: \nA unique attack that varies in type depending on the Pokémon using it."
+    "desc": "[33CCFF]Hidden Power[-]: \nA unique attack that varies in type depending on the PokÃ©mon using it."
   },
   "261": {
     "name": "TM61 - Sunny Day",
@@ -1037,11 +1042,11 @@
   },
   "269": {
     "name": "TM69 - Roost",
-    "desc": "[33CCFF]Roost[-]: \nThe user lands and rests its body. It restores the user s HP by up to half of its max HP"
+    "desc": "[33CCFF]Roost[-]: \nThe user lands and rests its body. It restores the userâ€™s HP by up to half of its max HP"
   },
   "270": {
     "name": "TM70 - Dragon Tail",
-    "desc": "[33CCFF]Dragon Tail[-]: \nThe target is knocked away, and a different Pokémon is dragged out. In the wild, this ends a battle against a single Pokémon."
+    "desc": "[33CCFF]Dragon Tail[-]: \nThe target is knocked away, and a different PokÃ©mon is dragged out. In the wild, this ends a battle against a single PokÃ©mon."
   },
   "271": {
     "name": "TM71 - Dragon Pulse",
@@ -1057,7 +1062,7 @@
   },
   "274": {
     "name": "TM74 - Dazzling Gleam",
-    "desc": "[33CCFF]Dazzling Gleam[-]: \nThe user damages opposing Pokémon by emitting a powerful flash."
+    "desc": "[33CCFF]Dazzling Gleam[-]: \nThe user damages opposing PokÃ©mon by emitting a powerful flash."
   },
   "275": {
     "name": "TM75 - Swords Dance",
@@ -1077,7 +1082,7 @@
   },
   "279": {
     "name": "TM79 - Captivate",
-    "desc": "[33CCFF]Captivate[-]: \nIf any opposing Pokémon is the opposite gender of the user, it is charmed, which harshly lowers its Sp. Atk stat."
+    "desc": "[33CCFF]Captivate[-]: \nIf any opposing PokÃ©mon is the opposite gender of the user, it is charmed, which harshly lowers its Sp. Atk stat."
   },
   "280": {
     "name": "TM80 - Shadow Ball",
@@ -1213,15 +1218,15 @@
   },
   "314": {
     "name": "Repel",
-    "desc": "Prevents weak wild Pokémon from appearing for 100 steps."
+    "desc": "Prevents weak wild PokÃ©mon from appearing for 100 steps."
   },
   "315": {
     "name": "Super Repel",
-    "desc": "An item that prevents any low-level wild Pokémon from jumping out at you for 200 steps after its use."
+    "desc": "An item that prevents any low-level wild PokÃ©mon from jumping out at you for 200 steps after its use."
   },
   "316": {
     "name": "Max Repel",
-    "desc": "An item that prevents any low-level wild Pokémon from jumping out at you for 250 steps after its use."
+    "desc": "An item that prevents any low-level wild PokÃ©mon from jumping out at you for 250 steps after its use."
   },
   "317": {
     "name": "HM01 - Cut",
@@ -1241,19 +1246,19 @@
   },
   "321": {
     "name": "HM05 - Flash",
-    "desc": "The user flashes a bright light that cuts the target s accuracy. It can also be used to illuminate dark caves."
+    "desc": "The user flashes a bright light that cuts the targetâ€™s accuracy. It can also be used to illuminate dark caves."
   },
   "322": {
     "name": "Antidote",
-    "desc": "A spray-type medicine for poisoning. It can be used once to lift the effects of being poisoned from a Pokémon."
+    "desc": "A spray-type medicine for poisoning. It can be used once to lift the effects of being poisoned from a PokÃ©mon."
   },
   "323": {
     "name": "Elixir",
-    "desc": "This medicine can restore 10 PP to each of the moves that have been learned by a Pokémon."
+    "desc": "This medicine can restore 10 PP to each of the moves that have been learned by a PokÃ©mon."
   },
   "324": {
     "name": "Max Elixir",
-    "desc": "This medicine can fully restore the PP of all of the moves that have been learned by a Pokémon."
+    "desc": "This medicine can fully restore the PP of all of the moves that have been learned by a PokÃ©mon."
   },
   "325": {
     "name": "Abomasite",
@@ -1421,39 +1426,39 @@
   },
   "366": {
     "name": "Key Stone",
-    "desc": "A stone filled with an unexplained power. It makes Pokémon that battle with a Mega Stone Mega Evolve."
+    "desc": "A stone filled with an unexplained power. It makes PokÃ©mon that battle with a Mega Stone Mega Evolve."
   },
   "367": {
     "name": "Assault Vest",
-    "desc": "An item to be held by a Pokémon. This offensive vest raises Sp. Def but prevents the use of status moves."
+    "desc": "An item to be held by a PokÃ©mon. This offensive vest raises Sp. Def but prevents the use of status moves."
   },
   "368": {
     "name": "Jaw Fossil",
-    "desc": "A fossil from a prehistoric Pokémon that once lived on the land. It looks as if it could be a piece of a large jaw."
+    "desc": "A fossil from a prehistoric PokÃ©mon that once lived on the land. It looks as if it could be a piece of a large jaw."
   },
   "369": {
     "name": "Mega Ring",
-    "desc": "This ring contains an untold power that somehow enables Pokémon carrying Mega Stones to Mega Evolve in battle."
+    "desc": "This ring contains an untold power that somehow enables PokÃ©mon carrying Mega Stones to Mega Evolve in battle."
   },
   "370": {
     "name": "Pixie Plate",
-    "desc": "An item to be held by a Pokémon. It's a stone tablet that boosts the power of Fairy-type moves."
+    "desc": "An item to be held by a PokÃ©mon. It's a stone tablet that boosts the power of Fairy-type moves."
   },
   "371": {
     "name": "Sail Fossil",
-    "desc": "A fossil from a prehistoric Pokémon that once lived on land. It looks like the impression from a skin sail."
+    "desc": "A fossil from a prehistoric PokÃ©mon that once lived on land. It looks like the impression from a skin sail."
   },
   "372": {
     "name": "Snowball",
-    "desc": "An item to be held by a Pokémon. It boosts Attack if hit with an Ice-type attack. It can only be used once."
+    "desc": "An item to be held by a PokÃ©mon. It boosts Attack if hit with an Ice-type attack. It can only be used once."
   },
   "373": {
     "name": "Weakness Policy",
-    "desc": "An item to be held by a Pokémon. Attack and Sp. Atk sharply increase if the holder is hit with a move it's weak to."
+    "desc": "An item to be held by a PokÃ©mon. Attack and Sp. Atk sharply increase if the holder is hit with a move it's weak to."
   },
   "374": {
     "name": "Absorb Bulb",
-    "desc": "An item to be held by a Pokémon. It boosts Sp. Atk if hit with a Water-type attack. It can only be used once."
+    "desc": "An item to be held by a PokÃ©mon. It boosts Sp. Atk if hit with a Water-type attack. It can only be used once."
   },
   "375": {
     "name": "Adamant Orb",
@@ -1461,11 +1466,11 @@
   },
   "376": {
     "name": "Air Balloon",
-    "desc": "When held by a Pokémon, the Pokémon will float in the air. When the holder is attacked, the item will burst."
+    "desc": "When held by a PokÃ©mon, the PokÃ©mon will float in the air. When the holder is attacked, the item will burst."
   },
   "377": {
     "name": "Amulet Coin",
-    "desc": "An item to be held by a Pokémon. It doubles any prize money received if the holding Pokémon joins a battle."
+    "desc": "An item to be held by a PokÃ©mon. It doubles any prize money received if the holding PokÃ©mon joins a battle."
   },
   "378": {
     "name": "Berserk Gene",
@@ -1473,11 +1478,11 @@
   },
   "379": {
     "name": "Big Root",
-    "desc": "An item to be held by a Pokémon. It boosts the amount of HP the holder recovers from HP-stealing moves."
+    "desc": "An item to be held by a PokÃ©mon. It boosts the amount of HP the holder recovers from HP-stealing moves."
   },
   "380": {
     "name": "Binding Band",
-    "desc": "An item to be held by a Pokémon. A band that increases the power of binding moves used by the holder."
+    "desc": "An item to be held by a PokÃ©mon. A band that increases the power of binding moves used by the holder."
   },
   "381": {
     "name": "Black Belt",
@@ -1485,7 +1490,7 @@
   },
   "382": {
     "name": "Black Sludge",
-    "desc": "An item to be held by a Pokémon. It gradually restores HP to Poison-type Pokémon. It damages any other type."
+    "desc": "An item to be held by a PokÃ©mon. It gradually restores HP to Poison-type PokÃ©mon. It damages any other type."
   },
   "383": {
     "name": "Black Glasses",
@@ -1493,11 +1498,11 @@
   },
   "384": {
     "name": "Blue Scarf",
-    "desc": "An item to be held by a Pokémon. During a contest, it raises the Beauty aspect of the Pokémon holding it."
+    "desc": "An item to be held by a PokÃ©mon. During a contest, it raises the Beauty aspect of the PokÃ©mon holding it."
   },
   "385": {
     "name": "Bright Powder",
-    "desc": "An item to be held by a Pokémon. It casts a tricky glare that lowers the opposing Pokémon's accuracy."
+    "desc": "An item to be held by a PokÃ©mon. It casts a tricky glare that lowers the opposing PokÃ©mon's accuracy."
   },
   "386": {
     "name": "Bug Gem",
@@ -1509,7 +1514,7 @@
   },
   "388": {
     "name": "Cell Battery",
-    "desc": "An item to be held by a Pokémon. It boosts Attack if hit with an Electric-type attack. It can only be used once."
+    "desc": "An item to be held by a PokÃ©mon. It boosts Attack if hit with an Electric-type attack. It can only be used once."
   },
   "389": {
     "name": "Charcoal",
@@ -1521,23 +1526,23 @@
   },
   "391": {
     "name": "Choice Band",
-    "desc": "An item to be held by a Pokémon. This curious headband boosts Attack but only allows the use of one move."
+    "desc": "An item to be held by a PokÃ©mon. This curious headband boosts Attack but only allows the use of one move."
   },
   "392": {
     "name": "Choice Scarf",
-    "desc": "An item to be held by a Pokémon. This curious scarf boosts Speed but only allows the use of one move."
+    "desc": "An item to be held by a PokÃ©mon. This curious scarf boosts Speed but only allows the use of one move."
   },
   "393": {
     "name": "Choice Specs",
-    "desc": "An item to be held by a Pokémon. These curious glasses boost Sp. Atk but only allow the use of one move."
+    "desc": "An item to be held by a PokÃ©mon. These curious glasses boost Sp. Atk but only allow the use of one move."
   },
   "394": {
     "name": "Cleanse Tag",
-    "desc": "An item to be held by a Pokémon. It helps keep wild Pokémon away if the holder is the head of the party."
+    "desc": "An item to be held by a PokÃ©mon. It helps keep wild PokÃ©mon away if the holder is the head of the party."
   },
   "395": {
     "name": "Damp Rock",
-    "desc": "An item to be held by a Pokémon. It extends the duration of the move Rain Dance when used by the holder."
+    "desc": "An item to be held by a PokÃ©mon. It extends the duration of the move Rain Dance when used by the holder."
   },
   "396": {
     "name": "Dark Gem",
@@ -1545,15 +1550,15 @@
   },
   "397": {
     "name": "Deep Sea Scale",
-    "desc": "A pretty scale that shines faintly. It allows a certain kind of Pokémon to evolve."
+    "desc": "A pretty scale that shines faintly. It allows a certain kind of PokÃ©mon to evolve."
   },
   "398": {
     "name": "Deep Sea Tooth",
-    "desc": "A supersharp fang with a subtle gleam. It allows a certain kind of Pokémon to evolve."
+    "desc": "A supersharp fang with a subtle gleam. It allows a certain kind of PokÃ©mon to evolve."
   },
   "399": {
     "name": "Destiny Knot",
-    "desc": "An item to be held by a Pokémon. If the holder becomes infatuated, the opposing Pokémon will be, too."
+    "desc": "An item to be held by a PokÃ©mon. If the holder becomes infatuated, the opposing PokÃ©mon will be, too."
   },
   "400": {
     "name": "Douse Drive",
@@ -1561,7 +1566,7 @@
   },
   "401": {
     "name": "Draco Plate",
-    "desc": "An item to be held by a Pokémon. It's a stone tablet that boosts the power of Dragon-type moves."
+    "desc": "An item to be held by a PokÃ©mon. It's a stone tablet that boosts the power of Dragon-type moves."
   },
   "402": {
     "name": "Dragon Fang",
@@ -1573,7 +1578,7 @@
   },
   "404": {
     "name": "Dread Plate",
-    "desc": "An item to be held by a Pokémon. It's a stone tablet that boosts the power of Dark-type moves."
+    "desc": "An item to be held by a PokÃ©mon. It's a stone tablet that boosts the power of Dark-type moves."
   },
   "405": {
     "name": "Dubious Disc",
@@ -1581,11 +1586,11 @@
   },
   "406": {
     "name": "Earth Plate",
-    "desc": "An item to be held by a Pokémon. It's a stone tablet that boosts the power of Ground-type moves."
+    "desc": "An item to be held by a PokÃ©mon. It's a stone tablet that boosts the power of Ground-type moves."
   },
   "407": {
     "name": "Green Scarf",
-    "desc": "An item to be held by a Pokémon. During a contest, it raises the Clever aspect of the Pokémon holding it."
+    "desc": "An item to be held by a PokÃ©mon. During a contest, it raises the Clever aspect of the PokÃ©mon holding it."
   },
   "408": {
     "name": "Electric Gem",
@@ -1593,19 +1598,19 @@
   },
   "409": {
     "name": "Everstone",
-    "desc": "An item to be held by a Pokémon. A Pokémon holding this peculiar stone is prevented from evolving."
+    "desc": "An item to be held by a PokÃ©mon. A PokÃ©mon holding this peculiar stone is prevented from evolving."
   },
   "410": {
     "name": "Eviolite",
-    "desc": "A mysterious Evolutionary lump. When held by a Pokémon that can still evolve, it raises both Defense and Sp. Def."
+    "desc": "A mysterious Evolutionary lump. When held by a PokÃ©mon that can still evolve, it raises both Defense and Sp. Def."
   },
   "411": {
     "name": "Exp.  Share",
-    "desc": "Turning on this special device will allow all the Pokémon on your team to receive Exp. Points from battles."
+    "desc": "Turning on this special device will allow all the PokÃ©mon on your team to receive Exp. Points from battles."
   },
   "412": {
     "name": "Expert Belt",
-    "desc": "An item to be held by a Pokémon. It is a well-worn belt that slightly boosts the power of supereffective moves."
+    "desc": "An item to be held by a PokÃ©mon. It is a well-worn belt that slightly boosts the power of supereffective moves."
   },
   "413": {
     "name": "Fairy Gem",
@@ -1621,19 +1626,19 @@
   },
   "416": {
     "name": "Fist Plate",
-    "desc": "An item to be held by a Pokémon. It's a stone tablet that boosts the power of Fighting-type moves."
+    "desc": "An item to be held by a PokÃ©mon. It's a stone tablet that boosts the power of Fighting-type moves."
   },
   "417": {
     "name": "Flame Orb",
-    "desc": "An item to be held by a Pokémon. It is a bizarre orb that will afflict the holder with a burn during battle."
+    "desc": "An item to be held by a PokÃ©mon. It is a bizarre orb that will afflict the holder with a burn during battle."
   },
   "418": {
     "name": "Flame Plate",
-    "desc": "An item to be held by a Pokémon. It's a stone tablet that boosts the power of Fire-type moves."
+    "desc": "An item to be held by a PokÃ©mon. It's a stone tablet that boosts the power of Fire-type moves."
   },
   "419": {
     "name": "Float Stone",
-    "desc": "An item to be held by a Pokémon. This very light stone reduces the weight of a Pokémon when held."
+    "desc": "An item to be held by a PokÃ©mon. This very light stone reduces the weight of a PokÃ©mon when held."
   },
   "420": {
     "name": "Flying Gem",
@@ -1641,15 +1646,15 @@
   },
   "421": {
     "name": "Focus Band",
-    "desc": "An item to be held by a Pokémon. The holder may endure a potential KO attack, leaving it with just 1 HP."
+    "desc": "An item to be held by a PokÃ©mon. The holder may endure a potential KO attack, leaving it with just 1 HP."
   },
   "422": {
     "name": "Focus Sash",
-    "desc": "An item to be held by a Pokémon. If the holder has full HP, it will endure a potential KO attack with 1 HP. The item then disappears."
+    "desc": "An item to be held by a PokÃ©mon. If the holder has full HP, it will endure a potential KO attack with 1 HP. The item then disappears."
   },
   "423": {
     "name": "Full Incense",
-    "desc": "An item to be held by a Pokémon. This exotic-smelling incense makes the holder bloated and slow moving."
+    "desc": "An item to be held by a PokÃ©mon. This exotic-smelling incense makes the holder bloated and slow moving."
   },
   "424": {
     "name": "Ghost Gem",
@@ -1665,7 +1670,7 @@
   },
   "427": {
     "name": "Grip Claw",
-    "desc": "A Pokémon held item that extends the duration of multiturn attacks like Bind and Wrap."
+    "desc": "A PokÃ©mon held item that extends the duration of multiturn attacks like Bind and Wrap."
   },
   "428": {
     "name": "Griseous Orb",
@@ -1681,7 +1686,7 @@
   },
   "431": {
     "name": "Heat Rock",
-    "desc": "An item to be held by a Pokémon. It extends the duration of the move Sunny Day when used by the holder."
+    "desc": "An item to be held by a PokÃ©mon. It extends the duration of the move Sunny Day when used by the holder."
   },
   "432": {
     "name": "Ice Gem",
@@ -1689,43 +1694,43 @@
   },
   "433": {
     "name": "Icicle Plate",
-    "desc": "An item to be held by a Pokémon. It's a stone tablet that boosts the power of Ice-type moves."
+    "desc": "An item to be held by a PokÃ©mon. It's a stone tablet that boosts the power of Ice-type moves."
   },
   "434": {
     "name": "Icy Rock",
-    "desc": "An item to be held by a Pokémon. It extends the duration of the move Hail when it's used by the holder."
+    "desc": "An item to be held by a PokÃ©mon. It extends the duration of the move Hail when it's used by the holder."
   },
   "435": {
     "name": "Insect Plate",
-    "desc": "An item to be held by a Pokémon. It's a stone tablet that boosts the power of Bug-type moves."
+    "desc": "An item to be held by a PokÃ©mon. It's a stone tablet that boosts the power of Bug-type moves."
   },
   "436": {
     "name": "Iron Ball",
-    "desc": "An item to be held by a Pokémon. It lowers Speed and allows Ground-type moves to hit Flying-type and levitating holders."
+    "desc": "An item to be held by a PokÃ©mon. It lowers Speed and allows Ground-type moves to hit Flying-type and levitating holders."
   },
   "437": {
     "name": "Iron Plate",
-    "desc": "An item to be held by a Pokémon. It's a stone tablet that boosts the power of Steel-type moves"
+    "desc": "An item to be held by a PokÃ©mon. It's a stone tablet that boosts the power of Steel-type moves"
   },
   "438": {
     "name": "Kings Rock",
-    "desc": "An impressive icon that conveys a kingly nobility. It allows certain kinds of Pokémon to evolve."
+    "desc": "An impressive icon that conveys a kingly nobility. It allows certain kinds of PokÃ©mon to evolve."
   },
   "439": {
     "name": "Lagging Tail",
-    "desc": "An item to be held by a Pokémon. It is tremendously heavy and makes the holder move slower than usual."
+    "desc": "An item to be held by a PokÃ©mon. It is tremendously heavy and makes the holder move slower than usual."
   },
   "440": {
     "name": "Lax Incense",
-    "desc": "An item to be held by a Pokémon. The beguiling aroma of this incense may cause attacks to miss its holder."
+    "desc": "An item to be held by a PokÃ©mon. The beguiling aroma of this incense may cause attacks to miss its holder."
   },
   "441": {
     "name": "Leftovers",
-    "desc": "An item to be held by a Pokémon. The holder's HP is slowly but steadily restored throughout every battle."
+    "desc": "An item to be held by a PokÃ©mon. The holder's HP is slowly but steadily restored throughout every battle."
   },
   "442": {
     "name": "Life Orb",
-    "desc": "An item to be held by a Pokémon. It boosts the power of moves, but at the cost of some HP on each hit."
+    "desc": "An item to be held by a PokÃ©mon. It boosts the power of moves, but at the cost of some HP on each hit."
   },
   "443": {
     "name": "Light Ball",
@@ -1733,15 +1738,15 @@
   },
   "444": {
     "name": "Light Clay",
-    "desc": "An item to be held by a Pokémon. Protective moves like Light Screen and Reflect will be effective longer."
+    "desc": "An item to be held by a PokÃ©mon. Protective moves like Light Screen and Reflect will be effective longer."
   },
   "445": {
     "name": "Luck Incense",
-    "desc": "An item to be held by a Pokémon. It doubles any prize money received if the holding Pokémon joins a battle."
+    "desc": "An item to be held by a PokÃ©mon. It doubles any prize money received if the holding PokÃ©mon joins a battle."
   },
   "446": {
     "name": "Lucky Egg",
-    "desc": "An item to be held by a Pokémon. It's an egg filled with happiness that earns extra Exp. Points in battle."
+    "desc": "An item to be held by a PokÃ©mon. It's an egg filled with happiness that earns extra Exp. Points in battle."
   },
   "447": {
     "name": "Lucky Punch",
@@ -1749,7 +1754,7 @@
   },
   "448": {
     "name": "Luminous Moss",
-    "desc": "An item to be held by a Pokémon. It boosts Sp. Def if hit with a Water-type attack. It can only be used once."
+    "desc": "An item to be held by a PokÃ©mon. It boosts Sp. Def if hit with a Water-type attack. It can only be used once."
   },
   "449": {
     "name": "Lustrous Orb",
@@ -1765,11 +1770,11 @@
   },
   "452": {
     "name": "Meadow Plate",
-    "desc": "An item to be held by a Pokémon. It's a stone tablet that boosts the power of Grass-type moves."
+    "desc": "An item to be held by a PokÃ©mon. It's a stone tablet that boosts the power of Grass-type moves."
   },
   "453": {
     "name": "Mental Herb",
-    "desc": "An item to be held by a Pokémon. It snaps the holder out of infatuation. It can be used once."
+    "desc": "An item to be held by a PokÃ©mon. It snaps the holder out of infatuation. It can be used once."
   },
   "454": {
     "name": "Metal Powder",
@@ -1777,11 +1782,11 @@
   },
   "455": {
     "name": "Metronome",
-    "desc": "An item to be held by a Pokémon. It boosts moves used consecutively, but only until a different move is used."
+    "desc": "An item to be held by a PokÃ©mon. It boosts moves used consecutively, but only until a different move is used."
   },
   "456": {
     "name": "Mind Plate",
-    "desc": "An item to be held by a Pokémon. It's a stone tablet that boosts the power of Psychic-type moves."
+    "desc": "An item to be held by a PokÃ©mon. It's a stone tablet that boosts the power of Psychic-type moves."
   },
   "457": {
     "name": "Miracle Seed",
@@ -1789,7 +1794,7 @@
   },
   "458": {
     "name": "Muscle Band",
-    "desc": "An item to be held by a Pokémon. This headband exudes strength, slightly boosting the power of physical moves."
+    "desc": "An item to be held by a PokÃ©mon. This headband exudes strength, slightly boosting the power of physical moves."
   },
   "459": {
     "name": "Mystic Water",
@@ -1805,7 +1810,7 @@
   },
   "462": {
     "name": "Odd Incense",
-    "desc": "An item to be held by a Pokémon. This exotic-smelling incense boosts the power of Psychic-type moves."
+    "desc": "An item to be held by a PokÃ©mon. This exotic-smelling incense boosts the power of Psychic-type moves."
   },
   "463": {
     "name": "Pink Bow",
@@ -1813,7 +1818,7 @@
   },
   "464": {
     "name": "Pink Scarf",
-    "desc": "An item to be held by a Pokémon. During a contest, it raises the Cute aspect of the Pokémon holding it."
+    "desc": "An item to be held by a PokÃ©mon. During a contest, it raises the Cute aspect of the PokÃ©mon holding it."
   },
   "465": {
     "name": "Poison Barb",
@@ -1829,31 +1834,31 @@
   },
   "468": {
     "name": "Power Anklet",
-    "desc": "An item to be held by a Pokémon. It reduces Speed but allows the holder s Speed stat to grow more after battling."
+    "desc": "An item to be held by a PokÃ©mon. It reduces Speed but allows the holderâ€™s Speed stat to grow more after battling."
   },
   "469": {
     "name": "Power Band",
-    "desc": "An item to be held by a Pokémon. It reduces Speed but allows the holder s Sp. Def stat to grow more after battling."
+    "desc": "An item to be held by a PokÃ©mon. It reduces Speed but allows the holderâ€™s Sp. Def stat to grow more after battling."
   },
   "470": {
     "name": "Power Belt",
-    "desc": "An item to be held by a Pokémon. It reduces Speed but allows the holder s Defense stat to grow more after battling."
+    "desc": "An item to be held by a PokÃ©mon. It reduces Speed but allows the holderâ€™s Defense stat to grow more after battling."
   },
   "471": {
     "name": "Power Bracer",
-    "desc": "An item to be held by a Pokémon. It reduces Speed but allows the holder s Attack stat to grow more after battling."
+    "desc": "An item to be held by a PokÃ©mon. It reduces Speed but allows the holderâ€™s Attack stat to grow more after battling."
   },
   "472": {
     "name": "Power Herb",
-    "desc": "A single-use item to be held by a Pokémon. It allows the immediate use of a move that charges on the first turn."
+    "desc": "A single-use item to be held by a PokÃ©mon. It allows the immediate use of a move that charges on the first turn."
   },
   "473": {
     "name": "Power Lens",
-    "desc": "An item to be held by a Pokémon. It reduces Speed but allows the holder s Sp. Atk stat to grow more after battling."
+    "desc": "An item to be held by a PokÃ©mon. It reduces Speed but allows the holderâ€™s Sp. Atk stat to grow more after battling."
   },
   "474": {
     "name": "Power Weight",
-    "desc": "An item to be held by a Pokémon. It reduces Speed but allows the holder s maximum HP to grow more after battling."
+    "desc": "An item to be held by a PokÃ©mon. It reduces Speed but allows the holderâ€™s maximum HP to grow more after battling."
   },
   "475": {
     "name": "Psychic Gem",
@@ -1861,11 +1866,11 @@
   },
   "476": {
     "name": "Pure Incense",
-    "desc": "An item to be held by a Pokémon. It helps keep wild Pokémon away if the holder is the head of the party."
+    "desc": "An item to be held by a PokÃ©mon. It helps keep wild PokÃ©mon away if the holder is the head of the party."
   },
   "477": {
     "name": "Quick Claw",
-    "desc": "An item to be held by a Pokémon. This light, sharp claw lets the bearer move first occasionally."
+    "desc": "An item to be held by a PokÃ©mon. This light, sharp claw lets the bearer move first occasionally."
   },
   "478": {
     "name": "Quick Powder",
@@ -1873,11 +1878,11 @@
   },
   "479": {
     "name": "Razor Claw",
-    "desc": "An item to be held by a Pokémon. This sharply hooked claw increases the holder's critical-hit ratio."
+    "desc": "An item to be held by a PokÃ©mon. This sharply hooked claw increases the holder's critical-hit ratio."
   },
   "480": {
     "name": "Razor Fang",
-    "desc": "Enables certain Pokémon to evolve. Increases the probability of attacks hitting enemies' weak spots."
+    "desc": "Enables certain PokÃ©mon to evolve. Increases the probability of attacks hitting enemies' weak spots."
   },
   "481": {
     "name": "X Speed",
@@ -1885,11 +1890,11 @@
   },
   "482": {
     "name": "Red Scarf",
-    "desc": "An item to be held by a Pokémon. During a contest, it raises the Cool aspect of the Pokémon holding it."
+    "desc": "An item to be held by a PokÃ©mon. During a contest, it raises the Cool aspect of the PokÃ©mon holding it."
   },
   "483": {
     "name": "Ring Target",
-    "desc": "An item to be held by a Pokémon. Moves that normally have no effect will land on a Pokémon holding it."
+    "desc": "An item to be held by a PokÃ©mon. Moves that normally have no effect will land on a PokÃ©mon holding it."
   },
   "484": {
     "name": "Rock Gem",
@@ -1897,27 +1902,27 @@
   },
   "485": {
     "name": "Rock Incense",
-    "desc": "An item to be held by a Pokémon. This exotic-smelling incense boosts the power of Rock-type moves."
+    "desc": "An item to be held by a PokÃ©mon. This exotic-smelling incense boosts the power of Rock-type moves."
   },
   "486": {
     "name": "X Speed 2",
-    "desc": "Sharply raises Speed of a Pokémon in battle."
+    "desc": "Sharply raises Speed of a PokÃ©mon in battle."
   },
   "487": {
     "name": "Rose Incense",
-    "desc": "An item to be held by a Pokémon. This exotic-smelling incense boosts the power of Grass-type moves."
+    "desc": "An item to be held by a PokÃ©mon. This exotic-smelling incense boosts the power of Grass-type moves."
   },
   "488": {
     "name": "Safety Goggles",
-    "desc": "An item to be held by a Pokémon. These goggles protect the holder from both weather-related damage and powder."
+    "desc": "An item to be held by a PokÃ©mon. These goggles protect the holder from both weather-related damage and powder."
   },
   "489": {
     "name": "Scope Lens",
-    "desc": "An item to be held by a Pokémon. It's a lens for scoping out weak points. It boosts the holder's critical-hit ratio."
+    "desc": "An item to be held by a PokÃ©mon. It's a lens for scoping out weak points. It boosts the holder's critical-hit ratio."
   },
   "490": {
     "name": "Sea Incense",
-    "desc": "An item to be held by a Pokémon. This incense has a curious aroma that boosts the power of Water-type moves."
+    "desc": "An item to be held by a PokÃ©mon. This incense has a curious aroma that boosts the power of Water-type moves."
   },
   "491": {
     "name": "Sharp Beak",
@@ -1925,15 +1930,15 @@
   },
   "492": {
     "name": "Shed Shell",
-    "desc": "A tough, discarded carapace to be held by a Pokémon. It enables the holder to switch with a waiting Pokémon in battle."
+    "desc": "A tough, discarded carapace to be held by a PokÃ©mon. It enables the holder to switch with a waiting PokÃ©mon in battle."
   },
   "493": {
     "name": "Shell Bell",
-    "desc": "An item to be held by a Pokémon. The holder regains a little HP every time it inflicts damage on others."
+    "desc": "An item to be held by a PokÃ©mon. The holder regains a little HP every time it inflicts damage on others."
   },
   "494": {
     "name": "Shock Drive",
-    "desc": "A cassette to be held by Genesect. It changes Genesect s Techno Blast move so it becomes Electric type."
+    "desc": "A cassette to be held by Genesect. It changes Genesectâ€™s Techno Blast move so it becomes Electric type."
   },
   "495": {
     "name": "Silk Scarf",
@@ -1945,15 +1950,15 @@
   },
   "497": {
     "name": "Sky Plate",
-    "desc": "An item to be held by a Pokémon. It s a stone tablet that boosts the power of Flying-type moves."
+    "desc": "An item to be held by a PokÃ©mon. Itâ€™s a stone tablet that boosts the power of Flying-type moves."
   },
   "498": {
     "name": "Smoke Ball",
-    "desc": "An item to be held by a Pokémon. It enables the holder to flee from any wild Pokémon encounter without fail."
+    "desc": "An item to be held by a PokÃ©mon. It enables the holder to flee from any wild PokÃ©mon encounter without fail."
   },
   "499": {
     "name": "Smooth Rock",
-    "desc": "An item to be held by a Pokémon. It extends the duration of the move Sandstorm when used by the holder."
+    "desc": "An item to be held by a PokÃ©mon. It extends the duration of the move Sandstorm when used by the holder."
   },
   "500": {
     "name": "Soft Sand",
@@ -1969,11 +1974,11 @@
   },
   "503": {
     "name": "Splash Plate",
-    "desc": "An item to be held by a Pokémon. It s a stone tablet that boosts the power of Water-type moves."
+    "desc": "An item to be held by a PokÃ©mon. Itâ€™s a stone tablet that boosts the power of Water-type moves."
   },
   "504": {
     "name": "Spooky Plate",
-    "desc": "An item to be held by a Pokémon. It s a stone tablet that boosts the power of Ghost-type moves."
+    "desc": "An item to be held by a PokÃ©mon. Itâ€™s a stone tablet that boosts the power of Ghost-type moves."
   },
   "505": {
     "name": "Steel Gem",
@@ -1981,15 +1986,15 @@
   },
   "506": {
     "name": "Stick",
-    "desc": "An item to be held by Farfetch d. This very long and stiff stalk of leek boosts its critical-hit ratio."
+    "desc": "An item to be held by Farfetchâ€™d. This very long and stiff stalk of leek boosts its critical-hit ratio."
   },
   "507": {
     "name": "Sticky Barb",
-    "desc": "An item to be held by a Pokémon. It damages the holder every turn and may latch on to Pokémon that touch the holder."
+    "desc": "An item to be held by a PokÃ©mon. It damages the holder every turn and may latch on to PokÃ©mon that touch the holder."
   },
   "508": {
     "name": "Stone Plate",
-    "desc": "An item to be held by a Pokémon. It s a stone tablet that boosts the power of Rock-type moves."
+    "desc": "An item to be held by a PokÃ©mon. Itâ€™s a stone tablet that boosts the power of Rock-type moves."
   },
   "509": {
     "name": "Thick Club",
@@ -1997,11 +2002,11 @@
   },
   "510": {
     "name": "Toxic Orb",
-    "desc": "An item to be held by a Pokémon. It is a bizarre orb that will badly poison the holder during battle."
+    "desc": "An item to be held by a PokÃ©mon. It is a bizarre orb that will badly poison the holder during battle."
   },
   "511": {
     "name": "Toxic Plate",
-    "desc": "An item to be held by a Pokémon. It s a stone tablet that boosts the power of Poison-type moves."
+    "desc": "An item to be held by a PokÃ©mon. Itâ€™s a stone tablet that boosts the power of Poison-type moves."
   },
   "512": {
     "name": "TwistedSpoon",
@@ -2013,35 +2018,35 @@
   },
   "514": {
     "name": "Wave Incense",
-    "desc": "An item to be held by a Pokémon. This incense has a curious aroma that boosts the power of Water-type moves."
+    "desc": "An item to be held by a PokÃ©mon. This incense has a curious aroma that boosts the power of Water-type moves."
   },
   "515": {
     "name": "White Herb",
-    "desc": "An item to be held by a Pokémon. It restores any lowered stat in battle. It can be used only once."
+    "desc": "An item to be held by a PokÃ©mon. It restores any lowered stat in battle. It can be used only once."
   },
   "516": {
     "name": "Wide Lens",
-    "desc": "An item to be held by a Pokémon. It's a magnifying lens that slightly boosts the accuracy of moves."
+    "desc": "An item to be held by a PokÃ©mon. It's a magnifying lens that slightly boosts the accuracy of moves."
   },
   "517": {
     "name": "Wise Glasses",
-    "desc": "An item to be held by a Pokémon. This thick pair of glasses slightly boosts the power of special moves."
+    "desc": "An item to be held by a PokÃ©mon. This thick pair of glasses slightly boosts the power of special moves."
   },
   "518": {
     "name": "Yellow Scarf",
-    "desc": "An item to be held by a Pokémon. During a contest, it raises the Tough aspect of the Pokémon holding it."
+    "desc": "An item to be held by a PokÃ©mon. During a contest, it raises the Tough aspect of the PokÃ©mon holding it."
   },
   "519": {
     "name": "Zap Plate",
-    "desc": "An item to be held by a Pokémon. It s a stone tablet that boosts the power of Electric-type moves."
+    "desc": "An item to be held by a PokÃ©mon. Itâ€™s a stone tablet that boosts the power of Electric-type moves."
   },
   "520": {
     "name": "Zoom Lens",
-    "desc": "An item to be held by a Pokémon. If the holder moves after its target moves, its accuracy will be boosted."
+    "desc": "An item to be held by a PokÃ©mon. If the holder moves after its target moves, its accuracy will be boosted."
   },
   "521": {
     "name": "Protector",
-    "desc": "A protective item of some sort. It is extremely stiff and heavy. It's loved by a certain Pokémon."
+    "desc": "A protective item of some sort. It is extremely stiff and heavy. It's loved by a certain PokÃ©mon."
   },
   "522": {
     "name": "Ice Orb",
@@ -2049,259 +2054,259 @@
   },
   "523": {
     "name": "Cheri Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, it can recover from paralysis on its own in battle."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, it can recover from paralysis on its own in battle."
   },
   "524": {
     "name": "Chesto Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, it can recover from sleep on its own in battle."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, it can recover from sleep on its own in battle."
   },
   "525": {
     "name": "Pecha Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, it can recover from poisoning on its own in battle."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, it can recover from poisoning on its own in battle."
   },
   "526": {
     "name": "Rawst Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, it can recover from a burn on its own in battle."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, it can recover from a burn on its own in battle."
   },
   "527": {
     "name": "Aspear Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, it can recover from being frozen on its own in battle."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, it can recover from being frozen on its own in battle."
   },
   "528": {
     "name": "Leppa Berry",
-    "desc": "A Berry to be consumed by a Pokémon. If a Pokémon holds one, it can restore 10 PP to a depleted move during battle."
+    "desc": "A Berry to be consumed by a PokÃ©mon. If a PokÃ©mon holds one, it can restore 10 PP to a depleted move during battle."
   },
   "529": {
     "name": "Oran Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, it can restore its own HP by 10 points during battle."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, it can restore its own HP by 10 points during battle."
   },
   "530": {
     "name": "Persim Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, it can recover from confusion on its own in battle."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, it can recover from confusion on its own in battle."
   },
   "531": {
     "name": "Lum Berry",
-    "desc": "A berry to be consumed by a Pokémon. If a Pokémon holds one, it can recover from any status condition during battle."
+    "desc": "A berry to be consumed by a PokÃ©mon. If a PokÃ©mon holds one, it can recover from any status condition during battle."
   },
   "532": {
     "name": "Sitrus Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, it can restore its own HP by a small amount during battle."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, it can restore its own HP by a small amount during battle."
   },
   "533": {
     "name": "Figy Berry",
-    "desc": "If held by a Pokémon, it restores the user s HP in a pinch, but it will cause confusion if the user hates the taste."
+    "desc": "If held by a PokÃ©mon, it restores the userâ€™s HP in a pinch, but it will cause confusion if the user hates the taste."
   },
   "534": {
     "name": "Wiki Berry",
-    "desc": "If held by a Pokémon, it restores the user s HP in a pinch, but it will cause confusion if the user hates the taste."
+    "desc": "If held by a PokÃ©mon, it restores the userâ€™s HP in a pinch, but it will cause confusion if the user hates the taste."
   },
   "535": {
     "name": "Mago Berry",
-    "desc": "If held by a Pokémon, it restores the user s HP in a pinch, but it will cause confusion if the user hates the taste."
+    "desc": "If held by a PokÃ©mon, it restores the userâ€™s HP in a pinch, but it will cause confusion if the user hates the taste."
   },
   "536": {
     "name": "Aguav Berry",
-    "desc": "If held by a Pokémon, it restores the user s HP in a pinch, but it will cause confusion if the user hates the taste."
+    "desc": "If held by a PokÃ©mon, it restores the userâ€™s HP in a pinch, but it will cause confusion if the user hates the taste."
   },
   "537": {
     "name": "Iapapa Berry",
-    "desc": "If held by a Pokémon, it restores the user s HP in a pinch, but it will cause confusion if the user hates the taste."
+    "desc": "If held by a PokÃ©mon, it restores the userâ€™s HP in a pinch, but it will cause confusion if the user hates the taste."
   },
   "538": {
     "name": "Razz Berry",
-    "desc": "Used to make Pokéblocks that will enhance your Coolness. Its red flesh is spicy when eaten."
+    "desc": "Used to make PokÃ©blocks that will enhance your Coolness. Its red flesh is spicy when eaten."
   },
   "539": {
     "name": "Bluk Berry",
-    "desc": "Used to make Pokéblocks that will enhance your Beauty. Its blue flesh is sour when eaten."
+    "desc": "Used to make PokÃ©blocks that will enhance your Beauty. Its blue flesh is sour when eaten."
   },
   "540": {
     "name": "Nanab Berry",
-    "desc": "Used to make Pokéblocks that will enhance your Cuteness. Its pink flesh is sweet when eaten."
+    "desc": "Used to make PokÃ©blocks that will enhance your Cuteness. Its pink flesh is sweet when eaten."
   },
   "541": {
     "name": "Wepear Berry",
-    "desc": "Used to make Pokéblocks that will enhance your Cleverness. Its green flesh is bitter when eaten."
+    "desc": "Used to make PokÃ©blocks that will enhance your Cleverness. Its green flesh is bitter when eaten."
   },
   "542": {
     "name": "Pinap Berry",
-    "desc": "Used to make Pokéblocks that will enhance your Toughness. Its yellow flesh is sour when eaten."
+    "desc": "Used to make PokÃ©blocks that will enhance your Toughness. Its yellow flesh is sour when eaten."
   },
   "543": {
     "name": "Pomeg Berry",
-    "desc": "A Berry to be consumed by Pokémon. Using it on a Pokémon makes it more friendly but lowers its base HP."
+    "desc": "A Berry to be consumed by PokÃ©mon. Using it on a PokÃ©mon makes it more friendly but lowers its base HP."
   },
   "544": {
     "name": "Kelpsy Berry",
-    "desc": "A Berry to be consumed by Pokémon. Using it on a Pokémon makes it more friendly but lowers its base Attack."
+    "desc": "A Berry to be consumed by PokÃ©mon. Using it on a PokÃ©mon makes it more friendly but lowers its base Attack."
   },
   "545": {
     "name": "Qualot Berry",
-    "desc": "A Berry to be consumed by Pokémon. Using it on a Pokémon makes it more friendly but lowers its base Defense."
+    "desc": "A Berry to be consumed by PokÃ©mon. Using it on a PokÃ©mon makes it more friendly but lowers its base Defense."
   },
   "546": {
     "name": "Hondew Berry",
-    "desc": "A Berry to be consumed by Pokémon. Using it on a Pokémon makes it more friendly but lowers its base Sp. Atk."
+    "desc": "A Berry to be consumed by PokÃ©mon. Using it on a PokÃ©mon makes it more friendly but lowers its base Sp. Atk."
   },
   "547": {
     "name": "Grepa Berry",
-    "desc": "A Berry to be consumed by Pokémon. Using it on a Pokémon makes it more friendly but lowers its base Sp. Def."
+    "desc": "A Berry to be consumed by PokÃ©mon. Using it on a PokÃ©mon makes it more friendly but lowers its base Sp. Def."
   },
   "548": {
-    "name": "Tomato Berry",
-    "desc": "A Berry to be consumed by Pokémon. Using it on a Pokémon makes it more friendly but lowers its base Speed."
+    "name": "Tamato Berry",
+    "desc": "A Berry to be consumed by PokÃ©mon. Using it on a PokÃ©mon makes it more friendly but lowers its base Speed."
   },
   "549": {
     "name": "Cornn Berry",
-    "desc": "Used to make Pokéblocks that will enhance your Beauty, this Berry is rare in other regions."
+    "desc": "Used to make PokÃ©blocks that will enhance your Beauty, this Berry is rare in other regions."
   },
   "550": {
     "name": "Magost Berry",
-    "desc": "Used to make Pokéblocks that will enhance your Cuteness, this Berry is rare in other regions."
+    "desc": "Used to make PokÃ©blocks that will enhance your Cuteness, this Berry is rare in other regions."
   },
   "551": {
     "name": "Rabuta Berry",
-    "desc": "Used to make Pokéblocks that will enhance your Cleverness, this Berry is rare in other regions."
+    "desc": "Used to make PokÃ©blocks that will enhance your Cleverness, this Berry is rare in other regions."
   },
   "552": {
     "name": "Nomel Berry",
-    "desc": "Used to make Pokéblocks that will enhance your Toughness, this Berry is rare in other regions."
+    "desc": "Used to make PokÃ©blocks that will enhance your Toughness, this Berry is rare in other regions."
   },
   "553": {
     "name": "Spelon Berry",
-    "desc": "Used to make Pokéblocks that will enhance your Cuteness, this Berry is rare in other regions."
+    "desc": "Used to make PokÃ©blocks that will enhance your Cuteness, this Berry is rare in other regions."
   },
   "554": {
     "name": "Pamtre Berry",
-    "desc": "Used to make Pokéblocks that will enhance your Beauty, this Berry is rare in other regions."
+    "desc": "Used to make PokÃ©blocks that will enhance your Beauty, this Berry is rare in other regions."
   },
   "555": {
     "name": "Watmel Berry",
-    "desc": "Used to make Pokéblocks that will enhance your Cleverness, this Berry is rare in other regions."
+    "desc": "Used to make PokÃ©blocks that will enhance your Cleverness, this Berry is rare in other regions."
   },
   "556": {
     "name": "Durin Berry",
-    "desc": "Used to make Pokéblocks that will enhance your Cleverness, this Berry is rare in other regions."
+    "desc": "Used to make PokÃ©blocks that will enhance your Cleverness, this Berry is rare in other regions."
   },
   "557": {
     "name": "Belue Berry",
-    "desc": "Used to make Pokéblocks that will enhance your Beauty, this Berry is rare in other regions."
+    "desc": "Used to make PokÃ©blocks that will enhance your Beauty, this Berry is rare in other regions."
   },
   "558": {
     "name": "Occa Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Fire-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Fire-type attack."
   },
   "559": {
     "name": "Passho Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Water-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Water-type attack."
   },
   "560": {
     "name": "Wacan Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Electric-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Electric-type attack."
   },
   "561": {
     "name": "Rindo Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Grass-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Grass-type attack."
   },
   "562": {
     "name": "Yache Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Ice-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Ice-type attack."
   },
   "563": {
     "name": "Chople Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Fighting-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Fighting-type attack."
   },
   "564": {
     "name": "Kebia Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Poison-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Poison-type attack."
   },
   "565": {
     "name": "Shuca Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Ground-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Ground-type attack."
   },
   "566": {
     "name": "Coba Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Flying-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Flying-type attack."
   },
   "567": {
     "name": "Payapa Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Psychic-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Psychic-type attack."
   },
   "568": {
     "name": "Tanga Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Bug-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Bug-type attack."
   },
   "569": {
     "name": "Charti Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Rock-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Rock-type attack."
   },
   "570": {
     "name": "Kasib Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Ghost-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Ghost-type attack."
   },
   "571": {
     "name": "Haban Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Dragon-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Dragon-type attack."
   },
   "572": {
     "name": "Colbur Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Dark-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Dark-type attack."
   },
   "573": {
     "name": "Babiri Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Steel-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Steel-type attack."
   },
   "574": {
     "name": "Chilan Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one Normal-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one Normal-type attack."
   },
   "575": {
     "name": "Liechi Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, its Attack stat will increase when it s in a pinch."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, its Attack stat will increase when itâ€™s in a pinch."
   },
   "576": {
     "name": "Ganlon Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, its Defense stat will increase when it s in a pinch."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, its Defense stat will increase when itâ€™s in a pinch."
   },
   "577": {
     "name": "Salac Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, its Speed stat will increase when it s in a pinch."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, its Speed stat will increase when itâ€™s in a pinch."
   },
   "578": {
     "name": "Petaya Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, its Sp. Atk stat will increase when it s in a pinch."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, its Sp. Atk stat will increase when itâ€™s in a pinch."
   },
   "579": {
     "name": "Apicot Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, its Sp. Def stat will increase when it s in a pinch."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, its Sp. Def stat will increase when itâ€™s in a pinch."
   },
   "580": {
     "name": "Lansat Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, its critical-hit ratio will increase when it s in a pinch."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, its critical-hit ratio will increase when itâ€™s in a pinch."
   },
   "581": {
     "name": "Starf Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, one of its stats will sharply increase when it s in a pinch."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, one of its stats will sharply increase when itâ€™s in a pinch."
   },
   "582": {
     "name": "Enigma Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, being hit by a supereffective attack will restore its HP."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, being hit by a supereffective attack will restore its HP."
   },
   "583": {
     "name": "Micle Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, its accuracy will increase just once when it s in a pinch."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, its accuracy will increase just once when itâ€™s in a pinch."
   },
   "584": {
     "name": "Custap Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a Pokémon holds one, it will be able to move first just once when it s in a pinch."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a PokÃ©mon holds one, it will be able to move first just once when itâ€™s in a pinch."
   },
   "585": {
     "name": "Jaboca Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a physical attack hits the Pokémon holding it, the attacker will also be hurt."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a physical attack hits the PokÃ©mon holding it, the attacker will also be hurt."
   },
   "586": {
     "name": "Rowap Berry",
-    "desc": "A Berry to be consumed by Pokémon. If a special attack hits the Pokémon holding it, the attacker will also be hurt."
+    "desc": "A Berry to be consumed by PokÃ©mon. If a special attack hits the PokÃ©mon holding it, the attacker will also be hurt."
   },
   "587": {
     "name": "Comet Shard",
@@ -2309,19 +2314,19 @@
   },
   "588": {
     "name": "Cover Fossil",
-    "desc": "A fossil of an ancient Pokémon that lived in the sea in ancient times. It appears to be part of its back."
+    "desc": "A fossil of an ancient PokÃ©mon that lived in the sea in ancient times. It appears to be part of its back."
   },
   "589": {
     "name": "Roseli Berry",
-    "desc": "If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Fairy-type attack."
+    "desc": "If held by a PokÃ©mon, this Berry will lessen the damage taken from one supereffective Fairy-type attack."
   },
   "590": {
     "name": "Kee Berry",
-    "desc": "If held by a Pokémon, this Berry will increase the holder s Defense if it s hit with a physical move."
+    "desc": "If held by a PokÃ©mon, this Berry will increase the holderâ€™s Defense if itâ€™s hit with a physical move."
   },
   "591": {
     "name": "Maranga Berry",
-    "desc": "If held by a Pokémon, this Berry will increase the holder s Sp. Def if it s hit with a special move."
+    "desc": "If held by a PokÃ©mon, this Berry will increase the holderâ€™s Sp. Def if itâ€™s hit with a special move."
   },
   "592": {
     "name": "Beedrillite",
@@ -2349,7 +2354,8 @@
   },
   "598": {
     "name": "Safari-Pass",
-    "desc": "A special ticket that allows free access to any regional safari for 24 hours."
+    "desc": "A special ticket that allows free access to any regional safari for 24 hours.",
+    "prompt": true
   },
   "599": {
     "name": "Galladite",
@@ -2361,11 +2367,11 @@
   },
   "601": {
     "name": "Red Orb",
-    "desc": "A shiny red orb that is said to have a legend tied to it. It s known to have a deep connection with the Hoenn region."
+    "desc": "A shiny red orb that is said to have a legend tied to it. Itâ€™s known to have a deep connection with the Hoenn region."
   },
   "602": {
     "name": "Blue Orb",
-    "desc": "A shiny blue orb that is said to have a legend tied to it. It s known to have a deep connection with the Hoenn region."
+    "desc": "A shiny blue orb that is said to have a legend tied to it. Itâ€™s known to have a deep connection with the Hoenn region."
   },
   "603": {
     "name": "Aqua Suit",
@@ -2389,11 +2395,12 @@
   },
   "608": {
     "name": "Paralyze Heal",
-    "desc": "A spray-type medicine. It eliminates paralysis from a single Pokémon."
+    "desc": "A spray-type medicine. It eliminates paralysis from a single PokÃ©mon."
   },
   "609": {
     "name": "Small Train Ticket",
-    "desc": "A normal Train Ticket that allows free access to the subway system for a week."
+    "desc": "A normal Train Ticket that allows free access to the subway system for a week.",
+    "prompt": true
   },
   "610": {
     "name": "Red Apricorn",
@@ -2417,7 +2424,7 @@
   },
   "615": {
     "name": "White Apricorn",
-    "desc": "A white Apricorn. It doesn t smell like anything."
+    "desc": "A white Apricorn. It doesnâ€™t smell like anything."
   },
   "616": {
     "name": "Black Apricorn",
@@ -2425,27 +2432,27 @@
   },
   "617": {
     "name": "X Attack",
-    "desc": "Raises Attack of a Pokémon in battle."
+    "desc": "Raises Attack of a PokÃ©mon in battle."
   },
   "618": {
     "name": "X Defense",
-    "desc": "Raises Defense of a Pokémon in battle."
+    "desc": "Raises Defense of a PokÃ©mon in battle."
   },
   "619": {
     "name": "X Sp. Atk",
-    "desc": "Raises Special Attack of a Pokémon in battle."
+    "desc": "Raises Special Attack of a PokÃ©mon in battle."
   },
   "620": {
     "name": "X Sp. Def",
-    "desc": "Raises Special Defense of a Pokémon in battle."
+    "desc": "Raises Special Defense of a PokÃ©mon in battle."
   },
   "621": {
     "name": "X Accuracy",
-    "desc": "Raises Accuracy of a Pokémon in battle."
+    "desc": "Raises Accuracy of a PokÃ©mon in battle."
   },
   "622": {
     "name": "Dire Hit",
-    "desc": "Raises critical-hit ratio of a Pokémon in battle."
+    "desc": "Raises critical-hit ratio of a PokÃ©mon in battle."
   },
   "623": {
     "name": "Guard Spec",
@@ -2453,35 +2460,35 @@
   },
   "624": {
     "name": "Kanto Map",
-    "desc": "Map of the starting region of the Pokémon world."
+    "desc": "Map of the starting region of the PokÃ©mon world."
   },
   "625": {
     "name": "Johto Map",
-    "desc": "Map of the second region of the Pokémon world."
+    "desc": "Map of the second region of the PokÃ©mon world."
   },
   "626": {
     "name": "Sevii Islands Map",
-    "desc": "Map of a famous Pokémon world archipelagos."
+    "desc": "Map of a famous PokÃ©mon world archipelagos."
   },
   "627": {
     "name": "Hoenn Map",
-    "desc": "Map of the third region of the Pokémon world."
+    "desc": "Map of the third region of the PokÃ©mon world."
   },
   "628": {
     "name": "Sinnoh Map",
-    "desc": "Map of the fourth region of the Pokémon world."
+    "desc": "Map of the fourth region of the PokÃ©mon world."
   },
   "629": {
     "name": "Unova Map",
-    "desc": "Map of the fifth region of the Pokémon world."
+    "desc": "Map of the fifth region of the PokÃ©mon world."
   },
   "630": {
     "name": "Kalos Map",
-    "desc": "Map of the sixth region of Pokémon world."
+    "desc": "Map of the sixth region of PokÃ©mon world."
   },
   "631": {
     "name": "Nugget",
-    "desc": ""
+    "desc": "A nugget of pure gold that gives off a lustrous gleam. A maniac will buy it for a high price."
   },
   "632": {
     "name": "Big Nugget",
@@ -2577,35 +2584,35 @@
   },
   "656": {
     "name": "Level Ball",
-    "desc": "A Pokéball for catching Pokémon that are a lower level than your own."
+    "desc": "A PokÃ©ball for catching PokÃ©mon that are a lower level than your own."
   },
   "657": {
     "name": "Lure Ball",
-    "desc": "A Pokéball for catching Pokémon hooked by a Rod when fishing."
+    "desc": "A PokÃ©ball for catching PokÃ©mon hooked by a Rod when fishing."
   },
   "658": {
     "name": "Moon Ball",
-    "desc": "A Pokéball for catching Pokémon that evolve using the Moon Stone."
+    "desc": "A PokÃ©ball for catching PokÃ©mon that evolve using the Moon Stone."
   },
   "659": {
     "name": "Friend Ball",
-    "desc": "A Pokéball that makes caught Pokémon more friendly."
+    "desc": "A PokÃ©ball that makes caught PokÃ©mon more friendly."
   },
   "660": {
     "name": "Love Ball",
-    "desc": "Pokéball for catching Pokémon that are the opposite gender of your Pokémon."
+    "desc": "PokÃ©ball for catching PokÃ©mon that are the opposite gender of your PokÃ©mon."
   },
   "661": {
     "name": "Heavy Ball",
-    "desc": "A Pokéball for catching very heavy Pokémon."
+    "desc": "A PokÃ©ball for catching very heavy PokÃ©mon."
   },
   "662": {
     "name": "Fast Ball",
-    "desc": "A Pokéball that makes it easier to catch Pokémon which are quick to run away."
+    "desc": "A PokÃ©ball that makes it easier to catch PokÃ©mon which are quick to run away."
   },
   "663": {
     "name": "Sport Ball",
-    "desc": "A special Pokéball for the Bug-Catching Contest."
+    "desc": "A special PokÃ©ball for the Bug-Catching Contest."
   },
   "664": {
     "name": "Red Shard",
@@ -2773,19 +2780,19 @@
   },
   "706": {
     "name": "Dusk Stone",
-    "desc": "An odd stone with a mesmerizing darkness. It allows certain kinds of Pokémon to evolve."
+    "desc": "An odd stone with a mesmerizing darkness. It allows certain kinds of PokÃ©mon to evolve."
   },
   "707": {
     "name": "Dawn Stone",
-    "desc": "A peculiar stone that can make certain species of Pokémon evolve. It sparkles like a glittering eye."
+    "desc": "A peculiar stone that can make certain species of PokÃ©mon evolve. It sparkles like a glittering eye."
   },
   "708": {
     "name": "Poke Flute",
-    "desc": "A flute which can play with such a beautiful tone that even sleeping Pokémon find themselves roused."
+    "desc": "A flute which can play with such a beautiful tone that even sleeping PokÃ©mon find themselves roused."
   },
   "709": {
     "name": "Silver Powder",
-    "desc": "An item to be held by a Pokémon. It is a shiny, silver powder that will boost the power of Bug-type moves."
+    "desc": "An item to be held by a PokÃ©mon. It is a shiny, silver powder that will boost the power of Bug-type moves."
   },
   "710": {
     "name": "Crystal Orb",
@@ -2797,7 +2804,7 @@
   },
   "712": {
     "name": "Nocturnal Feather",
-    "desc": "A special purple feather dropped during the night from certain Pokémon."
+    "desc": "A special purple feather dropped during the night from certain PokÃ©mon."
   },
   "713": {
     "name": "Yorkie Parcel",
@@ -2805,7 +2812,7 @@
   },
   "714": {
     "name": "Dark Memory",
-    "desc": "A memory disc that contains Dark-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Dark-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "715": {
     "name": "Dragon Medallion",
@@ -2853,7 +2860,7 @@
   },
   "726": {
     "name": "Yellow Nectar",
-    "desc": "A flower nectar obtained at Melemele Meadow. It changes the form of certain species of Pokémon."
+    "desc": "A flower nectar obtained at Melemele Meadow. It changes the form of certain species of PokÃ©mon."
   },
   "727": {
     "name": "Manectric Mount",
@@ -2865,7 +2872,7 @@
   },
   "729": {
     "name": "Dire Hit 2",
-    "desc": "An item that raises the critical-hit ratio greatly. It can be used only once and wears off if the Pokémon is withdrawn."
+    "desc": "An item that raises the critical-hit ratio greatly. It can be used only once and wears off if the PokÃ©mon is withdrawn."
   },
   "730": {
     "name": "Ninetales Mounts",
@@ -2877,7 +2884,7 @@
   },
   "732": {
     "name": "Mystery Egg",
-    "desc": "A mysterious Egg obtained from Mr. Pokémon. What's in the Egg is unknown."
+    "desc": "A mysterious Egg obtained from Mr. PokÃ©mon. What's in the Egg is unknown."
   },
   "733": {
     "name": "Good Rod",
@@ -2889,7 +2896,8 @@
   },
   "735": {
     "name": "EXP Boost Potion",
-    "desc": "Using this Potion will boost all EXP gained by 25% for 72 Hours!"
+    "desc": "Using this Potion will boost all EXP gained by 25% for 72 Hours!",
+    "prompt": true
   },
   "737": {
     "name": "Casual 1",
@@ -3033,19 +3041,21 @@
   },
   "772": {
     "name": "Super EXP Boost",
-    "desc": "Using this Potion will boost all EXP gained by 25% for 7 Days!"
+    "desc": "Using this Potion will boost all EXP gained by 25% for 7 Days!",
+    "prompt": true
   },
   "773": {
     "name": "MS Medalion",
-    "desc": "Using this Medalion will add 30 Days of Membership to your Account!"
+    "desc": "Using this Medalion will add 30 Days of Membership to your Account!",
+    "prompt": true
   },
   "774": {
     "name": "TM139 - U-Turn",
-    "desc": "[33CCFF]U-Turn[-]: \nAfter making its attack, the user rushes back to switch places with a party Pokémon in waiting."
+    "desc": "[33CCFF]U-Turn[-]: \nAfter making its attack, the user rushes back to switch places with a party PokÃ©mon in waiting."
   },
   "775": {
     "name": "Oval Stone",
-    "desc": "A surprisingly smooth, rounded stone. It allows a certain kind of Pokémon to evolve."
+    "desc": "A surprisingly smooth, rounded stone. It allows a certain kind of PokÃ©mon to evolve."
   },
   "777": {
     "name": "Houndoom Mount",
@@ -3165,7 +3175,7 @@
   },
   "806": {
     "name": "Xmas Stantler Mount",
-    "desc": "A land mount resembling a Christmas Stantler. That's way cooler than a bike!during their journey."
+    "desc": "A land mount resembling a Christmas Stantler. That's way cooler than a bike during their journey."
   },
   "807": {
     "name": "Glaceon Mount",
@@ -3212,24 +3222,24 @@
     "desc": "A water mount resembling Shiny Magikarp. These are commonly used by trainers as an alternative to HM Surf during their journey."
   },
   "818": {
-    "name": "PVP Hood 1",
-    "desc": "A Red hood."
+    "name": "PVP Hood Red",
+    "desc": "A red hood."
   },
   "819": {
-    "name": "PVP Hood 2",
-    "desc": "A Green hood."
+    "name": "PVP Hood Green",
+    "desc": "A green hood."
   },
   "820": {
-    "name": "PVP Hood 3",
-    "desc": "A light Blue hood."
+    "name": "PVP Hood Turquoise",
+    "desc": "A turquoise hood."
   },
   "821": {
-    "name": "PVP Hood 4",
-    "desc": "A Purple hood."
+    "name": "PVP Hood Purple",
+    "desc": "A purple hood."
   },
   "822": {
-    "name": "PVP Hood 5",
-    "desc": "An Orange hood."
+    "name": "PVP Hood Orange",
+    "desc": "An orange hood."
   },
   "823": {
     "name": "Fox Mask",
@@ -3268,24 +3278,24 @@
     "desc": "A Green kimono."
   },
   "832": {
-    "name": "PVP Cloak 1",
-    "desc": "A Red cloak."
+    "name": "PVP Cloak Red",
+    "desc": "A red cloak."
   },
   "833": {
-    "name": "PVP Cloak 2",
-    "desc": "A Green cloak."
+    "name": "PVP Cloak Green",
+    "desc": "A green cloak."
   },
   "834": {
-    "name": "PVP Cloak 3",
-    "desc": "A light Blue cloak."
+    "name": "PVP Cloak Turquoise",
+    "desc": "A turquoise cloak."
   },
   "835": {
-    "name": "PVP Cloak 4",
-    "desc": "A Purple cloak."
+    "name": "PVP Cloak Purple",
+    "desc": "A purple cloak."
   },
   "836": {
-    "name": "PVP Cloak 5",
-    "desc": "An Orange cloak."
+    "name": "PVP Cloak Orange",
+    "desc": "An orange cloak."
   },
   "837": {
     "name": "TM111 - Will-O-Wisp",
@@ -3521,7 +3531,7 @@
   },
   "895": {
     "name": "TM122 - Volt Switch",
-    "desc": "[33CCFF]Volt Switch[-]: \nAfter making its attack, the user rushes back to switch places with a party Pokémon in waiting."
+    "desc": "[33CCFF]Volt Switch[-]: \nAfter making its attack, the user rushes back to switch places with a party PokÃ©mon in waiting."
   },
   "896": {
     "name": "TM100 - Overheat",
@@ -3989,11 +3999,13 @@
   },
   "1012": {
     "name": "Halloween Box",
-    "desc": "A Halloween Mystery Box, this box can contain 1 of many unique items!"
+    "desc": "A Halloween Mystery Box, this box can contain 1 of many unique items!",
+    "prompt": true
   },
   "1013": {
     "name": "Lunch Box",
-    "desc": "A Mystery Lunch Box, this box can contain 1 of many unique items!"
+    "desc": "A Mystery Lunch Box, this box can contain 1 of many unique items!",
+    "prompt": true
   },
   "1014": {
     "name": "Umbreon Mount",
@@ -4177,11 +4189,13 @@
   },
   "1059": {
     "name": "Big MS Medalion",
-    "desc": "Using this Medalion will add 60 Days of Membership to your Account!"
+    "desc": "Using this Medalion will add 60 Days of Membership to your Account!",
+    "prompt": true
   },
   "1060": {
     "name": "Small MS Medalion",
-    "desc": "Using this Medalion will add 15 Days of Membership to your Account!"
+    "desc": "Using this Medalion will add 15 Days of Membership to your Account!",
+    "prompt": true
   },
   "1061": {
     "name": "Cubone Hat",
@@ -4229,11 +4243,13 @@
   },
   "1072": {
     "name": "Blk Medalion",
-    "desc": "Using this Medalion will boost Hidden Ability find rate by 20% for 72 Hours!"
+    "desc": "Using this Medalion will boost Hidden Ability find rate by 20% for 72 Hours!",
+    "prompt": true
   },
   "1073": {
     "name": "Coin Capsule",
-    "desc": "This Coin Capsule contains 100 Coins for the Coin store!"
+    "desc": "This Coin Capsule contains 100 Coins for the Coin store!",
+    "prompt": true
   },
   "1074": {
     "name": "Zap Bell Piece",
@@ -4685,7 +4701,7 @@
   },
   "1186": {
     "name": "Dire Hit 3",
-    "desc": "An item that raises the critical-hit ratio greatly. It can be used only once and wears off if the Pokémon is withdrawn."
+    "desc": "An item that raises the critical-hit ratio greatly. It can be used only once and wears off if the PokÃ©mon is withdrawn."
   },
   "1187": {
     "name": "Discount Coupon",
@@ -4693,11 +4709,11 @@
   },
   "1188": {
     "name": "Dive Ball",
-    "desc": "A somewhat different Pokéball that works especially well when catching Pokémon that live underwater."
+    "desc": "A somewhat different PokÃ©ball that works especially well when catching PokÃ©mon that live underwater."
   },
   "1189": {
     "name": "Dragon Memory",
-    "desc": "A memory disc that contains Dragon-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Dragon-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1190": {
     "name": "Dragonium Z",
@@ -4705,7 +4721,7 @@
   },
   "1191": {
     "name": "Dream Ball",
-    "desc": "A special Pokéball that appears in your Bag out of nowhere in the Entree Forest. It can catch any Pokémon."
+    "desc": "A special PokÃ©ball that appears in your Bag out of nowhere in the Entree Forest. It can catch any PokÃ©mon."
   },
   "1192": {
     "name": "Dropped Item",
@@ -4713,23 +4729,24 @@
   },
   "1193": {
     "name": "Dusk Ball",
-    "desc": "A somewhat different Pokéball that makes it easier to catch wild Pokémon at night or in dark places like caves."
+    "desc": "A somewhat different PokÃ©ball that makes it easier to catch wild PokÃ©mon at night or in dark places like caves."
   },
   "1194": {
     "name": "Eevium Z",
-    "desc": "It converts Z-Power into crystals that upgrade Eevee s Last Resort to an exclusive Z-Move."
+    "desc": "It converts Z-Power into crystals that upgrade Eeveeâ€™s Last Resort to an exclusive Z-Move."
   },
   "1195": {
     "name": "Electric Memory",
-    "desc": "A memory disc that contains Electric-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Electric-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1196": {
     "name": "Big Train Ticket",
-    "desc": "A normal Train Ticket that allows free access to the subway system for a month."
+    "desc": "A normal Train Ticket that allows free access to the subway system for a month.",
+    "prompt": true
   },
   "1197": {
     "name": "Electric Seed",
-    "desc": "An item to be held by a Pokémon. It boosts Defense on Electric Terrain. It can only be used once."
+    "desc": "An item to be held by a PokÃ©mon. It boosts Defense on Electric Terrain. It can only be used once."
   },
   "1198": {
     "name": "Electrium Z",
@@ -4741,7 +4758,7 @@
   },
   "1200": {
     "name": "Fairy Memory",
-    "desc": "A memory disc that contains Fairy-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Fairy-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1201": {
     "name": "Festival Ticket",
@@ -4749,7 +4766,7 @@
   },
   "1202": {
     "name": "Fighting Memory",
-    "desc": "A memory disc that contains Fighting-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Fighting-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1203": {
     "name": "Fightinium Z",
@@ -4757,7 +4774,7 @@
   },
   "1204": {
     "name": "Fire Memory",
-    "desc": "A memory disc that contains Fire-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Fire-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1205": {
     "name": "Firium Z",
@@ -4769,7 +4786,7 @@
   },
   "1207": {
     "name": "Flying Memory",
-    "desc": "A memory disc that contains Flying-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Flying-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1208": {
     "name": "Flyinium Z",
@@ -4777,7 +4794,7 @@
   },
   "1209": {
     "name": "Ghost Memory",
-    "desc": "A memory disc that contains Ghost-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Ghost-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1210": {
     "name": "Ghostium Z",
@@ -4793,7 +4810,7 @@
   },
   "1213": {
     "name": "Grass Memory",
-    "desc": "A memory disc that contains Grass-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Grass-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1214": {
     "name": "Grassium Z",
@@ -4801,11 +4818,11 @@
   },
   "1215": {
     "name": "Grassy Seed",
-    "desc": "An item to be held by a Pokémon. It boosts Defense on Grassy Terrain. It can only be used once."
+    "desc": "An item to be held by a PokÃ©mon. It boosts Defense on Grassy Terrain. It can only be used once."
   },
   "1216": {
     "name": "Ground Memory",
-    "desc": "A memory disc that contains Ground-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Ground-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1217": {
     "name": "Groundium Z",
@@ -4817,7 +4834,7 @@
   },
   "1219": {
     "name": "Grubby Hanky",
-    "desc": "A handkerchief dropped by a regular at Café Warehouse. It smells faintly like a Pokémon."
+    "desc": "A handkerchief dropped by a regular at CafÃ© Warehouse. It smells faintly like a PokÃ©mon."
   },
   "1220": {
     "name": "Guard Spec.",
@@ -4825,7 +4842,7 @@
   },
   "1221": {
     "name": "Heal Ball",
-    "desc": "A remedial Pokéball that restores the caught Pokémon s HP and eliminates any status problem."
+    "desc": "A remedial PokÃ©ball that restores the caught PokÃ©monâ€™s HP and eliminates any status problem."
   },
   "1222": {
     "name": "Heart Scale",
@@ -4833,11 +4850,11 @@
   },
   "1224": {
     "name": "Ice Memory",
-    "desc": "A memory disc that contains Ice-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Ice-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1225": {
     "name": "Ice Stone",
-    "desc": "A peculiar stone that can make certain species of Pokémon evolve. It has an unmistakable snowflake pattern."
+    "desc": "A peculiar stone that can make certain species of PokÃ©mon evolve. It has an unmistakable snowflake pattern."
   },
   "1226": {
     "name": "Icium Z",
@@ -4849,11 +4866,11 @@
   },
   "1228": {
     "name": "Item Drop",
-    "desc": "When used, it causes an ally Pokémon to drop a held item."
+    "desc": "When used, it causes an ally PokÃ©mon to drop a held item."
   },
   "1229": {
     "name": "Item Urge",
-    "desc": "When used, it causes an ally Pokémon to use its held item."
+    "desc": "When used, it causes an ally PokÃ©mon to use its held item."
   },
   "1230": {
     "name": "Kommonium Z",
@@ -4861,7 +4878,7 @@
   },
   "1231": {
     "name": "Looker Ticket",
-    "desc": "A ticket that was handmade by Looker. It s decorated with a liberal amount of glittery paint."
+    "desc": "A ticket that was handmade by Looker. Itâ€™s decorated with a liberal amount of glittery paint."
   },
   "1232": {
     "name": "Lopunnite",
@@ -4873,7 +4890,7 @@
   },
   "1234": {
     "name": "Luxury Ball",
-    "desc": "A comfortable Pokéball that makes a caught wild Pokémon quickly grow friendly."
+    "desc": "A comfortable PokÃ©ball that makes a caught wild PokÃ©mon quickly grow friendly."
   },
   "1235": {
     "name": "Lycanium Z",
@@ -4885,11 +4902,11 @@
   },
   "1237": {
     "name": "Max Ether",
-    "desc": "It fully restores the PP of a single selected move that has been learned by the target Pokémon."
+    "desc": "It fully restores the PP of a single selected move that has been learned by the target PokÃ©mon."
   },
   "1238": {
     "name": "Max Revive",
-    "desc": "A medicine that revives a fainted Pokémon. It fully restores the Pokémon s HP."
+    "desc": "A medicine that revives a fainted PokÃ©mon. It fully restores the PokÃ©monâ€™s HP."
   },
   "1239": {
     "name": "Mewnium Z",
@@ -4901,7 +4918,7 @@
   },
   "1241": {
     "name": "Misty Seed",
-    "desc": "An item to be held by a Pokémon. It boosts Sp. Def on Misty Terrain. It can only be used once."
+    "desc": "An item to be held by a PokÃ©mon. It boosts Sp. Def on Misty Terrain. It can only be used once."
   },
   "1242": {
     "name": "Muscle Wing",
@@ -4909,11 +4926,11 @@
   },
   "1243": {
     "name": "Nest Ball",
-    "desc": "A somewhat different Pokéball that works especially well on weaker Pokémon in the wild."
+    "desc": "A somewhat different PokÃ©ball that works especially well on weaker PokÃ©mon in the wild."
   },
   "1244": {
     "name": "Net Ball",
-    "desc": "A somewhat different Pokéball that works especially well on Water- and Bug-type Pokémon."
+    "desc": "A somewhat different PokÃ©ball that works especially well on Water- and Bug-type PokÃ©mon."
   },
   "1245": {
     "name": "Normalium Z",
@@ -4925,7 +4942,7 @@
   },
   "1247": {
     "name": "Park Ball",
-    "desc": "A special Pokéball for the Pal Park."
+    "desc": "A special PokÃ©ball for the Pal Park."
   },
   "1248": {
     "name": "Pass Orb",
@@ -4949,23 +4966,23 @@
   },
   "1253": {
     "name": "Pink Nectar",
-    "desc": "The flower nectar obtained at the flowering shrubs on Royal Avenue. It changes the form of certain species of Pokémon."
+    "desc": "The flower nectar obtained at the flowering shrubs on Royal Avenue. It changes the form of certain species of PokÃ©mon."
   },
   "1254": {
     "name": "Poison Memory",
-    "desc": "A memory disc that contains Poison-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Poison-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1255": {
     "name": "Poisonium Z",
     "desc": "Allows the use of Acid Downpour, the Poison type Z-Move."
   },
   "1256": {
-    "name": "Poké Doll",
-    "desc": "A doll that attracts Pokémon. Use it to flee from any battle with a wild Pokémon."
+    "name": "PokÃ© Doll",
+    "desc": "A doll that attracts PokÃ©mon. Use it to flee from any battle with a wild PokÃ©mon."
   },
   "1257": {
-    "name": "Poké Toy",
-    "desc": "An item that attracts Pokémon. Use it to flee from any battle with a wild Pokémon."
+    "name": "PokÃ© Toy",
+    "desc": "An item that attracts PokÃ©mon. Use it to flee from any battle with a wild PokÃ©mon."
   },
   "1258": {
     "name": "Power Plant Pass",
@@ -4973,11 +4990,11 @@
   },
   "1259": {
     "name": "Premier Ball",
-    "desc": "A somewhat rare Pokéball that has been specially made to commemorate an event of some sort."
+    "desc": "A somewhat rare PokÃ©ball that has been specially made to commemorate an event of some sort."
   },
   "1260": {
     "name": "Pretty Wing",
-    "desc": "Though this feather is beautiful, it s just a regular feather and has no effect on Pokémon."
+    "desc": "Though this feather is beautiful, itâ€™s just a regular feather and has no effect on PokÃ©mon."
   },
   "1261": {
     "name": "Primarium Z",
@@ -4993,15 +5010,15 @@
   },
   "1264": {
     "name": "Protective Pads",
-    "desc": "An item to be held by a Pokémon. These pads protect the holder from effects caused by making direct contact with the target."
+    "desc": "An item to be held by a PokÃ©mon. These pads protect the holder from effects caused by making direct contact with the target."
   },
   "1265": {
     "name": "Psychic Memory",
-    "desc": "A memory disc that contains Psychic-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Psychic-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1266": {
     "name": "Psychic Seed",
-    "desc": "An item to be held by a Pokémon. It boosts Sp. Def on Psychic Terrain. It can only be used once."
+    "desc": "An item to be held by a PokÃ©mon. It boosts Sp. Def on Psychic Terrain. It can only be used once."
   },
   "1267": {
     "name": "Psychium Z",
@@ -5009,15 +5026,15 @@
   },
   "1268": {
     "name": "Purple Nectar",
-    "desc": "A flower nectar obtained at Poni Meadow. It changes the form of certain species of Pokémon."
+    "desc": "A flower nectar obtained at Poni Meadow. It changes the form of certain species of PokÃ©mon."
   },
   "1269": {
     "name": "Quick Ball",
-    "desc": "A somewhat different Pokéball that provides a better catch rate if it is used at the start of a wild encounter."
+    "desc": "A somewhat different PokÃ©ball that provides a better catch rate if it is used at the start of a wild encounter."
   },
   "1270": {
     "name": "Rare Bone",
-    "desc": "A bone that is extremely valuable for Pokémon archeology. It can be sold for a high price to shops."
+    "desc": "A bone that is extremely valuable for PokÃ©mon archeology. It can be sold for a high price to shops."
   },
   "1271": {
     "name": "Red Flute",
@@ -5025,7 +5042,7 @@
   },
   "1272": {
     "name": "Red Nectar",
-    "desc": "A flower nectar obtained at Ula ula Meadow. It changes the form of certain species of Pokémon."
+    "desc": "A flower nectar obtained at Ulaâ€™ula Meadow. It changes the form of certain species of PokÃ©mon."
   },
   "1273": {
     "name": "Relic Band",
@@ -5057,19 +5074,19 @@
   },
   "1280": {
     "name": "Repeat Ball",
-    "desc": "A somewhat different Pokéball that works especially well on Pokémon species that were previously caught."
+    "desc": "A somewhat different PokÃ©ball that works especially well on PokÃ©mon species that were previously caught."
   },
   "1281": {
     "name": "Reset Urge",
-    "desc": "When used, it restores any stat changes of an ally Pokémon."
+    "desc": "When used, it restores any stat changes of an ally PokÃ©mon."
   },
   "1282": {
     "name": "Reveal Glass",
-    "desc": "A looking glass that reveals the truth. It s a mysterious glass that returns a Pokémon to its original shape."
+    "desc": "A looking glass that reveals the truth. Itâ€™s a mysterious glass that returns a PokÃ©mon to its original shape."
   },
   "1283": {
     "name": "Rock Memory",
-    "desc": "A memory disc that contains Rock-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Rock-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1284": {
     "name": "Rockium Z",
@@ -5081,27 +5098,27 @@
   },
   "1286": {
     "name": "Roto Bargain",
-    "desc": "Reduces the prices of products at Poké Marts by half."
+    "desc": "Reduces the prices of products at PokÃ© Marts by half."
   },
   "1287": {
     "name": "Roto Boost",
-    "desc": "Raises all stats of your battling Pokémon."
+    "desc": "Raises all stats of your battling PokÃ©mon."
   },
   "1288": {
     "name": "Roto Catch",
-    "desc": "Increases the chance to catch Pokémon a lot."
+    "desc": "Increases the chance to catch PokÃ©mon a lot."
   },
   "1289": {
     "name": "Roto Encounter",
-    "desc": "Increases the chance of encountering high-level wild Pokémon a lot for a certain period of time."
+    "desc": "Increases the chance of encountering high-level wild PokÃ©mon a lot for a certain period of time."
   },
   "1290": {
     "name": "Roto Exp. Points",
-    "desc": "Increases the Exp. Points your Pokémon receive after battle a little."
+    "desc": "Increases the Exp. Points your PokÃ©mon receive after battle a little."
   },
   "1291": {
     "name": "Roto Friendship",
-    "desc": "Helps Pokémon in your party grow friendly faster."
+    "desc": "Helps PokÃ©mon in your party grow friendly faster."
   },
   "1292": {
     "name": "Roto Hatch",
@@ -5109,11 +5126,11 @@
   },
   "1293": {
     "name": "Roto HP Restore",
-    "desc": "Fully restores the HP of your battling Pokémon."
+    "desc": "Fully restores the HP of your battling PokÃ©mon."
   },
   "1294": {
     "name": "Roto PP Restore",
-    "desc": "Fully restores the PP of your battling Pokémon."
+    "desc": "Fully restores the PP of your battling PokÃ©mon."
   },
   "1295": {
     "name": "Roto Prize Money",
@@ -5121,19 +5138,19 @@
   },
   "1296": {
     "name": "Roto Stealth",
-    "desc": "Prevents you from encountering wild Pokémon for a certain period of time."
+    "desc": "Prevents you from encountering wild PokÃ©mon for a certain period of time."
   },
   "1297": {
     "name": "Sachet",
-    "desc": "A sachet filled with fragrant perfumes that are just slightly too overwhelming. Yet it s loved by a certain Pokémon."
+    "desc": "A sachet filled with fragrant perfumes that are just slightly too overwhelming. Yet itâ€™s loved by a certain PokÃ©mon."
   },
   "1298": {
     "name": "Safari Ball",
-    "desc": "A special Pokéball that is used only in the Great Marsh. It is decorated in a camouflage pattern."
+    "desc": "A special PokÃ©ball that is used only in the Great Marsh. It is decorated in a camouflage pattern."
   },
   "1299": {
     "name": "Shiny Charm",
-    "desc": "A shiny charm is said to increase the chance of finding a shiny Pokémon in the wild."
+    "desc": "A shiny charm is said to increase the chance of finding a shiny PokÃ©mon in the wild."
   },
   "1300": {
     "name": "Snorlium Z",
@@ -5153,7 +5170,7 @@
   },
   "1304": {
     "name": "Steel Memory",
-    "desc": "A memory disc that contains Steel-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Steel-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1305": {
     "name": "Steelium Z",
@@ -5161,7 +5178,7 @@
   },
   "1306": {
     "name": "Strange Souvenir",
-    "desc": "An ornament depicting a Pokémon that is venerated as a protector in some region far from Kalos."
+    "desc": "An ornament depicting a PokÃ©mon that is venerated as a protector in some region far from Kalos."
   },
   "1307": {
     "name": "Xerneas Mount",
@@ -5173,7 +5190,7 @@
   },
   "1309": {
     "name": "Terrain Extender",
-    "desc": "An item to be held by a Pokémon. It extends the duration of the terrain caused by the holder s move or Ability."
+    "desc": "An item to be held by a PokÃ©mon. It extends the duration of the terrain caused by the holderâ€™s move or Ability."
   },
   "1310": {
     "name": "TM97 - Fire Punch",
@@ -5197,7 +5214,7 @@
   },
   "1315": {
     "name": "Water Memory",
-    "desc": "A memory disc that contains Water-type data. It changes the type of the holder if held by a certain species of Pokémon."
+    "desc": "A memory disc that contains Water-type data. It changes the type of the holder if held by a certain species of PokÃ©mon."
   },
   "1316": {
     "name": "Waterium Z",
@@ -5205,7 +5222,7 @@
   },
   "1317": {
     "name": "Whipped Dream",
-    "desc": "A soft and sweet treat made of fluffy, puffy, whipped and whirled cream. It s loved by a certain Pokémon."
+    "desc": "A soft and sweet treat made of fluffy, puffy, whipped and whirled cream. Itâ€™s loved by a certain PokÃ©mon."
   },
   "1318": {
     "name": "White Flute",
@@ -5213,79 +5230,79 @@
   },
   "1319": {
     "name": "X Accuracy 2",
-    "desc": "Sharply raises Accuracy of a Pokémon in battle."
+    "desc": "Sharply raises Accuracy of a PokÃ©mon in battle."
   },
   "1320": {
     "name": "X Accuracy 3",
-    "desc": "Drastically raises Accuracy of a Pokémon in battle."
+    "desc": "Drastically raises Accuracy of a PokÃ©mon in battle."
   },
   "1321": {
     "name": "X Accuracy 6",
-    "desc": "Immensely raises Accuracy of a Pokémon in battle."
+    "desc": "Immensely raises Accuracy of a PokÃ©mon in battle."
   },
   "1322": {
     "name": "X Attack 2",
-    "desc": "Sharply raises Attack of a Pokémon in battle."
+    "desc": "Sharply raises Attack of a PokÃ©mon in battle."
   },
   "1323": {
     "name": "X Attack 3",
-    "desc": "Drastically raises Attack of a Pokémon in battle."
+    "desc": "Drastically raises Attack of a PokÃ©mon in battle."
   },
   "1324": {
     "name": "X Attack 6",
-    "desc": "Immensely raises Attack of a Pokémon in battle."
+    "desc": "Immensely raises Attack of a PokÃ©mon in battle."
   },
   "1325": {
     "name": "X Defense 2",
-    "desc": "Sharply raises Defense of a Pokémon in battle."
+    "desc": "Sharply raises Defense of a PokÃ©mon in battle."
   },
   "1326": {
     "name": "X Defense 3",
-    "desc": "Drastically raises Defense of a Pokémon in battle."
+    "desc": "Drastically raises Defense of a PokÃ©mon in battle."
   },
   "1327": {
     "name": "X Defense 6",
-    "desc": "Immensely raises Defense of a Pokémon in battle."
+    "desc": "Immensely raises Defense of a PokÃ©mon in battle."
   },
   "1328": {
     "name": "X Sp. Atk",
-    "desc": "Raises Special Attack of a Pokémon in battle."
+    "desc": "Raises Special Attack of a PokÃ©mon in battle."
   },
   "1329": {
     "name": "X Sp. Atk 2",
-    "desc": "Sharply raises Special Attack of a Pokémon in battle."
+    "desc": "Sharply raises Special Attack of a PokÃ©mon in battle."
   },
   "1330": {
     "name": "X Sp. Atk 3",
-    "desc": "Drastically raises Special Attack of a Pokémon in battle."
+    "desc": "Drastically raises Special Attack of a PokÃ©mon in battle."
   },
   "1331": {
     "name": "X Sp. Atk 6",
-    "desc": "Immensely raises Special Attack of a Pokémon in battle."
+    "desc": "Immensely raises Special Attack of a PokÃ©mon in battle."
   },
   "1332": {
     "name": "X Sp. Def",
-    "desc": "Raises Special Defense of a Pokémon in battle."
+    "desc": "Raises Special Defense of a PokÃ©mon in battle."
   },
   "1333": {
     "name": "X Sp. Def 2",
-    "desc": "Sharply raises Special Defense of a Pokémon in battle."
+    "desc": "Sharply raises Special Defense of a PokÃ©mon in battle."
   },
   "1334": {
     "name": "X Sp. Def 3",
-    "desc": "Drastically raises Special Defense of a Pokémon in battle."
+    "desc": "Drastically raises Special Defense of a PokÃ©mon in battle."
   },
   "1335": {
     "name": "X Sp. Def 6",
-    "desc": "Immensely raises Special Defense of a Pokémon in battle."
+    "desc": "Immensely raises Special Defense of a PokÃ©mon in battle."
   },
   "1336": {
     "name": "X Speed 3",
-    "desc": "Drastically raises Speed of a Pokémon in battle."
+    "desc": "Drastically raises Speed of a PokÃ©mon in battle."
   },
   "1337": {
     "name": "X Speed 6",
-    "desc": "Immensely raises Speed of a Pokémon in battle."
+    "desc": "Immensely raises Speed of a PokÃ©mon in battle."
   },
   "1338": {
     "name": "Yellow Flute",
@@ -5337,7 +5354,7 @@
   },
   "1351": {
     "name": "TM106 - Icy Wind",
-    "desc": "[33CCFF]Icy Wind[-]: \nThe user attacks with a gust of chilled air. This also lowers the opposing Pokémon's Speed stats."
+    "desc": "[33CCFF]Icy Wind[-]: \nThe user attacks with a gust of chilled air. This also lowers the opposing PokÃ©mon's Speed stats."
   },
   "1352": {
     "name": "TM107 - Iron Tail",
@@ -5353,7 +5370,7 @@
   },
   "1355": {
     "name": "TM110 - Nature Power",
-    "desc": "[33CCFF]Nature Power[-]: \nThis attack makes use of nature s power. Its effects vary depending on the user s environment."
+    "desc": "[33CCFF]Nature Power[-]: \nThis attack makes use of natureâ€™s power. Its effects vary depending on the userâ€™s environment."
   },
   "1356": {
     "name": "TM112 - Nightmare",
@@ -5397,7 +5414,7 @@
   },
   "1366": {
     "name": "TM125 - Sweet Scent",
-    "desc": "[33CCFF]Sweet Scent[-]: \nA sweet scent that harshly lowers opposing Pokémon's evasiveness."
+    "desc": "[33CCFF]Sweet Scent[-]: \nA sweet scent that harshly lowers opposing PokÃ©mon's evasiveness."
   },
   "1367": {
     "name": "TM126 - Thunder Punch",
@@ -5453,7 +5470,7 @@
   },
   "1380": {
     "name": "TM141 - Fling",
-    "desc": "[33CCFF]Fling[-]: \nThe user flings its held item at the target to attack. This move s power and effects depend on the item."
+    "desc": "[33CCFF]Fling[-]: \nThe user flings its held item at the target to attack. This moveâ€™s power and effects depend on the item."
   },
   "1381": {
     "name": "TM142 - Rock Polish",
@@ -5481,7 +5498,7 @@
   },
   "1387": {
     "name": "TM148 - Trick Room",
-    "desc": "[33CCFF]Trick Room[-]: \nThe user creates a bizarre area in which slower Pokémon get to move first for five turns."
+    "desc": "[33CCFF]Trick Room[-]: \nThe user creates a bizarre area in which slower PokÃ©mon get to move first for five turns."
   },
   "1388": {
     "name": "TM149 - Stone Edge",
@@ -5489,7 +5506,7 @@
   },
   "1389": {
     "name": "TM150 - Stealth Rock",
-    "desc": "[33CCFF]Stealth Rock[-]: \nThe user lays a trap of levitating stones around the opposing team. The trap hurts opposing Pokémon that switch into battle."
+    "desc": "[33CCFF]Stealth Rock[-]: \nThe user lays a trap of levitating stones around the opposing team. The trap hurts opposing PokÃ©mon that switch into battle."
   },
   "1390": {
     "name": "TM151 - Grass Knot",
@@ -5513,7 +5530,7 @@
   },
   "1395": {
     "name": "TM156 - Smack Down",
-    "desc": "[33CCFF]Smack Down[-]: \nThe user throws a stone or similar projectile to attack an opponent. A flying Pokémon will fall to the ground when it's hit."
+    "desc": "[33CCFF]Smack Down[-]: \nThe user throws a stone or similar projectile to attack an opponent. A flying PokÃ©mon will fall to the ground when it's hit."
   },
   "1396": {
     "name": "TM157 - Wild Charge",
@@ -5529,7 +5546,7 @@
   },
   "1399": {
     "name": "TM160 - Incinerate",
-    "desc": "[33CCFF]Incinerate[-]: \nThe user attacks opposing Pokémon with fire. If a Pokémon is holding a certain item, such as a Berry, the item becomes burned up and unusable."
+    "desc": "[33CCFF]Incinerate[-]: \nThe user attacks opposing PokÃ©mon with fire. If a PokÃ©mon is holding a certain item, such as a Berry, the item becomes burned up and unusable."
   },
   "1400": {
     "name": "TM161 - Infestation",
@@ -5625,39 +5642,39 @@
   },
   "1423": {
     "name": "Black Backpack",
-    "desc": "An important utilitary for every Pokémon trainer, used to carry your items and made in black color."
+    "desc": "An important utilitary for every PokÃ©mon trainer, used to carry your items and made in black color."
   },
   "1424": {
     "name": "Blue Backpack",
-    "desc": "An important utilitary for every Pokémon trainer, used to carry your items and made in blue color."
+    "desc": "An important utilitary for every PokÃ©mon trainer, used to carry your items and made in blue color."
   },
   "1425": {
     "name": "Green Backpack",
-    "desc": "An important utilitary for every Pokémon trainer, used to carry your items and made in green color."
+    "desc": "An important utilitary for every PokÃ©mon trainer, used to carry your items and made in green color."
   },
   "1426": {
     "name": "Orange Backpack",
-    "desc": "An important utilitary for every Pokémon trainer, used to carry your items and made in orange color."
+    "desc": "An important utilitary for every PokÃ©mon trainer, used to carry your items and made in orange color."
   },
   "1427": {
     "name": "Purple Backpack",
-    "desc": "An important utilitary for every Pokémon trainer, used to carry your items and made in purple color."
+    "desc": "An important utilitary for every PokÃ©mon trainer, used to carry your items and made in purple color."
   },
   "1428": {
     "name": "Red Backpack",
-    "desc": "An important utilitary for every Pokémon trainer, used to carry your items and made in red color."
+    "desc": "An important utilitary for every PokÃ©mon trainer, used to carry your items and made in red color."
   },
   "1429": {
     "name": "White Backpack",
-    "desc": "An important utilitary for every Pokémon trainer, used to carry your items and made in white color."
+    "desc": "An important utilitary for every PokÃ©mon trainer, used to carry your items and made in white color."
   },
   "1430": {
     "name": "Yellow Backpack",
-    "desc": "An important utilitary for every Pokémon trainer, used to carry your items and made in yellow color."
+    "desc": "An important utilitary for every PokÃ©mon trainer, used to carry your items and made in yellow color."
   },
   "1431": {
     "name": "Pink Backpack",
-    "desc": "An important utilitary for every Pokémon trainer, used to carry your items and made in pink color."
+    "desc": "An important utilitary for every PokÃ©mon trainer, used to carry your items and made in pink color."
   },
   "1436": {
     "name": "Black Panther Clothes",
@@ -5709,7 +5726,8 @@
   },
   "1450": {
     "name": "Mini MS Medalion",
-    "desc": "Using this Medalion will add 3 Days of Membership to your Account!"
+    "desc": "Using this Medalion will add 3 Days of Membership to your Account!",
+    "prompt": true
   },
   "1451": {
     "name": "Green Yoshi Mount",
@@ -5742,6 +5760,662 @@
   "1458": {
     "name": "Black Yoshi Mount",
     "desc": "A land mount resembling a black Yoshi."
+  },
+  "1459": {
+    "name": "Liepard Mount",
+    "desc": "A land mount resembling a Liepard."
+  },
+  "1460": {
+    "name": "S Liepard Mount",
+    "desc": "A land mount resembling a shiny Liepard."
+  },
+  "1461": {
+    "name": "Winter Hat Black",
+    "desc": "A warm Black Winter Hat!"
+  },
+  "1462": {
+    "name": "Winter Hat Blue",
+    "desc": "A warm Blue Winter Hat!"
+  },
+  "1463": {
+    "name": "Winter Hat Brown",
+    "desc": "A warm Brown Winter Hat!"
+  },
+  "1464": {
+    "name": "Winter Hat Green",
+    "desc": "A warm Green Winter Hat!"
+  },
+  "1465": {
+    "name": "Winter Hat Red",
+    "desc": "A warm Red Winter Hat!"
+  },
+  "1466": {
+    "name": "Winter Clothes Black",
+    "desc": "Warm Black Winter Clothes!"
+  },
+  "1467": {
+    "name": "Winter Clothes Blue",
+    "desc": "Warm Blue Winter Clothes!"
+  },
+  "1468": {
+    "name": "Winter Clothes Brown",
+    "desc": "Warm Brown Winter Clothes!"
+  },
+  "1469": {
+    "name": "Winter Clothes Green",
+    "desc": "Warm Green Winter Clothes!"
+  },
+  "1470": {
+    "name": "Winter Clothes Red",
+    "desc": "Warm Red Winter Clothes!"
+  },
+  "1471": {
+    "name": "Mareep Mount",
+    "desc": "A land mount resembling a Mareep."
+  },
+  "1472": {
+    "name": "S Mareep Mount",
+    "desc": "A land mount resembling a shiny Mareep."
+  },
+  "1473": {
+    "name": "Xmas Mareep Mount",
+    "desc": "A land mount resembling a Christmas Mareep. That's way cooler than a bike during their journey."
+  },
+  "1474": {
+    "name": "Mantine Mount",
+    "desc": "A surf mount resembling a Mantine. It's mainly used by rain team trainers."
+  },
+  "1475": {
+    "name": "S Mantine Mount",
+    "desc": "A surf mount resembling a shiny Mantine. It's mainly used by rain team trainers."
+  },
+  "1476": {
+    "name": "Pink Pancham Hat",
+    "desc": "A hat resembling a pink Pancham."
+  },
+  "1477": {
+    "name": "Moltres Wings",
+    "desc": "A pair of wings resembling that of a Moltres. It gives off a hot air that can be unbearable at times.."
+  },
+  "1478": {
+    "name": "TZ Clothes",
+    "desc": "Clothes that resemble a well-known character in his Bankai form."
+  },
+  "1480": {
+    "name": "Pyroar Mount",
+    "desc": "A land mount resembling a Pyroar."
+  },
+  "1481": {
+    "name": "S Pyroar Mount",
+    "desc": "A land mount resembling a shiny Pyroar."
+  },
+  "1482": {
+    "name": "Electrode Mount",
+    "desc": "A land mount resembling an Electrode."
+  },
+  "1483": {
+    "name": "S Electrode Mount",
+    "desc": "A land mount resembling a shiny Electrode."
+  },
+  "1484": {
+    "name": "Muk Mount",
+    "desc": "A land mount resembling a Muk."
+  },
+  "1485": {
+    "name": "S Muk Mount",
+    "desc": "A land mount resembling a shiny Muk."
+  },
+  "1486": {
+    "name": "Hollow Mask",
+    "desc": "When you put on this mask, you attain a hollowized state. In this state, your power levels increase manifold."
+  },
+  "1487": {
+    "name": "Flashlight",
+    "desc": "A Flashlight to lighten caves. \nRequires having 'HM05 - Flash' to use."
+  },
+  "1488": {
+    "name": "Bisharp Helmet",
+    "desc": "A Bisharp Helmet."
+  },
+  "1489": {
+    "name": "S Bisharp Helmet",
+    "desc": "A shiny Bisharp Helmet."
+  },
+  "1490": {
+    "name": "Bisharp Clothes",
+    "desc": "Bisharp Clothes that are hard as steel."
+  },
+  "1491": {
+    "name": "S Bisharp Clothes",
+    "desc": "Shiny Bisharp Clothes that are hard as steel."
+  },
+  "1492": {
+    "name": "Flower Crown",
+    "desc": "A crown made of various flowers. Really shows your connection with nature's beauty."
+  },
+  "1493": {
+    "name": "Rose",
+    "desc": "A freshly picked rose. The perfect gift to show your affection on Valentine's Day."
+  },
+  "1494": {
+    "name": "Tophat",
+    "desc": "This hat is only reserved for the finest of gentlemen. Only those who consider themselves as such deserve to wear it."
+  },
+  "1495": {
+    "name": "Triple Combo Hat",
+    "desc": "A rose, a flower crown, and a top hat all in one! This combination could surely not fail in capturing your lover's heart."
+  },
+  "1496": {
+    "name": "Duo Combo Dapper",
+    "desc": "A classy and romantic outfit. Perfect combination to dance Tango."
+  },
+  "1497": {
+    "name": "Duo Combo Fancy",
+    "desc": "A fancy and romantic outfit. Perfect combination to make rich folk jealous."
+  },
+  "1498": {
+    "name": "Duo Combo Floral",
+    "desc": "A combination of flowers wrapped into a beautiful wreath that sits nicely upon your head."
+  },
+  "1499": {
+    "name": "Sunflower",
+    "desc": "A sunflower in your hair, to capture the rays of the sun and eyes of those around you."
+  },
+  "1500": {
+    "name": "Broly Clothes",
+    "desc": "Clothes that resemble a well-known character."
+  },
+  "1501": {
+    "name": "Squirtle Shell",
+    "desc": "A shell that resembles the shell of a Squirtle."
+  },
+  "1502": {
+    "name": "Togekiss Chocolate Mount",
+    "desc": "A land mount resembling Togekiss. Commonly used by trainers as an alternative to a bike during their journey."
+  },
+  "1503": {
+    "name": "Togekiss Caramel Mount",
+    "desc": "A land mount resembling an Eastern themed Togekiss."
+  },
+  "1504": {
+    "name": "Togekiss Vanilla Mount",
+    "desc": "A land mount resembling an Eastern themed Togekiss."
+  },
+  "1505": {
+    "name": "Togekiss Mint Mount",
+    "desc": "A land mount resembling an Eastern themed Togekiss."
+  },
+  "1506": {
+    "name": "Togekiss Strawberry Mount",
+    "desc": "A land mount resembling an Eastern themed Togekiss."
+  },
+  "1507": {
+    "name": "Togekiss Cotton Candy Mount",
+    "desc": "A land mount resembling an Eastern themed Togekiss."
+  },
+  "1508": {
+    "name": "Spring Brush Yellow",
+    "desc": "A colorful paintbrush that got stolen from the Artist of Breezy Town. [FF2800]Expires after the Spring Festival.[-]"
+  },
+  "1509": {
+    "name": "Spring Brush Red",
+    "desc": "A colorful paintbrush that got stolen from the Artist of Breezy Town. [FF2800]Expires after the Spring Festival.[-]"
+  },
+  "1510": {
+    "name": "Spring Brush Green",
+    "desc": "A colorful paintbrush that got stolen from the Artist of Breezy Town. [FF2800]Expires after the Spring Festival.[-]"
+  },
+  "1511": {
+    "name": "Spring Brush Blue",
+    "desc": "A colorful paintbrush that got stolen from the Artist of Breezy Town. [FF2800]Expires after the Spring Festival.[-]"
+  },
+  "1512": {
+    "name": "Discord Leader Clothes",
+    "desc": "The most prestigious clothes worn only by the ancient discord's gatekeepers."
+  },
+  "1513": {
+    "name": "Discord Moderator Clothes",
+    "desc": "The most prestigious clothes worn only by the ancient discord's gatekeepers."
+  },
+  "1514": {
+    "name": "Breezy Crystal Shard",
+    "desc": "A shiny rose-colored crystal. Mined from Breezy Cave's growing crystals. It is coveted by collectors and jewelers."
+  },
+  "1515": {
+    "name": "Breezy Easter Egg",
+    "desc": "A colorful and tasty chocolate egg. Carefully hand-painted. It can be delivered to the Egg Master in Breezy Town for some prizes. Don't eat it yet! \n\n[FF2800]Expires after the Spring Festival.[-]"
+  },
+  "1516": {
+    "name": "Shaymin-Sky Mount",
+    "desc": "A land mount resembling Shaymin-Sky. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1517": {
+    "name": "S Shaymin-Sky Mount",
+    "desc": "A land mount resembling shiny Shaymin-Sky. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1518": {
+    "name": "Salamence Mount",
+    "desc": "A land mount resembling shiny Salamence. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1519": {
+    "name": "S Salamence Mount",
+    "desc": "A land mount resembling shiny Salamence. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1520": {
+    "name": "Dewgong Mount",
+    "desc": "A water mount resembling Dewgong. It's used by trainers as an alternative to a surf Pokemon during their journey."
+  },
+  "1521": {
+    "name": "S Dewgong Mount",
+    "desc": "A water mount resembling shiny Dewgong. It's used by trainers as an alternative to a surf Pokemon during their journey."
+  },
+  "1522": {
+    "name": "BP Shaymin-Sky Mount",
+    "desc": "A land mount resembling Black Petal Shaymin-Sky. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1523": {
+    "name": "Obsidian Wings",
+    "desc": "A pair of sleek wings resembling the radiate pure evil."
+  },
+  "1524": {
+    "name": "Vivillon Wings",
+    "desc": "A pair of sleek wings resembling that of a beautiful Vivillon."
+  },
+  "1525": {
+    "name": "Tingle Headgear",
+    "desc": "A hat resembling a guide or a fairy in training!"
+  },
+  "1526": {
+    "name": "Tingle Clothes",
+    "desc": "Clothes resembling a guide or a fairy in training!"
+  },
+  "1527": {
+    "name": "Gracidea Flower",
+    "desc": "A flower known to have a strong bond to Shaymin."
+  },
+  "1528": {
+    "name": "Gracidea Shiny Flower",
+    "desc": "A shiny flower known to have a strong bond to Shaymin."
+  },
+  "1529": {
+    "name": "Gracidea BP Flower",
+    "desc": "A flower known to have a strong bond to Shaymin."
+  },
+  "1530": {
+    "name": "Cynthia Clothes",
+    "desc": "The newest clothes from the Johto gym collection!"
+  },
+  "1531": {
+    "name": "Cresselia Mount",
+    "desc": "A land mount resembling Cresselia. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1532": {
+    "name": "S Cresselia Mount",
+    "desc": "A land mount resembling shiny Cresselia. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1533": {
+    "name": "Magic Carpet",
+    "desc": "A flying magic carpet used by trainers as an alternative to a bike."
+  },
+  "1534": {
+    "name": "Rayquaza Mount",
+    "desc": "A flying land mount that said to be in production for more than half a year."
+  },
+  "1535": {
+    "name": "S Rayquaza Mount",
+    "desc": "A flying land shiny mount that said to be in production for more than half a year."
+  },
+  "1536": {
+    "name": "Logan Mask",
+    "desc": "A mask worn by the Wolverine from the X-Men."
+  },
+  "1537": {
+    "name": "Flying Nimbus",
+    "desc": ""
+  },
+  "1538": {
+    "name": "Espeon Mount",
+    "desc": "A land mount resembling Espeon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1539": {
+    "name": "S Espeon Mount",
+    "desc": "A land mount resembling shiny Espeon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1540": {
+    "name": "Vaporeon Mount",
+    "desc": "A surf mount resembling Vaporeon."
+  },
+  "1541": {
+    "name": "S Vaporeon Mount",
+    "desc": "A surf mount resembling shiny Vaporeon."
+  },
+  "1542": {
+    "name": "DC Clothes",
+    "desc": "Demon Corps Clothes."
+  },
+  "1543": {
+    "name": "Lycanroc Mount",
+    "desc": "A land mount resembling Lycanroc. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1544": {
+    "name": "S Lycanroc Mount",
+    "desc": "A land mount resembling shiny Lycanroc. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1545": {
+    "name": "P Dewgong Mount",
+    "desc": "A water mount resembling a pink Dewgong. It's used by trainers as an alternative to a surf Pokemon during their journey."
+  },
+  "1546": {
+    "name": "Citrus Diva Dress",
+    "desc": "An extravagant, glimmering dress with citrus undertones."
+  },
+  "1547": {
+    "name": "Lime Diva Dress",
+    "desc": "An extravagant, glimmering dress with lime undertones."
+  },
+  "1548": {
+    "name": "Peach Diva Dress",
+    "desc": "An extravagant, glimmering dress with peach undertones."
+  },
+  "1549": {
+    "name": "PVP Hood Blue",
+    "desc": "A blue hood."
+  },
+  "1550": {
+    "name": "PVP Cloak Blue",
+    "desc": "A blue cloak."
+  },
+  "1551": {
+    "name": "PVP Hood Pink",
+    "desc": "A pink hood."
+  },
+  "1552": {
+    "name": "PVP Cloak Pink",
+    "desc": "A pink cloak."
+  },
+  "1553": {
+    "name": "PVP Hood Yellow",
+    "desc": "A yellow hood."
+  },
+  "1554": {
+    "name": "PVP Cloak Yellow",
+    "desc": "A yellow cloak."
+  },
+  "1555": {
+    "name": "Dark Diva Dress",
+    "desc": "An extravagant, glimmering dress with black undertones."
+  },
+  "1556": {
+    "name": "Watermelon Hat",
+    "desc": "A limited hat made from a fresh watermelon."
+  },
+  "1557": {
+    "name": "Exeggcute Mask",
+    "desc": "Mask that resembles an Exeggcute egg."
+  },
+  "1558": {
+    "name": "S Exeggcute Mask",
+    "desc": "Shiny mask that resembles an Exeggcute egg."
+  },
+  "1559": {
+    "name": "Volcanion Mount",
+    "desc": "A land mount resembling Volcanion. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1560": {
+    "name": "S Volcanion Mount",
+    "desc": "A land mount resembling shiny Volcanion. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1561": {
+    "name": "Haunter Mount",
+    "desc": "A land mount resembling Haunter. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1562": {
+    "name": "S Haunter Mount",
+    "desc": "A land mount resembling shiny Haunter. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1563": {
+    "name": "Heatran Mount",
+    "desc": "A land mount resembling Heatran. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1564": {
+    "name": "S Heatran Mount",
+    "desc": "A land mount resembling shiny Heatran. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1566": {
+    "name": "Cult Mask",
+    "desc": ""
+  },
+  "1567": {
+    "name": "Girafarig Tail",
+    "desc": "The back-end of a Girafarig. Now you too have a partner in crime!"
+  },
+  "1568": {
+    "name": "Chandelure Clothes",
+    "desc": "It's a wearable body of a Chandelure! Now you can be the light of the party!"
+  },
+  "1569": {
+    "name": "Chandelure Hat",
+    "desc": "A wearable candle shaped like Chandelure's top! Now you can really shine!"
+  },
+  "1570": {
+    "name": "S Chandelure Clothes",
+    "desc": "It's a wearable body of a shiny Chandelure! Now you can be the light of the party!"
+  },
+  "1571": {
+    "name": "S Chandelure Hat",
+    "desc": "A wearable candle shaped like shiny Chandelure's top! Now you can really shine!"
+  },
+  "1572": {
+    "name": "Black Wig",
+    "desc": "A beautiful black wig."
+  },
+  "1573": {
+    "name": "Blue Wig",
+    "desc": "A beautiful blue wig."
+  },
+  "1574": {
+    "name": "Brown Wig",
+    "desc": "A beautiful brown wig."
+  },
+  "1575": {
+    "name": "Green Wig",
+    "desc": "A beautiful green wig."
+  },
+  "1576": {
+    "name": "Orange Wig",
+    "desc": "A beautiful orange wig."
+  },
+  "1577": {
+    "name": "Pink Wig",
+    "desc": "A beautiful pink wig."
+  },
+  "1578": {
+    "name": "Red Wig",
+    "desc": "A beautiful red wig."
+  },
+  "1579": {
+    "name": "White Wig",
+    "desc": "A beautiful white wig."
+  },
+  "1580": {
+    "name": "PVP Cloak Black",
+    "desc": "A black cloak."
+  },
+  "1581": {
+    "name": "PVP Hood Black",
+    "desc": "A black hood."
+  },
+  "1582": {
+    "name": "PVP Cloak White",
+    "desc": "A white cloak."
+  },
+  "1583": {
+    "name": "PVP Hood White",
+    "desc": "A white hood."
+  },
+  "1584": {
+    "name": "White Fire Wings",
+    "desc": "A set of wings with white flames. The true wings of a phoenix who has recently been reborn!"
+  },
+  "1585": {
+    "name": "Archipelago Wings",
+    "desc": "A pair of sleek wings resembling that of a beautiful Vivillon."
+  },
+  "1586": {
+    "name": "Mummy Clothes",
+    "desc": "A bodysuit of bandages. Only a true thrill seeker would wear this suit."
+  },
+  "1587": {
+    "name": "Mummy Hat",
+    "desc": "Covers your head with bandages. Only a true thrill seeker would wear this hat."
+  },
+  "1588": {
+    "name": "H Haunter Mount",
+    "desc": "A land mount resembling Haunter. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1589": {
+    "name": "Joker Clothes",
+    "desc": ""
+  },
+  "1590": {
+    "name": "Joker Mask",
+    "desc": ""
+  },
+  "1591": {
+    "name": "Sabito Mask",
+    "desc": "Sabito's white warding mask, hand carved by his master himself, took the shape of a fox's face."
+  },
+  "1592": {
+    "name": "Delcatty Mount",
+    "desc": "A land mount resembling Delcatty. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1593": {
+    "name": "S Delcatty Mount",
+    "desc": "A land mount resembling shiny Delcatty. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1594": {
+    "name": "Xmas Delcatty Mount",
+    "desc": "A land mount resembling Xmas Delcatty. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1595": {
+    "name": "Xmas Ninetales Mount",
+    "desc": "A land mount resembling Xmas Ninetales. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1596": {
+    "name": "Venusaur Mount",
+    "desc": "A land mount resembling Venusaur. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1597": {
+    "name": "S Venusaur Mount",
+    "desc": "A land mount resembling shiny Venusaur. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1598": {
+    "name": "Clone Venusaur Mount",
+    "desc": "A land mount resembling clone Venusaur. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1600": {
+    "name": "Sawsbuck Mount",
+    "desc": "A land mount Spring Sawsbuck. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1601": {
+    "name": "S Sawsbuck Mount",
+    "desc": "A land mount shiny Spring Sawsbuck. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1602": {
+    "name": "Sawsbuck Mount",
+    "desc": "A land mount Winter Sawsbuck. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1603": {
+    "name": "S Sawsbuck Mount",
+    "desc": "A land mount shiny Winter Sawsbuck. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1604": {
+    "name": "Sawsbuck Mount",
+    "desc": "A land mount Autumn Sawsbuck. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1605": {
+    "name": "S Sawsbuck Mount",
+    "desc": "A land mount shiny Autumn Sawsbuck. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1606": {
+    "name": "Sawsbuck Mount",
+    "desc": "A land mount Summer Sawsbuck. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1607": {
+    "name": "S Sawsbuck Mount",
+    "desc": "A land mount shiny Summer Sawsbuck. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1608": {
+    "name": "Empoleon Mount",
+    "desc": "A surf mount resembling Empoleon."
+  },
+  "1609": {
+    "name": "S Empoleon Mount",
+    "desc": "A surf mount resembling shiny Empoleon."
+  },
+  "1610": {
+    "name": "Whiscash Mount",
+    "desc": "A surf mount resembling Whiscash."
+  },
+  "1611": {
+    "name": "S Whiscash Mount",
+    "desc": "A surf mount resembling shiny Whiscash."
+  },
+  "1612": {
+    "name": "P Whiscash Mount",
+    "desc": "A surf mount resembling pink Whiscash."
+  },
+  "1613": {
+    "name": "Xmas Houndoom Mount",
+    "desc": "A land mount resembling an Xmas Houndoom. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1614": {
+    "name": "Ariados Mount",
+    "desc": "A land mount resembling Ariados. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1615": {
+    "name": "S Ariados Mount",
+    "desc": "A land mount resembling shiny Ariados. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1616": {
+    "name": "Metagross Mount",
+    "desc": "A land mount resembling Metagross. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1617": {
+    "name": "S Metagross Mount",
+    "desc": "A land mount resembling shiny Metagross. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1618": {
+    "name": "Azumarill Mount",
+    "desc": "A surf mount resembling Azumarill."
+  },
+  "1619": {
+    "name": "S Azumarill Mount",
+    "desc": "A surf mount resembling shiny Azumarill."
+  },
+  "1620": {
+    "name": "P Azumarill Mount",
+    "desc": "A surf mount resembling pink Azumarill."
+  },
+  "1621": {
+    "name": "Angel Halo Ring",
+    "desc": "A yellow angel halo ring."
+  },
+  "1622": {
+    "name": "Angel Halo Ring",
+    "desc": "A shiny angel halo ring."
+  },
+  "1623": {
+    "name": "Sword",
+    "desc": ""
+  },
+  "1624": {
+    "name": "Shield",
+    "desc": ""
+  },
+  "1625": {
+    "name": "Xmas Teddiursa Hat",
+    "desc": "A hat resembling xmas Teddiursa."
   },
   "1910": {
     "name": "Mysterious Ticket",
@@ -7194,5 +7868,13 @@
   "2272": {
     "name": "Random Egg",
     "desc": ""
+  },
+  "2273": {
+    "name": "TM166 - Snarl",
+    "desc": "[33CCFF]Snarl[-]: \nSnarl deals damage and lowers the target's Special Attack by one stage."
+  },
+  "2274": {
+    "name": "TM167 - Power-Up Punch",
+    "desc": "[33CCFF]Power-Up Punch[-]: \nThis move does damage and raises the user's Attack by one stage."
   }
 }
