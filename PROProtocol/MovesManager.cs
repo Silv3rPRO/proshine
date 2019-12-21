@@ -16,7 +16,6 @@ namespace PROProtocol
             public string Type;
             [JsonConverter(typeof(MoveStatusConverter))]
             public bool Status;
-            [JsonConverter(typeof(MoveDamageTypeConverter))]
             public DamageType DamageType;
             public string Desc;
 
@@ -34,39 +33,40 @@ namespace PROProtocol
 
                 public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => throw new NotImplementedException();
             }
-
-            class MoveDamageTypeConverter : JsonConverter
-            {
-                public override bool CanConvert(Type t) => t == typeof(string);
-
-                public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-                {
-                    if (reader.TokenType == JsonToken.Null) return null;
-                    var value = serializer.Deserialize<string>(reader);
-                    switch (value)
-                    {
-                    case "p":
-                        return DamageType.Physical;
-                    case "s":
-                        return DamageType.Special;
-                    case "z":
-                        return DamageType.Z;
-                    default:
-                        Console.Error.WriteLine($"Can't unmarshal DamageType '{value}'");
-                        // better than crashing...
-                        return DamageType.Physical;
-                    }
-                }
-
-                public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => throw new NotImplementedException();
-            }
         }
 
+        [JsonConverter(typeof(DamageTypeConverter))]
         public enum DamageType
         {
             Physical,
             Special,
             Z,
+        }
+
+        class DamageTypeConverter : JsonConverter
+        {
+            public override bool CanConvert(Type t) => t == typeof(string);
+
+            public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+            {
+                if (reader.TokenType == JsonToken.Null) return null;
+                var value = serializer.Deserialize<string>(reader);
+                switch (value)
+                {
+                case "p":
+                    return DamageType.Physical;
+                case "s":
+                    return DamageType.Special;
+                case "z":
+                    return DamageType.Z;
+                default:
+                    Console.Error.WriteLine($"Can't unmarshal DamageType '{value}'");
+                    // better than crashing...
+                    return DamageType.Physical;
+                }
+            }
+
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => throw new NotImplementedException();
         }
 
         private static MovesManager _instance;
@@ -78,8 +78,6 @@ namespace PROProtocol
                 return _instance ?? (_instance = new MovesManager());
             }
         }
-
-        private const string MovesFile = "Resources/Moves.json";
 
         public MoveData[] Moves;
         public string[] MoveNames;
@@ -157,27 +155,9 @@ namespace PROProtocol
 
         private void LoadMoves()
         {
-            Dictionary<int, MoveData> moves;
-            try
-            {
-                if (File.Exists(MovesFile))
-                {
-                    string json = File.ReadAllText(MovesFile);
-                    moves = JsonConvert.DeserializeObject<Dictionary<int, MoveData>>(json);
-                }
-                else
-                {
-                    Console.Error.WriteLine($"File '{MovesFile}' is missing");
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine("Could not read the moves: " + ex.Message);
-                return;
-            }
+            var moves = ResourcesUtil.GetResource<Dictionary<int, MoveData>>("Moves.json");
 
-            Moves = moves.Values.ToArray();//new MoveData[moves.Count];
+            Moves = moves.Values.ToArray();
 
             LoadMoveNames();
         }
