@@ -28,7 +28,7 @@ namespace PROProtocol
                     if (reader.TokenType == JsonToken.Null) return null;
                     var value = serializer.Deserialize<string>(reader);
                     // value can be either "y" or "n"
-                    return value != "y";
+                    return value != "n";
                 }
 
                 public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => throw new NotImplementedException();
