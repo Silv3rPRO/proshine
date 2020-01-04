@@ -26,19 +26,11 @@ namespace PROProtocol
                 int enc_index = 0;
                 while (true)
                 {
-                    _i++;
-                    _i &= 0xff;
-
-                    if (_i >= 0x100)
-                        break;
-
+                    _i = (_i + 1) & 0xff;
+                    
                     byte char_1 = _box[_i];
 
-                    _j += _box[_i];
-                    _j &= 0xff;
-
-                    if (_j >= 0x100)
-                        break;
+                    _j = (_j + _box[_i]) & 0xff;
 
                     byte char_2 = _box[_j];
 
