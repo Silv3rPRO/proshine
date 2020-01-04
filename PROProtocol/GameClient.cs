@@ -253,7 +253,7 @@ namespace PROProtocol
 
         private void SendRegularPing()
         {
-            if ((DateTime.UtcNow - _lastMovement).TotalSeconds > 6)
+            if ((DateTime.UtcNow - _lastMovement).TotalSeconds >= 6)
             {
                 _lastMovement = DateTime.UtcNow;
                 // DSSock.Update
