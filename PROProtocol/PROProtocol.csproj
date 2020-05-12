@@ -75,7 +75,7 @@
     <Compile Include="StatType.cs" />
     <Compile Include="Timeout.cs" />
     <Compile Include="TypesManager.cs" />
-    <Compile Include="XorEncryption.cs" />
+    <Compile Include="Encryption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -108,7 +108,7 @@ namespace PROProtocol
         public event Action ActivePokemonChanged;
         public event Action OpponentChanged;
         
-        private const string Version = "Xmas19";
+        private const string Version = "Spring20";
 
         private GameConnection _connection;
         private DateTime _lastMovement;
@@ -172,6 +172,7 @@ namespace PROProtocol
             _mapClient.MapLoaded += MapClient_MapLoaded;
 
             _connection = connection;
+            _connection.StateReady += OnStateReady;
             _connection.PacketReceived += OnPacketReceived;
             _connection.Connected += OnConnectionOpened;
             _connection.Disconnected += OnConnectionClosed;
@@ -541,7 +542,7 @@ namespace PROProtocol
         public void SendAuthentication(string username, string password, Guid deviceId)
         {
             // DSSock.AttemptLogin
-            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + XorEncryption.FixDeviceId(deviceId) + "|.|" + "Windows 10  (10.0.0) 64bit");
+            SendPacket("+|.|" + username + "|.|" + password + "|.|" + Version + "|.|" + Encryption.FixDeviceId(deviceId) + "|.|" + "Windows 10  (10.0.0) 64bit");
             // TODO: Add an option to select the OS we want, it could be useful.
             // I use Windows 10 here because the version is the same for everyone. This is not the case on Windows 7 or Mac.
         }
@@ -1088,10 +1089,7 @@ namespace PROProtocol
         private void OnConnectionOpened()
         {
             IsConnected = true;
-#if DEBUG
-            Console.WriteLine("[+++] Connection opened");
-#endif
-            ConnectionOpened?.Invoke();
+            Encryption.Reset();
         }
 
         private void OnConnectionClosed(Exception ex)
@@ -1111,6 +1109,17 @@ namespace PROProtocol
                 Console.WriteLine("[---] Connection closed");
 #endif
                 ConnectionClosed?.Invoke(ex);
+            }
+        }
+
+        private void OnStateReady()
+        {
+            if (IsConnected)
+            {
+#if DEBUG
+                Console.WriteLine("[+++] Connection opened");
+#endif
+                ConnectionOpened?.Invoke();
             }
         }
 
@@ -1414,7 +1423,7 @@ namespace PROProtocol
         private void OnGuildData(string[] data)
         {
             //y|.|Guild name|999(id)|guild description|total members format: (total/max)|Leader Name|.\
-            GuildId = int.Parse(data[1].Split('|')[1]);
+            GuildId = int.Parse(data[1].Split('|')[0]);
         }
 
         private void OnUpdateTime(string[] data)
