@@ -1423,7 +1423,11 @@ namespace PROProtocol
         private void OnGuildData(string[] data)
         {
             //y|.|Guild name|999(id)|guild description|total members format: (total/max)|Leader Name|.\
-            GuildId = int.Parse(data[1].Split('|')[0]);
+            data = data[1].Split('|');
+            if (data.Length > 1)
+            {
+                GuildId = int.Parse(data[1]);
+            }
         }
 
         private void OnUpdateTime(string[] data)
