@@ -172,7 +172,6 @@ namespace PROProtocol
             _mapClient.MapLoaded += MapClient_MapLoaded;
 
             _connection = connection;
-            _connection.StateReady += OnStateReady;
             _connection.PacketReceived += OnPacketReceived;
             _connection.Connected += OnConnectionOpened;
             _connection.Disconnected += OnConnectionClosed;
@@ -1089,7 +1088,10 @@ namespace PROProtocol
         private void OnConnectionOpened()
         {
             IsConnected = true;
-            Encryption.Reset();
+#if DEBUG
+            Console.WriteLine("[+++] Connection opened");
+#endif
+            ConnectionOpened?.Invoke();
         }
 
         private void OnConnectionClosed(Exception ex)
@@ -1109,17 +1111,6 @@ namespace PROProtocol
                 Console.WriteLine("[---] Connection closed");
 #endif
                 ConnectionClosed?.Invoke(ex);
-            }
-        }
-
-        private void OnStateReady()
-        {
-            if (IsConnected)
-            {
-#if DEBUG
-                Console.WriteLine("[+++] Connection opened");
-#endif
-                ConnectionOpened?.Invoke();
             }
         }
 
@@ -1296,7 +1287,6 @@ namespace PROProtocol
             {
                 LogMessage?.Invoke("Format error occurred(Probably server issue): " + packet);
             }
-            
         }
 
 

@@ -9,8 +9,7 @@ namespace PROProtocol
     public class GameConnection : SimpleTextClient
     {
         public GameServer Server;
-        public event Action StateReady;
-
+        
         private bool _useSocks;
         private int _socksVersion;
         private string _socksHost;
@@ -69,21 +68,15 @@ namespace PROProtocol
 
         protected override string ProcessDataBeforeReceiving(string data)
         {
-            var input_bytes = TextEncoding.GetBytes(data);
-            if (Encryption.StateReady)
+            var data_bytes = TextEncoding.GetBytes(data);
+            if (!Encryption.StateReady)
             {
-                var output_bytes = Encryption.Decrypt(input_bytes);
-                return TextEncoding.GetString(output_bytes);
-            }
-            else
-            {
-                var output_bytes = Encryption.Decrypt(input_bytes, 16);
-                output_bytes = input_bytes.Skip(16).ToArray();
-                Encryption.Encrypt(output_bytes, 16);
+                Encryption.Decrypt(data_bytes, 16);
+                Encryption.Encrypt(data_bytes.Skip(16).ToArray(), 16);
                 Encryption.StateReady = true;
-                StateReady?.Invoke();
+                return null;
             }
-            return null;
+            return TextEncoding.GetString(Encryption.Decrypt(data_bytes));
         }
     }
 }
