@@ -399,7 +399,6 @@ namespace PROBot
         private void Client_ConnectionOpened()
         {
             ConnectionOpened?.Invoke();
-            XorEncryption.Reset();
             Game.SendAuthentication(Account.Name, Account.Password, Account.DeviceId ?? HardwareHash.GenerateRandom());
         }
 

@@ -1,6 +1,6 @@
 ﻿using BrightNetwork;
 using System;
-using System.Net;
+using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 
@@ -9,6 +9,7 @@ namespace PROProtocol
     public class GameConnection : SimpleTextClient
     {
         public GameServer Server;
+        public event Action StateReady;
 
         private bool _useSocks;
         private int _socksVersion;
@@ -62,15 +63,27 @@ namespace PROProtocol
         protected override string ProcessDataBeforeSending(string data)
         {
             var input_bytes = TextEncoding.GetBytes(data);
-            var output_bytes = XorEncryption.Encrypt(input_bytes);
+            var output_bytes = Encryption.Encrypt(input_bytes);
             return TextEncoding.GetString(output_bytes);
         }
 
         protected override string ProcessDataBeforeReceiving(string data)
         {
             var input_bytes = TextEncoding.GetBytes(data);
-            var output_bytes = XorEncryption.Decrypt(input_bytes);
-            return TextEncoding.GetString(output_bytes);
+            if (Encryption.StateReady)
+            {
+                var output_bytes = Encryption.Decrypt(input_bytes);
+                return TextEncoding.GetString(output_bytes);
+            }
+            else
+            {
+                var output_bytes = Encryption.Decrypt(input_bytes, 16);
+                output_bytes = input_bytes.Skip(16).ToArray();
+                Encryption.Encrypt(output_bytes, 16);
+                Encryption.StateReady = true;
+                StateReady?.Invoke();
+            }
+            return null;
         }
     }
 }

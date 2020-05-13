@@ -16,9 +16,9 @@ namespace PROProtocol
             switch (server)
             {
                 case GameServer.Silver:
-                    return new IPEndPoint(IPAddress.Parse("185.212.131.104"), 800);
+                    return new IPEndPoint(GetAddressFromDns(server + ".pokemonrevolution.net"), 800);
                 case GameServer.Gold:
-                    return new IPEndPoint(IPAddress.Parse("185.212.131.104"), 801);
+                    return new IPEndPoint(GetAddressFromDns(server + ".pokemonrevolution.net"), 801);
             }
             return null;
         }
@@ -37,9 +37,14 @@ namespace PROProtocol
 
         public static IPAddress GetMapAddress(this GameServer server)
         {
-            var rand = new Random();
-            var addresses = Dns.GetHostAddresses(server + ".pokemonrevolution.net");
-            return addresses[rand.Next(0, addresses.Length - 1)];
+            return GetAddressFromDns(server + ".pokemonrevolution.net");
+        }
+
+        private static Random Random = new Random();
+        private static IPAddress GetAddressFromDns(string dns_host)
+        {
+            var addresses = Dns.GetHostAddresses(dns_host);
+            return addresses[Random.Next(0, addresses.Length - 1)];
         }
     }
 }
