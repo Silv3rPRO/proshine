@@ -47,6 +47,7 @@ namespace PROBot
         public Dictionary<int, TextOption> TextOptions { get; set; }
         
         private bool _loginRequested;
+        private bool _authenticationRequired;
 
         private Timeout _actionTimeout = new Timeout();
 
@@ -162,6 +163,8 @@ namespace PROBot
             {
                 client = new GameClient(new GameConnection(server), new MapConnection());
             }
+
+            Encryption.Reset();
             SetClient(client);
             client.Open();
         }
@@ -177,6 +180,15 @@ namespace PROBot
 
         public void Update()
         {
+            if (_authenticationRequired)
+            {
+                if (Encryption.StateReady)
+                {
+                    Game.SendAuthentication(Account.Name, Account.Password, Account.DeviceId ?? HardwareHash.GenerateRandom());
+                    _authenticationRequired = false;
+                }
+                return;
+            }
             AutoReconnector.Update();
 
             if (_loginRequested)
@@ -399,7 +411,7 @@ namespace PROBot
         private void Client_ConnectionOpened()
         {
             ConnectionOpened?.Invoke();
-            Game.SendAuthentication(Account.Name, Account.Password, Account.DeviceId ?? HardwareHash.GenerateRandom());
+            _authenticationRequired = true;
         }
 
         private void Client_ConnectionClosed(Exception ex)

@@ -196,6 +196,7 @@ namespace PROBot.Scripting
             _lua.Globals["isMounted"] = new Func<bool>(IsMounted);
             _lua.Globals["isSurfing"] = new Func<bool>(IsSurfing);
             _lua.Globals["isPrivateMessageEnabled"] = new Func<bool>(IsPrivateMessageEnabled);
+            _lua.Globals["isNpcInteractionsEnabled"] = new Func<bool>(IsNpcInteractionsEnabled);
             _lua.Globals["getTime"] = new GetTimeDelegate(GetTime);
             _lua.Globals["isMorning"] = new Func<bool>(IsMorning);
             _lua.Globals["isNoon"] = new Func<bool>(IsNoon);
@@ -297,6 +298,8 @@ namespace PROBot.Scripting
             _lua.Globals["disablePrivateMessage"] = new Func<bool>(DisablePrivateMessage);
             _lua.Globals["enableAutoEvolve"] = new Func<bool>(EnableAutoEvolve);
             _lua.Globals["disableAutoEvolve"] = new Func<bool>(DisableAutoEvolve);
+            _lua.Globals["enableNpcInteractions"] = new Func<bool>(EnableNpcInteractions);
+            _lua.Globals["disableNpcInteractions"] = new Func<bool>(DisableNpcInteractions);
 
             // Path functions
             _lua.Globals["pushDialogAnswer"] = new Action<DynValue>(PushDialogAnswer);
@@ -1878,6 +1881,24 @@ namespace PROBot.Scripting
             return ExecuteAction(Bot.Game.PrivateMessageOff());
         }
 
+        // API: Returns true if the bot is checking for npc interactions.
+        private bool IsNpcInteractionsEnabled()
+        {
+            return Bot.Game.IsNpcInteractionsOn;
+        }
+
+        // API: Enables npc interactions.
+        private bool EnableNpcInteractions()
+        {
+            return Bot.Game.IsNpcInteractionsOn = true;
+        }
+
+        // API: Disables npc interactions.
+        private bool DisableNpcInteractions()
+        {
+            return !(Bot.Game.IsNpcInteractionsOn = false);
+        }
+
         private delegate int GetTimeDelegate(out int minute);
 
         // API: Return the current in game hour and minute.
@@ -2934,17 +2955,16 @@ namespace PROBot.Scripting
         {
             if (string.IsNullOrEmpty(mount))
             {
-                Bot.Game.GroundMountName = null;
+                Bot.Game.GroundMount = null;
                 return true;
             }
-
-            Bot.Game.GroundMountName = mount;
 
             InventoryItem item = Bot.Game.GetItemFromName(mount);
 
             if (item == null)
                 return false;
 
+            Bot.Game.GroundMount = item;
             return true;
         }
 
@@ -2953,16 +2973,16 @@ namespace PROBot.Scripting
         {
             if (string.IsNullOrEmpty(mount))
             {
-                Bot.Game.WaterMountName = null;
+                Bot.Game.WaterMount = null;
                 return true;
             }
 
-            Bot.Game.WaterMountName = mount;
             InventoryItem item = Bot.Game.GetItemFromName(mount);
 
             if (item == null)
                 return false;
 
+            Bot.Game.WaterMount = item;
             return true;
         }
     }

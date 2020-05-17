@@ -6,14 +6,11 @@ namespace PROProtocol
 {
     public class GameClient
     {
-        private InventoryItem GroundMount;
-        private InventoryItem WaterMount;
+        public InventoryItem GroundMount;
+        public InventoryItem WaterMount;
 
-        public string GroundMountName;
-        public string WaterMountName;
-        
-        public Random Rand { get; private set; }
-        public Language I18n { get; private set; }
+        public Random Rand { get; private set; } = new Random();
+        public Language I18n { get; private set; } = new Language();
 
         public bool IsConnected { get; private set; }
         public bool IsAuthenticated { get; private set; }
@@ -36,17 +33,18 @@ namespace PROProtocol
         public bool IsPCOpen { get; private set; }
         public bool CanUseCut { get; private set; }
         public bool CanUseSmashRock { get; private set; }
-        public bool IsPrivateMessageOn { get; private set; }
+        public bool IsPrivateMessageOn { get; private set; } = true;
+        public bool IsNpcInteractionsOn = true;
 
         public int Money { get; private set; }
         public int Coins { get; private set; }
         public bool IsMember { get; private set; }
-        public List<Pokemon> Team { get; private set; }
-        public List<Pokemon> CurrentPCBox { get; private set; }
-        public List<InventoryItem> Items { get; private set; }
+        public List<Pokemon> Team { get; private set; } = new List<Pokemon>();
+        public List<Pokemon> CurrentPCBox { get; private set; } = new List<Pokemon>();
+        public List<InventoryItem> Items { get; private set; } = new List<InventoryItem>();
         public string PokemonTime { get; private set; }
         public string Weather { get; private set; }
-        public int PCGreatestUid { get; private set; }
+        public int PCGreatestUid { get; private set; } = -1;
 
         public bool IsScriptActive { get; private set; }
         public string ScriptId { get; private set; }
@@ -57,14 +55,15 @@ namespace PROProtocol
         public Shop OpenedShop { get; private set; }
         public MoveRelearner MoveRelearner { get; private set; }
 
-        public List<ChatChannel> Channels { get; }
-        public List<string> Conversations { get; }
-        public Dictionary<string, PlayerInfos> Players { get; }
+        public List<ChatChannel> Channels { get; } = new List<ChatChannel>();
+        public List<string> Conversations { get; } = new List<string>();
+        public Dictionary<string, PlayerInfos> Players { get; } = new Dictionary<string, PlayerInfos>();
+
         private DateTime _updatePlayers;
         private DateTime _refreshBoxTimeout;
+
         public bool IsPCBoxRefreshing { get; private set; }
         public int CurrentPCBoxId { get; private set; }
-
         public bool IsCreatingNewCharacter { get; private set; }
 
         public event Action ConnectionOpened;
@@ -172,21 +171,9 @@ namespace PROProtocol
             _mapClient.MapLoaded += MapClient_MapLoaded;
 
             _connection = connection;
-            _connection.StateReady += OnStateReady;
             _connection.PacketReceived += OnPacketReceived;
             _connection.Connected += OnConnectionOpened;
             _connection.Disconnected += OnConnectionClosed;
-
-            Rand = new Random();
-            I18n = new Language();
-            Team = new List<Pokemon>();
-            CurrentPCBox = new List<Pokemon>();
-            Items = new List<InventoryItem>();
-            Channels = new List<ChatChannel>();
-            Conversations = new List<string>();
-            Players = new Dictionary<string, PlayerInfos>();
-            PCGreatestUid = -1;
-            IsPrivateMessageOn = true;
         }
 
         public void Open()
@@ -229,7 +216,6 @@ namespace PROProtocol
             UpdatePlayers();
             UpdatePCBox();
             UpdateNpcBattle();
-            UpdateMounts();
         }
 
         public void CloseChannel(string channelName)
@@ -436,24 +422,6 @@ namespace PROProtocol
                     _dialogTimeout.Set();
                 }
             }
-        }
-
-        // Sometimes because of the connection speed the bot may receive items data later, so saving the mount name and would try to set it when it receives all items.
-        private void UpdateMounts()
-        {
-            bool isGroundMountSet = !string.IsNullOrEmpty(GroundMountName);
-            bool isWaterMountSet = !string.IsNullOrEmpty(WaterMountName);
-
-            if (!isGroundMountSet)
-                GroundMount = null;
-            if (!isWaterMountSet)
-                WaterMount = null;
-
-            if ((GroundMount is null && isWaterMountSet) || (GroundMount != null && GroundMount.Name.ToLowerInvariant() != GroundMountName.ToLowerInvariant()))
-                GroundMount = GetItemFromName(GroundMountName);
-
-            if ((WaterMount is null && isWaterMountSet) || (WaterMount != null && WaterMount.Name.ToLowerInvariant() != WaterMountName.ToLowerInvariant()))
-                WaterMount = GetItemFromName(WaterMountName);
         }
 
         private int GetNextDialogResponse()
@@ -1089,7 +1057,10 @@ namespace PROProtocol
         private void OnConnectionOpened()
         {
             IsConnected = true;
-            Encryption.Reset();
+#if DEBUG
+            Console.WriteLine("[+++] Connection opened");
+#endif
+            ConnectionOpened?.Invoke();
         }
 
         private void OnConnectionClosed(Exception ex)
@@ -1109,17 +1080,6 @@ namespace PROProtocol
                 Console.WriteLine("[---] Connection closed");
 #endif
                 ConnectionClosed?.Invoke(ex);
-            }
-        }
-
-        private void OnStateReady()
-        {
-            if (IsConnected)
-            {
-#if DEBUG
-                Console.WriteLine("[+++] Connection opened");
-#endif
-                ConnectionOpened?.Invoke();
             }
         }
 
@@ -1296,7 +1256,6 @@ namespace PROProtocol
             {
                 LogMessage?.Invoke("Format error occurred(Probably server issue): " + packet);
             }
-            
         }
 
 

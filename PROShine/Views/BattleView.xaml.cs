@@ -10,7 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using XamlAnimatedGif;
 
-namespace PROShine.Views
+namespace PROShine
 {
     public partial class BattleView : UserControl
     {

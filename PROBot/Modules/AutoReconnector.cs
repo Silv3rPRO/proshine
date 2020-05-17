@@ -29,7 +29,7 @@ namespace PROBot.Modules
         private bool _relogging;
         private double _reloggingDelay;
         private DateTime _autoReconnectTimeout;
-        private DateTime _botDelay = DateTime.MaxValue;
+        private DateTime _botScriptDelay = DateTime.MaxValue;
 
         public AutoReconnector(BotClient bot)
         {
@@ -60,10 +60,10 @@ namespace PROBot.Modules
                 }
             }
 
-            if (_botDelay < DateTime.UtcNow)
+            if (_botScriptDelay < DateTime.UtcNow)
             {
                 _bot.Start();
-                _botDelay = DateTime.MaxValue;
+                _botScriptDelay = DateTime.MaxValue;
             }
         }
 
@@ -91,7 +91,7 @@ namespace PROBot.Modules
             {
                 _reconnecting = false;
                 _relogging = false;
-                _botDelay = DateTime.UtcNow.AddSeconds(1);
+                _botScriptDelay = DateTime.UtcNow.AddSeconds(10);
             }
         }
 
