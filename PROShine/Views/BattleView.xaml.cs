@@ -4,11 +4,13 @@ using PROProtocol;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using XamlAnimatedGif;
 
-namespace PROShine.Views
+namespace PROShine
 {
     public partial class BattleView : UserControl
     {
@@ -18,6 +20,11 @@ namespace PROShine.Views
         private double _opponentHPWidth;
         private double _activeHPWidth;
         private double _expBarWidth;
+
+        private string _lastActiveName;
+        private string _lastOpponentName;
+        private Regex _nameCleaner = new Regex("'| |\\."); // Removes invalid characters
+        private const string _spriteDatabasePrefix = "http://pokestadium.com/sprites/xy";
 
         public BattleView(BotClient bot, MainWindow parent)
         {
@@ -45,11 +52,24 @@ namespace PROShine.Views
                 {
                     if (_bot.Game != null && _bot.Game.ActiveBattle != null)
                     {
-                        OpponentName.Text = PokemonNamesManager.Instance.Names[_bot.Game.ActiveBattle.OpponentId];
+                        string opponent = PokemonNamesManager.Instance.Names[_bot.Game.ActiveBattle.OpponentId];
+
+                        if (_lastOpponentName != opponent)
+                        {
+                            _lastOpponentName = opponent;
+                            string sprite = _nameCleaner.Replace(opponent.ToLowerInvariant(), "");
+                            if (_bot.Game.ActiveBattle.IsShiny)
+                                sprite = $"{_spriteDatabasePrefix}/shiny/{sprite}.gif";
+                            else
+                                sprite = $"{_spriteDatabasePrefix}/{sprite}.gif";
+                            AnimationBehavior.SetSourceUri(OpponentGraphic, new Uri(sprite));
+                        }
+
                         if (_bot.Game.ActiveBattle.IsShiny)
-                            OpponentName.Text = "Shiny " + OpponentName.Text;
+                            opponent = "Shiny " + opponent;
                         if (_bot.Game.ActiveBattle.IsWild)
-                            OpponentName.Text = "Wild " + OpponentName.Text;
+                            opponent = "Wild " + opponent;
+                        OpponentName.Text = opponent;
                         OpponentCaughtIcon.Visibility = _bot.Game.ActiveBattle.AlreadyCaught ? Visibility.Visible : Visibility.Hidden;
                         OpponentLevel.Text = _bot.Game.ActiveBattle.OpponentLevel.ToString();
                         OpponentMaxHealth.Text = _bot.Game.ActiveBattle.OpponentHealth.ToString();
@@ -84,6 +104,17 @@ namespace PROShine.Views
                         ActiveLevel.Text = active.Level.ToString();
                         ActiveMaxHealth.Text = active.MaxHealth.ToString();
                         ActiveCurrentHealth.Text = active.CurrentHealth.ToString();
+
+                        if (_lastActiveName != active.Name)
+                        {
+                            _lastActiveName = active.Name;
+                            string sprite = _nameCleaner.Replace(active.Name.ToLowerInvariant(), "");
+                            if (active.IsShiny)
+                                sprite = $"{_spriteDatabasePrefix}/shiny/back/{sprite}.gif";
+                            else
+                                sprite = $"{_spriteDatabasePrefix}/back/{sprite}.gif";
+                            AnimationBehavior.SetSourceUri(PlayerGraphic, new Uri(sprite));
+                        }
 
                         if (active.Experience.CurrentLevel == 100)
                         {
@@ -128,8 +159,7 @@ namespace PROShine.Views
                         RunButton.IsEnabled = active.CurrentHealth > 0 && _bot.Game.ActiveBattle.IsWild;
 
                         // Hide the graphics if the window is too small
-                        OpponentGraphic.Visibility = _parent.Width < 530 ? Visibility.Hidden : Visibility.Visible;
-                        PlayerGraphic.Visibility = _parent.Width < 425 ? Visibility.Hidden : Visibility.Visible;
+                        OpponentGraphic.Visibility = PlayerGraphic.Visibility = _parent.Width < 530 ? Visibility.Hidden : Visibility.Visible;
 
                         // Lerp health bar widths and colors to target positions
 
@@ -359,7 +389,7 @@ namespace PROShine.Views
             itemsMenu.PlacementTarget = sender as Button;
             itemsMenu.IsOpen = true;
         }
-        
+
         private void Item_Click(object sender, RoutedEventArgs e)
         {
             string tag = ((MenuItem)e.OriginalSource).Tag as string;
@@ -436,6 +466,12 @@ namespace PROShine.Views
             };
 
             return color;
+        }
+
+        private void ErrorLoadingGraphic(DependencyObject d, AnimationErrorEventArgs e)
+        {
+            // Set graphic to Decamark icon if the url couldn't be loaded
+            AnimationBehavior.SetSourceUri((Image)d, new Uri("https://cdn.bulbagarden.net/upload/archive/8/8e/20090709005535%21Spr_3r_000.png"));
         }
     }
 }

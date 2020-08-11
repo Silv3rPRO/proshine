@@ -24,7 +24,7 @@ namespace PROBot.Modules
         private readonly BotClient _bot;
 
         private Timeout _evolutionTimeout = new Timeout();
-        public int _evolvingPokemonUid;
+        public int _evolvingPokemonDBid;
         public int _evolvingItem;
 
         public PokemonEvolver(BotClient bot)
@@ -39,11 +39,11 @@ namespace PROBot.Modules
             {
                 if (IsEnabled)
                 {
-                    _bot.Game.SendAcceptEvolution(_evolvingPokemonUid, _evolvingItem);
+                    _bot.Game.SendAcceptEvolution(_evolvingPokemonDBid);
                 }
                 else
                 {
-                    _bot.Game.SendCancelEvolution(_evolvingPokemonUid, _evolvingItem);
+                    _bot.Game.SendCancelEvolution(_evolvingPokemonDBid);
                 }
                 return true;
             }
@@ -58,9 +58,9 @@ namespace PROBot.Modules
             }
         }
 
-        private void Game_Evolving(int evolvingPokemonUid, int evolvingItem)
+        private void Game_Evolving(int evolvingPokemonDBid, int evolvingItem)
         {
-            _evolvingPokemonUid = evolvingPokemonUid;
+            _evolvingPokemonDBid = evolvingPokemonDBid;
             _evolvingItem = evolvingItem;
             _evolutionTimeout.Set(_bot.Rand.Next(2000, 3000));
         }

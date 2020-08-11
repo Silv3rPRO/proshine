@@ -48,7 +48,7 @@ namespace PROShine
                     foreach (PlayerInfos player in playersList)
                     {
                         string petName = "";
-                        if (player.PokemonPetId < PokemonNamesManager.Instance.Names.Length)
+                        if (PokemonNamesManager.Instance.Names.ContainsKey(player.PokemonPetId))
                         {
                             petName = PokemonNamesManager.Instance.Names[player.PokemonPetId];
                             if (player.IsPokemonPetShiny)

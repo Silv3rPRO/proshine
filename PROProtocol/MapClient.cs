@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Net;
 using System.Text;
 
 namespace PROProtocol
@@ -29,12 +30,12 @@ namespace PROProtocol
             _connection.Disconnected += OnDisconnected;
         }
 
-        public void Open(string host, int port)
+        public void Open(IPAddress ip, int port)
         {
 #if DEBUG
             Console.WriteLine("[+++] Connecting to the map server");
 #endif
-            _connection.Connect(host, port);
+            _connection.Connect(ip, port);
         }
 
         public void Update()

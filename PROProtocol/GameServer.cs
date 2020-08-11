@@ -16,9 +16,9 @@ namespace PROProtocol
             switch (server)
             {
                 case GameServer.Silver:
-                    return new IPEndPoint(IPAddress.Parse("185.70.107.113"), 800);
+                    return new IPEndPoint(GetAddressFromDns(server + ".pokemonrevolution.net"), 800);
                 case GameServer.Gold:
-                    return new IPEndPoint(IPAddress.Parse("185.70.107.113"), 801);
+                    return new IPEndPoint(GetAddressFromDns(server + ".pokemonrevolution.net"), 801);
             }
             return null;
         }
@@ -33,6 +33,18 @@ namespace PROProtocol
                     return GameServer.Gold;
             }
             throw new Exception("The server " + name + " does not exist");
+        }
+
+        public static IPAddress GetMapAddress(this GameServer server)
+        {
+            return GetAddressFromDns(server + ".pokemonrevolution.net");
+        }
+
+        private static Random Random = new Random();
+        private static IPAddress GetAddressFromDns(string dns_host)
+        {
+            var addresses = Dns.GetHostAddresses(dns_host);
+            return addresses[Random.Next(0, addresses.Length - 1)];
         }
     }
 }
