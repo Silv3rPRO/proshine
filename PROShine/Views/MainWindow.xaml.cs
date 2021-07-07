@@ -85,8 +85,11 @@ namespace PROShine
 
             if (!string.IsNullOrEmpty(Bot.Settings.LastScript))
             {
-                MenuReloadScript.Header = "Reload " + Path.GetFileName(Bot.Settings.LastScript);
+                string fileName = Path.GetFileName(Bot.Settings.LastScript);
+                MenuReloadScript.Header = "Reload " + fileName;
                 MenuReloadScript.IsEnabled = true;
+                MenuExploreScript.Header = "Explore " + fileName;
+                MenuExploreScript.IsEnabled = true;
             }
 
             App.InitializeVersion();
@@ -372,6 +375,8 @@ namespace PROShine
                     Bot.Settings.LastScript = filePath;
                     MenuReloadScript.Header = "Reload " + Path.GetFileName(filePath);
                     MenuReloadScript.IsEnabled = true;
+                    MenuExploreScript.Header = "Explore " + Path.GetFileName(filePath);
+                    MenuExploreScript.IsEnabled = true;
                     Bot.SliderOptions.Clear();
                     Bot.TextOptions.Clear();
                     _sliderOptions.Clear();
@@ -774,11 +779,19 @@ namespace PROShine
             });
         }
 
-        private void Client_DialogOpened(string message)
+        private void Client_DialogOpened(string message, string[] options)
         {
             Dispatcher.InvokeAsync(delegate
             {
-                LogMessage(message);
+                var content = new StringBuilder(message);
+                for (int i = 0; i < options.Length; i++)
+                {
+                    content.AppendLine()
+                        .Append(i + 1)
+                        .Append(". ")
+                        .Append(options[i]);
+                }
+                LogMessage(content.ToString());
             });
         }
 
@@ -816,7 +829,7 @@ namespace PROShine
                 {
                     content.AppendLine();
                     content.Append(item.Name);
-                    content.Append(" ($" + item.Price + ")");
+                    content.Append(" ($").Append(item.Price).Append(')');
                 }
                 LogMessage(content.ToString());
             });
@@ -1024,6 +1037,14 @@ namespace PROShine
             if (string.IsNullOrEmpty(Bot.Settings.LastScript))
                 return;
             LoadScript(Bot.Settings.LastScript);
+        }
+
+        private void MenuExploreScript_Click(object sender, RoutedEventArgs e)
+        {
+            if (!File.Exists(Bot.Settings.LastScript))
+                return;
+
+            Process.Start("explorer.exe", "/select, " + Bot.Settings.LastScript);
         }
     }
 }

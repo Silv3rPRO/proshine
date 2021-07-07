@@ -111,7 +111,7 @@ namespace PROBot.Scripting
             _hookedFunctions = new Dictionary<string, IList<DynValue>>();
 
             _lua = new Script(CoreModules.Preset_SoftSandbox | CoreModules.LoadMethods);
-            _lua.Options.ScriptLoader = new CustomScriptLoader(_path) { ModulePaths = new[] { "?.lua" } };
+            _lua.Options.ScriptLoader = new CustomScriptLoader(_path) { ModulePaths = new[] { "?.lua", Directory.GetCurrentDirectory() + "/Libs/?.lua" } };
             _lua.Options.CheckThreadAccess = false;
             _lua.Globals["log"] = new Action<string>(Log);
             _lua.Globals["fatal"] = new Action<string>(Fatal);
@@ -172,7 +172,11 @@ namespace PROBot.Scripting
             _lua.Globals["getActiveHeadbuttTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveHeadbuttTrees);
             _lua.Globals["getActiveBerryTrees"] = new Func<List<Dictionary<string, int>>>(GetActiveBerryTrees);
             _lua.Globals["getDiscoverableItems"] = new Func<List<Dictionary<string, int>>>(GetDiscoverableItems);
-            _lua.Globals["getNpcData"] = new Func<List<Dictionary<string, string>>>(GetNpcData);
+            _lua.Globals["getNpcData"] = new Func<List<Dictionary<string, DynValue>>>(GetNpcData);
+            _lua.Globals["getMapLinks"] = new Func<List<Dictionary<string, int>>>(GetMapLinks);
+            _lua.Globals["getMapWidth"] = new Func<int>(GetMapWidth);
+            _lua.Globals["getMapHeight"] = new Func<int>(GetMapHeight);
+            _lua.Globals["getCellType"] = new Func<int, int, string>(GetCellType);
 
             _lua.Globals["hasItem"] = new Func<string, bool>(HasItem);
             _lua.Globals["getItemQuantity"] = new Func<string, int>(GetItemQuantity);
@@ -192,6 +196,7 @@ namespace PROBot.Scripting
             _lua.Globals["isMounted"] = new Func<bool>(IsMounted);
             _lua.Globals["isSurfing"] = new Func<bool>(IsSurfing);
             _lua.Globals["isPrivateMessageEnabled"] = new Func<bool>(IsPrivateMessageEnabled);
+            _lua.Globals["isNpcInteractionsEnabled"] = new Func<bool>(IsNpcInteractionsEnabled);
             _lua.Globals["getTime"] = new GetTimeDelegate(GetTime);
             _lua.Globals["isMorning"] = new Func<bool>(IsMorning);
             _lua.Globals["isNoon"] = new Func<bool>(IsNoon);
@@ -293,6 +298,8 @@ namespace PROBot.Scripting
             _lua.Globals["disablePrivateMessage"] = new Func<bool>(DisablePrivateMessage);
             _lua.Globals["enableAutoEvolve"] = new Func<bool>(EnableAutoEvolve);
             _lua.Globals["disableAutoEvolve"] = new Func<bool>(DisableAutoEvolve);
+            _lua.Globals["enableNpcInteractions"] = new Func<bool>(EnableNpcInteractions);
+            _lua.Globals["disableNpcInteractions"] = new Func<bool>(DisableNpcInteractions);
 
             // Path functions
             _lua.Globals["pushDialogAnswer"] = new Action<DynValue>(PushDialogAnswer);
@@ -388,6 +395,7 @@ namespace PROBot.Scripting
                     if (isPathAction && _actionExecuted) return;
                 }
             }
+            Console.WriteLine(functionName);
             CallDynValueFunction(_lua.Globals.Get(functionName), functionName, args);
         }
 
@@ -530,23 +538,82 @@ namespace PROBot.Scripting
             return items;
         }
 
-        // API return npc data on current map, format : { { "x" = x , "y" = y, "type" = type }, {...}, ... }
-        private List<Dictionary<string, string>> GetNpcData()
+        // API: Returns npc data on current map, format : { { "x" = x , "y" = y, "type" = type }, {...}, ... }
+        private List<Dictionary<string, DynValue>> GetNpcData()
         {
-            var lNpc = new List<Dictionary<string, string>>();
+            var lNpc = new List<Dictionary<string, DynValue>>();
             foreach (Npc npc in Bot.Game.Map.Npcs)
             {
-                var npcData = new Dictionary<string, string>();
-                npcData["x"] = npc.PositionX.ToString();
-                npcData["y"] = npc.PositionY.ToString();
-                npcData["type"] = npc.Type.ToString();
-                npcData["name"] = npc.Name;
-                npcData["isBattler"] = npc.IsBattler.ToString();
-                npcData["id"] = npc.Id.ToString();
-                npcData["los"] = npc.LosLength.ToString();
+                var npcData = new Dictionary<string, DynValue>
+                {
+                    ["x"] = DynValue.NewNumber(npc.PositionX),
+                    ["y"] = DynValue.NewNumber(npc.PositionY),
+                    ["type"] = DynValue.NewNumber(npc.Type),
+                    ["name"] = DynValue.NewString(npc.Name),
+                    ["isBattler"] = DynValue.NewBoolean(npc.IsBattler),
+                    ["id"] = DynValue.NewNumber(npc.Id),
+                    ["los"] = DynValue.NewNumber(npc.LosLength)
+                };
                 lNpc.Add(npcData);
             }
             return lNpc;
+        }
+
+        // API: Returns an array of all map links on the current map
+        public List<Dictionary<string, int>> GetMapLinks()
+        {
+            var links = new List<Dictionary<string, int>>();
+
+            for (int y = 0; y < Bot.Game.Map.DimensionY; y++)
+            {
+                for (int x = 0; x < Bot.Game.Map.DimensionX; x++)
+                {
+                    if (Bot.Game.Map.Links[x, y])
+                    {
+                        links.Add(new Dictionary<string, int>
+                        {
+                            ["x"] = x,
+                            ["y"] = y,
+                        });
+                    }
+                }
+            }
+
+            return links;
+        }
+
+        // API: The number of cells on the current map in the x direction.
+        private int GetMapWidth()
+        {
+            return Bot.Game.Map.Width;
+        }
+
+        // API: The number of cells on the current map in the y direction.
+        private int GetMapHeight()
+        {
+            return Bot.Game.Map.Height;
+        }
+
+        // API: Returns the cell type of the specified cell on the current map.
+        private string GetCellType(int x, int y)
+        {
+            Map map = Bot.Game.Map;
+
+            if (map.HasLink(x, y)) return "Link";
+            if (map.IsGrass(x, y)) return "Grass";
+            if (map.IsWater(x, y)) return "Water";
+            if (map.IsNormalGround(x, y)) return "Normal Ground";
+            if (map.IsIce(x, y)) return "Ice";
+            if (map.IsPC(x, y)) return "PC";
+
+            int collider = map.GetCollider(x, y);
+            if (collider == 2) return "Ledge South";
+            if (collider == 3) return "Ledge East";
+            if (collider == 4) return "Ledge West";
+            if (collider == 11) return "Tree";
+            if (collider == 13) return "Rock";
+
+            return "Collider";
         }
 
         // API: Returns true if the string contains the specified part, ignoring the case.
@@ -960,7 +1027,7 @@ namespace PROBot.Scripting
 
             int id = Bot.Game.Team[index - 1].Id;
 
-            if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
+            if (!TypesManager.Instance.Type1.ContainsKey(id))
             {
                 return new string[] { "Unknown", "Unknown" };
             }
@@ -1478,7 +1545,7 @@ namespace PROBot.Scripting
 
             int id = Bot.Game.ActiveBattle.OpponentId;	    
 
-            if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
+            if (!TypesManager.Instance.Type1.ContainsKey(id))
             {
                 return new string[] { "Unknown", "Unknown" };
             }
@@ -1497,7 +1564,7 @@ namespace PROBot.Scripting
         // API: Moves to the nearest cell teleporting to the specified map.
         private bool MoveToMap(string mapName)
         {
-            Fatal("error: moveToMap: this function is no longer available, please use moveToCell or moveToRectangle instead.");
+            Fatal("error: moveToMap: this function is no longer available, please use moveToCell instead.");
             return false;
         }
 
@@ -1632,25 +1699,8 @@ namespace PROBot.Scripting
         // API: Moves near the cell teleporting to the specified map.
         private bool MoveNearExit(string mapName)
         {
-            if (!ValidateAction("moveNearExit", false)) return false;
-
-            Tuple<int, int> nearest = Bot.Game.Map.GetNearestLinks(mapName.ToUpperInvariant(), Bot.Game.PlayerX, Bot.Game.PlayerY).First();
-            if (nearest == null)
-            {
-                Fatal("error: moveNearExit: could not find the exit '" + mapName + "'.");
-                return false;
-            }
-
-            int x, y;
-            int tries = 0;
-            do
-            {
-                x = Bot.Game.Rand.Next(-10, 10) + nearest.Item1;
-                y = Bot.Game.Rand.Next(-10, 10) + nearest.Item2;
-                if (++tries > 100) return false;
-            } while (x <= 0 || y <= 0 || !Bot.Game.Map.IsNormalGround(x, y) || (x == Bot.Game.PlayerX && y == Bot.Game.PlayerY));
-
-            return ExecuteAction(Bot.MoveToCell(x, y));
+            Fatal("error: moveNearExit: this function is no longer available, please use moveToNormalGround instead.");
+            return false;
         }
 
         // API: Moves then talk to NPC specified by its name.
@@ -1829,6 +1879,24 @@ namespace PROBot.Scripting
         private bool DisablePrivateMessage()
         {
             return ExecuteAction(Bot.Game.PrivateMessageOff());
+        }
+
+        // API: Returns true if the bot is checking for npc interactions.
+        private bool IsNpcInteractionsEnabled()
+        {
+            return Bot.Game.IsNpcInteractionsOn;
+        }
+
+        // API: Enables npc interactions.
+        private bool EnableNpcInteractions()
+        {
+            return Bot.Game.IsNpcInteractionsOn = true;
+        }
+
+        // API: Disables npc interactions.
+        private bool DisableNpcInteractions()
+        {
+            return !(Bot.Game.IsNpcInteractionsOn = false);
         }
 
         private delegate int GetTimeDelegate(out int minute);
@@ -2399,9 +2467,9 @@ namespace PROBot.Scripting
 		{
 			return null;
 		}
-		
+
 		int id = Bot.Game.CurrentPCBox[boxPokemonId - 1].Id;
-		
+
 		if (id <= 0 || id >= TypesManager.Instance.Type1.Count())
 		{
 			return new string[] { "Unknown", "Unknown" };
@@ -2679,7 +2747,7 @@ namespace PROBot.Scripting
             }
 
             moveName = moveName.ToUpperInvariant();
-            Pokemon pokemon = Bot.Game.Team[Bot.MoveTeacher.PokemonUid - 1];
+            Pokemon pokemon = Bot.Game.GetPokemonFromDBId(Bot.MoveTeacher.PokemonDBid);
             PokemonMove move = pokemon.Moves.FirstOrDefault(m => MovesManager.Instance.GetMoveData(m.Id)?.Name.ToUpperInvariant() == moveName);
 
             if (move != null)
@@ -2705,7 +2773,7 @@ namespace PROBot.Scripting
                 movesInvariantNames.Add(value.CastToString().ToUpperInvariant());
             }
 
-            Pokemon pokemon = Bot.Game.Team[Bot.MoveTeacher.PokemonUid - 1];
+            Pokemon pokemon = Bot.Game.GetPokemonFromDBId(Bot.MoveTeacher.PokemonDBid);
             PokemonMove move = pokemon.Moves.FirstOrDefault(m => !movesInvariantNames.Contains(MovesManager.Instance.GetMoveData(m.Id)?.Name.ToUpperInvariant()));
 
             if (move != null)

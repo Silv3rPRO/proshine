@@ -23,7 +23,7 @@ namespace PROProtocol
         public bool IsShiny { get; private set; }
         public string Gender { get; private set; }
         public PokemonNature Nature { get; private set; }
-        public PokemonAbility Ability { get; private set; }
+        public AbilityData Ability { get; private set; }
         public int Happiness { get; private set; }
         public string ItemHeld { get; private set; }
         public PokemonStats Stats { get; private set; }
@@ -92,7 +92,7 @@ namespace PROProtocol
             Form = Convert.ToInt32(data[48]);
 
             Nature = new PokemonNature(Convert.ToInt32(data[36]));
-            Ability = new PokemonAbility(Convert.ToInt32(data[38]));
+            Ability = AbilitiesManager.Instance.Abilities[Convert.ToInt32(data[38])];
             Happiness = Convert.ToInt32(data[37]);
             ItemHeld = data[40];
 
