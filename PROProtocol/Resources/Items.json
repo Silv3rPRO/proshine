@@ -97,8 +97,7 @@
   },
   "24": {
     "name": "Ability Capsule",
-    "desc": "A capsule that allows a Pokémon with two Abilities to switch between these Abilities when it is used.",
-    "prompt": true
+    "desc": "A capsule that allows a legendary Pokémon with two or more abilities to switch between these abilities."
   },
   "25": {
     "name": "Ability Urge",
@@ -658,7 +657,7 @@
   },
   "173": {
     "name": "Gracidea",
-    "desc": "A flower sometimes bundled in bouquets to convey gratitude on special occasions like birthdys."
+    "desc": "A flower sometimes bundled in bouquets to convey gratitude on special occasions like birthdays."
   },
   "174": {
     "name": "Light Stone",
@@ -809,7 +808,7 @@
     "desc": "[33CCFF]Double-Edge[-]: \nA reckless, life-risking tackle. This also damages the user quite a lot."
   },
   "211": {
-    "name": "TM11 - Bubblebeam ",
+    "name": "TM11 - Bubblebeam",
     "desc": "[33CCFF]Bubblebeam[-]: \nA spray of bubbles is forcefully ejected at the target. This may also lower its Speed stat."
   },
   "212": {
@@ -1408,10 +1407,6 @@
     "name": "Lightning Orb",
     "desc": "A spherical yellow orb with endless lightning power that is said to have a legend tied to it."
   },
-  "362": {
-    "name": "Sharpedite",
-    "desc": "One of a variety of mysterious Mega Stones. Have Sharpedo hold it, and this stone will enable it to Mega Evolve during battle."
-  },
   "363": {
     "name": "Fire Orb",
     "desc": "A spherical red orb with endless fire power that is said to have a legend tied to it."
@@ -1605,7 +1600,7 @@
     "desc": "A mysterious Evolutionary lump. When held by a Pokémon that can still evolve, it raises both Defense and Sp. Def."
   },
   "411": {
-    "name": "Exp.  Share",
+    "name": "Exp. Share",
     "desc": "Turning on this special device will allow all the Pokémon on your team to receive Exp. Points from battles."
   },
   "412": {
@@ -2796,7 +2791,7 @@
   },
   "710": {
     "name": "Crystal Orb",
-    "desc": ""
+    "desc": "A mysterious glow eminates from within this crystal ball."
   },
   "711": {
     "name": "Damp Mulch",
@@ -4344,7 +4339,7 @@
     "desc": "A pair of beautiful wings resembling that of a Beautifly."
   },
   "1097": {
-    "name": "Oddish Hat ",
+    "name": "Oddish Hat",
     "desc": "A grassy, bulb-like hat resembling an Oddish."
   },
   "1098": {
@@ -4352,7 +4347,7 @@
     "desc": "A caterpillar-like hat with bright red antennas resembling a Caterpie."
   },
   "1099": {
-    "name": "Caterpie Clothes ",
+    "name": "Caterpie Clothes",
     "desc": "A caterpillar-like outfit with yellow ring-shaped markings down the sides resembling a Caterpie."
   },
   "1100": {
@@ -4360,7 +4355,7 @@
     "desc": "A long, green cloak representing bug-type Pokemon."
   },
   "1101": {
-    "name": "Dark Cloak ",
+    "name": "Dark Cloak",
     "desc": "A long, navy cloak representing dark-type Pokemon."
   },
   "1102": {
@@ -4380,7 +4375,7 @@
     "desc": "A long, brown cloak representing fighting-type Pokemon."
   },
   "1106": {
-    "name": "Fire Cloak ",
+    "name": "Fire Cloak",
     "desc": "A long, red cloak representing fire-type Pokemon."
   },
   "1107": {
@@ -4412,11 +4407,11 @@
     "desc": "A long, purple cloak representing poison-type Pokemon."
   },
   "1114": {
-    "name": "Psychic Cloak ",
+    "name": "Psychic Cloak",
     "desc": "A long, light purple cloak repesenting psychic-type Pokemon."
   },
   "1115": {
-    "name": "Rock Cloak ",
+    "name": "Rock Cloak",
     "desc": "A long, light brown cloak representing rock-type Pokemon."
   },
   "1116": {
@@ -4428,7 +4423,7 @@
     "desc": "A long, blue cloak representing water-type Pokemon."
   },
   "1118": {
-    "name": "Bug Hood ",
+    "name": "Bug Hood",
     "desc": "A green hood with a symbol embellished on top, representing bug-type Pokemon."
   },
   "1119": {
@@ -4440,15 +4435,15 @@
     "desc": "A midnight blue hood with a symbol embellished on top, representing dragon-type Pokemon."
   },
   "1121": {
-    "name": "Electric Hood ",
+    "name": "Electric Hood",
     "desc": "A yellow hood with a symbol embellished on top, representing electric-type Pokemon."
   },
   "1122": {
-    "name": "Fairy Hood ",
+    "name": "Fairy Hood",
     "desc": "A pink hood with a symbol embellished on top, representing fairy-type Pokemon."
   },
   "1123": {
-    "name": "Fighting Hood ",
+    "name": "Fighting Hood",
     "desc": "A brown hood with a symbol embellished on top, representing fighting-type Pokemon."
   },
   "1124": {
@@ -4460,11 +4455,11 @@
     "desc": "A light blue hood with a symbol embellished on top, representing flying-type Pokemon."
   },
   "1126": {
-    "name": "Ghost Hood ",
+    "name": "Ghost Hood",
     "desc": "A dark magenta hood with a symbol embellished on top, representing ghost-type Pokemon."
   },
   "1127": {
-    "name": "Grass Hood ",
+    "name": "Grass Hood",
     "desc": "A light green hood with a symbol embellished on top, representing grass-type Pokemon."
   },
   "1128": {
@@ -4472,7 +4467,7 @@
     "desc": "A beige hood with a symbol embellished on top, representing ground-type Pokemon."
   },
   "1129": {
-    "name": "Ice Hood ",
+    "name": "Ice Hood",
     "desc": "A periwinkle hood with a symbol embellished on top, representing ice-type Pokemon."
   },
   "1130": {
@@ -4492,11 +4487,11 @@
     "desc": "A light brown hood with a symbol embellished on top, representing rock-type Pokemon."
   },
   "1134": {
-    "name": "Steel Hood ",
+    "name": "Steel Hood",
     "desc": "A sturdy hood with a symbol embellished on top, representing steel-type Pokemon."
   },
   "1135": {
-    "name": "Water Hood ",
+    "name": "Water Hood",
     "desc": "A blue hood with a symbol embellished on top, representing water-type Pokemon."
   },
   "1136": {
@@ -4512,7 +4507,7 @@
     "desc": "An extravagant, glimmering dress with aquatic undertones."
   },
   "1139": {
-    "name": "Fuchsia Diva Dress ",
+    "name": "Fuchsia Diva Dress",
     "desc": "An extravagant, glimmering dress with magenta undertones."
   },
   "1140": {
@@ -4520,11 +4515,11 @@
     "desc": "An extravagant, glimmering dress with silvery undertones."
   },
   "1141": {
-    "name": "Blue Punk Jacket ",
+    "name": "Blue Punk Jacket",
     "desc": "A trendy, blue punk jacket."
   },
   "1142": {
-    "name": "Gold Punk Jacket ",
+    "name": "Gold Punk Jacket",
     "desc": "A trendy, gold punk jacket."
   },
   "1143": {
@@ -4540,15 +4535,15 @@
     "desc": "A fossil from a prehistoric Pokemon that once lived on the land. It looks to be from some kind of protective collar."
   },
   "1146": {
-    "name": "Honey ",
+    "name": "Honey",
     "desc": "A sweet Honey with a lush aroma that attracts wild Pokemon when it is spread on certain golden trees."
   },
   "1147": {
-    "name": "Plumber Clothes",
+    "name": "Mario Clothes",
     "desc": "An outfit with a red shirt and blue overalls representing a certain popular plumber."
   },
   "1148": {
-    "name": "Plumber Hat",
+    "name": "Mario Hat",
     "desc": "A plumber's hat with a Pokeball embellished on the front. It represents a certain popular plumber."
   },
   "1149": {
@@ -4564,7 +4559,7 @@
     "desc": "A dark blue jet-proppelled vehicle used by trainers as an alternative to HM Surf during their journey, treading water at speeds faster than usual."
   },
   "1152": {
-    "name": "D-Green Jet-Skii ",
+    "name": "D-Green Jet-Skii",
     "desc": "A dark green jet-proppelled vehicle used by trainers as an alternative to HM Surf during their journey, treading water at speeds faster than usual."
   },
   "1153": {
@@ -4572,7 +4567,7 @@
     "desc": "A light blue jet-proppelled vehicle used by trainers as an alternative to HM Surf during their journey, treading water at speeds faster than usual."
   },
   "1154": {
-    "name": "L-Green Jet-Skii ",
+    "name": "L-Green Jet-Skii",
     "desc": "A light green jet-proppelled vehicle used by trainers as an alternative to HM Surf during their journey, treading water at speeds faster than usual."
   },
   "1155": {
@@ -4580,7 +4575,7 @@
     "desc": "An orange jet-proppelled vehicle used by trainers as an alternative to HM Surf during their journey, treading water at speeds faster than usual."
   },
   "1156": {
-    "name": "Pink Jet-Skii ",
+    "name": "Pink Jet-Skii",
     "desc": "A pink jet-proppelled vehicle used by trainers as an alternative to HM Surf during their journey, treading water at speeds faster than usual."
   },
   "1157": {
@@ -4592,7 +4587,7 @@
     "desc": "A teal jet-proppelled vehicle used by trainers as an alternative to HM Surf during their journey, treading water at speeds faster than usual."
   },
   "1159": {
-    "name": "Teal Jet-Skii ",
+    "name": "Teal Jet-Skii",
     "desc": "A brown jet-proppelled vehicle used by trainers as an alternative to HM Surf during their journey, treading water at speeds faster than usual."
   },
   "1160": {
@@ -4612,15 +4607,15 @@
     "desc": "A land mount resembling a zombie-like Charizard. Are commonly used by trainers as an alternative to a bike during their journey."
   },
   "1164": {
-    "name": "Reroll Ticket ",
+    "name": "Reroll Ticket",
     "desc": "A ticket which is said to be popular amongst Psychics with the ability to change individual values on certain Pokemon."
   },
   "1165": {
-    "name": "H Rapidash Mount ",
+    "name": "H Rapidash Mount",
     "desc": "A land mount resembling a harrowing Rapidash. Are commonly used by trainers as an alternative to a bike during during their journey."
   },
   "1166": {
-    "name": "Ghost Rider Mask ",
+    "name": "Ghost Rider Mask",
     "desc": "An angry skull with flames blazing on top, representing a popular antihero."
   },
   "1167": {
@@ -4652,7 +4647,7 @@
     "desc": "A mask resembling a grotesque, humanoid creature."
   },
   "1174": {
-    "name": "Cloak ",
+    "name": "Cloak",
     "desc": "A mysterious cloak that Astraea can't seem to use..."
   },
   "1175": {
@@ -4672,7 +4667,7 @@
     "desc": "A cute, blue tail with a white tip. Its furriness is unbearably cute!"
   },
   "1179": {
-    "name": "Froslass Clothes ",
+    "name": "Froslass Clothes",
     "desc": "A snowy outfit with a hollow torso that looks similar to a kimono. It appears to resemble a Froslass."
   },
   "1180": {
@@ -4684,11 +4679,11 @@
     "desc": "A spherical hat that consists of a black rock core covered by ice. The mask appears to resemble a Glalie."
   },
   "1182": {
-    "name": "Ludicolo Clothes ",
+    "name": "Ludicolo Clothes",
     "desc": "An outfit covered with shaggy yellow fur and several zigzagging brown stripes. It appears to resemble a Ludicolo."
   },
   "1183": {
-    "name": "Aurorus Mount ",
+    "name": "Aurorus Mount",
     "desc": "A land mount resembling an Aurorus. Are commonly used by trainers as an alternative to a bike during during their journey."
   },
   "1184": {
@@ -5569,11 +5564,11 @@
     "desc": "[33CCFF]Telekinesis[-]: \nThe user makes the target float with its psychic power. The target is easier to hit for three turns."
   },
   "1405": {
-    "name": "Plumber Clothes Green",
+    "name": "Luigi Clothes",
     "desc": "An outfit with a blue shirt and blue overalls representing a certain popular plumber."
   },
   "1406": {
-    "name": "Plumber Hat Green",
+    "name": "Luigi Hat",
     "desc": "A plumber's hat with a Pokeball embellished on the front. It represents a certain popular plumber."
   },
   "1407": {
@@ -5841,6 +5836,10 @@
     "name": "TZ Clothes",
     "desc": "Clothes that resemble a well-known character in his Bankai form."
   },
+  "1479": {
+    "name": "Pikachu Clothes",
+    "desc": "Clothes resembling a Pikachu."
+  },
   "1480": {
     "name": "Pyroar Mount",
     "desc": "A land mount resembling a Pyroar."
@@ -6071,7 +6070,7 @@
   },
   "1537": {
     "name": "Flying Nimbus",
-    "desc": ""
+    "desc": "A mount to ride on in the shape of an orange cloud!"
   },
   "1538": {
     "name": "Espeon Mount",
@@ -6183,7 +6182,7 @@
   },
   "1566": {
     "name": "Cult Mask",
-    "desc": ""
+    "desc": "An eerie mask with stitches across the mouth!"
   },
   "1567": {
     "name": "Girafarig Tail",
@@ -6275,11 +6274,11 @@
   },
   "1589": {
     "name": "Joker Clothes",
-    "desc": ""
+    "desc": "The stylish clothes of the brutal, dark, and mad villain, Joker!"
   },
   "1590": {
     "name": "Joker Mask",
-    "desc": ""
+    "desc": "The face of the brutal, dark, and mad villain, Joker!"
   },
   "1591": {
     "name": "Sabito Mask",
@@ -6407,15 +6406,1031 @@
   },
   "1623": {
     "name": "Sword",
-    "desc": ""
+    "desc": "A special sword, for when the situation calls for it!"
   },
   "1624": {
     "name": "Shield",
-    "desc": ""
+    "desc": "A special shield, for when the situation calls for it!"
   },
   "1625": {
     "name": "Xmas Teddiursa Hat",
     "desc": "A hat resembling xmas Teddiursa."
+  },
+  "1626": {
+    "name": "Ho-Oh Mount",
+    "desc": "A land mount resembling Ho-Oh. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1627": {
+    "name": "S Ho-Oh Mount",
+    "desc": "A land mount resembling shiny Ho-Oh. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1628": {
+    "name": "Lugia Mount",
+    "desc": "A land mount resembling Lugia. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1629": {
+    "name": "S Lugia Mount",
+    "desc": "A land mount resembling shiny Lugia. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1630": {
+    "name": "Dialga Mount",
+    "desc": "A land mount resembling Dialga. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1631": {
+    "name": "S Dialga Mount",
+    "desc": "A land mount resembling shiny Dialga. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1632": {
+    "name": "XD001 Mount",
+    "desc": "A land mount resembling XD001. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1633": {
+    "name": "Altaria Mount",
+    "desc": "A land mount resembling Altaria. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1634": {
+    "name": "S Altaria Mount",
+    "desc": "A land mount resembling shiny Altaria. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1635": {
+    "name": "Xmas Altaria Mount",
+    "desc": "A land mount resembling Xmas Altaria. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1636": {
+    "name": "Contributor Clothes B",
+    "desc": "A black gi with red highlights, given to helpful or influential members of the community."
+  },
+  "1637": {
+    "name": "Mysterious Candy",
+    "desc": "A mysterious Candy that allows not fully evolved Pokemon to still evolve at level 100."
+  },
+  "1638": {
+    "name": "Contributor Clothes W",
+    "desc": "A white gi with red highlights, given to helpful or influential members of the community."
+  },
+  "1639": {
+    "name": "Elegant Wings",
+    "desc": "A set of Vivillion wings. They always draw the eyes of others around."
+  },
+  "1640": {
+    "name": "Black Fire Wings",
+    "desc": "A set of wings with black flames. The true wings of a phoenix who has been reborn."
+  },
+  "1641": {
+    "name": "BB Fire Wings",
+    "desc": "A set of wings with blue and black flames. The true wings of a phoenix who has been reborn."
+  },
+  "1642": {
+    "name": "Blue Fire Wings",
+    "desc": "A set of wings with blue flames. The true wings of a phoenix who has been reborn."
+  },
+  "1643": {
+    "name": "Cyan Fire Wings",
+    "desc": "A set of wings with cyan flames. The true wings of a phoenix who has been reborn."
+  },
+  "1644": {
+    "name": "Pink Fire Wings",
+    "desc": "A set of wings with pink flames. The true wings of a phoenix who has been reborn."
+  },
+  "1645": {
+    "name": "Purple Fire Wings",
+    "desc": "A set of wings with purple flames. The true wings of a phoenix who has been reborn."
+  },
+  "1646": {
+    "name": "Wario Clothes",
+    "desc": "An outfit with a yellow shirt and blue overalls representing a certain popular plumber."
+  },
+  "1647": {
+    "name": "Wario Hat",
+    "desc": "A plumber's hat with a Pokeball embellished on the front. It represents a certain popular plumber."
+  },
+  "1648": {
+    "name": "Waluigi Clothes",
+    "desc": "An outfit with a purple shirt and blue overalls representing a certain popular plumber."
+  },
+  "1649": {
+    "name": "Waluigi Hat",
+    "desc": "A plumber's hat with a Pokeball embellished on the front. It represents a certain popular plumber."
+  },
+  "1650": {
+    "name": "Goggles",
+    "desc": "Keep your eyes protected with these stylish goggles."
+  },
+  "1651": {
+    "name": "Team Galactic Clothes",
+    "desc": "Impersonate your favourite Sinnoh villains with an outfit stolen from their wardrobes."
+  },
+  "1653": {
+    "name": "Blue Cappy",
+    "desc": "A blue cap."
+  },
+  "1654": {
+    "name": "Gold Cappy",
+    "desc": "A gold cap, perfect to show off your wealth."
+  },
+  "1655": {
+    "name": "Black Bandana",
+    "desc": "The finest in biker fashion, in black."
+  },
+  "1656": {
+    "name": "Blue Bandana",
+    "desc": "The finest in biker fashion, in blue."
+  },
+  "1657": {
+    "name": "Green Bandana",
+    "desc": "The finest in biker fashion, in green."
+  },
+  "1658": {
+    "name": "Red Bandana",
+    "desc": "The finest in biker fashion, in red."
+  },
+  "1659": {
+    "name": "Doublade",
+    "desc": "A well trained Doublade to help keep you safe."
+  },
+  "1660": {
+    "name": "S Doublade",
+    "desc": "A well trained Shiny Doublade to help keep you safe."
+  },
+  "1661": {
+    "name": "Duskull Hat",
+    "desc": "A ghoulish hat made to resemble a Duskull."
+  },
+  "1662": {
+    "name": "S Duskull Hat",
+    "desc": "A ghoulish hat made to resemble a Shiny Duskull."
+  },
+  "1663": {
+    "name": "Toad Hat",
+    "desc": "It's a trend in the Mushroom Kingdom."
+  },
+  "1664": {
+    "name": "Medical Mask",
+    "desc": "A mask to be safe and help you stay healthy."
+  },
+  "1665": {
+    "name": "Medical Mask Pink",
+    "desc": "A pink mask to be safe and help you stay healthy."
+  },
+  "1666": {
+    "name": "Medical Mask Blue",
+    "desc": "A blue mask to be safe and help you stay healthy."
+  },
+  "1667": {
+    "name": "Medical Mask Black",
+    "desc": "A black mask to be safe and help you stay healthy."
+  },
+  "1668": {
+    "name": "Seadra Mount",
+    "desc": "A surf mount resembling Seadra."
+  },
+  "1669": {
+    "name": "S Seadra Mount",
+    "desc": "A surf mount resembling shiny Seadra."
+  },
+  "1670": {
+    "name": "Honedge",
+    "desc": "A well trained Honedge to help keep you safe."
+  },
+  "1671": {
+    "name": "S Honedge",
+    "desc": "A well trained Shiny Honedge to help keep you safe."
+  },
+  "1672": {
+    "name": "Aegislash",
+    "desc": "A well trained Aegislash to help keep you safe."
+  },
+  "1673": {
+    "name": "S Aegislash",
+    "desc": "A well trained Shiny Aegislash to help keep you safe."
+  },
+  "1674": {
+    "name": "Banana",
+    "desc": "A Banana that restores 50 HP when given to a Pokemon."
+  },
+  "1675": {
+    "name": "Plusle Clothes",
+    "desc": "Clothes radiating with positive energy meant to represent Plusle."
+  },
+  "1676": {
+    "name": "Plusle Hat",
+    "desc": "A hat radiating with positive energy meant to represent Plusle."
+  },
+  "1677": {
+    "name": "Minun Clothes",
+    "desc": "Sparky blue clothes made to represent Minun."
+  },
+  "1678": {
+    "name": "Minun Hat",
+    "desc": "A sparky blue hat made to represent Minun."
+  },
+  "1679": {
+    "name": "Fur Coat",
+    "desc": "A plush coat to keep you warm."
+  },
+  "1680": {
+    "name": "Gracidea Flower Black",
+    "desc": "A flower known to have a strong bond to Shaymin."
+  },
+  "1681": {
+    "name": "Gracidea Flower Blue",
+    "desc": "A flower known to have a strong bond to Shaymin."
+  },
+  "1682": {
+    "name": "Gracidea Flower Cyan",
+    "desc": "A flower known to have a strong bond to Shaymin."
+  },
+  "1683": {
+    "name": "Gracidea Flower Magenta",
+    "desc": "A flower known to have a strong bond to Shaymin."
+  },
+  "1684": {
+    "name": "Gracidea Flower Purple",
+    "desc": "A flower known to have a strong bond to Shaymin."
+  },
+  "1685": {
+    "name": "Gracidea Flower Red",
+    "desc": "A flower known to have a strong bond to Shaymin."
+  },
+  "1686": {
+    "name": "Gracidea Flower White",
+    "desc": "A flower known to have a strong bond to Shaymin."
+  },
+  "1687": {
+    "name": "Gracidea Flower Yellow",
+    "desc": "A flower known to have a strong bond to Shaymin."
+  },
+  "1688": {
+    "name": "Shaymin-Sky Mount V",
+    "desc": "A land mount resembling a Valentine Shaymin-Sky. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1689": {
+    "name": "Star",
+    "desc": "A land mount resembling a Valentine Shaymin-Sky. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1690": {
+    "name": "Terrakion Mount",
+    "desc": "A land mount resembling a Terrakion. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1691": {
+    "name": "S Terrakion Mount",
+    "desc": "A land mount resembling a shiny Terrakion. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1692": {
+    "name": "Hippowdon Mount M",
+    "desc": "A land mount resembling a male Hippowdon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1693": {
+    "name": "Hippowdon Mount F",
+    "desc": "A land mount resembling a female Hippowdon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1694": {
+    "name": "S Hippowdon Mount",
+    "desc": "A land mount resembling a shiny Hippowdon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1695": {
+    "name": "Rhyhorn Mount",
+    "desc": "A land mount resembling a Rhyhorn. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1696": {
+    "name": "S Rhyhorn Mount",
+    "desc": "A land mount resembling a shiny Rhyhorn. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1697": {
+    "name": "P Rhyhorn Mount",
+    "desc": "A land mount resembling a pink Rhyhorn. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1698": {
+    "name": "Tauros Mount",
+    "desc": "A land mount resembling a Tauros. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1699": {
+    "name": "S Tauros Mount",
+    "desc": "A land mount resembling a shiny Tauros. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1700": {
+    "name": "Mirror Shard",
+    "desc": "A mysterious shard that seems to be part of a mirror."
+  },
+  "1701": {
+    "name": "Bouffalant Mount",
+    "desc": "A land mount resembling a Bouffalant. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1702": {
+    "name": "S Bouffalant Mount",
+    "desc": "A land mount resembling a shiny Bouffalant. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1703": {
+    "name": "Flareon Mount",
+    "desc": "A land mount resembling a Flareon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1704": {
+    "name": "S Flareon Mount",
+    "desc": "A land mount resembling a shiny Flareon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1705": {
+    "name": "Jolteon Mount",
+    "desc": "A land mount resembling a Jolteon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1706": {
+    "name": "S Jolteon Mount",
+    "desc": "A land mount resembling a shiny Jolteon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1707": {
+    "name": "Furret Mount",
+    "desc": "A land mount resembling a Furret. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1708": {
+    "name": "S Furret Mount",
+    "desc": "A land mount resembling a shiny Furret. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1709": {
+    "name": "Xmas Furret Mount",
+    "desc": "A land mount resembling a Xmas Furret. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1710": {
+    "name": "Bidoof Mount",
+    "desc": "A land mount resembling a Bidoof. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1711": {
+    "name": "S Bidoof Mount",
+    "desc": "A land mount resembling a shiny Bidoof. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1712": {
+    "name": "Pirate Clothes",
+    "desc": ""
+  },
+  "1713": {
+    "name": "Pirate Hat",
+    "desc": ""
+  },
+  "1714": {
+    "name": "Leafeon Mount",
+    "desc": "A land mount resembling a Leafeon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1715": {
+    "name": "S Leafeon Mount",
+    "desc": "A land mount resembling a shiny Leafeon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1716": {
+    "name": "Xmas Leafeon Mount",
+    "desc": "A land mount resembling a Xmas Leafeon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1717": {
+    "name": "Xmas Espeon Mount",
+    "desc": "A land mount resembling a Xmas Espeon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1718": {
+    "name": "Xmas Flareon Mount",
+    "desc": "A land mount resembling a Xmas Flareon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1719": {
+    "name": "Xmas Glaceon Mount",
+    "desc": "A land mount resembling a Xmas Glaceon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1720": {
+    "name": "Xmas Jolteon Mount",
+    "desc": "A land mount resembling a Xmas Jolteon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1721": {
+    "name": "Xmas Sylveon Mount",
+    "desc": "A land mount resembling a Xmas Sylveon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1722": {
+    "name": "Xmas Umbreon Mount",
+    "desc": "A land mount resembling a Xmas Umbreon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1723": {
+    "name": "Xmas Vaporeon Mount",
+    "desc": "A land mount resembling a Xmas Vaporeon."
+  },
+  "1724": {
+    "name": "Gold Tourney Crown",
+    "desc": "A majestic crown that can only be obtained once a year."
+  },
+  "1725": {
+    "name": "Silver Tourney Crown",
+    "desc": "A majestic crown that can only be obtained once a year."
+  },
+  "1726": {
+    "name": "Bronze Tourney Crown",
+    "desc": "A majestic crown that can only be obtained once a year."
+  },
+  "1727": {
+    "name": "Gold Tourney Crown",
+    "desc": "A majestic crown that can only be obtained once a year."
+  },
+  "1728": {
+    "name": "Silver Tourney Crown",
+    "desc": "A majestic crown that can only be obtained once a year."
+  },
+  "1729": {
+    "name": "Bronze Tourney Crown",
+    "desc": "A majestic crown that can only be obtained once a year."
+  },
+  "1730": {
+    "name": "Mega Bracelet",
+    "desc": "A Key Stone accessory that enables Mega Evolution."
+  },
+  "1731": {
+    "name": "Meganium Mount",
+    "desc": "A land mount resembling a Meganium. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1732": {
+    "name": "S Meganium Mount",
+    "desc": "A land mount resembling a shiny Meganium. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1733": {
+    "name": "P Meganium Mount",
+    "desc": "A land mount resembling a pink Meganium. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1734": {
+    "name": "S Pikachu Hat",
+    "desc": "A Hat shaped like a cute shiny Pikachu!"
+  },
+  "1735": {
+    "name": "S Bulbasaur Hat",
+    "desc": "A hat resembling a shiny Bulbasaur!"
+  },
+  "1736": {
+    "name": "S Charmander Hat",
+    "desc": "A hat resembling a shiny Charmander!"
+  },
+  "1737": {
+    "name": "S Squirtle Hat",
+    "desc": "A hat resembling a shiny Squirtle!"
+  },
+  "1738": {
+    "name": "S Teddiursa Hat",
+    "desc": "A hat resembling a shiny Teddiursa!"
+  },
+  "1739": {
+    "name": "S Pancham Hat",
+    "desc": "A hat resembling a shiny Pancham!"
+  },
+  "1740": {
+    "name": "S Cubchoo Hat",
+    "desc": "A hat resembling a shiny Cubchoo!"
+  },
+  "1741": {
+    "name": "Muk-Alolan Mount",
+    "desc": "A land mount resembling a Muk-Alolan. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1742": {
+    "name": "S Muk-Alolan Mount",
+    "desc": "A land mount resembling a shiny Muk-Alolan. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1743": {
+    "name": "Yellow Car",
+    "desc": "A yellow car. Finally, a car that can be used on the walkway."
+  },
+  "1744": {
+    "name": "Black Car",
+    "desc": "A black car. Finally, a car that can be used on the walkway."
+  },
+  "1745": {
+    "name": "Blue Car",
+    "desc": "A blue car. Finally, a car that can be used on the walkway."
+  },
+  "1746": {
+    "name": "Green Car",
+    "desc": "A green car. Finally, a car that can be used on the walkway."
+  },
+  "1747": {
+    "name": "Orange Car",
+    "desc": "An orange car. Finally, a car that can be used on the walkway."
+  },
+  "1748": {
+    "name": "Pink Car",
+    "desc": "A pink car. Finally, a car that can be used on the walkway."
+  },
+  "1749": {
+    "name": "Red Car",
+    "desc": "A red car. Finally, a car that can be used on the walkway."
+  },
+  "1750": {
+    "name": "White Car",
+    "desc": "A white car. Finally, a car that can be used on the walkway."
+  },
+  "1751": {
+    "name": "Purple Car",
+    "desc": "A purple car. Finally, a car that can be used on the walkway."
+  },
+  "1752": {
+    "name": "Red Banana",
+    "desc": "A weird looking banana gifted from a mysterious old man named Konkey Dong."
+  },
+  "1753": {
+    "name": "Blue Pearl",
+    "desc": "Hidden treasure found in the depths of the Eriyadu Island."
+  },
+  "1754": {
+    "name": "Red Stone",
+    "desc": "A red glowing stone only given to the most experienced trainers."
+  },
+  "1755": {
+    "name": "Eevee Hat",
+    "desc": "A Hat shaped like a cute Eevee!"
+  },
+  "1756": {
+    "name": "Shuckle Hat",
+    "desc": "A Hat shaped like a cute Shuckle!"
+  },
+  "1757": {
+    "name": "Dunsparce Hat",
+    "desc": "A Hat shaped like a cute Dunsparce!"
+  },
+  "1758": {
+    "name": "Munchlax Hat",
+    "desc": "A Hat shaped like a cute Munchlax!"
+  },
+  "1759": {
+    "name": "Vulpix Hat",
+    "desc": "A Hat shaped like a cute Vulpix!"
+  },
+  "1760": {
+    "name": "S Eevee Hat",
+    "desc": "A Hat shaped like a cute shiny Eevee!"
+  },
+  "1761": {
+    "name": "S Shuckle Hat",
+    "desc": "A Hat shaped like a cute shiny Shuckle!"
+  },
+  "1762": {
+    "name": "S Dunsparce Hat",
+    "desc": "A Hat shaped like a cute shiny Dunsparce!"
+  },
+  "1763": {
+    "name": "S Munchlax Hat",
+    "desc": "A Hat shaped like a cute shiny Munchlax!"
+  },
+  "1764": {
+    "name": "S Vulpix Hat",
+    "desc": "A Hat shaped like a cute shiny Vulpix!"
+  },
+  "1765": {
+    "name": "Mudsale Mount",
+    "desc": "A land mount resembling a Mudsdale. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1766": {
+    "name": "S Mudsale Mount",
+    "desc": "A land mount resembling a shiny Mudsdale. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1767": {
+    "name": "Honchkrow Mount",
+    "desc": "A land mount resembling a Honchkrow. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1768": {
+    "name": "S Honchkrow Mount",
+    "desc": "A land mount resembling a shiny Honchkrow. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1769": {
+    "name": "Stoutland Mount",
+    "desc": "A land mount resembling a Stoutland. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1770": {
+    "name": "S Stoutland Mount",
+    "desc": "A land mount resembling a shiny Stoutland. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1771": {
+    "name": "Blastoise Mount",
+    "desc": "A surf mount resembling a Blastoise."
+  },
+  "1772": {
+    "name": "S Blastoise Mount",
+    "desc": "A surf mount resembling a shiny Blastoise."
+  },
+  "1773": {
+    "name": "TDWL Hat",
+    "desc": "A fancy hat known to be worn by a known character!"
+  },
+  "1774": {
+    "name": "Devil Horns",
+    "desc": ""
+  },
+  "1775": {
+    "name": "JDH Mask",
+    "desc": ""
+  },
+  "1776": {
+    "name": "JDH Clothes",
+    "desc": ""
+  },
+  "1777": {
+    "name": "Drifloon Mount",
+    "desc": "A land mount resembling a Drifloon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1778": {
+    "name": "S Drifloon Mount",
+    "desc": "A land mount resembling a shiny Drifloon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1779": {
+    "name": "Poliweird Mask",
+    "desc": ""
+  },
+  "1780": {
+    "name": "Biker Clothes",
+    "desc": ""
+  },
+  "1781": {
+    "name": "Rotom Backpack",
+    "desc": ""
+  },
+  "1782": {
+    "name": "S Rotom Backpack",
+    "desc": ""
+  },
+  "1783": {
+    "name": "Squirtle Glasses",
+    "desc": ""
+  },
+  "1784": {
+    "name": "Arceus Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1785": {
+    "name": "S Arceus Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1786": {
+    "name": "Arceus-Draco Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1787": {
+    "name": "S Arceus-Draco Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1788": {
+    "name": "Arceus-Dread Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1789": {
+    "name": "S Arceus-Dread Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1790": {
+    "name": "Arceus-Earth Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1791": {
+    "name": "S Arceus-Earth Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1792": {
+    "name": "Arceus-Fist Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1793": {
+    "name": "S Arceus-Fist Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1794": {
+    "name": "Arceus-Flame Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1795": {
+    "name": "S Arceus-Flame Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1796": {
+    "name": "Arceus-Icicle Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1797": {
+    "name": "S Arceus-Icicle Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1798": {
+    "name": "Arceus-Insect Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1799": {
+    "name": "S Arceus-Insect Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1800": {
+    "name": "Arceus-Iron Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1801": {
+    "name": "S Arceus-Iron Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1802": {
+    "name": "Arceus-Meadow Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1803": {
+    "name": "S Arceus-Meadow Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1804": {
+    "name": "Arceus-Mind Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1805": {
+    "name": "S Arceus-Mind Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1806": {
+    "name": "Arceus-Pixie Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1807": {
+    "name": "S Arceus-Pixie Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1808": {
+    "name": "Arceus-Sky Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1809": {
+    "name": "S Arceus-Sky Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1810": {
+    "name": "Arceus-Splash Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1811": {
+    "name": "S Arceus-Splash Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1812": {
+    "name": "Arceus-Spooky Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1813": {
+    "name": "S Arceus-Spooky Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1814": {
+    "name": "Arceus-Stone Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1815": {
+    "name": "S Arceus-Stone Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1816": {
+    "name": "Arceus-Toxic Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1817": {
+    "name": "S Arceus-Toxic Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1818": {
+    "name": "Arceus-Zap Mount",
+    "desc": "A land mount resembling an Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1819": {
+    "name": "S Arceus-Zap Mount",
+    "desc": "A land mount resembling a shiny Arceus. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1820": {
+    "name": "Flygon Mount",
+    "desc": "A land mount resembling a Flygon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1821": {
+    "name": "S Flygon Mount",
+    "desc": "A land mount resembling a shiny Flygon. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1822": {
+    "name": "Ditto Mount",
+    "desc": "A land mount resembling a Ditto. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1823": {
+    "name": "S Ditto Mount",
+    "desc": "A land mount resembling a shiny Ditto. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1824": {
+    "name": "Lotad Mount",
+    "desc": "A surf mount resembling Lotad."
+  },
+  "1825": {
+    "name": "S Lotad Mount",
+    "desc": "A surf mount resembling shiny Lotad."
+  },
+  "1826": {
+    "name": "Purple Motorbike",
+    "desc": "A yellow motorbike. Finally, a motorbike that can be used on the walkway."
+  },
+  "1827": {
+    "name": "Pink Motorbike",
+    "desc": "A pink motorbike. Finally, a motorbike that can be used on the walkway."
+  },
+  "1828": {
+    "name": "Orange Motorbike",
+    "desc": "An orange motorbike. Finally, a motorbike that can be used on the walkway."
+  },
+  "1829": {
+    "name": "Green Motorbike",
+    "desc": "A green motorbike. Finally, a motorbike that can be used on the walkway."
+  },
+  "1830": {
+    "name": "Blue Motorbike",
+    "desc": "A blue motorbike. Finally, a motorbike that can be used on the walkway."
+  },
+  "1831": {
+    "name": "Gogoat Mount",
+    "desc": "A land mount resembling a Gogoat. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1832": {
+    "name": "S Gogoat Mount",
+    "desc": "A land mount resembling a shiny Gogoat. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1833": {
+    "name": "Galvantula Mount",
+    "desc": "A land mount resembling a Galvantula. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1834": {
+    "name": "S Galvantula Mount",
+    "desc": "A land mount resembling a shiny Galvantula. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1835": {
+    "name": "Emolga Hat",
+    "desc": "A Hat shaped like a cute Emolga!"
+  },
+  "1836": {
+    "name": "S Emolga Hat",
+    "desc": "A Hat shaped like a cute shiny Emolga!"
+  },
+  "1837": {
+    "name": "Zorua Hat",
+    "desc": "A Hat shaped like a cute Zorua!"
+  },
+  "1838": {
+    "name": "S Zorua Hat",
+    "desc": "A Hat shaped like a cute shiny Zorua!"
+  },
+  "1839": {
+    "name": "Oshawott Hat",
+    "desc": "A Hat shaped like a cute Oshawott!"
+  },
+  "1840": {
+    "name": "S Oshawott Hat",
+    "desc": "A Hat shaped like a cute shiny Oshawott!"
+  },
+  "1841": {
+    "name": "Pachirisu Hat",
+    "desc": "A Hat shaped like a cute Pachirisu!"
+  },
+  "1842": {
+    "name": "S Pachirisu Hat",
+    "desc": "A Hat shaped like a cute shiny Pachirisu!"
+  },
+  "1843": {
+    "name": "Houndoom Mount",
+    "desc": "A land mount resembling a Houndoom."
+  },
+  "1844": {
+    "name": "S Houndoom Mount",
+    "desc": "A land mount resembling a shiny Houndoom."
+  },
+  "1845": {
+    "name": "Vulpix-Alolan Hat",
+    "desc": "A Hat shaped like a cute Vulpix-Alolan!"
+  },
+  "1846": {
+    "name": "S Vulpix-Alolan Hat",
+    "desc": "A Hat shaped like a cute shiny Vulpix-Alolan!"
+  },
+  "1847": {
+    "name": "Dive Mask",
+    "desc": "A mask worn by divers underwater over the eyes or face to allow them to see clearly underwater, having a watertight seal around its edges to hold it securely to the face."
+  },
+  "1848": {
+    "name": "Sturdy Hiking Boots",
+    "desc": "Durable hiking boots with great support and stability to climb walls right next to waterfalls."
+  },
+  "1849": {
+    "name": "Rotom-Wash Mount",
+    "desc": "A land mount resembling a Rotom-Wash. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1850": {
+    "name": "S Rotom-Wash Mount",
+    "desc": "A land mount resembling a shiny Rotom-Wash. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1851": {
+    "name": "Gyarados Mount",
+    "desc": "A land mount resembling a mega Gyarados. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1852": {
+    "name": "S Gyarados Mount",
+    "desc": "A land mount resembling a shiny mega Gyarados. It's used by trainers as an alternative to a bike during their journey."
+  },
+  "1853": {
+    "name": "Red Motorbike",
+    "desc": "A red motorbike. Finally, a motorbike that can be used on the walkway."
+  },
+  "1854": {
+    "name": "Witch's Broom",
+    "desc": "A fyling broom of an unknown Witch."
+  },
+  "1855": {
+    "name": "Witch Hat 2",
+    "desc": "The Black hat of an unknown Witch."
+  },
+  "1856": {
+    "name": "Motorbike Helm",
+    "desc": "A motorbike helm, it's always good to be safe!"
+  },
+  "1857": {
+    "name": "Oni Mask Red",
+    "desc": ""
+  },
+  "1858": {
+    "name": "Oni Mask Blue",
+    "desc": ""
+  },
+  "1859": {
+    "name": "Oni Mask Green",
+    "desc": ""
+  },
+  "1860": {
+    "name": "Plague Doctor Hat",
+    "desc": ""
+  },
+  "1861": {
+    "name": "Plague Doctor Mask",
+    "desc": ""
+  },
+  "1862": {
+    "name": "Plague Doctor Combo",
+    "desc": ""
+  },
+  "1863": {
+    "name": "Plague Doctor Clothes",
+    "desc": ""
+  },
+  "1864": {
+    "name": "Ghost Outfit 17",
+    "desc": "A spooky ghost outfit."
+  },
+  "1865": {
+    "name": "Ghost Outfit 18",
+    "desc": "A spooky ghost outfit."
+  },
+  "1866": {
+    "name": "Donphan Mount",
+    "desc": "A land mount resembling a Donphan. Are commonly used by trainers as an alternative to a bike during during their journey."
+  },
+  "1867": {
+    "name": "S Donphan Mount",
+    "desc": "A land mount resembling a shiny Donphan. Are commonly used by trainers as an alternative to a bike during during their journey."
+  },
+  "1868": {
+    "name": "Linoone Mount",
+    "desc": "A land mount resembling a Linoone. Are commonly used by trainers as an alternative to a bike during during their journey."
+  },
+  "1869": {
+    "name": "S Linoone Mount",
+    "desc": "A land mount resembling a shiny Linoone. Are commonly used by trainers as an alternative to a bike during during their journey."
+  },
+  "1870": {
+    "name": "Mega Gengar Hat",
+    "desc": ""
+  },
+  "1871": {
+    "name": "Mega Gengar Clothes",
+    "desc": ""
+  },
+  "1872": {
+    "name": "S Mega Gengar Hat",
+    "desc": ""
+  },
+  "1873": {
+    "name": "S Mega Gengar Clothes",
+    "desc": ""
+  },
+  "1874": {
+    "name": "Reaper Outfit",
+    "desc": ""
+  },
+  "1875": {
+    "name": "Scythe",
+    "desc": ""
+  },
+  "1876": {
+    "name": "Angel Wings Blue",
+    "desc": "Beautiful angel wings."
+  },
+  "1877": {
+    "name": "Angel Wings Pink",
+    "desc": "Beautiful angel wings"
+  },
+  "1878": {
+    "name": "Angel Wings",
+    "desc": "Beautiful angel wings"
+  },
+  "1879": {
+    "name": "Angel Wings Orange",
+    "desc": "Beautiful angel wings"
+  },
+  "1880": {
+    "name": "Angel Wings Black",
+    "desc": "Beautiful angel wings"
   },
   "1910": {
     "name": "Mysterious Ticket",

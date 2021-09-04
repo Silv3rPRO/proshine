@@ -87,11 +87,11 @@ namespace PROProtocol
             return new Npc(Id, Name, IsBattler, Type, PositionX, PositionY, Direction, LosLength, Path);
         }
 
-        public bool IsInLineOfSight(int x, int y)
+        public bool IsInLineOfSight(int x, int y, bool skipMovingNpc = false)
         {
             if (x != PositionX && y != PositionY) return false;
             int distance = GameClient.DistanceBetween(PositionX, PositionY, x, y);
-            if (distance > LosLength) return false;
+            if (distance > LosLength || (skipMovingNpc && IsMoving)) return false;
             switch (Direction)
             {
                 case Direction.Up:

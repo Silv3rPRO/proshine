@@ -2831,7 +2831,7 @@
     "accuracy": 90,
     "type": "electric",
     "status": "y",
-    "damagetype": "p",
+    "damagetype": "s",
     "desc": "The user launches a weak jolt of electricity that paralyzes the target."
   },
   "315": {
@@ -2976,7 +2976,7 @@
     "type": "normal",
     "status": "n",
     "damagetype": "p",
-    "desc": "None"
+    "desc": "Vise Grip inflicts damage and has no secondary effect."
   },
   "331": {
     "name": "Vine Whip",
@@ -4627,7 +4627,7 @@
   },
   "514": {
     "name": "Fell Stinger",
-    "power": 30,
+    "power": 50,
     "accuracy": 100,
     "type": "bug",
     "status": "n",
@@ -6406,5 +6406,518 @@
     "status": "y",
     "damagetype": "z",
     "desc": "Psychic type Z-Move."
+  },
+  "713": {
+    "name": "Dynamax Cannon",
+    "power": 100,
+    "accuracy": 100,
+    "type": "dragon",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "The user unleashes a strong beam from its core. This move deals twice the damage if the target is Dynamaxed."
+  },
+  "714": {
+    "name": "Snipe Shot",
+    "power": 80,
+    "accuracy": 100,
+    "type": "water",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "The user ignores the effects of opposing Pokémon's moves and Abilities that draw in moves, allowing this move to hit the chosen target."
+  },
+  "715": {
+    "name": "Jaw Lock",
+    "power": 80,
+    "accuracy": 100,
+    "type": "dark",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "This move prevents the user and the target from switching out until either of them faints. The effect goes away if either of the Pokémon leaves the field."
+  },
+  "716": {
+    "name": "Stuff Cheeks",
+    "power": -1,
+    "accuracy": -1,
+    "type": "normal",
+    "status": "y",
+    "damagetype": "s",
+    "desc": "The user eats its held Berry, then sharply raises its Defense stat."
+  },
+  "717": {
+    "name": "No Retreat",
+    "power": -1,
+    "accuracy": -1,
+    "type": "fighting",
+    "status": "y",
+    "damagetype": "s",
+    "desc": "This move raises all the user's stats but prevents the user from switching out or fleeing."
+  },
+  "718": {
+    "name": "Tar Shot",
+    "power": -1,
+    "accuracy": 100,
+    "type": "rock",
+    "status": "y",
+    "damagetype": "s",
+    "desc": "The user pours sticky tar over the target, lowering the target's Speed stat. The target becomes weaker to Fire-type moves."
+  },
+  "719": {
+    "name": "Magic Powder",
+    "power": -1,
+    "accuracy": 100,
+    "type": "psychic",
+    "status": "y",
+    "damagetype": "s",
+    "desc": "The user scatters a cloud of magic powder that changes the target to Psychic type."
+  },
+  "720": {
+    "name": "Dragon Darts",
+    "power": 50,
+    "accuracy": 100,
+    "type": "dragon",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user attacks twice using Dreepy. If there are two targets, this move hits each target once."
+  },
+  "721": {
+    "name": "Tea Time",
+    "power": -1,
+    "accuracy": -1,
+    "type": "normal",
+    "status": "y",
+    "damagetype": "s",
+    "desc": "The user has teatime with all the Pokémon in the battle. Each Pokémon eats its held Berry."
+  },
+  "722": {
+    "name": "Octolock",
+    "power": -1,
+    "accuracy": 100,
+    "type": "fighting",
+    "status": "y",
+    "damagetype": "s",
+    "desc": "The user locks the target in and prevents it from fleeing. This move also lowers the target's Defense and Sp. Def every turn."
+  },
+  "723": {
+    "name": "Bolt Beak",
+    "power": 85,
+    "accuracy": 100,
+    "type": "Electric",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user stabs the target with its electrified beak. If the user attacks before the target, the power of this move is doubled."
+  },
+  "724": {
+    "name": "Fishious Rend",
+    "power": 85,
+    "accuracy": 100,
+    "type": "water",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user rends the target with its hard gills. If the user attacks before the target, the power of this move is doubled."
+  },
+  "725": {
+    "name": "Court Change",
+    "power": -1,
+    "accuracy": -1,
+    "type": "normal",
+    "status": "y",
+    "damagetype": "s",
+    "desc": "With its mysterious power, the user swaps the effects on either side of the field."
+  },
+  "726": {
+    "name": "Clangorous Soul",
+    "power": -1,
+    "accuracy": -1,
+    "type": "dragon",
+    "status": "y",
+    "damagetype": "s",
+    "desc": "The user raises all its stats by using some of its HP."
+  },
+  "727": {
+    "name": "Body Press",
+    "power": 80,
+    "accuracy": 100,
+    "type": "fighting",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user attacks by slamming its body into the target. The higher the user's Defense, the more damage it can inflict on the target."
+  },
+  "728": {
+    "name": "Decorate",
+    "power": -1,
+    "accuracy": -1,
+    "type": "Fairy",
+    "status": "y",
+    "damagetype": "s",
+    "desc": "The user sharply raises the target's Attack and Sp. Atk stats by decorating the target."
+  },
+  "729": {
+    "name": "Drum Beating",
+    "power": 80,
+    "accuracy": 100,
+    "type": "grass",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user plays its drum, controlling the drum's roots to attack the target. This also lowers the target's Speed stat."
+  },
+  "730": {
+    "name": "Snap Trap",
+    "power": 35,
+    "accuracy": 100,
+    "type": "grass",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user snares the target in a snap trap for four to five turns."
+  },
+  "731": {
+    "name": "Pyro Ball",
+    "power": 120,
+    "accuracy": 90,
+    "type": "fire",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user attacks by igniting a small stone and launching it as a fiery ball at the target. This may also leave the target with a burn."
+  },
+  "732": {
+    "name": "Behemoth Blade",
+    "power": 100,
+    "accuracy": 100,
+    "type": "steel",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user becomes a gigantic sword and cuts the target. This move deals twice the damage if the target is Dynamaxed."
+  },
+  "733": {
+    "name": "Behemoth Bash",
+    "power": 100,
+    "accuracy": 100,
+    "type": "steel",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user becomes a gigantic shield and cuts the target. This move deals twice the damage if the target is Dynamaxed."
+  },
+  "734": {
+    "name": "Aura Wheel",
+    "power": 110,
+    "accuracy": 100,
+    "type": "electric",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "Morpeko attacks and raises its Speed with the energy stored in its cheeks. This move's type changes depending on the user's form."
+  },
+  "735": {
+    "name": "Breaking Swipe",
+    "power": 60,
+    "accuracy": 100,
+    "type": "dragon",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user swings its tough tail wildly and attacks opposing Pokémon. This also lowers their Attack stats."
+  },
+  "736": {
+    "name": "Branch Poke",
+    "power": 40,
+    "accuracy": 100,
+    "type": "grass",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user attacks the target by poking it with a sharply pointed branch."
+  },
+  "737": {
+    "name": "Overdrive",
+    "power": 80,
+    "accuracy": 100,
+    "type": "electric",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "The user attacks opposing Pokémon by twanging a guitar or bass guitar, causing a huge echo and strong vibration."
+  },
+  "738": {
+    "name": "Apple Acid",
+    "power": 80,
+    "accuracy": 100,
+    "type": "grass",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "The user attacks the target with an acidic liquid created from tart apples. This also lowers the target's Sp. Def stat."
+  },
+  "739": {
+    "name": "Grav Apple",
+    "power": 80,
+    "accuracy": 100,
+    "type": "grass",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user attacks the target with an acidic liquid created from tart apples. This also lowers the target's Defense stat."
+  },
+  "740": {
+    "name": "Spirit Break",
+    "power": 75,
+    "accuracy": 100,
+    "type": "fairy",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user attacks the target with so much force that it could break the target's spirit. This also lowers the target's Sp. Atk stat."
+  },
+  "741": {
+    "name": "Strange Steam",
+    "power": 90,
+    "accuracy": 95,
+    "type": "fairy",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "The user attacks the target by emitting steam. This may also confuse the target."
+  },
+  "742": {
+    "name": "Life Dew",
+    "power": -1,
+    "accuracy": -1,
+    "type": "water",
+    "status": "y",
+    "damagetype": "s",
+    "desc": "The user scatters mysterious water around and restores the HP of itself and its ally Pokémon in the battle."
+  },
+  "743": {
+    "name": "Obstruct",
+    "power": -1,
+    "accuracy": -1,
+    "type": "dark",
+    "status": "y",
+    "damagetype": "s",
+    "desc": "This move enables the user to protect itself from all attacks. Its chance of failing rises if it is used in succession. Direct contact harshly lowers the attacker's Defense stat."
+  },
+  "744": {
+    "name": "False Surrender",
+    "power": 80,
+    "accuracy": -1,
+    "type": "dark",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user pretends to bow its head, but then it stabs the target with its disheveled hair. This attack never misses."
+  },
+  "745": {
+    "name": "Meteor Assault",
+    "power": 150,
+    "accuracy": 100,
+    "type": "fighting",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user attacks wildly with its thick leek. The user can't move on the next turn, because the force of this move makes it stagger."
+  },
+  "746": {
+    "name": "Eterna Beam",
+    "power": 160,
+    "accuracy": 90,
+    "type": "dragon",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "This is Eternatus's most powerful attack in its original form. The user can't move on the next turn."
+  },
+  "747": {
+    "name": "Steel Beam",
+    "power": 140,
+    "accuracy": 95,
+    "type": "steel",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "The user fires a beam of steel that it collected from its entire body. This also damages the user."
+  },
+  "748": {
+    "name": "Expanding Force",
+    "power": 80,
+    "accuracy": 100,
+    "type": "psychic",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "The user attacks the target with its psychic power. This move's power goes up and damages all opposing Pokémon on Psychic Terrain."
+  },
+  "749": {
+    "name": "Steel Roller",
+    "power": 130,
+    "accuracy": 100,
+    "type": "steel",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user attacks while destroying the terrain. This move fails when the ground hasn't turned into a terrain."
+  },
+  "750": {
+    "name": "Scale Shot",
+    "power": 25,
+    "accuracy": 90,
+    "type": "dragon",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user attacks by shooting scales two to five times in a row. This move boosts the user's Speed stat but lowers its Defense stat."
+  },
+  "751": {
+    "name": "Meteor Beam",
+    "power": 120,
+    "accuracy": 90,
+    "type": "rock",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "In this two-turn attack, the user gathers space power and boosts its Sp. Atk stat, then attacks the target on the next turn."
+  },
+  "752": {
+    "name": "Shell Side Arm",
+    "power": 90,
+    "accuracy": 100,
+    "type": "poison",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "This move inflicts physical or special damage, whichever will be more effective. This may also poison the target."
+  },
+  "753": {
+    "name": "Misty Explosion",
+    "power": 100,
+    "accuracy": 100,
+    "type": "fairy",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "The user attacks everything around it and faints upon using this move. This move's power is increased on Misty Terrain."
+  },
+  "754": {
+    "name": "Grassy Glide",
+    "power": 70,
+    "accuracy": 100,
+    "type": "grass",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "Gliding on the ground, the user attacks the target. This move always goes first on Grassy Terrain."
+  },
+  "755": {
+    "name": "Rising Voltage",
+    "power": 70,
+    "accuracy": 100,
+    "type": "electric",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "The user attacks with electric voltage rising from the ground. This move's power doubles when the target is on Electric Terrain."
+  },
+  "756": {
+    "name": "Terrain Pulse",
+    "power": 50,
+    "accuracy": 100,
+    "type": "normal",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "The user utilizes the power of the terrain to attack. This move's type and power changes depending on the terrain when it's used."
+  },
+  "757": {
+    "name": "Skitter Smack",
+    "power": 70,
+    "accuracy": 90,
+    "type": "bug",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user skitters behind the target to attack. This also lowers the target's Sp. Atk stat."
+  },
+  "758": {
+    "name": "Burning Jealousy",
+    "power": 70,
+    "accuracy": 100,
+    "type": "fire",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "The user attacks with energy from jealousy. This leaves all opposing Pokémon that have had their stats boosted during the turn with a burn."
+  },
+  "759": {
+    "name": "Lash Out",
+    "power": 75,
+    "accuracy": 100,
+    "type": "dark",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user lashes out to vent its frustration toward the target. If its stats were lowered during the turn, the power of this move is doubled."
+  },
+  "760": {
+    "name": "Poltergeist",
+    "power": 110,
+    "accuracy": 90,
+    "type": "ghost",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user attacks the target by controlling the target's item. The move fails if the target doesn't have an item."
+  },
+  "761": {
+    "name": "Corrosive Gas",
+    "power": -1,
+    "accuracy": 100,
+    "type": "poison",
+    "status": "y",
+    "damagetype": "s",
+    "desc": "The user surrounds everything around it with highly acidic gas and melts away items they hold."
+  },
+  "762": {
+    "name": "Coaching",
+    "power": -1,
+    "accuracy": -1,
+    "type": "fighting",
+    "status": "y",
+    "damagetype": "s",
+    "desc": "The user properly coaches its ally Pokémon, boosting their Attack and Defense stats."
+  },
+  "763": {
+    "name": "Flip Turn",
+    "power": 60,
+    "accuracy": 100,
+    "type": "water",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "After making its attack, the user rushes back to switch places with a party Pokémon in waiting."
+  },
+  "764": {
+    "name": "Triple Axel",
+    "power": 20,
+    "accuracy": 90,
+    "type": "ice",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "A consecutive three-kick attack that becomes more powerful with each successful hit."
+  },
+  "765": {
+    "name": "Dual Wingbeat",
+    "power": 40,
+    "accuracy": 90,
+    "type": "flying",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user slams the target with its wings. The target is hit twice in a row."
+  },
+  "766": {
+    "name": "Scorching Sands",
+    "power": 70,
+    "accuracy": 100,
+    "type": "ground",
+    "status": "n",
+    "damagetype": "s",
+    "desc": "The user throws scorching sand at the target to attack. This may also leave the target with a burn."
+  },
+  "767": {
+    "name": "Jungle Healing",
+    "power": -1,
+    "accuracy": -1,
+    "type": "grass",
+    "status": "y",
+    "damagetype": "s",
+    "desc": "The user becomes one with the jungle, restoring HP and healing any status conditions of itself and its ally Pokémon in battle."
+  },
+  "768": {
+    "name": "Wicked Blow",
+    "power": 80,
+    "accuracy": 100,
+    "type": "dark",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user, having mastered the Dark style, strikes the target with a fierce blow. This attack always results in a critical hit."
+  },
+  "769": {
+    "name": "Surging Strikes",
+    "power": 25,
+    "accuracy": 100,
+    "type": "water",
+    "status": "n",
+    "damagetype": "p",
+    "desc": "The user, having mastered the Water style, strikes the target with a flowing motion three times in a row. This attack always results in a critical hit."
   }
 }

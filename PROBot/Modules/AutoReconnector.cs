@@ -95,12 +95,14 @@ namespace PROBot.Modules
             }
         }
 
-        private void Client_AuthenticationFailed(AuthenticationResult result)
+        private void Client_AuthenticationFailed(string message)
         {
             _relogging = false;
-            if (result == AuthenticationResult.InvalidUser || result == AuthenticationResult.InvalidPassword
+            message = message.ToLowerInvariant();
+            if (/*result == AuthenticationResult.InvalidUser || result == AuthenticationResult.InvalidPassword
                 || result == AuthenticationResult.InvalidVersion || result == AuthenticationResult.Banned
-                || result == AuthenticationResult.EmailNotActivated)
+                || result == AuthenticationResult.EmailNotActivated*/
+                message.Contains("invalid") || message.Contains("ban") || message.Contains("email"))
             {
                 IsEnabled = false;
                 _reconnecting = false;

@@ -70,17 +70,15 @@ namespace PROProtocol
             StateReady = false;
         }
 
-        public static string FixDeviceId(Guid deviceId)
+        public static string ReplaceSumByte(string id)
         {
-            var id = deviceId.ToString();
-            // Last byte of the ID is the last byte of the total GUID ASCII Value's Sum
-            id = id.Substring(0, id.Length - 2);
+            id = id.Substring(0, 34);
             int sum = 0;
             for (int i = 0; i < id.Length; i++)
             {
                 sum += id[i];
             }
-            id += (sum & 0xff).ToString("X2"); // need the last byte
+            id += (sum & 0xff).ToString("x2"); // need the last byte
             return id;
         }
     }

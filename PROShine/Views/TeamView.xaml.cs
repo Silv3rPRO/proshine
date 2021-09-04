@@ -162,7 +162,7 @@ namespace PROShine
                 InventoryItem item = _bot.Game.Items.Find(i => i.Name == itemName);
                 if (item != null)
                 {
-                    _bot.Game.SendGiveItem(pokemon.Uid, item.Id);
+                    _bot.Game.SendGiveItem(pokemon.DatabaseId, item.Id);
                 }
             }
         }
@@ -173,7 +173,7 @@ namespace PROShine
             Pokemon pokemon = (Pokemon)PokemonsListView.SelectedItems[0];
             lock (_bot)
             {
-                _bot.Game.SendTakeItem(pokemon.Uid);
+                _bot.Game.SendTakeItem(pokemon.DatabaseId);
             }
         }
     }

@@ -133,6 +133,7 @@ namespace PROBot.Scripting
             _lua.Globals["isAccountMember"] = new Func<bool>(IsAccountMember);
 
             _lua.Globals["getPokemonId"] = new Func<int, int>(GetPokemonId);
+            _lua.Globals["getPokemonDatabaseId"] = new Func<int, int>(GetPokemonDatabaseId);
             _lua.Globals["getPokemonName"] = new Func<int, string>(GetPokemonName);
             _lua.Globals["getPokemonHealth"] = new Func<int, int>(GetPokemonHealth);
             _lua.Globals["getPokemonHealthPercent"] = new Func<int, int>(GetPokemonHealthPercent);
@@ -212,9 +213,10 @@ namespace PROBot.Scripting
             _lua.Globals["getCurrentPCBoxId"] = new Func<int>(GetCurrentPCBoxId);
             _lua.Globals["getCurrentPCBoxSize"] = new Func<int>(GetCurrentPCBoxSize);
             _lua.Globals["getPCBoxCount"] = new Func<int>(GetPCBoxCount);
-            _lua.Globals["getPCPokemonCount"] = new Func<int>(GetPCPokemonCount);
+            //_lua.Globals["getPCPokemonCount"] = new Func<int>(GetPCPokemonCount);
 
             _lua.Globals["getPokemonIdFromPC"] = new Func<int, int, int>(GetPokemonIdFromPC);
+            _lua.Globals["getPokemonDatabaseIdFromPC"] = new Func<int, int, int>(GetPokemonDatabaseIdFromPC);
             _lua.Globals["getPokemonNameFromPC"] = new Func<int, int, string>(GetPokemonNameFromPC);
             _lua.Globals["getPokemonHealthFromPC"] = new Func<int, int, int>(GetPokemonHealthFromPC);
             _lua.Globals["getPokemonHealthPercentFromPC"] = new Func<int, int, int>(GetPokemonHealthPercentFromPC);
@@ -712,6 +714,17 @@ namespace PROBot.Scripting
                 return 0;
             }
             return Bot.Game.Team[index - 1].Id;
+        }
+
+        // API: Returns the Database ID of the specified pokémon in the team.
+        private int GetPokemonDatabaseId(int index)
+        {
+            if (index < 1 || index > Bot.Game.Team.Count)
+            {
+                Fatal("error: getPokemonDatabaseId: tried to retrieve the non-existing pokemon " + index + ".");
+                return 0;
+            }
+            return Bot.Game.Team[index - 1].DatabaseId;
         }
 
         // API: Returns the name of the specified pokémon in the team.
@@ -1884,19 +1897,19 @@ namespace PROBot.Scripting
         // API: Returns true if the bot is checking for npc interactions.
         private bool IsNpcInteractionsEnabled()
         {
-            return Bot.Game.IsNpcInteractionsOn;
+            return Bot.Game.DisableMovingNpcInteractions;
         }
 
         // API: Enables npc interactions.
         private bool EnableNpcInteractions()
         {
-            return Bot.Game.IsNpcInteractionsOn = true;
+            return Bot.Game.DisableMovingNpcInteractions = true;
         }
 
         // API: Disables npc interactions.
         private bool DisableNpcInteractions()
         {
-            return !(Bot.Game.IsNpcInteractionsOn = false);
+            return !(Bot.Game.DisableMovingNpcInteractions = false);
         }
 
         private delegate int GetTimeDelegate(out int minute);
@@ -2030,19 +2043,18 @@ namespace PROBot.Scripting
             return Bot.Game.CurrentPCBoxId;
         }
 
-        // API: Return the number of non-empty boxes in the PC
+        // API: Return the number of boxes in the PC
         private int GetPCBoxCount()
         {
-            // The PCGreatestUid is only known after the first box refresh
-            if (!Bot.Game.IsPCOpen || Bot.Game.PCGreatestUid == -1 || Bot.Game.IsPCBoxRefreshing)
+            if (!Bot.Game.IsPCOpen || Bot.Game.IsPCBoxRefreshing)
             {
                 return -1;
             }
-            return Bot.Game.GetBoxIdFromPokemonUid(Bot.Game.PCGreatestUid);
+            return 67; // hardcoded in the client
         }
 
         // API: Return the number of pokemon in the PC
-        private int GetPCPokemonCount()
+        /*private int GetPCPokemonCount()
         {
             // The PCGreatestUid is only known after the first box refresh
             if (!Bot.Game.IsPCOpen || Bot.Game.PCGreatestUid == -1 || Bot.Game.IsPCBoxRefreshing)
@@ -2050,7 +2062,7 @@ namespace PROBot.Scripting
                 return -1;
             }
             return Bot.Game.PCGreatestUid - 7;
-        }
+        }*/
 
         // API: Is the currentPcBox refreshed yet?
         private bool IsCurrentPCBoxRefreshed()
@@ -2110,11 +2122,21 @@ namespace PROBot.Scripting
         // API: Pokedex ID of the pokemon of the current box matching the ID.
         private int GetPokemonIdFromPC(int boxId, int boxPokemonId)
         {
-            if (!IsPCAccessValid("getPokemonNationalIdFromPC", boxId, boxPokemonId))
+            if (!IsPCAccessValid("getPokemonIdFromPC", boxId, boxPokemonId))
             {
                 return -1;
             }
             return Bot.Game.CurrentPCBox[boxPokemonId - 1].Id;
+        }
+
+        // API: Database ID of the pokemon of the current box matching the ID.
+        private int GetPokemonDatabaseIdFromPC(int boxId, int boxPokemonId)
+        {
+            if (!IsPCAccessValid("getPokemonDatabaseIdFromPC", boxId, boxPokemonId))
+            {
+                return -1;
+            }
+            return Bot.Game.CurrentPCBox[boxPokemonId - 1].DatabaseId;
         }
 
         // API: PROShine custom unique ID of the pokemon of the current box matching the ID.
@@ -2555,14 +2577,21 @@ namespace PROBot.Scripting
                 return false;
             }
 
-            MovesManager.MoveData move = Bot.Game.MoveRelearner.Moves.FirstOrDefault(i => i.Name.Equals(moveName.ToLowerInvariant(), StringComparison.InvariantCultureIgnoreCase));
+            MovesManager.MoveData move = Bot.Game.MoveRelearner.Moves.FirstOrDefault(i => i.Name.Equals(moveName, StringComparison.InvariantCultureIgnoreCase));
 
             if (move == null)
             {
                 Fatal($"error: relearnMove: the move '{ moveName }' cannot be learn by the current Pokemon or already learnt.");
                 return false;
             }
-            return ExecuteAction(Bot.Game.PurchaseMove(moveName));
+
+            int moveId = MovesManager.Instance.GetMoveId(moveName);
+            if (moveId == -1)
+            {
+                Fatal($"error: relearnMove: the move '{ moveName }' cannot be learn by the current Pokemon or already learnt.");
+                return false;
+            }
+            return ExecuteAction(Bot.Game.PurchaseMove(moveId));
         }
 
         // API: Give the specified item on the specified pokemon.

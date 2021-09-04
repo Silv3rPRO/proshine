@@ -184,7 +184,11 @@ namespace PROBot
             {
                 if (Encryption.StateReady)
                 {
-                    Game.SendAuthentication(Account.Name, Account.Password, Account.DeviceId ?? HardwareHash.GenerateRandom());
+                    // TODO: Add an option to select the OS we want, it could be useful.
+                    Game.SendAuthentication(Account.Name,
+                        Account.Password,
+                        Account.DeviceId ?? Hardware.GenerateRandomHash(),
+                        Hardware.GenerateRandomOsInfo());
                     _authenticationRequired = false;
                 }
                 return;
@@ -211,7 +215,7 @@ namespace PROBot
             if (Game.IsCreatingNewCharacter)
             {
                 LogMessage("Creating a new character with a random skin...");
-                Game.CreateCharacter(Rand.Next(14), Rand.Next(28), Rand.Next(8), Rand.Next(6), Rand.Next(5));
+                Game.CreateCharacter(Rand.Next(14), Rand.Next(28), Rand.Next(4), 695 + Rand.Next(6), Rand.Next(5));
                 return;
             }
 

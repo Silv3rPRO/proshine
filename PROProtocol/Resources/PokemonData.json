@@ -12424,7 +12424,7 @@
     "Name": "Mothim",
     "Desc": "It flutters around at night and steals honey from the Combee hive.",
     "Types": [
-      "Bug",  
+      "Bug",
       "Flying"
     ],
     "HP": 70,
@@ -17778,8 +17778,8 @@
     "Weight": 33,
     "RatioM": 50,
     "Abilities": [
-      "Water Absorb",
       "Cursed Body",
+      "Water Absorb",
       "Damp"
     ],
     "EVATK": 0,
@@ -17808,8 +17808,8 @@
     "Weight": 135,
     "RatioM": 50,
     "Abilities": [
-      "Water Absorb",
       "Cursed Body",
+      "Water Absorb",
       "Damp"
     ],
     "EVATK": 0,
@@ -19968,7 +19968,7 @@
     "Weight": 8.4,
     "RatioM": 50,
     "Abilities": [
-      "Compound Eyes",
+      "Shed Skin",
       "Shield Dust",
       "Friend Guard"
     ],
@@ -19998,8 +19998,8 @@
     "Weight": 17,
     "RatioM": 50,
     "Abilities": [
-      "Shield Dust",
       "Compound Eyes",
+      "Shield Dust",
       "Friend Guard"
     ],
     "EVATK": 0,
@@ -20341,7 +20341,7 @@
   },
   {
     "ID": 678,
-    "Name": "Meowstic",
+    "Name": "Meowstic-M",
     "Desc": "The eyeball patterns on the interior of its ears emit psychic energy. It keeps the patterns tightly covered because that power is too immense.",
     "Types": [
       "Psychic",
@@ -20356,7 +20356,7 @@
     "Species": "Constraint Pokémon",
     "Height": 0.6,
     "Weight": 8.5,
-    "RatioM": 50,
+    "RatioM": 100,
     "Abilities": [
       "Keen Eye",
       "Infiltrator",
@@ -24240,6 +24240,2496 @@
     "EVHP": 0
   },
   {
+    "ID": 808,
+    "Name": "Meltan",
+    "Types": [
+      "Steel",
+      ""
+    ],
+    "HP": 46,
+    "ATK": 65,
+    "DEF": 65,
+    "SPATK": 55,
+    "SPDEF": 35,
+    "SPD": 34,
+    "Species": "Hex Nut Pokemon",
+    "Height": 0.2,
+    "Weight": 8,
+    "RatioM": 0,
+    "Abilities": [
+      "Magnet Pull",
+      "None",
+      "None"
+    ],
+    "EVATK": 1,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It dissolves and eats metal. Circulating liquid metal within its body is how it generates energy."
+  },
+  {
+    "ID": 809,
+    "Name": "Melmetal",
+    "Types": [
+      "Steel",
+      ""
+    ],
+    "HP": 135,
+    "ATK": 143,
+    "DEF": 143,
+    "SPATK": 80,
+    "SPDEF": 65,
+    "SPD": 34,
+    "Species": "Hex Nut Pokemon",
+    "Height": 2.5,
+    "Weight": 800,
+    "RatioM": 0,
+    "Abilities": [
+      "Iron Fist",
+      "None",
+      "None"
+    ],
+    "EVATK": 3,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "At the end of its life-span, Melmetal will rust and fall apart. The small shards left behind will eventually be reborn as Meltan."
+  },
+  {
+    "ID": 810,
+    "Name": "Grookey",
+    "Types": [
+      "Grass",
+      ""
+    ],
+    "HP": 50,
+    "ATK": 65,
+    "DEF": 50,
+    "SPATK": 40,
+    "SPDEF": 40,
+    "SPD": 65,
+    "Species": "Chimp Pokemon",
+    "Height": 0.3,
+    "Weight": 5,
+    "RatioM": 88.14,
+    "Abilities": [
+      "Overgrow",
+      "None",
+      "Grassy Surge"
+    ],
+    "EVATK": 1,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "When it uses its special stick to strike up a beat, the sound waves produced carry revitalizing energy to the plants and flowers in the area."
+  },
+  {
+    "ID": 811,
+    "Name": "Thwackey",
+    "Types": [
+      "Grass",
+      ""
+    ],
+    "HP": 70,
+    "ATK": 85,
+    "DEF": 70,
+    "SPATK": 55,
+    "SPDEF": 60,
+    "SPD": 80,
+    "Species": "Beat Pokemon",
+    "Height": 0.7,
+    "Weight": 14,
+    "RatioM": 88.14,
+    "Abilities": [
+      "Overgrow",
+      "None",
+      "Grassy Surge"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "The faster a Thwackey can beat out a rhythm with its two sticks, the more respect it wins from its peers."
+  },
+  {
+    "ID": 812,
+    "Name": "Rillaboom",
+    "Types": [
+      "Grass",
+      ""
+    ],
+    "HP": 100,
+    "ATK": 125,
+    "DEF": 90,
+    "SPATK": 60,
+    "SPDEF": 70,
+    "SPD": 85,
+    "Species": "Drummer Pokemon",
+    "Height": 2.1,
+    "Weight": 90,
+    "RatioM": 88.14,
+    "Abilities": [
+      "Overgrow",
+      "None",
+      "Grassy Surge"
+    ],
+    "EVATK": 3,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "By drumming, it taps into the power of its special tree stump. The roots of the stump follow its direction in battle."
+  },
+  {
+    "ID": 813,
+    "Name": "Scorbunny",
+    "Types": [
+      "Fire",
+      ""
+    ],
+    "HP": 50,
+    "ATK": 71,
+    "DEF": 40,
+    "SPATK": 40,
+    "SPDEF": 40,
+    "SPD": 69,
+    "Species": "Rabbit Pokemon",
+    "Height": 0.3,
+    "Weight": 4.5,
+    "RatioM": 88.14,
+    "Abilities": [
+      "Blaze",
+      "None",
+      "Libero"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 1,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "A warm-up of running around gets fire energy coursing through this Pokémon's body. Once that happens, it's ready to fight at full power."
+  },
+  {
+    "ID": 814,
+    "Name": "Raboot",
+    "Types": [
+      "Fire",
+      ""
+    ],
+    "HP": 65,
+    "ATK": 86,
+    "DEF": 60,
+    "SPATK": 55,
+    "SPDEF": 60,
+    "SPD": 94,
+    "Species": "Rabbit Pokemon",
+    "Height": 0.6,
+    "Weight": 9,
+    "RatioM": 88.14,
+    "Abilities": [
+      "Blaze",
+      "None",
+      "Libero"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 2,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Its thick and fluffy fur protects it from the cold and enables it to use hotter fire moves."
+  },
+  {
+    "ID": 815,
+    "Name": "Cinderace",
+    "Types": [
+      "Fire",
+      ""
+    ],
+    "HP": 80,
+    "ATK": 116,
+    "DEF": 75,
+    "SPATK": 65,
+    "SPDEF": 75,
+    "SPD": 119,
+    "Species": "Striker Pokemon",
+    "Height": 1.4,
+    "Weight": 33,
+    "RatioM": 88.14,
+    "Abilities": [
+      "Blaze",
+      "None",
+      "Libero"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 3,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It juggles a pebble with its feet, turning it into a burning soccer ball. Its shots strike opponents hard and leave them scorched."
+  },
+  {
+    "ID": 816,
+    "Name": "Sobble",
+    "Types": [
+      "Water",
+      ""
+    ],
+    "HP": 50,
+    "ATK": 40,
+    "DEF": 40,
+    "SPATK": 70,
+    "SPDEF": 40,
+    "SPD": 70,
+    "Species": "Water Lizard Pokemon",
+    "Height": 0.3,
+    "Weight": 4,
+    "RatioM": 88.14,
+    "Abilities": [
+      "Torrent",
+      "None",
+      "Sniper"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 1,
+    "EVSPDEF": 1,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "When scared, this Pokémon cries. Its tears pack the chemical punch of 100 onions, and attackers won't be able to resist weeping."
+  },
+  {
+    "ID": 817,
+    "Name": "Drizzile",
+    "Types": [
+      "Water",
+      ""
+    ],
+    "HP": 65,
+    "ATK": 60,
+    "DEF": 55,
+    "SPATK": 95,
+    "SPDEF": 55,
+    "SPD": 90,
+    "Species": "Water Lizard Pokemon",
+    "Height": 0.7,
+    "Weight": 11.5,
+    "RatioM": 883.14,
+    "Abilities": [
+      "Torrent",
+      "None",
+      "Sniper"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 2,
+    "EVHP": 0,
+    "Desc": "A clever combatant, this Pokémon battles using water balloons created with moisture secreted from its palms."
+  },
+  {
+    "ID": 818,
+    "Name": "Inteleon",
+    "Types": [
+      "Water",
+      ""
+    ],
+    "HP": 70,
+    "ATK": 85,
+    "DEF": 65,
+    "SPATK": 125,
+    "SPDEF": 65,
+    "SPD": 120,
+    "Species": "Secret Agent Pokemon",
+    "Height": 1.9,
+    "Weight": 45.2,
+    "RatioM": 88.14,
+    "Abilities": [
+      "Torrent",
+      "None",
+      "Sniper"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 3,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It has many hidden capabilities, such as fingertips that can shoot water and a membrane on its back that it can use to glide through the air."
+  },
+  {
+    "ID": 819,
+    "Name": "Skwovet",
+    "Types": [
+      "Normal",
+      ""
+    ],
+    "HP": 70,
+    "ATK": 55,
+    "DEF": 55,
+    "SPATK": 35,
+    "SPDEF": 35,
+    "SPD": 25,
+    "Species": "Cheeky Pokemon",
+    "Height": 0.3,
+    "Weight": 2.5,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Cheek Pouch",
+      "None",
+      "Gluttony"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 1,
+    "Desc": "Found throughout the Galar region, this Pokémon becomes uneasy if its cheeks are ever completely empty of berries."
+  },
+  {
+    "ID": 820,
+    "Name": "Greedent",
+    "Types": [
+      "Normal",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 55,
+    "SPDEF": 75,
+    "SPD": 20,
+    "Species": "Greedy Pokemon",
+    "Height": 0.6,
+    "Weight": 6,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Cheek Pouch",
+      "None",
+      "Gluttony"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 2,
+    "Desc": "It stashes berries in its tail—so many berries that they fall out constantly. But this Pokémon is a bit slow-witted, so it doesn't notice the loss."
+  },
+  {
+    "ID": 821,
+    "Name": "Rookidee",
+    "Types": [
+      "Flying",
+      ""
+    ],
+    "HP": 38,
+    "ATK": 47,
+    "DEF": 35,
+    "SPATK": 33,
+    "SPDEF": 35,
+    "SPD": 57,
+    "Species": "Tiny Bird Pokemon",
+    "Height": 0.2,
+    "Weight": 1.8,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Keen Eye",
+      "Unnerve",
+      "Big Pecks"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 1,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It will bravely challenge any opponent, no matter how powerful. This Pokémon benefits from every battle even a defeat increases its strength a bit."
+  },
+  {
+    "ID": 822,
+    "Name": "Corvisquire",
+    "Types": [
+      "Flying",
+      ""
+    ],
+    "HP": 68,
+    "ATK": 67,
+    "DEF": 55,
+    "SPATK": 43,
+    "SPDEF": 55,
+    "SPD": 77,
+    "Species": "Raven Pokemon",
+    "Height": 0.8,
+    "Weight": 16,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Keen Eye",
+      "Unnerve",
+      "Big Pecks"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 2,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Smart enough to use tools in battle, these Pokémon have been seen picking up rocks and flinging them or using ropes to wrap up enemies."
+  },
+  {
+    "ID": 823,
+    "Name": "Corviknight",
+    "Types": [
+      "Flying",
+      "Steel"
+    ],
+    "HP": 98,
+    "ATK": 87,
+    "DEF": 105,
+    "SPATK": 53,
+    "SPDEF": 85,
+    "SPD": 67,
+    "Species": "Raven Pokemon",
+    "Height": 2.2,
+    "Weight": 75,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Pressure",
+      "Unnerve",
+      "Mirror Armor"
+    ],
+    "EVATK": 0,
+    "EVDEF": 3,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "This Pokémon reigns supreme in the skies of the Galar region. The black luster of its steel body could drive terror into the heart of any foe."
+  },
+  {
+    "ID": 824,
+    "Name": "Blipbug",
+    "Types": [
+      "Bug",
+      ""
+    ],
+    "HP": 25,
+    "ATK": 20,
+    "DEF": 20,
+    "SPATK": 25,
+    "SPDEF": 45,
+    "SPD": 45,
+    "Species": "Larva Pokemon",
+    "Height": 0.4,
+    "Weight": 8,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Swarm",
+      "Compound Eyes",
+      "Telepathy"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 1,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "A constant collector of information, this Pokémon is very smart. Very strong is what it isn't."
+  },
+  {
+    "ID": 825,
+    "Name": "Dottler",
+    "Types": [
+      "Bug",
+      "Psychic"
+    ],
+    "HP": 50,
+    "ATK": 35,
+    "DEF": 80,
+    "SPATK": 50,
+    "SPDEF": 90,
+    "SPD": 30,
+    "Species": "Radome Pokemon",
+    "Height": 0.4,
+    "Weight": 19.5,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Swarm",
+      "Compound Eyes",
+      "Telepathy"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 2,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It barely moves, but it's still alive. Hiding in its shell without food or water seems to have awakened its psychic powers."
+  },
+  {
+    "ID": 826,
+    "Name": "Orbeetle",
+    "Types": [
+      "Bug",
+      "Psychic"
+    ],
+    "HP": 60,
+    "ATK": 45,
+    "DEF": 110,
+    "SPATK": 80,
+    "SPDEF": 120,
+    "SPD": 90,
+    "Species": "Seven Spot Pokemon",
+    "Height": 0.4,
+    "Weight": 40.8,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Swarm",
+      "Frisk",
+      "Telepathy"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 3,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It's famous for its high level of intelligence, and the large size of its brain is proof that it also possesses immense psychic power."
+  },
+  {
+    "ID": 827,
+    "Name": "Nickit",
+    "Types": [
+      "Dark",
+      ""
+    ],
+    "HP": 40,
+    "ATK": 28,
+    "DEF": 28,
+    "SPATK": 47,
+    "SPDEF": 52,
+    "SPD": 50,
+    "Species": "Fox Pokemon",
+    "Height": 0.6,
+    "Weight": 8.9,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Run Away",
+      "Unburden",
+      "Stakeout"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 1,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Aided by the soft pads on its feet, it silently raids the food stores of other Pokémon. It survives off its ill-gotten gains."
+  },
+  {
+    "ID": 828,
+    "Name": "Thievul",
+    "Types": [
+      "Dark",
+      ""
+    ],
+    "HP": 70,
+    "ATK": 58,
+    "DEF": 58,
+    "SPATK": 87,
+    "SPDEF": 92,
+    "SPD": 90,
+    "Species": "Fox Pokemon",
+    "Height": 1.2,
+    "Weight": 19.9,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Run Away",
+      "Unburden",
+      "Stakeout"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 2,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It secretly marks potential targets with a scent. By following the scent, it stalks its targets and steals from them when they least expect it."
+  },
+  {
+    "ID": 829,
+    "Name": "Gossifleur",
+    "Types": [
+      "Grass",
+      ""
+    ],
+    "HP": 40,
+    "ATK": 40,
+    "DEF": 60,
+    "SPATK": 40,
+    "SPDEF": 60,
+    "SPD": 10,
+    "Species": "Flowering Pokemon",
+    "Height": 0.4,
+    "Weight": 2.2,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Cotton Down",
+      "Regenerator",
+      "Effect Spore"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 1,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It anchors itself in the ground with its single leg, then basks in the sun. After absorbing enough sunlight, its petals spread as it blooms brilliantly."
+  },
+  {
+    "ID": 830,
+    "Name": "Eldegoss",
+    "Types": [
+      "Grass",
+      ""
+    ],
+    "HP": 60,
+    "ATK": 50,
+    "DEF": 90,
+    "SPATK": 80,
+    "SPDEF": 120,
+    "SPD": 60,
+    "Species": "Cotton Bloom Pokemon",
+    "Height": 0.5,
+    "Weight": 2.5,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Cotton Down",
+      "Regenerator",
+      "Effect Spore"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 2,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "The seeds attached to its cotton fluff are full of nutrients. It spreads them on the wind so that plants and other Pokémon can benefit from them."
+  },
+  {
+    "ID": 831,
+    "Name": "Wooloo",
+    "Types": [
+      "Normal",
+      ""
+    ],
+    "HP": 42,
+    "ATK": 40,
+    "DEF": 55,
+    "SPATK": 40,
+    "SPDEF": 45,
+    "SPD": 48,
+    "Species": "Sheep Pokemon",
+    "Height": 0.6,
+    "Weight": 6,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Fluffy",
+      "Run Away",
+      "Bulletproof"
+    ],
+    "EVATK": 0,
+    "EVDEF": 1,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Its curly fleece is such an effective cushion that this Pokémon could fall off a cliff and stand right back up at the bottom, unharmed."
+  },
+  {
+    "ID": 832,
+    "Name": "Dubwool",
+    "Types": [
+      "Normal",
+      ""
+    ],
+    "HP": 72,
+    "ATK": 80,
+    "DEF": 100,
+    "SPATK": 60,
+    "SPDEF": 90,
+    "SPD": 88,
+    "Species": "Sheep Pokemon",
+    "Height": 1.3,
+    "Weight": 43,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Fluffy",
+      "Steadfast",
+      "Bulletproof"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Weave a carpet from its springy wool, and you end up with something closer to a trampoline. You'll start to bounce the moment you set foot on it."
+  },
+  {
+    "ID": 833,
+    "Name": "Chewtle",
+    "Types": [
+      "Water",
+      ""
+    ],
+    "HP": 50,
+    "ATK": 64,
+    "DEF": 50,
+    "SPATK": 38,
+    "SPDEF": 38,
+    "SPD": 44,
+    "Species": "Snapping Pokemon",
+    "Height": 0.3,
+    "Weight": 8.5,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Strong Jaw",
+      "Shell Armor",
+      "Swift Swim"
+    ],
+    "EVATK": 1,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Apparently the itch of its teething impels it to snap its jaws at anything in front of it."
+  },
+  {
+    "ID": 834,
+    "Name": "Drednaw",
+    "Types": [
+      "Water",
+      "Rock"
+    ],
+    "HP": 90,
+    "ATK": 115,
+    "DEF": 90,
+    "SPATK": 48,
+    "SPDEF": 68,
+    "SPD": 74,
+    "Species": "Bite Pokemon",
+    "Height": 1,
+    "Weight": 115.5,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Strong Jaw",
+      "Shell Armor",
+      "Swift Swim"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "With jaws that can shear through steel rods, this highly aggressive Pokémon chomps down on its unfortunate prey."
+  },
+  {
+    "ID": 835,
+    "Name": "Yamper",
+    "Types": [
+      "Electric",
+      ""
+    ],
+    "HP": 59,
+    "ATK": 45,
+    "DEF": 50,
+    "SPATK": 40,
+    "SPDEF": 50,
+    "SPD": 26,
+    "Species": "Puppy Pokemon",
+    "Height": 0.3,
+    "Weight": 13.5,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Ball Fetch",
+      "None",
+      "Rattled"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 1,
+    "Desc": "This Pokémon is very popular as a herding dog in the Galar region. As it runs, it generates electricity from the base of its tail."
+  },
+  {
+    "ID": 836,
+    "Name": "Boltund",
+    "Types": [
+      "Electric",
+      ""
+    ],
+    "HP": 69,
+    "ATK": 90,
+    "DEF": 60,
+    "SPATK": 90,
+    "SPDEF": 60,
+    "SPD": 121,
+    "Species": "Dog Pokemon",
+    "Height": 1,
+    "Weight": 34,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Strong Jaw",
+      "None",
+      "Competitive"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 2,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "This Pokémon generates electricity and channels it into its legs to keep them going strong. Boltund can run nonstop for three full days."
+  },
+  {
+    "ID": 837,
+    "Name": "Rolycoly",
+    "Types": [
+      "Rock",
+      ""
+    ],
+    "HP": 30,
+    "ATK": 40,
+    "DEF": 50,
+    "SPATK": 40,
+    "SPDEF": 50,
+    "SPD": 30,
+    "Species": "Coal Pokemon",
+    "Height": 0.3,
+    "Weight": 12,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Steam Engine",
+      "Heatproof",
+      "Flash Fire"
+    ],
+    "EVATK": 0,
+    "EVDEF": 1,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Most of its body has the same composition as coal. Fittingly, this Pokémon was first discovered in coal mines about 400 years ago."
+  },
+  {
+    "ID": 838,
+    "Name": "Carkol",
+    "Types": [
+      "Rock",
+      "Fire"
+    ],
+    "HP": 80,
+    "ATK": 60,
+    "DEF": 90,
+    "SPATK": 60,
+    "SPDEF": 70,
+    "SPD": 50,
+    "Species": "Coal Pokemon",
+    "Height": 1.1,
+    "Weight": 78,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Steam Engine",
+      "Flame Body",
+      "Flash Fire"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It forms coal inside its body. Coal dropped by this Pokémon once helped fuel the lives of people in the Galar region."
+  },
+  {
+    "ID": 839,
+    "Name": "Coalossal",
+    "Types": [
+      "Rock",
+      "Fire"
+    ],
+    "HP": 110,
+    "ATK": 80,
+    "DEF": 120,
+    "SPATK": 80,
+    "SPDEF": 90,
+    "SPD": 30,
+    "Species": "Coal Pokemon",
+    "Height": 2.8,
+    "Weight": 310.5,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Steam Engine",
+      "Flame Body",
+      "Flash Fire"
+    ],
+    "EVATK": 0,
+    "EVDEF": 3,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It's usually peaceful, but the vandalism of mines enrages it. Offenders will be incinerated with flames that reach 2.700 degrees Fahrenheit."
+  },
+  {
+    "ID": 840,
+    "Name": "Applin",
+    "Types": [
+      "Grass",
+      "Dragon"
+    ],
+    "HP": 40,
+    "ATK": 40,
+    "DEF": 80,
+    "SPATK": 40,
+    "SPDEF": 40,
+    "SPD": 20,
+    "Species": "Apple Core Pokemon",
+    "Height": 0.2,
+    "Weight": 0.5,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Ripen",
+      "Gluttony",
+      "Bulletproof"
+    ],
+    "EVATK": 0,
+    "EVDEF": 1,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It spends its entire life inside an apple. It hides from its natural enemies, bird Pokémon, by pretending it's just an apple and nothing more."
+  },
+  {
+    "ID": 841,
+    "Name": "Flapple",
+    "Types": [
+      "Grass",
+      "Dragon"
+    ],
+    "HP": 70,
+    "ATK": 110,
+    "DEF": 80,
+    "SPATK": 95,
+    "SPDEF": 60,
+    "SPD": 70,
+    "Species": "Apple Wing Pokemon",
+    "Height": 0.3,
+    "Weight": 1,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Ripen",
+      "Gluttony",
+      "Hustle"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It ate a sour apple, and that induced its evolution. In its cheeks, it stores an acid capable of causing chemical burns."
+  },
+  {
+    "ID": 842,
+    "Name": "Appletun",
+    "Types": [
+      "Grass",
+      "Dragon"
+    ],
+    "HP": 110,
+    "ATK": 85,
+    "DEF": 80,
+    "SPATK": 100,
+    "SPDEF": 80,
+    "SPD": 30,
+    "Species": "Apple Nectar Pokemon",
+    "Height": 0.4,
+    "Weight": 13,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Ripen",
+      "Gluttony",
+      "Thick Fat"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 2,
+    "Desc": "Eating a sweet apple caused its evolution. A nectarous scent wafts from its body, luring in the bug Pokémon it preys on."
+  },
+  {
+    "ID": 843,
+    "Name": "Silicobra",
+    "Types": [
+      "Ground",
+      ""
+    ],
+    "HP": 52,
+    "ATK": 57,
+    "DEF": 75,
+    "SPATK": 35,
+    "SPDEF": 50,
+    "SPD": 46,
+    "Species": "Sand Snake Pokemon",
+    "Height": 2.2,
+    "Weight": 7.6,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Sand Spit",
+      "Shed Skin",
+      "Sand Veil"
+    ],
+    "EVATK": 0,
+    "EVDEF": 1,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "As it digs, it swallows sand and stores it in its neck pouch. The pouch can hold more than 17 pounds of sand."
+  },
+  {
+    "ID": 844,
+    "Name": "Sandaconda",
+    "Types": [
+      "Ground",
+      ""
+    ],
+    "HP": 72,
+    "ATK": 107,
+    "DEF": 125,
+    "SPATK": 65,
+    "SPDEF": 70,
+    "SPD": 71,
+    "Species": "Sand Snake Pokemon",
+    "Height": 3.8,
+    "Weight": 65.5,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Sand Spit",
+      "Shed Skin",
+      "Sand Veil"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "When it contracts its body, over 220 pounds of sand sprays from its nose. If it ever runs out of sand, it becomes disheartened."
+  },
+  {
+    "ID": 845,
+    "Name": "Cramorant",
+    "Types": [
+      "Flying",
+      ""
+    ],
+    "HP": 70,
+    "ATK": 85,
+    "DEF": 55,
+    "SPATK": 85,
+    "SPDEF": 95,
+    "SPD": 85,
+    "Species": "Gulp Pokemon",
+    "Height": 0.8,
+    "Weight": 18,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Gulp Missile",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 2,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It's so strong that it can knock out some opponents in a single hit, but it also may forget what it's battling midfight."
+  },
+  {
+    "ID": 846,
+    "Name": "Arrokuda",
+    "Types": [
+      "Water",
+      ""
+    ],
+    "HP": 41,
+    "ATK": 63,
+    "DEF": 40,
+    "SPATK": 40,
+    "SPDEF": 30,
+    "SPD": 66,
+    "Species": "Rush Pokemon",
+    "Height": 0.5,
+    "Weight": 1,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Swift Swim",
+      "None",
+      "Propeller Tail"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 1,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "If it sees any movement around it, this Pokémon charges for it straightaway, leading with its sharply pointed jaw. It's very proud of that jaw."
+  },
+  {
+    "ID": 847,
+    "Name": "Barraskewda",
+    "Types": [
+      "Water",
+      ""
+    ],
+    "HP": 61,
+    "ATK": 123,
+    "DEF": 60,
+    "SPATK": 60,
+    "SPDEF": 50,
+    "SPD": 136,
+    "Species": "Skewer Pokemon",
+    "Height": 1.3,
+    "Weight": 30,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Swift Swim",
+      "None",
+      "Propeller Tail"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 2,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "This Pokémon has a jaw that's as sharp as a spear and as strong as steel. Apparently Barraskewda's flesh is surprisingly tasty, too."
+  },
+  {
+    "ID": 848,
+    "Name": "Toxel",
+    "Types": [
+      "Electric",
+      "Poison"
+    ],
+    "HP": 40,
+    "ATK": 38,
+    "DEF": 35,
+    "SPATK": 54,
+    "SPDEF": 35,
+    "SPD": 40,
+    "Species": "Baby Pokemon",
+    "Height": 0.4,
+    "Weight": 11,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Rattled",
+      "Static",
+      "Klutz"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 1,
+    "EVHP": 0,
+    "Desc": "It stores poison in an internal poison sac and secretes that poison through its skin. If you touch this Pokémon, a tingling sensation follows."
+  },
+  {
+    "ID": 849,
+    "Name": "Toxtricity",
+    "Types": [
+      "Electric",
+      "Poison"
+    ],
+    "HP": 75,
+    "ATK": 98,
+    "DEF": 70,
+    "SPATK": 114,
+    "SPDEF": 70,
+    "SPD": 75,
+    "Species": "Punk Pokemon",
+    "Height": 1.6,
+    "Weight": 40,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Punk Rock",
+      "Plus",
+      "Technician"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 2,
+    "EVHP": 0,
+    "Desc": "When this Pokémon sounds as if it's strumming a guitar, it's actually clawing at the protrusions on its chest to generate electricity."
+  },
+  {
+    "ID": 850,
+    "Name": "Sizzlipede",
+    "Types": [
+      "Fire",
+      "Bug"
+    ],
+    "HP": 50,
+    "ATK": 65,
+    "DEF": 45,
+    "SPATK": 50,
+    "SPDEF": 50,
+    "SPD": 45,
+    "Species": "Radiator Pokemon",
+    "Height": 0.7,
+    "Weight": 1,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Flash Fire",
+      "White Smoke",
+      "Flame Body"
+    ],
+    "EVATK": 1,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It stores flammable gas in its body and uses it to generate heat. The yellow sections on its belly get particularly hot."
+  },
+  {
+    "ID": 851,
+    "Name": "Centiskorch",
+    "Types": [
+      "Fire",
+      "Bug"
+    ],
+    "HP": 100,
+    "ATK": 115,
+    "DEF": 65,
+    "SPATK": 90,
+    "SPDEF": 90,
+    "SPD": 65,
+    "Species": "Radiator Pokemon",
+    "Height": 3,
+    "Weight": 120,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Flash Fire",
+      "White Smoke",
+      "Flame Body"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "When it heats up, its body temperature reaches about 1.500 degrees Fahrenheit. It lashes its body like a whip and launches itself at enemies."
+  },
+  {
+    "ID": 852,
+    "Name": "Clobbopus",
+    "Types": [
+      "Fighting",
+      ""
+    ],
+    "HP": 50,
+    "ATK": 68,
+    "DEF": 60,
+    "SPATK": 50,
+    "SPDEF": 50,
+    "SPD": 32,
+    "Species": "Tantrum Pokemon",
+    "Height": 0.6,
+    "Weight": 4,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Limber",
+      "None",
+      "Technician"
+    ],
+    "EVATK": 1,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It's very curious, but its means of investigating things is to try to punch them with its tentacles. The search for food is what brings it onto land."
+  },
+  {
+    "ID": 853,
+    "Name": "Grapploct",
+    "Types": [
+      "Fighting",
+      ""
+    ],
+    "HP": 80,
+    "ATK": 118,
+    "DEF": 90,
+    "SPATK": 70,
+    "SPDEF": 80,
+    "SPD": 42,
+    "Species": "Jujitsu Pokemon",
+    "Height": 1.6,
+    "Weight": 39,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Limber",
+      "None",
+      "Technician"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "A body made up of nothing but muscle makes the grappling moves this Pokémon performs with its tentacles tremendously powerful."
+  },
+  {
+    "ID": 854,
+    "Name": "Sinistea",
+    "Types": [
+      "Ghost",
+      ""
+    ],
+    "HP": 40,
+    "ATK": 45,
+    "DEF": 45,
+    "SPATK": 74,
+    "SPDEF": 54,
+    "SPD": 50,
+    "Species": "Black Tea Pokemon",
+    "Height": 0.1,
+    "Weight": 0.2,
+    "RatioM": 0,
+    "Abilities": [
+      "Weak Armor",
+      "None",
+      "Cursed Body"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 1,
+    "EVHP": 0,
+    "Desc": "This Pokémon is said to have been born when a lonely spirit possessed a cold, leftover cup of tea."
+  },
+  {
+    "ID": 855,
+    "Name": "Polteageist",
+    "Types": [
+      "Ghost",
+      ""
+    ],
+    "HP": 60,
+    "ATK": 65,
+    "DEF": 65,
+    "SPATK": 134,
+    "SPDEF": 114,
+    "SPD": 70,
+    "Species": "Black Tea Pokemon",
+    "Height": 0.2,
+    "Weight": 0.4,
+    "RatioM": 0,
+    "Abilities": [
+      "Weak Armor",
+      "None",
+      "Cursed Body"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 2,
+    "EVHP": 0,
+    "Desc": "This species lives in antique teapots. Most pots are forgeries, but on rare occasions, an authentic work is found."
+  },
+  {
+    "ID": 856,
+    "Name": "Hatenna",
+    "Types": [
+      "Psychic",
+      ""
+    ],
+    "HP": 42,
+    "ATK": 30,
+    "DEF": 45,
+    "SPATK": 56,
+    "SPDEF": 53,
+    "SPD": 39,
+    "Species": "Calm Pokemon",
+    "Height": 0.4,
+    "Weight": 3.4,
+    "RatioM": 0.01,
+    "Abilities": [
+      "Healer",
+      "Anticipation",
+      "Magic Bounce"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 1,
+    "EVHP": 0,
+    "Desc": "Via the protrusion on its head, it senses other creatures' emotions. If you don't have a calm disposition, it will never warm up to you."
+  },
+  {
+    "ID": 857,
+    "Name": "Hattrem",
+    "Types": [
+      "Psychic",
+      ""
+    ],
+    "HP": 57,
+    "ATK": 40,
+    "DEF": 65,
+    "SPATK": 86,
+    "SPDEF": 73,
+    "SPD": 49,
+    "Species": "Serene Pokemon",
+    "Height": 0.6,
+    "Weight": 4.8,
+    "RatioM": 0.01,
+    "Abilities": [
+      "Healer",
+      "Anticipation",
+      "Magic Bounce"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 2,
+    "EVHP": 0,
+    "Desc": "No matter who you are, if you bring strong emotions near this Pokémon, it will silence you violently."
+  },
+  {
+    "ID": 858,
+    "Name": "Hatterene",
+    "Types": [
+      "Psychic",
+      "Fairy"
+    ],
+    "HP": 57,
+    "ATK": 90,
+    "DEF": 95,
+    "SPATK": 136,
+    "SPDEF": 103,
+    "SPD": 29,
+    "Species": "Silent Pokemon",
+    "Height": 2.1,
+    "Weight": 5.1,
+    "RatioM": 0.01,
+    "Abilities": [
+      "Healer",
+      "Anticipation",
+      "Magic Bounce"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 3,
+    "EVHP": 0,
+    "Desc": "It emits psychic power strong enough to cause headaches as a deterrent to the approach of others."
+  },
+  {
+    "ID": 859,
+    "Name": "Impidimp",
+    "Types": [
+      "Dark",
+      "Fairy"
+    ],
+    "HP": 45,
+    "ATK": 45,
+    "DEF": 30,
+    "SPATK": 55,
+    "SPDEF": 40,
+    "SPD": 50,
+    "Species": "Wily Pokemon",
+    "Height": 0.4,
+    "Weight": 5.5,
+    "RatioM": 100,
+    "Abilities": [
+      "Prankster",
+      "Frisk",
+      "Pickpocket"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 1,
+    "EVHP": 0,
+    "Desc": "Through its nose, it sucks in the emanations produced by people and Pokémon when they feel annoyed. It thrives off this negative energy."
+  },
+  {
+    "ID": 860,
+    "Name": "Morgrem",
+    "Types": [
+      "Dark",
+      "Fairy"
+    ],
+    "HP": 65,
+    "ATK": 60,
+    "DEF": 45,
+    "SPATK": 75,
+    "SPDEF": 55,
+    "SPD": 70,
+    "Species": "Devious Pokemon",
+    "Height": 0.8,
+    "Weight": 12.5,
+    "RatioM": 100,
+    "Abilities": [
+      "Prankster",
+      "Frisk",
+      "Pickpocket"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 2,
+    "EVHP": 0,
+    "Desc": "When it gets down on all fours as if to beg for forgiveness, it's trying to lure opponents in so that it can stab them with its spear-like hair."
+  },
+  {
+    "ID": 861,
+    "Name": "Grimmsnarl",
+    "Types": [
+      "Dark",
+      "Fairy"
+    ],
+    "HP": 95,
+    "ATK": 120,
+    "DEF": 65,
+    "SPATK": 95,
+    "SPDEF": 75,
+    "SPD": 60,
+    "Species": "Bulk Up Pokemon",
+    "Height": 1.5,
+    "Weight": 61,
+    "RatioM": 100,
+    "Abilities": [
+      "Prankster",
+      "Frisk",
+      "Pickpocket"
+    ],
+    "EVATK": 3,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "With the hair wrapped around its body helping to enhance its muscles, this Pokémon can overwhelm even Machamp."
+  },
+  {
+    "ID": 862,
+    "Name": "Obstagoon",
+    "Types": [
+      "Dark",
+      "Normal"
+    ],
+    "HP": 93,
+    "ATK": 90,
+    "DEF": 101,
+    "SPATK": 60,
+    "SPDEF": 81,
+    "SPD": 95,
+    "Species": "Blocking Pokemon",
+    "Height": 1.6,
+    "Weight": 46,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Reckless",
+      "Guts",
+      "Defiant"
+    ],
+    "EVATK": 0,
+    "EVDEF": 3,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Its voice is staggering in volume. Obstagoon has a tendency to take on a threatening posture and shout—this move is known as Obstruct."
+  },
+  {
+    "ID": 863,
+    "Name": "Perrserker",
+    "Types": [
+      "Steel",
+      ""
+    ],
+    "HP": 70,
+    "ATK": 110,
+    "DEF": 100,
+    "SPATK": 50,
+    "SPDEF": 60,
+    "SPD": 50,
+    "Species": "Viking Pokemon",
+    "Height": 0.8,
+    "Weight": 28,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Battle Armor",
+      "Tough Claws",
+      "Steely Spirit"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "What appears to be an iron helmet is actually hardened hair. This Pokémon lives for the thrill of battle."
+  },
+  {
+    "ID": 864,
+    "Name": "Cursola",
+    "Types": [
+      "Ghost",
+      ""
+    ],
+    "HP": 60,
+    "ATK": 95,
+    "DEF": 50,
+    "SPATK": 145,
+    "SPDEF": 130,
+    "SPD": 30,
+    "Species": "Coral Pokemon",
+    "Height": 1,
+    "Weight": 0.4,
+    "RatioM": 24.9,
+    "Abilities": [
+      "Weak Armor",
+      "None",
+      "Perish Body"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 2,
+    "EVHP": 0,
+    "Desc": "Its shell is overflowing with its heightened otherworldly energy. The ectoplasm serves as protection for this Pokémon's core spirit."
+  },
+  {
+    "ID": 865,
+    "Name": "Sirfetchd",
+    "Types": [
+      "Fighting",
+      ""
+    ],
+    "HP": 62,
+    "ATK": 135,
+    "DEF": 95,
+    "SPATK": 68,
+    "SPDEF": 82,
+    "SPD": 65,
+    "Species": "Wild Duck Pokemon",
+    "Height": 0.8,
+    "Weight": 117,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Steadfast",
+      "None",
+      "Scrappy"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Only Farfetch'd that have survived many battles can attain this evolution. When this Pokémon's leek withers, it will retire from combat."
+  },
+  {
+    "ID": 866,
+    "Name": "Mr. Rime",
+    "Types": [
+      "Ice",
+      "Psychic"
+    ],
+    "HP": 80,
+    "ATK": 85,
+    "DEF": 75,
+    "SPATK": 110,
+    "SPDEF": 100,
+    "SPD": 70,
+    "Species": "Comedian Pokemon",
+    "Height": 1.5,
+    "Weight": 58.2,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Tangled Feet",
+      "Screen Cleaner",
+      "Ice Body"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 3,
+    "EVHP": 0,
+    "Desc": "It's highly skilled at tap-dancing. It waves its cane of ice in time with its graceful movements."
+  },
+  {
+    "ID": 867,
+    "Name": "Runerigus",
+    "Types": [
+      "Ground",
+      ""
+    ],
+    "HP": 58,
+    "ATK": 95,
+    "DEF": 145,
+    "SPATK": 50,
+    "SPDEF": 105,
+    "SPD": 30,
+    "Species": "Grudge Pokemon",
+    "Height": 1.6,
+    "Weight": 66.6,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Wandering Spirit",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "A powerful curse was woven into an ancient painting. After absorbing the spirit of a Yamask, the painting began to move."
+  },
+  {
+    "ID": 868,
+    "Name": "Milcery",
+    "Types": [
+      "Fairy",
+      ""
+    ],
+    "HP": 45,
+    "ATK": 40,
+    "DEF": 40,
+    "SPATK": 50,
+    "SPDEF": 61,
+    "SPD": 34,
+    "Species": "Cream Pokemon",
+    "Height": 0.2,
+    "Weight": 0.3,
+    "RatioM": 0.01,
+    "Abilities": [
+      "Sweet Veil",
+      "None",
+      "Aroma Veil"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 1,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "This Pokémon was born from sweet-smelling particles in the air. Its body is made of cream."
+  },
+  {
+    "ID": 869,
+    "Name": "Alcremie",
+    "Types": [
+      "Fairy",
+      ""
+    ],
+    "HP": 65,
+    "ATK": 60,
+    "DEF": 75,
+    "SPATK": 110,
+    "SPDEF": 121,
+    "SPD": 64,
+    "Species": "Cream Pokemon",
+    "Height": 0.3,
+    "Weight": 0.5,
+    "RatioM": 0.01,
+    "Abilities": [
+      "Sweet Veil",
+      "None",
+      "Aroma Veil"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 2,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "When it trusts a Trainer, it will treat them to berries it's decorated with cream."
+  },
+  {
+    "ID": 870,
+    "Name": "Falinks",
+    "Types": [
+      "Fighting",
+      ""
+    ],
+    "HP": 65,
+    "ATK": 100,
+    "DEF": 100,
+    "SPATK": 70,
+    "SPDEF": 60,
+    "SPD": 75,
+    "Species": "Formation Pokemon",
+    "Height": 3,
+    "Weight": 62,
+    "RatioM": 0,
+    "Abilities": [
+      "Battle Armor",
+      "None",
+      "Defiant"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 1,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Five of them are troopers, and one is the brass. The brass's orders are absolute."
+  },
+  {
+    "ID": 871,
+    "Name": "Pincurchin",
+    "Types": [
+      "Electric",
+      ""
+    ],
+    "HP": 48,
+    "ATK": 101,
+    "DEF": 95,
+    "SPATK": 91,
+    "SPDEF": 85,
+    "SPD": 15,
+    "Species": "Sea Urchin Pokemon",
+    "Height": 0.3,
+    "Weight": 1,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Lightning Rod",
+      "None",
+      "Electric Surge"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It feeds on seaweed, using its teeth to scrape it off rocks. Electric current flows from the tips of its spines."
+  },
+  {
+    "ID": 872,
+    "Name": "Snom",
+    "Types": [
+      "Ice",
+      ""
+    ],
+    "HP": 30,
+    "ATK": 25,
+    "DEF": 35,
+    "SPATK": 45,
+    "SPDEF": 30,
+    "SPD": 20,
+    "Species": "Worm Pokemon",
+    "Height": 0.3,
+    "Weight": 3.8,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Shield Dust",
+      "None",
+      "Ice Scales"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 1,
+    "EVHP": 0,
+    "Desc": "It spits out thread imbued with a frigid sort of energy and uses it to tie its body to branches, disguising itself as an icicle while it sleeps."
+  },
+  {
+    "ID": 873,
+    "Name": "Frosmoth",
+    "Types": [
+      "Ice",
+      ""
+    ],
+    "HP": 70,
+    "ATK": 65,
+    "DEF": 60,
+    "SPATK": 125,
+    "SPDEF": 90,
+    "SPD": 65,
+    "Species": "Frost Moth Pokemon",
+    "Height": 1.3,
+    "Weight": 42,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Shield Dust",
+      "None",
+      "Ice Scales"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 2,
+    "EVHP": 0,
+    "Desc": "Icy scales fall from its wings like snow as it flies over fields and mountains. The temperature of its wings is less than -290 degrees Fahrenheit."
+  },
+  {
+    "ID": 874,
+    "Name": "Stonjourner",
+    "Types": [
+      "Rock",
+      ""
+    ],
+    "HP": 100,
+    "ATK": 125,
+    "DEF": 135,
+    "SPATK": 20,
+    "SPDEF": 20,
+    "SPD": 70,
+    "Species": "Big Rock Pokemon",
+    "Height": 2.5,
+    "Weight": 520,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Power Spot",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It stands in grasslands, watching the sun's descent from zenith to horizon. This Pokémon has a talent for delivering dynamic kicks."
+  },
+  {
+    "ID": 875,
+    "Name": "Eiscue",
+    "Types": [
+      "Ice",
+      ""
+    ],
+    "HP": 75,
+    "ATK": 80,
+    "DEF": 110,
+    "SPATK": 65,
+    "SPDEF": 90,
+    "SPD": 50,
+    "Species": "Penguin Pokemon",
+    "Height": 1.4,
+    "Weight": 89,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Ice Face",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It drifted in on the flow of ocean waters from a frigid place. It keeps its head iced constantly to make sure it stays nice and cold."
+  },
+  {
+    "ID": 876,
+    "Name": "Indeedee",
+    "Types": [
+      "Psychic",
+      "Normal"
+    ],
+    "HP": 60,
+    "ATK": 65,
+    "DEF": 55,
+    "SPATK": 105,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Emotion Pokemon",
+    "Height": 0.9,
+    "Weight": 28,
+    "RatioM": 100,
+    "Abilities": [
+      "Inner Focus",
+      "Synchronize",
+      "Psychic Surge"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 2,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It uses the horns on its head to sense the emotions of others. Males will act as valets for those they serve, looking after their every need."
+  },
+  {
+    "ID": 877,
+    "Name": "Morpeko",
+    "Types": [
+      "Electric",
+      ""
+    ],
+    "HP": 58,
+    "ATK": 95,
+    "DEF": 58,
+    "SPATK": 70,
+    "SPDEF": 58,
+    "SPD": 97,
+    "Species": "Two Sided-Pokemon",
+    "Height": 0.3,
+    "Weight": 3,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Hunger Switch",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 2,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "As it eats the seeds stored up in its pocket-like pouches, this Pokémon is not just satisfying its constant hunger. It's also generating electricity."
+  },
+  {
+    "ID": 878,
+    "Name": "Cufant",
+    "Types": [
+      "Steel",
+      ""
+    ],
+    "HP": 72,
+    "ATK": 80,
+    "DEF": 49,
+    "SPATK": 40,
+    "SPDEF": 49,
+    "SPD": 40,
+    "Species": "Copperderm Pokemon",
+    "Height": 1.2,
+    "Weight": 100,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Sheer Force",
+      "None",
+      "Heavy Metal"
+    ],
+    "EVATK": 1,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It digs up the ground with its trunk. It's also very strong, being able to carry loads of over five tons without any problem at all."
+  },
+  {
+    "ID": 879,
+    "Name": "Copperajah",
+    "Types": [
+      "Steel",
+      ""
+    ],
+    "HP": 122,
+    "ATK": 130,
+    "DEF": 69,
+    "SPATK": 80,
+    "SPDEF": 69,
+    "SPD": 30,
+    "Species": "Copperderm Pokemon",
+    "Height": 3,
+    "Weight": 650,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Sheer Force",
+      "None",
+      "Heavy Metal"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "They came over from another region long ago and worked together with humans. Their green skin is resistant to water."
+  },
+  {
+    "ID": 880,
+    "Name": "Dracozolt",
+    "Types": [
+      "Electric",
+      "Dragon"
+    ],
+    "HP": 90,
+    "ATK": 100,
+    "DEF": 90,
+    "SPATK": 80,
+    "SPDEF": 70,
+    "SPD": 75,
+    "Species": "Fossil Pokemon",
+    "Height": 1.8,
+    "Weight": 190,
+    "RatioM": 0,
+    "Abilities": [
+      "Volt Absorb",
+      "Hustle",
+      "Sand Rush"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "In ancient times, it was unbeatable thanks to its powerful lower body, but it went extinct anyway after it depleted all its plant-based food sources."
+  },
+  {
+    "ID": 881,
+    "Name": "Arctozolt",
+    "Types": [
+      "Electric",
+      "Ice"
+    ],
+    "HP": 90,
+    "ATK": 100,
+    "DEF": 90,
+    "SPATK": 90,
+    "SPDEF": 80,
+    "SPD": 55,
+    "Species": "Fossil Pokemon",
+    "Height": 2.3,
+    "Weight": 150,
+    "RatioM": 0,
+    "Abilities": [
+      "Volt Absorb",
+      "Static",
+      "Slush Rush"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "The shaking of its freezing upper half is what generates its electricity. It has a hard time walking around."
+  },
+  {
+    "ID": 882,
+    "Name": "Dracovish",
+    "Types": [
+      "Water",
+      "Dragon"
+    ],
+    "HP": 90,
+    "ATK": 90,
+    "DEF": 100,
+    "SPATK": 70,
+    "SPDEF": 80,
+    "SPD": 75,
+    "Species": "Fossil Pokemon",
+    "Height": 2.3,
+    "Weight": 215,
+    "RatioM": 0,
+    "Abilities": [
+      "Water Absorb",
+      "Strong Jaw",
+      "Sand Rush"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Powerful legs and jaws made it the apex predator of its time. Its own overhunting of its prey was what drove it to extinction."
+  },
+  {
+    "ID": 883,
+    "Name": "Arctovish",
+    "Types": [
+      "Water",
+      "Ice"
+    ],
+    "HP": 90,
+    "ATK": 90,
+    "DEF": 100,
+    "SPATK": 80,
+    "SPDEF": 90,
+    "SPD": 55,
+    "Species": "Fossil Pokemon",
+    "Height": 2,
+    "Weight": 175,
+    "RatioM": 0,
+    "Abilities": [
+      "Water Absorb",
+      "Ice Body",
+      "Slush Rush"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Though it's able to capture prey by freezing its surroundings, it has trouble eating the prey afterward because its mouth is on top of its head."
+  },
+  {
+    "ID": 884,
+    "Name": "Duraludon",
+    "Types": [
+      "Steel",
+      "Dragon"
+    ],
+    "HP": 70,
+    "ATK": 95,
+    "DEF": 115,
+    "SPATK": 120,
+    "SPDEF": 50,
+    "SPD": 85,
+    "Species": "Alloy Pokemon",
+    "Height": 1.8,
+    "Weight": 40,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Light Metal",
+      "Heavy Metal",
+      "Stalwart"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 2,
+    "EVHP": 0,
+    "Desc": "Its body resembles polished metal, and it's both lightweight and strong. The only drawback is that it rusts easily."
+  },
+  {
+    "ID": 885,
+    "Name": "Dreepy",
+    "Types": [
+      "Dragon",
+      "Ghost"
+    ],
+    "HP": 28,
+    "ATK": 60,
+    "DEF": 30,
+    "SPATK": 40,
+    "SPDEF": 30,
+    "SPD": 82,
+    "Species": "Lingering Pokemon",
+    "Height": 0.5,
+    "Weight": 2,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Clear Body",
+      "Infiltrator",
+      "Cursed Body"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 1,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "After being reborn as a ghost Pokémon, Dreepy wanders the areas it used to inhabit back when it was alive in prehistoric seas."
+  },
+  {
+    "ID": 886,
+    "Name": "Drakloak",
+    "Types": [
+      "Dragon",
+      "Ghost"
+    ],
+    "HP": 68,
+    "ATK": 80,
+    "DEF": 50,
+    "SPATK": 60,
+    "SPDEF": 50,
+    "SPD": 102,
+    "Species": "Caretaker Pokemon",
+    "Height": 1.4,
+    "Weight": 11,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Clear Body",
+      "Infiltrator",
+      "Cursed Body"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 2,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It's capable of flying faster than 120 mph. It battles alongside Dreepy and dotes on them until they successfully evolve."
+  },
+  {
+    "ID": 887,
+    "Name": "Dragapult",
+    "Types": [
+      "Dragon",
+      "Ghost"
+    ],
+    "HP": 88,
+    "ATK": 120,
+    "DEF": 75,
+    "SPATK": 100,
+    "SPDEF": 75,
+    "SPD": 142,
+    "Species": "Stealth Pokemon",
+    "Height": 3,
+    "Weight": 50,
+    "RatioM": 50.2,
+    "Abilities": [
+      "Clear Body",
+      "Infiltrator",
+      "Cursed Body"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 3,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "When it isn't battling, it keeps Dreepy in the holes on its horns. Once a fight starts, it launches the Dreepy like supersonic missiles."
+  },
+  {
+    "ID": 888,
+    "Name": "Zacian",
+    "Types": [
+      "Fairy",
+      ""
+    ],
+    "HP": 92,
+    "ATK": 130,
+    "DEF": 115,
+    "SPATK": 80,
+    "SPDEF": 115,
+    "SPD": 138,
+    "Species": "Warrior Pokemon",
+    "Height": 2.8,
+    "Weight": 110,
+    "RatioM": 0,
+    "Abilities": [
+      "Intrepid Sword",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 3,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Known as a legendary hero, this Pokémon absorbs metal particles, transforming them into a weapon it uses to battle."
+  },
+  {
+    "ID": 889,
+    "Name": "Zamazenta",
+    "Types": [
+      "Fighting",
+      ""
+    ],
+    "HP": 92,
+    "ATK": 130,
+    "DEF": 115,
+    "SPATK": 80,
+    "SPDEF": 115,
+    "SPD": 138,
+    "Species": "Warrior Pokemon",
+    "Height": 2.9,
+    "Weight": 210,
+    "RatioM": 0,
+    "Abilities": [
+      "Dauntless Shield",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 3,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "In times past, it worked together with a king of the people to save the Galar region. It absorbs metal that it then uses in battle."
+  },
+  {
+    "ID": 890,
+    "Name": "Eternatus",
+    "Types": [
+      "Fighting",
+      ""
+    ],
+    "HP": 140,
+    "ATK": 85,
+    "DEF": 95,
+    "SPATK": 145,
+    "SPDEF": 95,
+    "SPD": 130,
+    "Species": "Gigantic Pokemon",
+    "Height": 20,
+    "Weight": 950,
+    "RatioM": 0,
+    "Abilities": [
+      "Pressure",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "The core on its chest absorbs energy emanating from the lands of the Galar region. This energy is what allows Eternatus to stay active."
+  },
+  {
     "ID": 3000,
     "Name": "Venusaur",
     "Types": [
@@ -24640,7 +27130,7 @@
     "ATK": 150,
     "DEF": 140,
     "SPATK": 65,
-    "SPDEF": 10,
+    "SPDEF": 100,
     "SPD": 75,
     "Species": "Pincer Pokemon",
     "Height": 2,
@@ -25561,7 +28051,7 @@
   },
   {
     "ID": 3044,
-    "Name": "Greninja",
+    "Name": "Greninja-Ash",
     "Types": [
       "Water",
       "Dark"
@@ -25926,7 +28416,7 @@
       "Ice",
       "Steel"
     ],
-    "HP": 100,
+    "HP": 80,
     "ATK": 110,
     "DEF": 200,
     "SPATK": 70,
@@ -27266,6 +29756,2466 @@
     "EVDEF": 0,
     "EVSPD": 3,
     "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0
+  },
+  {
+    "ID": 3104,
+    "Name": "Aegislash",
+    "Desc": "Apparently, it can detect the innate qualities of leadership. According to legend, whoever it recognizes is destined to become king.",
+    "Types": [
+      "Steel",
+      "Ghost"
+    ],
+    "HP": 60,
+    "ATK": 150,
+    "DEF": 50,
+    "SPATK": 150,
+    "SPDEF": 50,
+    "SPD": 60,
+    "Species": "Royal Sword Pokémon",
+    "Height": 1.7,
+    "Weight": 53,
+    "RatioM": 50,
+    "Abilities": [
+      "Stance Change",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 1,
+    "EVSPATK": 0,
+    "EVHP": 0
+  },
+  {
+    "ID": 3105,
+    "Name": "Froakie",
+    "Desc": "It protects its skin by covering its body in delicate bubbles. Beneath its happy-go-lucky air, it keeps a watchful eye on its surroundings.",
+    "Types": [
+      "Water",
+      ""
+    ],
+    "HP": 41,
+    "ATK": 56,
+    "DEF": 40,
+    "SPATK": 62,
+    "SPDEF": 44,
+    "SPD": 71,
+    "Species": "Bubble Frog Pokémon",
+    "Height": 0.3,
+    "Weight": 7,
+    "RatioM": 87.5,
+    "Abilities": [
+      "Torrent",
+      "None",
+      "Protean"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 1,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0
+  },
+  {
+    "ID": 3106,
+    "Name": "Frogadier",
+    "Desc": "Its swiftness is unparalleled. It can scale a tower of more than 2,000 feet in a minute's time.",
+    "Types": [
+      "Water",
+      ""
+    ],
+    "HP": 54,
+    "ATK": 63,
+    "DEF": 52,
+    "SPATK": 83,
+    "SPDEF": 56,
+    "SPD": 97,
+    "Species": "Bubble Frog Pokémon",
+    "Height": 0.6,
+    "Weight": 10.9,
+    "RatioM": 87.5,
+    "Abilities": [
+      "Torrent",
+      "None",
+      "Protean"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 2,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0
+  },
+  {
+    "ID": 3107,
+    "Name": "Greninja",
+    "Desc": "It appears and vanishes with a ninja's grace. It toys with its enemies using swift movements, while slicing them with throwing stars of sharpest water.",
+    "Types": [
+      "Water",
+      "Dark"
+    ],
+    "HP": 72,
+    "ATK": 95,
+    "DEF": 67,
+    "SPATK": 103,
+    "SPDEF": 71,
+    "SPD": 122,
+    "Species": "Ninja Pokémon",
+    "Height": 1.5,
+    "Weight": 40,
+    "RatioM": 87.5,
+    "Abilities": [
+      "Torrent",
+      "None",
+      "Battle Bond"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 3,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0
+  },
+  {
+    "ID": 3108,
+    "Name": "Substitute",
+    "Desc": "A substitute doll.",
+    "Types": [
+      "",
+      ""
+    ],
+    "HP": 0,
+    "ATK": 0,
+    "DEF": 0,
+    "SPATK": 0,
+    "SPDEF": 0,
+    "SPD": 0,
+    "Species": "Doll",
+    "Height": 0,
+    "Weight": 0,
+    "RatioM": 0,
+    "Abilities": [
+      "None",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0
+  },
+  {
+    "ID": 3109,
+    "Name": "Darmanitan-Zen",
+    "Desc": "Its internal fire burns at 1,371 degrees Celsius, making enough power that it can destroy a dump truck with one punch.",
+    "Types": [
+      "Fire",
+      "Psychic"
+    ],
+    "HP": 105,
+    "ATK": 30,
+    "DEF": 105,
+    "SPATK": 140,
+    "SPDEF": 105,
+    "SPD": 55,
+    "Species": "Blazing Pokémon",
+    "Height": 1.3,
+    "Weight": 92.9,
+    "RatioM": 50,
+    "Abilities": [
+      "Zen Mode",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 2,
+    "EVHP": 0
+  },
+  {
+    "ID": 3110,
+    "Name": "Cherrim-Sun",
+    "Desc": "If it senses strong sunlight, it opens its folded petals to absorb the sun's rays with its whole body.",
+    "Types": [
+      "Grass",
+      ""
+    ],
+    "HP": 70,
+    "ATK": 60,
+    "DEF": 70,
+    "SPATK": 87,
+    "SPDEF": 78,
+    "SPD": 85,
+    "Species": "Blossom Pokémon",
+    "Height": 0.5,
+    "Weight": 9.3,
+    "RatioM": 50,
+    "Abilities": [
+      "Flower Gift",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 2,
+    "EVHP": 0
+  },
+  {
+    "ID": 3111,
+    "Name": "Meowstic-F",
+    "Types": [
+      "Psychic",
+      ""
+    ],
+    "HP": 74,
+    "ATK": 48,
+    "DEF": 76,
+    "SPATK": 83,
+    "SPDEF": 81,
+    "SPD": 104,
+    "Species": "Constraint Pokemon",
+    "Height": 0.6,
+    "Weight": 8.5,
+    "RatioM": 0,
+    "Abilities": [
+      "Keen Eye",
+      "Infiltrator",
+      "Competitive"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 2,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "The eyeball patterns on the interior of its ears emit psychic energy. It keeps the patterns tightly covered because that power is too immense."
+  },
+  {
+    "ID": 3112,
+    "Name": "Farfetch'd-Galar",
+    "Types": [
+      "Fighting",
+      ""
+    ],
+    "HP": 52,
+    "ATK": 95,
+    "DEF": 55,
+    "SPATK": 58,
+    "SPDEF": 62,
+    "SPD": 55,
+    "Species": "Poison Gas Pokémon",
+    "Height": 15,
+    "Weight": 0.8,
+    "RatioM": 50,
+    "Abilities": [
+      "Steadfast",
+      "None",
+      "Scrappy"
+    ],
+    "EVATK": 1,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "The Farfetch'd of the Galar region are brave warriors, and they wield thick, tough leeks in battle."
+  },
+  {
+    "ID": 3113,
+    "Name": "Weezing-Galar",
+    "Types": [
+      "Poison",
+      "Fairy"
+    ],
+    "HP": 65,
+    "ATK": 90,
+    "DEF": 120,
+    "SPATK": 85,
+    "SPDEF": 70,
+    "SPD": 60,
+    "Species": "Poison Gas Pokémon",
+    "Height": 3,
+    "Weight": 16,
+    "RatioM": 50,
+    "Abilities": [
+      "Levitate",
+      "Neutralizing Gas",
+      "Misty Surge"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "This Pokémon consumes particles that contaminate the air. Instead of leaving droppings, it expels clean air."
+  },
+  {
+    "ID": 3114,
+    "Name": "Mr. Mime-Galar",
+    "Types": [
+      "Ice",
+      "Psychic"
+    ],
+    "HP": 50,
+    "ATK": 65,
+    "DEF": 65,
+    "SPATK": 90,
+    "SPDEF": 90,
+    "SPD": 100,
+    "Species": "Dancing Pokémon",
+    "Height": 1.4,
+    "Weight": 56.8,
+    "RatioM": 50,
+    "Abilities": [
+      "Vital Spirit",
+      "Screen Cleaner",
+      "Ice Body"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 2,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Its talent is tap-dancing. It can also manipulate temperatures to create a floor of ice, which this Pokémon can kick up to use as a barrier."
+  },
+  {
+    "ID": 3115,
+    "Name": "Corsola-Galar",
+    "Types": [
+      "Ghost",
+      ""
+    ],
+    "HP": 60,
+    "ATK": 55,
+    "DEF": 100,
+    "SPATK": 65,
+    "SPDEF": 100,
+    "SPD": 30,
+    "Species": "Coral Pokémon",
+    "Height": 0.6,
+    "Weight": 0.5,
+    "RatioM": 25,
+    "Abilities": [
+      "Weak Armor",
+      "None",
+      "Cursed Body"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 1,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Watch your step when wandering areas oceans once covered. What looks like a stone could be this Pokémon, and it will curse you if you kick it."
+  },
+  {
+    "ID": 3116,
+    "Name": "Zigzagoon-Galar",
+    "Types": [
+      "Dark",
+      "Normal"
+    ],
+    "HP": 38,
+    "ATK": 30,
+    "DEF": 41,
+    "SPATK": 30,
+    "SPDEF": 41,
+    "SPD": 60,
+    "Species": "Tiny Raccoon Pokémon",
+    "Height": 0.4,
+    "Weight": 17.5,
+    "RatioM": 50,
+    "Abilities": [
+      "Pickup",
+      "Gluttony",
+      "Quick Feet"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 1,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Its restlessness has it constantly running around. If it sees another Pokémon, it will purposely run into them in order to start a fight."
+  },
+  {
+    "ID": 3116,
+    "Name": "Darumaka-Galar",
+    "Types": [
+      "Ice",
+      ""
+    ],
+    "HP": 70,
+    "ATK": 90,
+    "DEF": 45,
+    "SPATK": 15,
+    "SPDEF": 45,
+    "SPD": 50,
+    "Species": "Zen Charm Pokémon",
+    "Height": 0.7,
+    "Weight": 40,
+    "RatioM": 50,
+    "Abilities": [
+      "Hustle",
+      "None",
+      "Inner Focus"
+    ],
+    "EVATK": 1,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It lived in snowy areas for so long that its fire sac colled off and atrophied. It now has an organ that generates cold instead."
+  },
+  {
+    "ID": 3117,
+    "Name": "Linoone-Galar",
+    "Types": [
+      "Dark",
+      "Normal"
+    ],
+    "HP": 78,
+    "ATK": 70,
+    "DEF": 61,
+    "SPATK": 50,
+    "SPDEF": 61,
+    "SPD": 100,
+    "Species": "Rushing Pokémon",
+    "Height": 0.5,
+    "Weight": 32.5,
+    "RatioM": 50,
+    "Abilities": [
+      "Pickup",
+      "Gluttony",
+      "Quick Feet"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 2,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It uses its long tongue to taunt opponents. Once the opposition is enraged, this Pokémon hurls itself at the opponent, tackling them forefully."
+  },
+  {
+    "ID": 3119,
+    "Name": "Darmanitan-Galar",
+    "Types": [
+      "Ice",
+      ""
+    ],
+    "HP": 105,
+    "ATK": 140,
+    "DEF": 55,
+    "SPATK": 30,
+    "SPDEF": 55,
+    "SPD": 95,
+    "Species": "Zen Charm Pokémon",
+    "Height": 1.7,
+    "Weight": 120,
+    "RatioM": 50,
+    "Abilities": [
+      "Gorilla Tactics",
+      "None",
+      "Zen Mode"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "On days when blizzards blow through, it comes down to where people live. It stashes food in the snowball on its head, taking it home for later."
+  },
+  {
+    "ID": 3120,
+    "Name": "Darmanitan-Zen-Galar",
+    "Types": [
+      "Ice",
+      "Fire"
+    ],
+    "HP": 105,
+    "ATK": 160,
+    "DEF": 55,
+    "SPATK": 30,
+    "SPDEF": 55,
+    "SPD": 135,
+    "Species": "Blazing Pokémon",
+    "Height": 1.7,
+    "Weight": 120,
+    "RatioM": 50,
+    "Abilities": [
+      "Zen Mode",
+      "None",
+      "None"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Anger has reignited its atrophied flame sac. This Pokémon spews fire everywhere as it rampages indiscriminately."
+  },
+  {
+    "ID": 3121,
+    "Name": "Yamask-Galar",
+    "Types": [
+      "Ground",
+      "Ghost"
+    ],
+    "HP": 38,
+    "ATK": 55,
+    "DEF": 85,
+    "SPATK": 30,
+    "SPDEF": 65,
+    "SPD": 30,
+    "Species": "Spirit Pokémon",
+    "Height": 0.5,
+    "Weight": 1.5,
+    "RatioM": 50,
+    "Abilities": [
+      "Wandering Spirit",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 1,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "A clay slab with cursed engravings took possession of a Yamask. The slab is said to be absorbing the Yamask's dark power."
+  },
+  {
+    "ID": 3122,
+    "Name": "Stunfisk-Galar",
+    "Types": [
+      "Ground",
+      "Steel"
+    ],
+    "HP": 100,
+    "ATK": 81,
+    "DEF": 99,
+    "SPATK": 66,
+    "SPDEF": 84,
+    "SPD": 32,
+    "Species": "Trap Pokémon",
+    "Height": 0.7,
+    "Weight": 20.5,
+    "RatioM": 50,
+    "Abilities": [
+      "Mimicry",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 2,
+    "Desc": "Living in mud with a high iron content has given it a strong steel body."
+  },
+  {
+    "ID": 3123,
+    "Name": "Zacian-Crowned",
+    "Types": [
+      "Fairy",
+      "Steel"
+    ],
+    "HP": 92,
+    "ATK": 170,
+    "DEF": 115,
+    "SPATK": 80,
+    "SPDEF": 115,
+    "SPD": 148,
+    "Species": "Warrior Pokemon",
+    "Height": 2.8,
+    "Weight": 355,
+    "RatioM": 0,
+    "Abilities": [
+      "Intrepid Sword",
+      "NONE",
+      "NONE"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 3,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Now armed with a weapon it used in ancient times, this Pokemon needs only a single strike to fell even Gigantamax Pokemon"
+  },
+  {
+    "ID": 3124,
+    "Name": "Zamazenta-Crowned",
+    "Types": [
+      "Fighting",
+      "Steel"
+    ],
+    "HP": 92,
+    "ATK": 130,
+    "DEF": 145,
+    "SPATK": 80,
+    "SPDEF": 145,
+    "SPD": 128,
+    "Species": "Warrion Pokémon",
+    "Height": 2.9,
+    "Weight": 785,
+    "RatioM": 0,
+    "Abilities": [
+      "Dauntless Shield",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 3,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Its ability to deflect any attack led to it being kown as the Fighting Master's Shield. It was feared and respecter by all."
+  },
+  {
+    "ID": 3125,
+    "Name": "Eiscue-Noice",
+    "Types": [
+      "Ice",
+      ""
+    ],
+    "HP": 75,
+    "ATK": 80,
+    "DEF": 70,
+    "SPATK": 65,
+    "SPDEF": 50,
+    "SPD": 130,
+    "Species": "Penguin Pokémon",
+    "Height": 1.4,
+    "Weight": 89,
+    "RatioM": 0,
+    "Abilities": [
+      "Ice Face",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "The ice covering this Pokémon's face has shattered, revealing a slightly worried expression that many people are enamored with."
+  },
+  {
+    "ID": 3126,
+    "Name": "Morpeko-Hangry",
+    "Types": [
+      "Electric",
+      "Dark"
+    ],
+    "HP": 58,
+    "ATK": 95,
+    "DEF": 58,
+    "SPATK": 70,
+    "SPDEF": 58,
+    "SPD": 97,
+    "Species": "Two-Sided Pokémon",
+    "Height": 0.3,
+    "Weight": 3,
+    "RatioM": 0,
+    "Abilities": [
+      "Hunger Switch",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 2,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Intense hunger drives it to extremes of violence, and the electricity in its cheek sacs has converted into a Dark-type energy."
+  },
+  {
+    "ID": 3127,
+    "Name": "Toxtricity-Low",
+    "Types": [
+      "Electric",
+      "Poison"
+    ],
+    "HP": 75,
+    "ATK": 98,
+    "DEF": 70,
+    "SPATK": 114,
+    "SPDEF": 70,
+    "SPD": 75,
+    "Species": "Punk Pokémon",
+    "Height": 1.6,
+    "Weight": 40,
+    "RatioM": 0,
+    "Abilities": [
+      "Punk Rock",
+      "Minus",
+      "Technician"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 2,
+    "EVHP": 0,
+    "Desc": "Capable of generating 15,000 volts of electricity, this Pokémon looks down on all that would challenge it."
+  },
+  {
+    "ID": 3128,
+    "Name": "Meowth-Galar",
+    "Types": [
+      "Steel",
+      ""
+    ],
+    "HP": 50,
+    "ATK": 65,
+    "DEF": 55,
+    "SPATK": 40,
+    "SPDEF": 40,
+    "SPD": 40,
+    "Species": "Scratch Cat Pokémon",
+    "Height": 0.4,
+    "Weight": 7.5,
+    "RatioM": 50,
+    "Abilities": [
+      "Pickup",
+      "Tough Claws",
+      "Unnerve"
+    ],
+    "EVATK": 1,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Living with a savage, seafaring people has toughened this Pokémon's body so much that parts of it have turned to iron."
+  },
+  {
+    "ID": 3129,
+    "Name": "Ponyta-Galar",
+    "Types": [
+      "Psychic",
+      ""
+    ],
+    "HP": 50,
+    "ATK": 85,
+    "DEF": 55,
+    "SPATK": 65,
+    "SPDEF": 65,
+    "SPD": 90,
+    "Species": "Unique Horn Pokémon",
+    "Height": 0.8,
+    "Weight": 24,
+    "RatioM": 50,
+    "Abilities": [
+      "Run Away",
+      "Pastel Veil",
+      "Anticipation"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 1,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Its small horn hides a healing power. With a few rubs from this Pokémon's horn, any slight wound you have will be healed."
+  },
+  {
+    "ID": 3130,
+    "Name": "Rapidash-Galar",
+    "Types": [
+      "Psychic",
+      "Fairy"
+    ],
+    "HP": 65,
+    "ATK": 100,
+    "DEF": 70,
+    "SPATK": 80,
+    "SPDEF": 80,
+    "SPD": 105,
+    "Species": "Unique Horn Pokémon",
+    "Height": 1.7,
+    "Weight": 80,
+    "RatioM": 50,
+    "Abilities": [
+      "Run Away",
+      "Pastel Veil",
+      "Anticipation"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 2,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Little can stand up to its psycho cut. Unleashed from this Pokémon's horn, the move will punch a hole right through a thick metal sheet."
+  },
+  {
+    "ID": 3132,
+    "Name": "Deoxys",
+    "Types": [
+      "Psychic",
+      ""
+    ],
+    "HP": 50,
+    "ATK": 180,
+    "DEF": 20,
+    "SPATK": 180,
+    "SPDEF": 20,
+    "SPD": 150,
+    "Species": "DNA Pokemon",
+    "Height": 1.7,
+    "Weight": 60.8,
+    "RatioM": 0,
+    "Abilities": [
+      "Pressure",
+      "None",
+      "None"
+    ],
+    "EVATK": 2,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 1,
+    "EVHP": 0,
+    "Desc": "DNA from a space virus mutated and became a Pokemon. It appears where auroras are seen."
+  },
+  {
+    "ID": 3133,
+    "Name": "Deoxys",
+    "Types": [
+      "Psychic",
+      ""
+    ],
+    "HP": 50,
+    "ATK": 70,
+    "DEF": 160,
+    "SPATK": 70,
+    "SPDEF": 160,
+    "SPD": 90,
+    "Species": "DNA Pokemon",
+    "Height": 1.7,
+    "Weight": 60.8,
+    "RatioM": 0,
+    "Abilities": [
+      "Pressure",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 1,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "DNA from a space virus mutated and became a Pokemon. It appears where auroras are seen."
+  },
+  {
+    "ID": 3134,
+    "Name": "Deoxys",
+    "Types": [
+      "Psychic",
+      ""
+    ],
+    "HP": 50,
+    "ATK": 95,
+    "DEF": 90,
+    "SPATK": 95,
+    "SPDEF": 90,
+    "SPD": 180,
+    "Species": "DNA Pokemon",
+    "Height": 1.7,
+    "Weight": 60.8,
+    "RatioM": 0,
+    "Abilities": [
+      "Pressure",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 3,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "DNA from a space virus mutated and became a Pokemon. It appears where auroras are seen."
+  },
+  {
+    "ID": 3135,
+    "Name": "Keldeo",
+    "Types": [
+      "Water",
+      "Fighting"
+    ],
+    "HP": 91,
+    "ATK": 72,
+    "DEF": 90,
+    "SPATK": 129,
+    "SPDEF": 90,
+    "SPD": 108,
+    "Species": "Colt Pokemon",
+    "Height": 1.4,
+    "Weight": 48.5,
+    "RatioM": 0,
+    "Abilities": [
+      "Justified",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 3,
+    "EVHP": 0,
+    "Desc": "It crosses the world, running over the surfaces of oceans and rivers. It appears at scenic waterfronts."
+  },
+  {
+    "ID": 3136,
+    "Name": "Zygarde",
+    "Types": [
+      "Dragon",
+      "Ground"
+    ],
+    "HP": 54,
+    "ATK": 100,
+    "DEF": 71,
+    "SPATK": 61,
+    "SPDEF": 85,
+    "SPD": 115,
+    "Species": "Order Pokemon",
+    "Height": 1.2,
+    "Weight": 33.5,
+    "RatioM": 0,
+    "Abilities": [
+      "Aura Break",
+      "Power Construct",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "This is Zygarde when about 10% of its pieces have been assembled. It leaps at its opponent’s chest and sinks its sharp fangs into them."
+  },
+  {
+    "ID": 3137,
+    "Name": "Zygarde",
+    "Types": [
+      "Dragon",
+      "Ground"
+    ],
+    "HP": 216,
+    "ATK": 100,
+    "DEF": 121,
+    "SPATK": 91,
+    "SPDEF": 95,
+    "SPD": 85,
+    "Species": "Order Pokemon",
+    "Height": 4.5,
+    "Weight": 610,
+    "RatioM": 0,
+    "Abilities": [
+      "Power Construct",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "This is Zygarde’s perfected form. From the orifice on its chest, it radiates high-powered energy that eliminates everything."
+  },
+  {
+    "ID": 3138,
+    "Name": "Giratina",
+    "Types": [
+      "Ghost",
+      "Dragon"
+    ],
+    "HP": 150,
+    "ATK": 120,
+    "DEF": 100,
+    "SPATK": 120,
+    "SPDEF": 100,
+    "SPD": 90,
+    "Species": "Renegade Pokemon",
+    "Height": 6.9,
+    "Weight": 650,
+    "RatioM": 0,
+    "Abilities": [
+      "Levitate",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "This Pokemon is said to live in a world on the reverse side of ours, where common knowledge is distorted and strange."
+  },
+  {
+    "ID": 3139,
+    "Name": "Kyurem",
+    "Types": [
+      "Dragon",
+      "Ice"
+    ],
+    "HP": 125,
+    "ATK": 170,
+    "DEF": 100,
+    "SPATK": 120,
+    "SPDEF": 90,
+    "SPD": 95,
+    "Species": "Boundary Pokemon",
+    "Height": 3.3,
+    "Weight": 325,
+    "RatioM": 0,
+    "Abilities": [
+      "Teravolt",
+      "None",
+      "None"
+    ],
+    "EVATK": 3,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It’s said that this Pokemon battles in order to protect the ideal world that will exist in the future for people and Pokemon."
+  },
+  {
+    "ID": 3140,
+    "Name": "Kyurem",
+    "Types": [
+      "Dragon",
+      "Ice"
+    ],
+    "HP": 125,
+    "ATK": 120,
+    "DEF": 90,
+    "SPATK": 170,
+    "SPDEF": 100,
+    "SPD": 95,
+    "Species": "Boundary Pokemon",
+    "Height": 3.6,
+    "Weight": 325,
+    "RatioM": 0,
+    "Abilities": [
+      "Turboblaze",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 3,
+    "EVHP": 0,
+    "Desc": "The sameness of Reshiram’s and Kyurem’s genes allowed Kyurem to absorb Reshiram. Kyurem can now use the power of both fire and ice."
+  },
+  {
+    "ID": 3141,
+    "Name": "Meloetta",
+    "Types": [
+      "Normal",
+      "Fighting"
+    ],
+    "HP": 100,
+    "ATK": 128,
+    "DEF": 90,
+    "SPATK": 77,
+    "SPDEF": 77,
+    "SPD": 128,
+    "Species": "Melody Pokemon",
+    "Height": 0.6,
+    "Weight": 6.5,
+    "RatioM": 0,
+    "Abilities": [
+      "Serene Grace",
+      "None",
+      "None"
+    ],
+    "EVATK": 1,
+    "EVDEF": 1,
+    "EVSPD": 1,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "The melodies sung by Meloetta have the power to make Pokemon that hear them happy or sad."
+  },
+  {
+    "ID": 3142,
+    "Name": "Arceus",
+    "Types": [
+      "Fighting",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3143,
+    "Name": "Arceus",
+    "Types": [
+      "Flying",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3144,
+    "Name": "Arceus",
+    "Types": [
+      "Poison",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3145,
+    "Name": "Arceus",
+    "Types": [
+      "Ground",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3146,
+    "Name": "Arceus",
+    "Types": [
+      "Rock",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3147,
+    "Name": "Arceus",
+    "Types": [
+      "Bug",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3148,
+    "Name": "Arceus",
+    "Types": [
+      "Ghost",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3149,
+    "Name": "Arceus",
+    "Types": [
+      "Steel",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3150,
+    "Name": "Arceus",
+    "Types": [
+      "Fire",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3151,
+    "Name": "Arceus",
+    "Types": [
+      "Water",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3152,
+    "Name": "Arceus",
+    "Types": [
+      "Grass",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3153,
+    "Name": "Arceus",
+    "Types": [
+      "Electric",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3154,
+    "Name": "Arceus",
+    "Types": [
+      "Psychic",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3155,
+    "Name": "Arceus",
+    "Types": [
+      "Ice",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3156,
+    "Name": "Arceus",
+    "Types": [
+      "Dragon",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3157,
+    "Name": "Arceus",
+    "Types": [
+      "Dark",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3158,
+    "Name": "Arceus",
+    "Types": [
+      "Fairy",
+      ""
+    ],
+    "HP": 120,
+    "ATK": 120,
+    "DEF": 120,
+    "SPATK": 120,
+    "SPDEF": 120,
+    "SPD": 120,
+    "Species": "Alpha Pokemon",
+    "Height": 3.2,
+    "Weight": 320,
+    "RatioM": 0,
+    "Abilities": [
+      "Multitype",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "According to the legends of Sinnoh, this Pokemon emerged from an egg and shaped all there is in this world."
+  },
+  {
+    "ID": 3159,
+    "Name": "Pumpkaboo",
+    "Types": [
+      "Ghost",
+      "Grass"
+    ],
+    "HP": 44,
+    "ATK": 66,
+    "DEF": 70,
+    "SPATK": 44,
+    "SPDEF": 55,
+    "SPD": 56,
+    "Species": "Pumpkin Pokemon",
+    "Height": 0.3,
+    "Weight": 3.5,
+    "RatioM": 50,
+    "Abilities": [
+      "Pickup",
+      "Frisk",
+      "Insomnia"
+    ],
+    "EVATK": 0,
+    "EVDEF": 1,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "When taking spirits to the afterlife, small Pumpkaboo prefer the spirits of children to those of adults."
+  },
+  {
+    "ID": 3160,
+    "Name": "Pumpkaboo",
+    "Types": [
+      "Ghost",
+      "Grass"
+    ],
+    "HP": 54,
+    "ATK": 66,
+    "DEF": 70,
+    "SPATK": 44,
+    "SPDEF": 55,
+    "SPD": 46,
+    "Species": "Pumpkin Pokemon",
+    "Height": 0.5,
+    "Weight": 7.5,
+    "RatioM": 50,
+    "Abilities": [
+      "Pickup",
+      "Frisk",
+      "Insomnia"
+    ],
+    "EVATK": 0,
+    "EVDEF": 1,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "When taking spirits to the afterlife, large Pumpkaboo prefer the spirits of adults to those of children."
+  },
+  {
+    "ID": 3161,
+    "Name": "Pumpkaboo",
+    "Types": [
+      "Ghost",
+      "Grass"
+    ],
+    "HP": 59,
+    "ATK": 66,
+    "DEF": 70,
+    "SPATK": 44,
+    "SPDEF": 55,
+    "SPD": 41,
+    "Species": "Pumpkin Pokemon",
+    "Height": 0.8,
+    "Weight": 15,
+    "RatioM": 50,
+    "Abilities": [
+      "Pickup",
+      "Frisk",
+      "Insomnia"
+    ],
+    "EVATK": 0,
+    "EVDEF": 1,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Supersized Pumpkaboo are very partial to the spirits of people who were of similarly superior proportions."
+  },
+  {
+    "ID": 3162,
+    "Name": "Gourgeist",
+    "Types": [
+      "Ghost",
+      "Grass"
+    ],
+    "HP": 55,
+    "ATK": 85,
+    "DEF": 122,
+    "SPATK": 58,
+    "SPDEF": 75,
+    "SPD": 99,
+    "Species": "Pumpkin Pokemon",
+    "Height": 0.7,
+    "Weight": 9.5,
+    "RatioM": 50,
+    "Abilities": [
+      "Pickup",
+      "Frisk",
+      "Insomnia"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Small Gourgeist pretend to be children to fool adults. Anyone who falls for the act gets carried away to the hereafter."
+  },
+  {
+    "ID": 3163,
+    "Name": "Gourgeist",
+    "Types": [
+      "Ghost",
+      "Grass"
+    ],
+    "HP": 75,
+    "ATK": 95,
+    "DEF": 122,
+    "SPATK": 58,
+    "SPDEF": 75,
+    "SPD": 69,
+    "Species": "Pumpkin Pokemon",
+    "Height": 1.1,
+    "Weight": 14,
+    "RatioM": 50,
+    "Abilities": [
+      "Pickup",
+      "Frisk",
+      "Insomnia"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Large Gourgeist put on the guise of adults, taking the hands of children to lead them to the afterlife."
+  },
+  {
+    "ID": 3164,
+    "Name": "Gourgeist",
+    "Types": [
+      "Ghost",
+      "Grass"
+    ],
+    "HP": 85,
+    "ATK": 100,
+    "DEF": 122,
+    "SPATK": 58,
+    "SPDEF": 75,
+    "SPD": 54,
+    "Species": "Pumpkin Pokemon",
+    "Height": 1.7,
+    "Weight": 39,
+    "RatioM": 50,
+    "Abilities": [
+      "Pickup",
+      "Frisk",
+      "Insomnia"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Supersized Gourgeist aren’t picky. They will forcefully drag anyone off to the afterlife."
+  },
+  {
+    "ID": 3165,
+    "Name": "Wishiwashi",
+    "Types": [
+      "Water",
+      ""
+    ],
+    "HP": 45,
+    "ATK": 140,
+    "DEF": 130,
+    "SPATK": 140,
+    "SPDEF": 130,
+    "SPD": 30,
+    "Species": "Small Fry Pokemon",
+    "Height": 8.2,
+    "Weight": 78.6,
+    "RatioM": 50,
+    "Abilities": [
+      "Schooling",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 1,
+    "Desc": "Wishiwashi assemble in this formation to face off against strong foes. It boasts a strength that earned it the name demon of the sea."
+  },
+  {
+    "ID": 3166,
+    "Name": "Silvally",
+    "Types": [
+      "Fighting",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3167,
+    "Name": "Silvally",
+    "Types": [
+      "Flying",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3168,
+    "Name": "Silvally",
+    "Types": [
+      "Poison",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3169,
+    "Name": "Silvally",
+    "Types": [
+      "Ground",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3170,
+    "Name": "Silvally",
+    "Types": [
+      "Rock",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3171,
+    "Name": "Silvally",
+    "Types": [
+      "Bug",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3172,
+    "Name": "Silvally",
+    "Types": [
+      "Ghost",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3173,
+    "Name": "Silvally",
+    "Types": [
+      "Steel",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3174,
+    "Name": "Silvally",
+    "Types": [
+      "Fire",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3175,
+    "Name": "Silvally",
+    "Types": [
+      "Water",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3176,
+    "Name": "Silvally",
+    "Types": [
+      "Grass",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3177,
+    "Name": "Silvally",
+    "Types": [
+      "Electric",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3178,
+    "Name": "Silvally",
+    "Types": [
+      "Psychic",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3179,
+    "Name": "Silvally",
+    "Types": [
+      "Ice",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3180,
+    "Name": "Silvally",
+    "Types": [
+      "Dragon",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3181,
+    "Name": "Silvally",
+    "Types": [
+      "Dark",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3182,
+    "Name": "Silvally",
+    "Types": [
+      "Fairy",
+      ""
+    ],
+    "HP": 95,
+    "ATK": 95,
+    "DEF": 95,
+    "SPATK": 95,
+    "SPDEF": 95,
+    "SPD": 95,
+    "Species": "Synthetic Pokemon",
+    "Height": 2.3,
+    "Weight": 100.5,
+    "RatioM": 0,
+    "Abilities": [
+      "RKS System",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 3,
+    "Desc": "Having been awakened successfully, it can change its type and battle—just like a certain Pokémon depicted in legends."
+  },
+  {
+    "ID": 3183,
+    "Name": "Necrozma",
+    "Types": [
+      "Psychic",
+      "Steel"
+    ],
+    "HP": 97,
+    "ATK": 157,
+    "DEF": 127,
+    "SPATK": 113,
+    "SPDEF": 109,
+    "SPD": 77,
+    "Species": "Prism Pokemon",
+    "Height": 3.8,
+    "Weight": 460,
+    "RatioM": 0,
+    "Abilities": [
+      "Prism Armor",
+      "None",
+      "None"
+    ],
+    "EVATK": 3,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "This is its form while it is devouring the light of Solgaleo. It pounces on foes and then slashes them with the claws on its four limbs and back."
+  },
+  {
+    "ID": 3184,
+    "Name": "Necrozma",
+    "Types": [
+      "Psychic",
+      "Ghost"
+    ],
+    "HP": 97,
+    "ATK": 113,
+    "DEF": 109,
+    "SPATK": 157,
+    "SPDEF": 127,
+    "SPD": 77,
+    "Species": "Prism Pokemon",
+    "Height": 4.2,
+    "Weight": 350,
+    "RatioM": 0,
+    "Abilities": [
+      "Prism Armor",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 3,
+    "EVHP": 0,
+    "Desc": "Lunala no longer has a will of its own. Now under the control of Necrozma, it continuously expels all of its energy."
+  },
+  {
+    "ID": 3185,
+    "Name": "Necrozma",
+    "Types": [
+      "Psychic",
+      "Dragon"
+    ],
+    "HP": 97,
+    "ATK": 167,
+    "DEF": 97,
+    "SPATK": 167,
+    "SPDEF": 97,
+    "SPD": 129,
+    "Species": "Prism Pokemon",
+    "Height": 7.5,
+    "Weight": 230,
+    "RatioM": 0,
+    "Abilities": [
+      "Prism Armor",
+      "None",
+      "None"
+    ],
+    "EVATK": 1,
+    "EVDEF": 0,
+    "EVSPD": 1,
+    "EVSPDEF": 0,
+    "EVSPATK": 1,
+    "EVHP": 0,
+    "Desc": "This is its form when it has absorbed overwhelming light energy. It fires laser beams from all over its body."
+  },
+  {
+    "ID": 3186,
+    "Name": "Mimikyu",
+    "Desc": "Although it’s a quiet, lonely Pokémon, if you try to look at what’s under its rag, it will become agitated and resist violently.",
+    "Types": [
+      "Ghost",
+      "Fairy"
+    ],
+    "HP": 55,
+    "ATK": 90,
+    "DEF": 80,
+    "SPATK": 50,
+    "SPDEF": 105,
+    "SPD": 96,
+    "Species": "Disguise Pokémon",
+    "Height": 0.2,
+    "Weight": 0.7,
+    "RatioM": 50,
+    "Abilities": [
+      "Disguise",
+      "None",
+      "None"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 2,
     "EVSPATK": 0,
     "EVHP": 0
   }

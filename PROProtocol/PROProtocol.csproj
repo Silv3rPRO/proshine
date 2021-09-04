@@ -54,7 +54,7 @@
     <Compile Include="Direction.cs" />
     <Compile Include="GameClient.cs" />
     <Compile Include="GameConnection.cs" />
-    <Compile Include="HardwareHash.cs" />
+    <Compile Include="Hardware.cs" />
     <Compile Include="InventoryItem.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Npc.cs" />

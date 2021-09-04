@@ -192,6 +192,35 @@ namespace PROProtocol
             return false;
         }
 
+        public Direction GetWaterDirectionFrom(int positionX, int positionY)
+        {
+            int collider = GetCollider(positionX, positionY - 1);
+            if (collider == 5 || collider == 12)
+            {
+                return Direction.Up;
+            }
+
+            collider = GetCollider(positionX, positionY + 1);
+            if (collider == 5 || collider == 12)
+            {
+                return Direction.Down;
+            }
+
+            collider = GetCollider(positionX - 1, positionY);
+            if (collider == 5 || collider == 12)
+            {
+                return Direction.Left;
+            }
+
+            collider = GetCollider(positionX + 1, positionY);
+            if (collider == 5 || collider == 12)
+            {
+                return Direction.Right;
+            }
+
+            return Direction.Down;
+        }
+
         public MoveResult CanMove(Direction direction, int destinationX, int destinationY, bool isOnGround, bool isSurfing, bool canUseCut, bool canUseSmashRock)
         {
             if (destinationX < 0 || destinationX >= DimensionX

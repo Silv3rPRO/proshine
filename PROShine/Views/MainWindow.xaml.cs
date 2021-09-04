@@ -516,11 +516,11 @@ namespace PROShine
             });
         }
 
-        private void Client_AuthenticationFailed(AuthenticationResult reason)
+        private void Client_AuthenticationFailed(string message)
         {
             Dispatcher.InvokeAsync(delegate
             {
-                string message = "";
+                /*string message = "";
                 switch (reason)
                 {
                     case AuthenticationResult.AlreadyLogged:
@@ -548,7 +548,7 @@ namespace PROShine
                     case AuthenticationResult.OtherServer:
                         message = "Already logged in on another server";
                         break;
-                }
+                }*/
                 LogMessage("Authentication failed: " + message);
             });
         }

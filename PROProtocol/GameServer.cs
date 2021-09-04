@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace PROProtocol
@@ -11,14 +12,21 @@ namespace PROProtocol
 
     public static class GameServerExtensions
     {
+        private static Dictionary<GameServer, IPAddress> _cachedIpAddresses = new Dictionary<GameServer, IPAddress>();
+
         public static IPEndPoint GetAddress(this GameServer server)
         {
+            if (!_cachedIpAddresses.ContainsKey(server))
+                _cachedIpAddresses.Add(server, GetAddressFromDns(server + ".pokemonrevolution.net"));
+            else if (_cachedIpAddresses[server] is null)
+                _cachedIpAddresses[server] = GetAddressFromDns(server + ".pokemonrevolution.net");
+
             switch (server)
             {
                 case GameServer.Silver:
-                    return new IPEndPoint(GetAddressFromDns(server + ".pokemonrevolution.net"), 800);
+                    return new IPEndPoint(_cachedIpAddresses[server], 800);
                 case GameServer.Gold:
-                    return new IPEndPoint(GetAddressFromDns(server + ".pokemonrevolution.net"), 801);
+                    return new IPEndPoint(_cachedIpAddresses[server], 801);
             }
             return null;
         }
@@ -37,7 +45,7 @@ namespace PROProtocol
 
         public static IPAddress GetMapAddress(this GameServer server)
         {
-            return GetAddressFromDns(server + ".pokemonrevolution.net");
+            return _cachedIpAddresses[server];
         }
 
         private static Random Random = new Random();
