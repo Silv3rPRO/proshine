@@ -112,6 +112,7 @@ namespace PROProtocol
 
         private GameConnection _connection;
         private DateTime _lastMovement;
+        private DateTime _lastVisPacket;
         private List<Direction> _movements = new List<Direction>();
         private Direction? _slidingDirection;
         private int _surfAfterMovement; // 0 = no action needed, 1 = have to send surf packet, 2 = sent surf packet waiting for server response
@@ -237,33 +238,37 @@ namespace PROProtocol
             }
         }
 
-        private int _pingCurrentStep = 1;
-        private bool _isPingSwapped = false;
+        private short _legitCounter = 0;
+        private uint _legitFlag = 1;
 
         private void SendRegularPing()
         {
-            if ((DateTime.UtcNow - _lastMovement).TotalSeconds >= 6)
+            if ((DateTime.UtcNow - _lastMovement).TotalSeconds >= 6
+                || (DateTime.UtcNow - _lastVisPacket).TotalSeconds >= 60)
             {
                 _lastMovement = DateTime.UtcNow;
+                _lastVisPacket = DateTime.UtcNow;
+
                 // DSSock.Update
                 int packetType;
-                if (_pingCurrentStep == 5)
+
+                bool isPingSwapped;
+                if (_legitCounter == 4)
                 {
-                    packetType = _isPingSwapped ? 2 : 1;
-                    _pingCurrentStep = 0;
+                    isPingSwapped = _legitFlag != 0;
+                    _legitCounter = -1;
                 }
                 else
                 {
-                    packetType = Rand.Next(2) + 1;
+                    isPingSwapped = Rand.NextDouble() > 0.5;
                 }
 
-                if (packetType == 1)
-                {
-                    _isPingSwapped = !_isPingSwapped;
-                }
-                
-                _pingCurrentStep++;
+                packetType = isPingSwapped ? 1 : 2;
+
                 SendPacket(packetType.ToString());
+                if (isPingSwapped)
+                    _legitFlag ^= 1u;
+                _legitCounter++;
             }
         }
 
