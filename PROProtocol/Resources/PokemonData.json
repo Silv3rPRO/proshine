@@ -21559,7 +21559,7 @@
     "RatioM": 0,
     "Abilities": [
       "Aura Break",
-      "None",
+      "Power Construct",
       "None"
     ],
     "EVATK": 0,
@@ -28353,7 +28353,7 @@
     "ID": 3054,
     "Name": "XD001",
     "Types": [
-      "Psychic",
+      "Shadow",
       "Flying"
     ],
     "HP": 110,
@@ -28476,12 +28476,12 @@
       "Dark",
       "Normal"
     ],
-    "HP": 55,
-    "ATK": 81,
-    "DEF": 60,
-    "SPATK": 50,
-    "SPDEF": 70,
-    "SPD": 97,
+    "HP": 75,
+    "ATK": 71,
+    "DEF": 70,
+    "SPATK": 40,
+    "SPDEF": 80,
+    "SPD": 77,
     "Species": "Mouse Pokemon",
     "Height": 7.1,
     "Weight": 25.5,
@@ -29160,6 +29160,126 @@
     "Desc": "Shaymins Sky Forme will revert into its Land Forme during the night or when frozen."
   },
   {
+    "ID": 3081,
+    "Name": "Burmy",
+    "Types": [
+      "Bug",
+      ""
+    ],
+    "HP": 40,
+    "ATK": 29,
+    "DEF": 45,
+    "SPATK": 29,
+    "SPDEF": 45,
+    "SPD": 36,
+    "Species": "Bagworm Pokemon",
+    "Height": 2,
+    "Weight": 3.4,
+    "RatioM": 50,
+    "Abilities": [
+      "Shed Skin",
+      "None",
+      "Overcoat"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 1,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Burmy is a small, larval Pokemon with a black segmented body and a coiled antenna on top of its head."
+  },
+  {
+    "ID": 3082,
+    "Name": "Burmy",
+    "Types": [
+      "Bug",
+      ""
+    ],
+    "HP": 40,
+    "ATK": 29,
+    "DEF": 45,
+    "SPATK": 29,
+    "SPDEF": 45,
+    "SPD": 36,
+    "Species": "Bagworm Pokemon",
+    "Height": 2,
+    "Weight": 3.4,
+    "RatioM": 50,
+    "Abilities": [
+      "Shed Skin",
+      "None",
+      "Overcoat"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 1,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Burmy is a small, larval Pokemon with a black segmented body and a coiled antenna on top of its head."
+  },
+  {
+    "ID": 3083,
+    "Name": "Wormadam",
+    "Types": [
+      "Bug",
+      "Ground"
+    ],
+    "HP": 60,
+    "ATK": 79,
+    "DEF": 105,
+    "SPATK": 59,
+    "SPDEF": 85,
+    "SPD": 36,
+    "Species": "Bagworm Pokemon",
+    "Height": 5.1,
+    "Weight": 6.5,
+    "RatioM": 0.01,
+    "Abilities": [
+      "Anticipation",
+      "None",
+      "Overcoat"
+    ],
+    "EVATK": 0,
+    "EVDEF": 2,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Wormadam is a black, bagworm-like Pokemon with a coat of leaves, sand, or building insulation that has fused with its body."
+  },
+  {
+    "ID": 3084,
+    "Name": "Wormadam",
+    "Types": [
+      "Bug",
+      "Steel"
+    ],
+    "HP": 60,
+    "ATK": 69,
+    "DEF": 95,
+    "SPATK": 69,
+    "SPDEF": 95,
+    "SPD": 36,
+    "Species": "Bagworm Pokemon",
+    "Height": 5.1,
+    "Weight": 6.5,
+    "RatioM": 0.01,
+    "Abilities": [
+      "Anticipation",
+      "None",
+      "Overcoat"
+    ],
+    "EVATK": 0,
+    "EVDEF": 1,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "Wormadam is a black, bagworm-like Pokemon with a coat of leaves, sand, or building insulation that has fused with its body."
+  },
+  {
     "ID": 3085,
     "Name": "Castform",
     "Types": [
@@ -29584,22 +29704,22 @@
     "Name": "Baby Lugia",
     "Types": [
       "Psychic",
-      "Water"
+      "Flying"
     ],
-    "HP": 110,
-    "ATK": 80,
-    "DEF": 110,
-    "SPATK": 100,
-    "SPDEF": 110,
-    "SPD": 80,
+    "HP": 76,
+    "ATK": 30,
+    "DEF": 95,
+    "SPATK": 80,
+    "SPDEF": 124,
+    "SPD": 100,
     "Species": "Baby Pokemon",
     "Height": 2.2,
     "Weight": 70,
     "RatioM": 0,
     "Abilities": [
-      "Multiscale",
+      "Hydration",
       "None",
-      "None"
+      "Multiscale"
     ],
     "EVATK": 0,
     "EVDEF": 0,
@@ -29608,36 +29728,6 @@
     "EVSPATK": 0,
     "EVHP": 0,
     "Desc": "Baby offspring of a legendary Lugia."
-  },
-  {
-    "ID": 3100,
-    "Name": "MissingNo.",
-    "Types": [
-      "Bird",
-      "Normal"
-    ],
-    "HP": 178,
-    "ATK": 19,
-    "DEF": 11,
-    "SPATK": 23,
-    "SPDEF": 11,
-    "SPD": 0,
-    "Species": "Glitch Pokemon",
-    "Height": 3.3,
-    "Weight": 10,
-    "RatioM": 0,
-    "Abilities": [
-      "???",
-      "None",
-      "None"
-    ],
-    "EVATK": 0,
-    "EVDEF": 0,
-    "EVSPD": 0,
-    "EVSPDEF": 0,
-    "EVSPATK": 0,
-    "EVHP": 0,
-    "Desc": "MissingNo. is a Red/Blue glitch Pokémon."
   },
   {
     "ID": 3100,
@@ -29911,7 +30001,7 @@
   },
   {
     "ID": 3109,
-    "Name": "Darmanitan-Zen",
+    "Name": "Darmanitan",
     "Desc": "Its internal fire burns at 1,371 degrees Celsius, making enough power that it can destroy a dump truck with one punch.",
     "Types": [
       "Fire",
@@ -29941,7 +30031,7 @@
   },
   {
     "ID": 3110,
-    "Name": "Cherrim-Sun",
+    "Name": "Cherrim",
     "Desc": "If it senses strong sunlight, it opens its folded petals to absorb the sun's rays with its whole body.",
     "Types": [
       "Grass",
@@ -30001,7 +30091,7 @@
   },
   {
     "ID": 3112,
-    "Name": "Farfetch'd-Galar",
+    "Name": "Farfetch'd",
     "Types": [
       "Fighting",
       ""
@@ -30031,7 +30121,7 @@
   },
   {
     "ID": 3113,
-    "Name": "Weezing-Galar",
+    "Name": "Weezing",
     "Types": [
       "Poison",
       "Fairy"
@@ -30061,7 +30151,7 @@
   },
   {
     "ID": 3114,
-    "Name": "Mr. Mime-Galar",
+    "Name": "Mr. Mime",
     "Types": [
       "Ice",
       "Psychic"
@@ -30091,7 +30181,7 @@
   },
   {
     "ID": 3115,
-    "Name": "Corsola-Galar",
+    "Name": "Corsola",
     "Types": [
       "Ghost",
       ""
@@ -30121,7 +30211,7 @@
   },
   {
     "ID": 3116,
-    "Name": "Zigzagoon-Galar",
+    "Name": "Zigzagoon",
     "Types": [
       "Dark",
       "Normal"
@@ -30150,38 +30240,8 @@
     "Desc": "Its restlessness has it constantly running around. If it sees another Pokémon, it will purposely run into them in order to start a fight."
   },
   {
-    "ID": 3116,
-    "Name": "Darumaka-Galar",
-    "Types": [
-      "Ice",
-      ""
-    ],
-    "HP": 70,
-    "ATK": 90,
-    "DEF": 45,
-    "SPATK": 15,
-    "SPDEF": 45,
-    "SPD": 50,
-    "Species": "Zen Charm Pokémon",
-    "Height": 0.7,
-    "Weight": 40,
-    "RatioM": 50,
-    "Abilities": [
-      "Hustle",
-      "None",
-      "Inner Focus"
-    ],
-    "EVATK": 1,
-    "EVDEF": 0,
-    "EVSPD": 0,
-    "EVSPDEF": 0,
-    "EVSPATK": 0,
-    "EVHP": 0,
-    "Desc": "It lived in snowy areas for so long that its fire sac colled off and atrophied. It now has an organ that generates cold instead."
-  },
-  {
     "ID": 3117,
-    "Name": "Linoone-Galar",
+    "Name": "Linoone",
     "Types": [
       "Dark",
       "Normal"
@@ -30210,8 +30270,38 @@
     "Desc": "It uses its long tongue to taunt opponents. Once the opposition is enraged, this Pokémon hurls itself at the opponent, tackling them forefully."
   },
   {
+    "ID": 3118,
+    "Name": "Darumaka",
+    "Types": [
+      "Ice",
+      ""
+    ],
+    "HP": 70,
+    "ATK": 90,
+    "DEF": 45,
+    "SPATK": 15,
+    "SPDEF": 45,
+    "SPD": 50,
+    "Species": "Zen Charm Pokémon",
+    "Height": 0.7,
+    "Weight": 40,
+    "RatioM": 50,
+    "Abilities": [
+      "Hustle",
+      "None",
+      "Inner Focus"
+    ],
+    "EVATK": 1,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 0,
+    "EVHP": 0,
+    "Desc": "It lived in snowy areas for so long that its fire sac colled off and atrophied. It now has an organ that generates cold instead."
+  },
+  {
     "ID": 3119,
-    "Name": "Darmanitan-Galar",
+    "Name": "Darmanitan",
     "Types": [
       "Ice",
       ""
@@ -30241,7 +30331,7 @@
   },
   {
     "ID": 3120,
-    "Name": "Darmanitan-Zen-Galar",
+    "Name": "Darmanitan",
     "Types": [
       "Ice",
       "Fire"
@@ -30271,7 +30361,7 @@
   },
   {
     "ID": 3121,
-    "Name": "Yamask-Galar",
+    "Name": "Yamask",
     "Types": [
       "Ground",
       "Ghost"
@@ -30301,7 +30391,7 @@
   },
   {
     "ID": 3122,
-    "Name": "Stunfisk-Galar",
+    "Name": "Stunfisk",
     "Types": [
       "Ground",
       "Steel"
@@ -30331,7 +30421,7 @@
   },
   {
     "ID": 3123,
-    "Name": "Zacian-Crowned",
+    "Name": "Zacian",
     "Types": [
       "Fairy",
       "Steel"
@@ -30348,8 +30438,8 @@
     "RatioM": 0,
     "Abilities": [
       "Intrepid Sword",
-      "NONE",
-      "NONE"
+      "None",
+      "None"
     ],
     "EVATK": 0,
     "EVDEF": 0,
@@ -30361,7 +30451,7 @@
   },
   {
     "ID": 3124,
-    "Name": "Zamazenta-Crowned",
+    "Name": "Zamazenta",
     "Types": [
       "Fighting",
       "Steel"
@@ -30481,7 +30571,7 @@
   },
   {
     "ID": 3128,
-    "Name": "Meowth-Galar",
+    "Name": "Meowth",
     "Types": [
       "Steel",
       ""
@@ -30511,7 +30601,7 @@
   },
   {
     "ID": 3129,
-    "Name": "Ponyta-Galar",
+    "Name": "Ponyta    ",
     "Types": [
       "Psychic",
       ""
@@ -30541,7 +30631,7 @@
   },
   {
     "ID": 3130,
-    "Name": "Rapidash-Galar",
+    "Name": "Rapidash    ",
     "Types": [
       "Psychic",
       "Fairy"
@@ -32218,5 +32308,35 @@
     "EVSPDEF": 2,
     "EVSPATK": 0,
     "EVHP": 0
+  },
+  {
+    "ID": 3187,
+    "Name": "Baby XD001",
+    "Types": [
+      "Shadow",
+      "Flying"
+    ],
+    "HP": 70,
+    "ATK": 20,
+    "DEF": 105,
+    "SPATK": 55,
+    "SPDEF": 110,
+    "SPD": 100,
+    "Species": "Baby Shadow Pokemon",
+    "Height": 2.2,
+    "Weight": 70,
+    "RatioM": 0,
+    "Abilities": [
+      "Marvel Scale",
+      "None",
+      "Multiscale"
+    ],
+    "EVATK": 0,
+    "EVDEF": 0,
+    "EVSPD": 0,
+    "EVSPDEF": 0,
+    "EVSPATK": 3,
+    "EVHP": 0,
+    "Desc": "This was once a Baby Lugia, Guardian of the Sea, but has since been corrupted by a criminal organisation to be the ultimate evil Pokemon."
   }
 ]

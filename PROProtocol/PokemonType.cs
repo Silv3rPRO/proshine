@@ -26,6 +26,7 @@ namespace PROProtocol
         Dark,
         Fairy,
         Bird, // https://bulbapedia.bulbagarden.net/wiki/List_of_glitch_types#Bird
+        Shadow, // https://bulbapedia.bulbagarden.net/wiki/Shadow_Pok%C3%A9mon
         None
     }
 
@@ -89,6 +90,8 @@ namespace PROProtocol
                     return PokemonType.Fairy;
                 case "bird":
                     return PokemonType.Bird;
+                case "shadow":
+                    return PokemonType.Shadow;
                 default:
                     throw new System.Exception("The pokemon type " + typeName + " does not exist");
             }
