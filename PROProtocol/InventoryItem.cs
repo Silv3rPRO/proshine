@@ -19,10 +19,10 @@
 
         public bool CanBeUsedOutsideOfBattle => Scope == 8 || Scope == 10 || Scope == 15;
 
-        public bool CanBeUsedOnPokemonOutsideOfBattle => Scope == 2 || Scope == 3 || Scope == 9 || Scope == 13 || Scope == 14;
+        public bool CanBeUsedOnPokemonOutsideOfBattle => Scope == 2 || Scope == 3 || Scope == 9 || Scope == 13 || Scope == 14 || Scope == 17;
 
         public bool CanBeUsedInBattle => Scope == 5;
 
-        public bool CanBeUsedOnPokemonInBattle => Scope == 2;
+        public bool CanBeUsedOnPokemonInBattle => Scope == 2 || Scope == 17;
     }
 }

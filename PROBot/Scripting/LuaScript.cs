@@ -309,6 +309,7 @@ namespace PROBot.Scripting
             // General actions
             _lua.Globals["useItem"] = new Func<string, bool>(UseItem);
             _lua.Globals["useItemOnPokemon"] = new Func<string, int, bool>(UseItemOnPokemon);
+            _lua.Globals["useItemOnPokemonMove"] = new Func<string, int, DynValue, bool>(UseItemOnPokemonMove);
 
             // Battle actions
             _lua.Globals["attack"] = new Func<bool>(Attack);
@@ -2681,6 +2682,11 @@ namespace PROBot.Scripting
 
             if (item != null && item.Quantity > 0)
             {
+                if (item.Scope == 17)
+                {
+                    Fatal("error: 'useItemOnPokemon' can only be used for items which don't affect any moves of the specified pokemon.");
+                    return false;
+                }
                 if (Bot.Game.IsInBattle && item.CanBeUsedOnPokemonInBattle)
                 {
                     if (!ValidateAction("useItemOnPokemon", true)) return false;
@@ -2690,6 +2696,38 @@ namespace PROBot.Scripting
                 {
                     if (!ValidateAction("useItemOnPokemon", false)) return false;
                     Bot.Game.UseItem(item.Id, pokemonIndex);
+                    return ExecuteAction(true);
+                }
+            }
+            return false;
+        }
+
+        // API: Uses the specified item on the specified pokémon's specified move.
+        private bool UseItemOnPokemonMove(string itemName, int pokemonIndex, DynValue move)
+        {
+            itemName = itemName.ToUpperInvariant();
+            InventoryItem item = Bot.Game.GetItemFromName(itemName.ToUpperInvariant());
+
+            if (pokemonIndex < 1 || pokemonIndex > 6 || (move.Type != DataType.String && move.Type != DataType.Number)) return false;
+            
+            int moveIndex = 0;
+            if (move.Type == DataType.String)
+                moveIndex = Bot.Game.Team[pokemonIndex - 1].Moves.
+                    FirstOrDefault(m => MovesManager.Instance.GetMoveData(m.Id)?.Name.ToUpperInvariant() == move.String.ToUpperInvariant()).Position;
+            if (move.Type == DataType.Number)
+                moveIndex = (int)move.Number;
+
+            if (item != null && item.Quantity > 0 && moveIndex > 0)
+            {
+                if (Bot.Game.IsInBattle && item.CanBeUsedOnPokemonInBattle)
+                {
+                    if (!ValidateAction("useItemOnPokemonMove", true)) return false;
+                    return ExecuteAction(Bot.AI.UseItem(item.Id, pokemonIndex, moveIndex));
+                }
+                else if (!Bot.Game.IsInBattle && item.CanBeUsedOnPokemonOutsideOfBattle)
+                {
+                    if (!ValidateAction("useItemOnPokemonMove", false)) return false;
+                    Bot.Game.UseItem(item.Id, pokemonIndex, moveIndex);
                     return ExecuteAction(true);
                 }
             }

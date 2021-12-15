@@ -534,12 +534,16 @@ namespace PROProtocol
                 + "|.|" + osInfo);
         }
 
-        public void SendUseItem(int id, int pokemonDBId = 0)
+        public void SendUseItem(int id, int pokemonDBId = 0, int moveIndex = 0)
         {
             string toSend = "*|.|" + id;
             if (pokemonDBId != 0)
             {
                 toSend += "|.|" + pokemonDBId;
+            }
+            if (moveIndex != 0)
+            {
+                toSend += "|.|" + moveIndex;
             }
             SendPacket(toSend);
         }
@@ -771,25 +775,25 @@ namespace PROProtocol
             _battleTimeout.Set();
         }
 
-        public void UseItem(int id, int pokemonUid = 0)
+        public void UseItem(int id, int pokemonUid = 0, int moveIndex = 0)
         {
             if (!(pokemonUid >= 0 && pokemonUid <= 6) || !HasItemId(id))
             {
                 return;
             }
             InventoryItem item = GetItemFromId(id);
-            if (item == null || item.Quantity == 0)
+            if (item == null || item.Quantity == 0 || (item.Scope == 17 && moveIndex <= 0))
             {
                 return;
             }
             if (pokemonUid == 0) // simple use
             {
-                if (!_itemUseTimeout.IsActive && !IsInBattle && (item.Scope == 8 || item.Scope == 10 || item.Scope == 15))
+                if (!_itemUseTimeout.IsActive && !IsInBattle && item.CanBeUsedOutsideOfBattle)
                 {
                     SendUseItem(id);
                     _itemUseTimeout.Set();
                 }
-                else if (!_battleTimeout.IsActive && IsInBattle && item.Scope == 5)
+                else if (!_battleTimeout.IsActive && IsInBattle && item.CanBeUsedInBattle)
                 {
                     SendAttack("item" + id);
                     _battleTimeout.Set();
@@ -797,16 +801,18 @@ namespace PROProtocol
             }
             else // use item on pokemon
             {
-                if (!_itemUseTimeout.IsActive && !IsInBattle
-                    && (item.Scope == 2 || item.Scope == 3 || item.Scope == 9
-                        || item.Scope == 13 || item.Scope == 14))
+                if (!_itemUseTimeout.IsActive && !IsInBattle && item.CanBeUsedOnPokemonOutsideOfBattle)
                 {
-                    SendUseItem(id, Team[pokemonUid - 1].DatabaseId);
+                    SendUseItem(id, Team[pokemonUid - 1].DatabaseId, moveIndex);
                     _itemUseTimeout.Set();
                 }
-                else if (!_battleTimeout.IsActive && IsInBattle && item.Scope == 2)
+                else if (!_battleTimeout.IsActive && IsInBattle && item.CanBeUsedOnPokemonInBattle)
                 {
-                    SendAttack("item" + id + ":" + Team[pokemonUid - 1].DatabaseId);
+                    //(|.|item528:28118282:3||.\
+                    string bItemCmd = "item" + id + ":" + Team[pokemonUid - 1].DatabaseId;
+                    if (moveIndex != 0)
+                        bItemCmd += ":" + moveIndex;
+                    SendAttack(bItemCmd);
                     _battleTimeout.Set();
                 }
             }
@@ -823,9 +829,7 @@ namespace PROProtocol
             {
                 return false;
             }
-            if (!_itemUseTimeout.IsActive && !IsInBattle
-                && (item.Scope == 2 || item.Scope == 3 || item.Scope == 9 || item.Scope == 13
-                || item.Scope == 14 || item.Scope == 5 || item.Scope == 12 || item.Scope == 6))
+            if (!_itemUseTimeout.IsActive && !IsInBattle && item.CanBeHeld)
             {
                 SendGiveItem(Team[pokemonUid - 1].DatabaseId, itemId);
                 _itemUseTimeout.Set();

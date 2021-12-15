@@ -153,10 +153,10 @@ namespace PROBot
             return false;
         }
 
-        public bool UseItem(int itemId, int pokemonUid = 0)
+        public bool UseItem(int itemId, int pokemonUid = 0, int moveIndex = 0)
         {
             if (ActivePokemon.CurrentHealth == 0) return false;
-            _client.UseItem(itemId, pokemonUid);
+            _client.UseItem(itemId, pokemonUid, moveIndex);
             return true;
         }
 
