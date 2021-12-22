@@ -243,8 +243,8 @@ namespace PROProtocol
 
         private void SendRegularPing()
         {
-            if ((DateTime.UtcNow - _lastMovement).TotalSeconds >= 6
-                || (DateTime.UtcNow - _lastVisPacket).TotalSeconds >= 60)
+            if ((DateTime.UtcNow - _lastMovement).TotalSeconds > 6.0
+                || (DateTime.UtcNow - _lastVisPacket).TotalSeconds > 60.0)
             {
                 _lastMovement = DateTime.UtcNow;
                 _lastVisPacket = DateTime.UtcNow;
@@ -768,6 +768,11 @@ namespace PROProtocol
         {
             SendPacket("_");
         }
+        
+        public void RequestSpawnList()
+        {
+            SendPacket("k|.|" + MapName.ToLowerInvariant());
+        }
 
         public void UseAttack(int number)
         {
@@ -1061,7 +1066,7 @@ namespace PROProtocol
                 Map = map;
                 // DSSock.loadMap
                 SendPacket("-");
-                SendPacket("k|.|" + MapName.ToLowerInvariant());
+                RequestSpawnList();
 
                 CanUseCut = HasCutAbility();
                 CanUseSmashRock = HasRockSmashAbility();
@@ -1538,6 +1543,11 @@ namespace PROProtocol
                 {
                     BattleMessage?.Invoke(I18n.Replace(message));
                 }
+            }
+
+            if (!ActiveBattle.AlreadyCaught)
+            {
+                RequestSpawnList();
             }
 
             BattleUpdated?.Invoke();

@@ -56,7 +56,7 @@ namespace PROProtocol
             }
             OpponentGender = data[10];
             OpponentStatus = data[11];
-            AlreadyCaught = (data[12] == "1");
+            AlreadyCaught = data[12] == "1";
             AlternateForm = int.Parse(data[13]);
         }
 

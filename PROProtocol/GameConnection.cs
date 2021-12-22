@@ -21,7 +21,7 @@ namespace PROProtocol
             : base(new BrightClient())
         {
             PacketDelimiter = "|.\\\r\n";
-            TextEncoding = Encoding.GetEncoding(1252);
+            TextEncoding = Encoding.GetEncoding("ISO-8859-1");
 
             Server = server;
         }
