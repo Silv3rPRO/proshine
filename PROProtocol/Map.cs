@@ -19,7 +19,7 @@ namespace PROProtocol
             Icing
         }
 
-        public int[,] Colliders { get; }
+        public byte[,] Colliders { get; }
         public bool[,] Links { get; }
         public int[,] Tiles1 { get; }
         public int[,] Tiles2 { get; }
@@ -53,16 +53,17 @@ namespace PROProtocol
             {
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    Colliders = ReadTiles(reader);
-                    DimensionX = Colliders.GetUpperBound(0) + 1;
-                    DimensionY = Colliders.GetUpperBound(1) + 1;
+                    DimensionY = reader.ReadInt32();
+                    DimensionX = reader.ReadInt32();
                     Width = DimensionX - 1;
                     Height = DimensionY - 1;
 
-                    Tiles1 = ReadTiles(reader);
-                    Tiles2 = ReadTiles(reader);
-                    Tiles3 = ReadTiles(reader);
-                    Tiles4 = ReadTiles(reader);
+                    Colliders = ReadColliders(reader, DimensionX, DimensionY);
+
+                    Tiles1 = ReadTiles(reader, DimensionX, DimensionY);
+                    Tiles2 = ReadTiles(reader, DimensionX, DimensionY);
+                    Tiles3 = ReadTiles(reader, DimensionX, DimensionY);
+                    Tiles4 = ReadTiles(reader, DimensionX, DimensionY);
 
                     MapWeather = ReadString(reader);
                     reader.ReadInt16();
@@ -98,9 +99,7 @@ namespace PROProtocol
                         
                         bool isBattler = reader.ReadInt16() != 0;
 
-                        int npcId = reader.ReadInt16();
-
-                        reader.ReadInt16();
+                        int npcId = reader.ReadInt32();
 
                         OriginalNpcs.Add(new Npc(npcId, npcName, isBattler, type, x, y, DirectionExtensions.FromNumber(direction), losLength, path));
                     }
@@ -113,16 +112,27 @@ namespace PROProtocol
             return File.Exists("Resources/" + name + ".dat");
         }
 
-        private int[,] ReadTiles(BinaryReader reader)
+        private static byte[,] ReadColliders(BinaryReader reader, int dimensionX, int dimensionY)
         {
-            int height = reader.ReadInt32();
-            int width = reader.ReadInt32();
-            int[,] tiles = new int[width, height];
-            for (int y = 0; y < height; ++y)
+            byte[,] tiles = new byte[dimensionX, dimensionY];
+            for (int y = 0; y < dimensionY; ++y)
             {
-                for (int x = 0; x < width; ++x)
+                for (int x = 0; x < dimensionX; ++x)
                 {
-                    tiles[x, y] = reader.ReadUInt16();
+                    tiles[x, y] = reader.ReadByte();
+                }
+            }
+            return tiles;
+        }
+
+        private int[,] ReadTiles(BinaryReader reader, int dimensionX, int dimensionY)
+        {
+            int[,] tiles = new int[dimensionX, dimensionY];
+            for (int y = 0; y < dimensionY; ++y)
+            {
+                for (int x = 0; x < dimensionX; ++x)
+                {
+                    tiles[x, y] = reader.ReadInt32();
                 }
             }
             return tiles;
@@ -180,6 +190,35 @@ namespace PROProtocol
             }
 
             return false;
+        }
+
+        public Direction GetWaterDirectionFrom(int positionX, int positionY)
+        {
+            int collider = GetCollider(positionX, positionY - 1);
+            if (collider == 5 || collider == 12)
+            {
+                return Direction.Up;
+            }
+
+            collider = GetCollider(positionX, positionY + 1);
+            if (collider == 5 || collider == 12)
+            {
+                return Direction.Down;
+            }
+
+            collider = GetCollider(positionX - 1, positionY);
+            if (collider == 5 || collider == 12)
+            {
+                return Direction.Left;
+            }
+
+            collider = GetCollider(positionX + 1, positionY);
+            if (collider == 5 || collider == 12)
+            {
+                return Direction.Right;
+            }
+
+            return Direction.Down;
         }
 
         public MoveResult CanMove(Direction direction, int destinationX, int destinationY, bool isOnGround, bool isSurfing, bool canUseCut, bool canUseSmashRock)
@@ -367,7 +406,7 @@ namespace PROProtocol
 
         private bool IsMovementValid(Direction direction, int collider, bool isOnGround, bool isSurfing, bool canUseCut, bool canUseSmashRock)
         {
-            if (collider == -1)
+            if (collider == 1)
             {
                 return false;
             }

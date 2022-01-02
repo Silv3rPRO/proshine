@@ -4,6 +4,7 @@ using PROProtocol;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace PROBot
 {
@@ -46,6 +47,7 @@ namespace PROBot
         public Dictionary<int, TextOption> TextOptions { get; set; }
         
         private bool _loginRequested;
+        private bool _authenticationRequired;
 
         private Timeout _actionTimeout = new Timeout();
 
@@ -161,6 +163,8 @@ namespace PROBot
             {
                 client = new GameClient(new GameConnection(server), new MapConnection());
             }
+
+            Encryption.Reset();
             SetClient(client);
             client.Open();
         }
@@ -176,6 +180,19 @@ namespace PROBot
 
         public void Update()
         {
+            if (_authenticationRequired)
+            {
+                if (Encryption.StateReady)
+                {
+                    // TODO: Add an option to select the OS we want, it could be useful.
+                    Game.SendAuthentication(Account.Name,
+                        Account.Password,
+                        Account.DeviceId ?? Hardware.GenerateRandomHash(),
+                        Hardware.GenerateRandomOsInfo());
+                    _authenticationRequired = false;
+                }
+                return;
+            }
             AutoReconnector.Update();
 
             if (_loginRequested)
@@ -198,7 +215,7 @@ namespace PROBot
             if (Game.IsCreatingNewCharacter)
             {
                 LogMessage("Creating a new character with a random skin...");
-                Game.CreateCharacter(Rand.Next(14), Rand.Next(28), Rand.Next(8), Rand.Next(6), Rand.Next(5));
+                Game.CreateCharacter(Rand.Next(14), Rand.Next(28), Rand.Next(4), 695 + Rand.Next(6), Rand.Next(5));
                 return;
             }
 
@@ -261,17 +278,13 @@ namespace PROBot
         {
             string input = File.ReadAllText(filename);
 
-            List<string> libs = new List<string>();
+            var libs = new List<string>();
             if (Directory.Exists("Libs"))
             {
-                string[] files = Directory.GetFiles("Libs");
-                foreach (string file in files)
-                {
-                    if (file.ToUpperInvariant().EndsWith(".LUA"))
-                    {
-                        libs.Add(File.ReadAllText(file));
-                    }
-                }
+                libs = Directory.GetFiles("Libs")
+                    .Where(f => f.EndsWith(".lua", StringComparison.InvariantCultureIgnoreCase))
+                    .Select(File.ReadAllText)
+                    .ToList();
             }
 
             BaseScript script = new LuaScript(this, Path.GetFullPath(filename), input, libs);
@@ -283,10 +296,10 @@ namespace PROBot
                 Script.ScriptMessage += Script_ScriptMessage;
                 Script.Initialize();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Script = null;
-                throw ex;
+                throw;
             }
         }
 
@@ -402,7 +415,7 @@ namespace PROBot
         private void Client_ConnectionOpened()
         {
             ConnectionOpened?.Invoke();
-            Game.SendAuthentication(Account.Name, Account.Password, Account.DeviceId ?? HardwareHash.GenerateRandom());
+            _authenticationRequired = true;
         }
 
         private void Client_ConnectionClosed(Exception ex)
@@ -441,7 +454,7 @@ namespace PROBot
             SetClient(null);
         }
 
-        private void Client_DialogOpened(string message)
+        private void Client_DialogOpened(string message, string[] options)
         {
             if (Running == State.Started)
             {

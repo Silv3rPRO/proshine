@@ -46,6 +46,7 @@ namespace PROProtocol
             {  74, "chuck" },
             { 101, "headbuttable tree" },
             { 111, "bill" },
+            { 113, "interactive environment"},
             { 119, "pokestop"},
         };
 
@@ -65,7 +66,7 @@ namespace PROProtocol
         
         public bool IsMoving => Path.Length > 0 && Path.IndexOfAny(Movements) >= 0;
 
-        public bool CanBlockPlayer => Type != 10;
+        public bool CanBlockPlayer => Type != 10 && Type != 113;
         
         public Npc(int id, string name, bool isBattler, int type, int x, int y, Direction direction, int losLength, string path)
         {
@@ -86,11 +87,11 @@ namespace PROProtocol
             return new Npc(Id, Name, IsBattler, Type, PositionX, PositionY, Direction, LosLength, Path);
         }
 
-        public bool IsInLineOfSight(int x, int y)
+        public bool IsInLineOfSight(int x, int y, bool skipMovingNpc = false)
         {
             if (x != PositionX && y != PositionY) return false;
             int distance = GameClient.DistanceBetween(PositionX, PositionY, x, y);
-            if (distance > LosLength) return false;
+            if (distance > LosLength || (skipMovingNpc && IsMoving)) return false;
             switch (Direction)
             {
                 case Direction.Up:

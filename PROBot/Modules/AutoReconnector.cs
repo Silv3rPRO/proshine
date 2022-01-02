@@ -29,6 +29,7 @@ namespace PROBot.Modules
         private bool _relogging;
         private double _reloggingDelay;
         private DateTime _autoReconnectTimeout;
+        private DateTime _botScriptDelay = DateTime.MaxValue;
 
         public AutoReconnector(BotClient bot)
         {
@@ -58,6 +59,12 @@ namespace PROBot.Modules
                     _autoReconnectTimeout = DateTime.UtcNow.AddSeconds(_bot.Rand.Next(MinDelay, MaxDelay + 1));
                 }
             }
+
+            if (_botScriptDelay < DateTime.UtcNow)
+            {
+                _bot.Start();
+                _botScriptDelay = DateTime.MaxValue;
+            }
         }
 
         public void Relog(double delay)
@@ -84,16 +91,18 @@ namespace PROBot.Modules
             {
                 _reconnecting = false;
                 _relogging = false;
-                _bot.Start();
+                _botScriptDelay = DateTime.UtcNow.AddSeconds(10);
             }
         }
 
-        private void Client_AuthenticationFailed(AuthenticationResult result)
+        private void Client_AuthenticationFailed(string message)
         {
             _relogging = false;
-            if (result == AuthenticationResult.InvalidUser || result == AuthenticationResult.InvalidPassword
+            message = message.ToLowerInvariant();
+            if (/*result == AuthenticationResult.InvalidUser || result == AuthenticationResult.InvalidPassword
                 || result == AuthenticationResult.InvalidVersion || result == AuthenticationResult.Banned
-                || result == AuthenticationResult.EmailNotActivated)
+                || result == AuthenticationResult.EmailNotActivated*/
+                message.Contains("invalid") || message.Contains("ban") || message.Contains("email"))
             {
                 IsEnabled = false;
                 _reconnecting = false;

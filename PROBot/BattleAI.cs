@@ -47,6 +47,7 @@ namespace PROBot
                 return usablePokemons;
             }
         }
+
         public bool UseMandatoryAction()
         {
             return RepeatAttack();
@@ -152,10 +153,10 @@ namespace PROBot
             return false;
         }
 
-        public bool UseItem(int itemId, int pokemonUid = 0)
+        public bool UseItem(int itemId, int pokemonUid = 0, int moveIndex = 0)
         {
             if (ActivePokemon.CurrentHealth == 0) return false;
-            _client.UseItem(itemId, pokemonUid);
+            _client.UseItem(itemId, pokemonUid, moveIndex);
             return true;
         }
 
@@ -235,6 +236,12 @@ namespace PROBot
                     {
                         power = 0;
                     }
+                }
+
+                if (move.Id == DragonRage)
+                {
+                    if (opponentType1 == PokemonType.Fairy || opponentType2 == PokemonType.Fairy)
+                        power = 0;
                 }
 
                 if (power < 0.01) continue;

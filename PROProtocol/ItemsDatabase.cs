@@ -20,18 +20,7 @@ namespace PROProtocol
 
         private ItemsDatabase()
         {
-            try
-            {
-                if (File.Exists("Resources/Items.json"))
-                {
-                    string json = File.ReadAllText("Resources/Items.json");
-                    _items = JsonConvert.DeserializeObject<Dictionary<int, ItemInfo>>(json);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine("Could not read the items: " + ex.Message);
-            }
+            _items = ResourcesUtil.GetResource<Dictionary<int, ItemInfo>>("Items.json");
         }
 
         public ItemInfo Get(int itemId)

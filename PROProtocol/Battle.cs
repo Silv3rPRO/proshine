@@ -42,21 +42,22 @@ namespace PROProtocol
             OpponentHealth = Convert.ToInt32(data[1]);
             CurrentHealth = OpponentHealth;
             OpponentLevel = Convert.ToInt32(data[2]);
-            SelectedPokemonIndex = Convert.ToInt32(data[3]) - 1;
-            BattleText = data[4];
-            IsShiny = (data[5] != "0");
-            IsWild = data[6] == string.Empty && data[8] == string.Empty;
-            TrainerName = data[6];
-            IsPvp = data[7] == string.Empty;
+            // data[3] = mega form? or something
+            SelectedPokemonIndex = Convert.ToInt32(data[4]) - 1;
+            BattleText = data[5];
+            IsShiny = (data[6] != "0");
+            IsWild = data[7] == string.Empty && data[9] == string.Empty;
+            TrainerName = data[7];
+            IsPvp = data[8] == string.Empty;
             PokemonCount = 1;
-            if (data[8] != string.Empty)
+            if (data[9] != string.Empty)
             {
                 PokemonCount = Convert.ToInt32(data[8]);
             }
-            OpponentGender = data[9];
-            OpponentStatus = data[10];
-            AlreadyCaught = (data[11] == "1");
-            AlternateForm = int.Parse(data[12]);
+            OpponentGender = data[10];
+            OpponentStatus = data[11];
+            AlreadyCaught = data[12] == "1";
+            AlternateForm = int.Parse(data[13]);
         }
 
         public bool ProcessMessage(List<Pokemon> team, string message)
@@ -126,14 +127,15 @@ namespace PROProtocol
 
                 int pokemonId = Convert.ToInt32(data[2]);
                 int level = Convert.ToInt32(data[3]);
-                bool isShiny = data[4] == "1";
-                int maxHealth = Convert.ToInt32(data[5]);
-                int currentHealth = Convert.ToInt32(data[6]);
-                int index = Convert.ToInt32(data[7]) - 1;
-                string status = data[8];
-                string gender = data[9];
-                bool alreadyCaught = (data[10] == "1");
-                string alternateForm = data[11];
+                // data[4] = mega form? or something
+                bool isShiny = data[5] == "1";
+                int maxHealth = Convert.ToInt32(data[6]);
+                int currentHealth = Convert.ToInt32(data[7]);
+                int index = Convert.ToInt32(data[8]) - 1;
+                string status = data[9];
+                string gender = data[10];
+                bool alreadyCaught = (data[11] == "1");
+                string alternateForm = data[12];
 
                 if (data[1] == _playerName)
                 {
@@ -191,10 +193,17 @@ namespace PROProtocol
                 int stickyWeb = Convert.ToInt32(data[5]);
                 return true;
             }
-            
-            if (message.StartsWith("CP") && message.Length == 3)
+
+            if (message.StartsWith("T:") || message.StartsWith("U:") || message.StartsWith("EXP:"))
             {
-                // Capture animation (2 = fail, 3 = success).
+                // exp animation
+                // may be blackout animation?
+                return true;
+            }
+
+            if (message.StartsWith("W:"))
+            {
+                // Capture animation (ball shake number):(1 = success, 0 = fail).
                 return true;
             }
 

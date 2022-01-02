@@ -10,28 +10,23 @@ namespace PROProtocol
         private List<MovesManager.MoveData> _moveNames = new List<MovesManager.MoveData>();
 
         public int SelectedPokemonUid { get; }
+        public bool IsEggMoves { get; }
 
-        public bool IsEgg { get; }
-
-        public MoveRelearner(int pokemonUid, bool isEgg)
+        public MoveRelearner(int pokemonUid, bool isEggMoves)
         {
             SelectedPokemonUid = pokemonUid;
-            IsEgg = isEgg;
+            IsEggMoves = isEggMoves;
         }
 
-        public void ProcessMessage(string msg)
+        public void ProcessMessage(string data)
         {
-            string[] array = msg.Split(new string[]
-            {
-                "|"
-            }, StringSplitOptions.None);
+            string[] moveNames = data.Split(new string[] { "|" }, StringSplitOptions.None);
 
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < moveNames.Length; i++)
             {
-                string moveName = array[i];
-                if (moveName.Length > 2)
+                if (moveNames[i].Length > 2)
                 {
-                    MovesManager.MoveData move = MovesManager.Instance.GetMoveData(moveName);
+                    MovesManager.MoveData move = MovesManager.Instance.GetMoveData(moveNames[i]);
                     _moveNames.Add(move);
                 }
             }
